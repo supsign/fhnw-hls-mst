@@ -1,11 +1,7 @@
 <?php
 
-namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-
-class Completion extends Model
+class Completion extends BaseModel
 {
-    use HasFactory;
+    
 }

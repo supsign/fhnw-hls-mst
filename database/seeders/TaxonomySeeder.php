@@ -5,15 +5,15 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class LangaugeSeeder extends Seeder
+class TaxonomySeeder extends Seeder
 {
     private $data = [
-        ['id' => 1, 'name' => 'Deutsch'],
-        ['id' => 2, 'name' => 'Englisch'],
-        ['id' => 3, 'name' => 'Deutsch oder Englisch'],
-        ['id' => 4, 'name' => 'Französisch'],
-        ['id' => 5, 'name' => 'Italienisch'],
-        ['id' => 6, 'name' => 'Deutsch mit englischen Unterlagen'],
+        ['id' => 1, 'name' => 'kennen'],
+        ['id' => 2, 'name' => 'verstehen'],
+        ['id' => 3, 'name' => 'anwenden'],
+        ['id' => 4, 'name' => 'analysieren'],
+        ['id' => 5, 'name' => 'beurteilen'],
+        ['id' => 6, 'name' => 'erschaffen'],
     ];
     /**
      * Run the database seeds.
@@ -33,7 +33,7 @@ class LangaugeSeeder extends Seeder
                 $data[$key] = $value;
             }
 
-            DB::table('langauges')->updateOrInsert(['id' => $entry['id']], $data);
+            DB::table('taxonomies')->updateOrInsert(['id' => $entry['id']], $data);
         }
     }
 }

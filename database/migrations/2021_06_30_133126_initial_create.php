@@ -44,11 +44,21 @@ class InitialCreate extends Migration
             $table->timestampsTz();
         });
 
+        Artisan::call('db:seed', [
+            '--class' => CourseSeeder::class,
+            '--force' => true
+        ]);
+
         Schema::create('taxonomies', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
             $table->timestampsTz();
         });
+
+        Artisan::call('db:seed', [
+            '--class' => TaxonomySeeder::class,
+            '--force' => true
+        ]);
 
         Schema::create('skills', function (Blueprint $table) {
             $table->id();
@@ -56,6 +66,11 @@ class InitialCreate extends Migration
             $table->string('definition');
             $table->timestampsTz();
         });
+
+        Artisan::call('db:seed', [
+            '--class' => SkillSeeder::class,
+            '--force' => true
+        ]);
 
         Schema::create('semesters', function (Blueprint $table) {
             $table->id();
@@ -80,12 +95,22 @@ class InitialCreate extends Migration
             $table->timestampsTz();
         });
 
+        Artisan::call('db:seed', [
+            '--class' => StudyProgramSeeder::class,
+            '--force' => true
+        ]);
+
         Schema::create('study_fields', function (Blueprint $table) {
             $table->id();
             $table->foreignId('study_program_id')->constrained();
             $table->string('name')->nullable();
             $table->timestampsTz();
         });
+
+        Artisan::call('db:seed', [
+            '--class' => StudyFieldSeeder::class,
+            '--force' => true
+        ]);
 
         Schema::create('course_groups', function (Blueprint $table) {
             $table->id();

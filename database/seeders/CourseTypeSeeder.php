@@ -8,7 +8,13 @@ use Illuminate\Support\Facades\DB;
 class CourseTypeSeeder extends Seeder
 {
     private $data = [
-        
+        ['id' => 1, 'name' => 'Vorlesung'],
+        ['id' => 2, 'name' => 'Praktikum'],
+        ['id' => 3, 'name' => 'Laborpraktikum'],
+        ['id' => 4, 'name' => 'Studierendenprojekt'],
+        ['id' => 5, 'name' => 'Bachelor-Thesis'],
+        ['id' => 6, 'name' => 'Bachelor-Thesis (lang)'],
+        ['id' => 7, 'name' => 'Master-Thesis'],
     ];
     /**
      * Run the database seeds.

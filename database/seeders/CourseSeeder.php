@@ -5,15 +5,10 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class LangaugeSeeder extends Seeder
+class CourseSeeder extends Seeder
 {
     private $data = [
-        ['id' => 1, 'name' => 'Deutsch'],
-        ['id' => 2, 'name' => 'Englisch'],
-        ['id' => 3, 'name' => 'Deutsch oder Englisch'],
-        ['id' => 4, 'name' => 'Französisch'],
-        ['id' => 5, 'name' => 'Italienisch'],
-        ['id' => 6, 'name' => 'Deutsch mit englischen Unterlagen'],
+        ['id' => 1, 'number' => 'A1', 'langauge_id' => 1, 'course_type_id' => 1],
     ];
     /**
      * Run the database seeds.
@@ -33,7 +28,7 @@ class LangaugeSeeder extends Seeder
                 $data[$key] = $value;
             }
 
-            DB::table('langauges')->updateOrInsert(['id' => $entry['id']], $data);
+            DB::table('courses')->updateOrInsert(['id' => $entry['id']], $data);
         }
     }
 }

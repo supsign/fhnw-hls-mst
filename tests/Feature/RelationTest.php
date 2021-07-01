@@ -13,6 +13,7 @@ use App\Models\CourseCrossQualification;
 use App\Models\Event;
 use App\Models\Mentor;
 use App\Models\Student;
+use App\Models\StudyField;
 use App\Models\User;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -41,6 +42,7 @@ class RelationTest extends TestCase
         $this->assertTrue($assessment->course->assessments()->first()->id === $assessment->id);
         $this->assertTrue($assessment->studyField()->first()->id === $assessment->id);
         $this->assertTrue($assessment->startSemester()->first()->id === $assessment->id);
+        
     }
 
     public function test_completionRelations()
@@ -109,8 +111,18 @@ class RelationTest extends TestCase
             'student_id' => $student->id
         ]);
 
+        $this->assertTrue($user->mentor->evento_person_id === 1);
+        $this->assertTrue($user->student->evento_person_id === 2);
         $this->assertTrue($user->mentor->users()->first()->id === $user->id);
         $this->assertTrue($user->student->users()->first()->id === $user->id);
+    }
+
+    public function test_studyfieldRelations()
+    {
+        $studyField = StudyField::find(1);
+
+        $this->assertTrue($studyField->studyProgram->name === 'Weitere Certificates of Advanced Studies');
+        $this->assertTrue($studyField->studyProgram->studyFields()->first()->id === $studyField->id);
     }
 }
 

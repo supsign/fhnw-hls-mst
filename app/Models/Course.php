@@ -21,6 +21,31 @@ class Course extends BaseModel
         );
     }
 
+
+    public function coursePlanningSemesters()
+    {
+        return $this->hasManyThrough(
+            Semester::class,
+            CoursePlanning::class,
+            'course_id',
+            'id',
+            'id',
+            'semester_id',
+        );
+    }
+
+    public function courseRecommendationSemesters()
+    {
+        return $this->hasManyThrough(
+            Semester::class,
+            CourseRecommendation::class,
+            'course_id',
+            'id',
+            'id',
+            'semester_id',
+        );
+    }
+
     public function courseSpecializationStartSemesters()
     {
         return $this->hasManyThrough(
@@ -73,6 +98,16 @@ class Course extends BaseModel
     public function langauge()
     {
         return $this->belongsTo(Langauge::class);
+    }
+
+    public function plannings()
+    {
+        return $this->belongsToMany(Planning::class);
+    }
+
+    public function recommendations()
+    {
+        return $this->belongsToMany(Recommendation::class);
     }
 
     public function specializations()

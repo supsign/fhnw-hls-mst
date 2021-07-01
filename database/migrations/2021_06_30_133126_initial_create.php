@@ -250,7 +250,7 @@ class InitialCreate extends Migration
             $table->timestampsTz();
         });
 
-        Schema::create('course_plannings', function (Blueprint $table) {
+        Schema::create('course_planning', function (Blueprint $table) {
             $table->id();
             $table->foreignId('course_id')->constrained();
             $table->foreignId('planning_id')->constrained();

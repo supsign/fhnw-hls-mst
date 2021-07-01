@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-class CourseRecommendation extends BaseModel
+class CoursePlanning extends BaseModel
 {
-    protected $table = 'course_recommendation';
+    protected $table = 'course_planning';
 
     public function course()
     {
@@ -16,8 +16,8 @@ class CourseRecommendation extends BaseModel
         return $this->belongsTo(Semester::class);
     }
 
-    public function recommendation()
+    public function planning()
     {
-        return $this->belongsTo(Recommendation::class);
+        return $this->belongsTo(Plannings::class);
     }
 }

@@ -6,7 +6,7 @@ class Mentor extends BaseModel
 {
     public function plannings()
     {
-        return $this->hasMany(Plannings::class);
+        return $this->hasMany(Planning::class);
     }
 
     public function mentorStudent()

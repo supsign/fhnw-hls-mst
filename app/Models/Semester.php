@@ -33,6 +33,30 @@ class Semester extends BaseModel
         );
     }
 
+    public function coursePlanningCourses()
+    {
+        return $this->hasManyThrough(
+            Course::class,
+            CoursePlanning::class,
+            'semester_id',
+            'id',
+            'id',
+            'course_id',
+        );
+    }
+
+    public function courseRecommendationCourses()
+    {
+        return $this->hasManyThrough(
+            Course::class,
+            CourseRecommendation::class,
+            'semester_id',
+            'id',
+            'id',
+            'course_id',
+        );
+    }
+
     public function courseSpecializationCourses()
     {
         return $this->hasManyThrough(
@@ -42,6 +66,30 @@ class Semester extends BaseModel
             'id',
             'id',
             'course_id',
+        );
+    }
+
+    public function coursePlanningPlannings()
+    {
+        return $this->hasManyThrough(
+            Planning::class,
+            CoursePlanning::class,
+            'semester_id',
+            'id',
+            'id',
+            'planning_id',
+        );
+    }
+
+    public function courseRecommendationRecommendations()
+    {
+        return $this->hasManyThrough(
+            Recommendation::class,
+            CourseRecommendation::class,
+            'semester_id',
+            'id',
+            'id',
+            'recommendation_id',
         );
     }
 

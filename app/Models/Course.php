@@ -21,6 +21,18 @@ class Course extends BaseModel
         );
     }
 
+    public function courseSpecializationStartSemesters()
+    {
+        return $this->hasManyThrough(
+            Semester::class,
+            CourseSpecialization::class,
+            'course_id',
+            'id',
+            'id',
+            'start_semester_id',
+        );
+    }
+
     public function crossQualificationStartSemesters()
     {
         return $this->hasManyThrough(
@@ -61,5 +73,10 @@ class Course extends BaseModel
     public function langauge()
     {
         return $this->belongsTo(Langauge::class);
+    }
+
+    public function specializations()
+    {
+        return $this->belongsToMany(Specialization::class);
     }
 }

@@ -13,4 +13,16 @@ class CourseGroup extends BaseModel
     {
         return $this->hasMany(CourseCourseGroup::class);
     }
+
+    public function startSemesters()
+    {
+        return $this->hasManyThrough(
+            Semester::class,
+            CourseCourseGroup::class,
+            'course_group_id',
+            'id',
+            'id',
+            'start_semester_id',
+        );
+    }
 }

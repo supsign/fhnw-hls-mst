@@ -9,6 +9,7 @@ use App\Models\CourseGroup;
 use App\Models\CourseCourseGroup;
 use App\Models\CrossQualification;
 use App\Models\CourseCrossQualification;
+use App\Models\CourseSpecialization;
 use App\Models\Event;
 use App\Models\Mentor;
 use App\Models\Plannings;
@@ -89,10 +90,13 @@ class RelationTest extends TestCase
         $this->assertTrue($course->courseGroups()->first()->courses()->first()->id === $course->id);
         $this->assertTrue($course->courseGroupStartSemesters()->first()->year === 2021);
         $this->assertTrue($course->courseGroupStartSemesters()->first()->courseGroupCourses()->first()->id === $course->id);
+        $this->assertTrue($course->courseGroupStartSemesters()->first()->courseGroupCourseGroups()->first()->id === $courseGroup->id);
+        $this->assertTrue($course->courseGroupStartSemesters()->first()->id === $courseGroup->startSemesters()->first()->id);
 
+        $crossQualification = CrossQualification::create();
         $ccq = CourseCrossQualification::create([
             'course_id' => $course->id,
-            'cross_qualification_id' => CrossQualification::create()->id,
+            'cross_qualification_id' => $crossQualification->id,
             'start_semester_id' => 1,
         ]);
 
@@ -100,6 +104,8 @@ class RelationTest extends TestCase
         $this->assertTrue($course->crossQualifications()->first()->courses()->first()->id === $course->id);
         $this->assertTrue($course->crossQualificationStartSemesters()->first()->year === 2021);
         $this->assertTrue($course->crossQualificationStartSemesters()->first()->crossQualificationCourses()->first()->id === $course->id);
+        $this->assertTrue($course->crossQualificationStartSemesters()->first()->crossQualificationCrossQualifications()->first()->id === $crossQualification->id);
+        $this->assertTrue($course->crossQualificationStartSemesters()->first()->id === $crossQualification->startSemesters()->first()->id);
     }
 
     public function test_userRelations()
@@ -233,6 +239,24 @@ class RelationTest extends TestCase
         $this->assertTrue($lesson->event->id === $event->id);
         $this->assertTrue($event->semester->year === 2021);
         $this->assertTrue($event->course->number === 'A1');
+    }
+
+    public function test_courseSpecializationRelations()
+    {
+        $course = Course::find(1);
+        $specialization = Specialization::create();
+        $courseSpecialization = CourseSpecialization::create([
+            'course_id' => $course->id,
+            'start_semester_id' => 1,
+            'specialization_id' => $specialization->id,
+        ]);
+
+        $this->assertTrue($course->specializations()->first()->id === $specialization->id);
+        $this->assertTrue($specialization->courses()->first()->id === $course->id);
+        $this->assertTrue($course->courseSpecializationStartSemesters()->first()->year === 2021);
+        $this->assertTrue($specialization->startSemesters()->first()->year === 2021);
+        $this->assertTrue($course->courseSpecializationStartSemesters()->first()->courseSpecializationSpecializations()->first()->id === $specialization->id);
+        $this->assertTrue($specialization->startSemesters()->first()->courseSpecializationCourses()->first()->id === $course->id);
     }
 }
 

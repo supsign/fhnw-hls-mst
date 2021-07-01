@@ -21,6 +21,42 @@ class Semester extends BaseModel
         );
     }
 
+    public function courseGroupCourseGroups()
+    {
+        return $this->hasManyThrough(
+            CourseGroup::class,
+            CourseCourseGroup::class,
+            'start_semester_id',
+            'id',
+            'id',
+            'course_group_id',
+        );
+    }
+
+    public function courseSpecializationCourses()
+    {
+        return $this->hasManyThrough(
+            Course::class,
+            CourseSpecialization::class,
+            'start_semester_id',
+            'id',
+            'id',
+            'course_id',
+        );
+    }
+
+    public function courseSpecializationSpecializations()
+    {
+        return $this->hasManyThrough(
+            Specialization::class,
+            CourseSpecialization::class,
+            'start_semester_id',
+            'id',
+            'id',
+            'specialization_id',
+        );
+    }
+
     public function courseCourseGroups()
     {
         return $this->hasMany(CourseCourseGroup::class, 'start_semester_id');
@@ -35,6 +71,18 @@ class Semester extends BaseModel
             'id',
             'id',
             'course_id',
+        );
+    }
+
+    public function crossQualificationCrossQualifications()
+    {
+        return $this->hasManyThrough(
+            CrossQualification::class,
+            CourseCrossQualification::class,
+            'start_semester_id',
+            'id',
+            'id',
+            'cross_qualification_id',
         );
     }
 

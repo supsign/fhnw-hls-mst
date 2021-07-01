@@ -8,6 +8,8 @@ use App\Models\Completion;
 use App\Models\Course;
 use App\Models\CourseGroup;
 use App\Models\CourseCourseGroup;
+use App\Models\CrossQualification;
+use App\Models\CourseCrossQualification;
 use App\Models\Event;
 use App\Models\Student;
 
@@ -78,7 +80,19 @@ class RelationTest extends TestCase
 
         $this->assertTrue($course->courseGroups()->first()->id === $courseGroup->id);
         $this->assertTrue($course->courseGroups()->first()->courses()->first()->id === $course->id);
-        $this->assertTrue($course->startSemesters()->first()->year === 2021);
-        $this->assertTrue($course->startSemesters()->first()->courses()->first()->id === $course->id);
+        $this->assertTrue($course->courseGroupStartSemesters()->first()->year === 2021);
+        $this->assertTrue($course->courseGroupStartSemesters()->first()->courseGroupCourses()->first()->id === $course->id);
+
+        $crossQualification = CrossQualification::create();
+        $ccq = CourseCrossQualification::create([
+            'course_id' => $course->id,
+            'cross_qualification_id' => $crossQualification->id,
+            'start_semester_id' => 1,
+        ]);
+
+        $this->assertTrue($course->crossQualifications()->first()->id === $courseGroup->id);
+        $this->assertTrue($course->crossQualifications()->first()->courses()->first()->id === $course->id);
+        $this->assertTrue($course->crossQualificationStartSemesters()->first()->year === 2021);
+        $this->assertTrue($course->crossQualificationStartSemesters()->first()->crossQualificationCourses()->first()->id === $course->id);
     }
 }

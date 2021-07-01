@@ -14,17 +14,25 @@ use Tests\TestCase;
 
 class RelationTest extends TestCase
 {
+    use RefreshDatabase;
     /**
      * A basic feature test example.
      *
      * @return void
      */
-    public function test_example()
+    public function test_assessmentRelations()
     {
-        $assessment = Assessment::create();
+        $assessment = Assessment::create([
+            'course_id' => 1,
+            'study_field_id' => 1,
+            'start_semester_id' => 1
+        ]);
 
-        $assessment->course()->create(['number' => 7]);
-        $assessment->studyField()->create();
-        $assessment->startSemester()->create();
+        $this->assertTrue($assessment->course->number === 'A1');
+        $this->assertTrue($assessment->studyField->name === 'Chemie');
+        $this->assertTrue($assessment->startSemester->year === 2021);
+        $this->assertTrue($assessment->course->assessments()->first()->id === $assessment->id);
+        $this->assertTrue($assessment->studyField()->first()->id === $assessment->id);
+        $this->assertTrue($assessment->startSemester()->first()->id === $assessment->id);
     }
 }

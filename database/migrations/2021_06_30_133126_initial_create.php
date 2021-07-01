@@ -75,9 +75,14 @@ class InitialCreate extends Migration
         Schema::create('semesters', function (Blueprint $table) {
             $table->id();
             $table->smallInteger('year');
-            $table->boolean('is_has')->default(0);
+            $table->boolean('is_hs')->default(0);
             $table->timestampsTz();
         });
+
+        Artisan::call('db:seed', [
+            '--class' => SemesterSeeder::class,
+            '--force' => true
+        ]);
 
         Schema::create('course_skill', function (Blueprint $table) {
             $table->id();

@@ -11,6 +11,7 @@ use App\Models\CrossQualification;
 use App\Models\CourseCrossQualification;
 use App\Models\Event;
 use App\Models\Mentor;
+use App\Models\Plannings;
 use App\Models\Recommendation;
 use App\Models\Specialization;
 use App\Models\Skill;
@@ -88,10 +89,9 @@ class RelationTest extends TestCase
         $this->assertTrue($course->courseGroupStartSemesters()->first()->year === 2021);
         $this->assertTrue($course->courseGroupStartSemesters()->first()->courseGroupCourses()->first()->id === $course->id);
 
-        $crossQualification = CrossQualification::create();
         $ccq = CourseCrossQualification::create([
             'course_id' => $course->id,
-            'cross_qualification_id' => $crossQualification->id,
+            'cross_qualification_id' => CrossQualification::create()->id,
             'start_semester_id' => 1,
         ]);
 
@@ -103,14 +103,13 @@ class RelationTest extends TestCase
 
     public function test_userRelations()
     {
-        $mentor = Mentor::create(['evento_person_id' => 1]);
         $student = Student::create([
             'start_semester_id' => 1,
             'study_field_id' => 1,
             'evento_person_id' => 2
         ]);
         $user = User::create([
-            'mentor_id' => $mentor->id,
+            'mentor_id' => Mentor::create(['evento_person_id' => 1])->id,
             'student_id' => $student->id
         ]);
 
@@ -172,12 +171,9 @@ class RelationTest extends TestCase
 
     public function test_recommendationRelations()
     {
-        $crossQualification = CrossQualification::create();
-        $specialization = Specialization::create();
-
         $recommendation = Recommendation::create([
-            'cross_qualification_id' => $crossQualification->id,
-            'specialization_id' => $specialization->id,
+            'cross_qualification_id' => CrossQualification::create()->id,
+            'specialization_id' => Specialization::create()->id,
             'start_semester_id' => 1,
             'study_field_id' => 1,
         ]);
@@ -186,6 +182,39 @@ class RelationTest extends TestCase
         $this->assertTrue($recommendation->specialization->recommendations()->first()->id === $recommendation->id);
         $this->assertTrue($recommendation->startSemester->recommendations()->first()->id === $recommendation->id);
         $this->assertTrue($recommendation->studyField->recommendations()->first()->id === $recommendation->id);
+    }
+
+    public function test_planningRelations()
+    {
+        $student = Student::create([
+            'start_semester_id' => 1,
+            'study_field_id' => 1,
+            'evento_person_id' => 2
+        ]);
+        $planning = Plannings::create([
+            'cross_qualification_id' => CrossQualification::create()->id,
+            'mentor_id' => Mentor::create(['evento_person_id' => 3])->id,
+            'specialization_id' => Specialization::create()->id,
+            'student_id' => $student->id,
+        ]);
+
+        $this->assertTrue($planning->crossQualification->plannings()->first()->id === $planning->id);
+        $this->assertTrue($planning->mentor->plannings()->first()->id === $planning->id);
+        $this->assertTrue($planning->specialization->plannings()->first()->id === $planning->id);
+        $this->assertTrue($planning->student->plannings()->first()->id === $planning->id);
+    }
+
+    public function test_mentorStudentRelations()
+    {
+        $student = Student::create([
+            'start_semester_id' => 1,
+            'study_field_id' => 1,
+            'evento_person_id' => 4
+        ]);
+
+        $mentor = $student->mentors()->create(['evento_person_id' => 5]);
+
+        $this->assertTrue($mentor->students()->first()->id === $student->id);
     }
 }
 

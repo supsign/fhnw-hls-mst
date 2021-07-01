@@ -9,6 +9,11 @@ class CrossQualification extends BaseModel
         return $this->belongsToMany(Course::class);
     }
 
+    public function plannings()
+    {
+        return $this->hasMany(Plannings::class);
+    }
+
     public function recommendations()
     {
         return $this->hasMany(Recommendation::class);

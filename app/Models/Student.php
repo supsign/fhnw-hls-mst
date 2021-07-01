@@ -9,6 +9,21 @@ class Student extends BaseModel
     	return $this->hasMany(Completion::class);
     }
 
+    public function mentors()
+    {
+        return $this->belongsToMany(Mentor::class);
+    }
+
+    public function mentorStudent()
+    {
+        return $this->hasMany(MentorStudent::class);
+    }
+
+    public function plannings()
+    {
+        return $this->hasMany(Plannings::class);
+    }
+
     public function startSemester()
     {
         return $this->belongsTo(Semester::class, 'start_semester_id');

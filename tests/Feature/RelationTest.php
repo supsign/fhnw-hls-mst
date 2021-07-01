@@ -5,6 +5,7 @@ namespace Tests\Feature;
 
 use App\Models\Assessment;
 use App\Models\Completion;
+use App\Models\Course;
 use App\Models\Event;
 use App\Models\Student;
 
@@ -57,8 +58,13 @@ class RelationTest extends TestCase
 
         $this->assertTrue($completion->student->completions()->first()->id === $completion->id);
         $this->assertTrue($completion->event->completions()->first()->id === $completion->id);
+    }
 
+    public function test_courseRelations()
+    {
+        $course = Course::find(1);
 
-
+        $this->assertTrue($course->courseType->courses()->first()->id === $course->id);
+        $this->assertTrue($course->langauge->courses()->first()->id === $course->id);
     }
 }

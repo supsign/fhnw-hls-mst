@@ -8,4 +8,14 @@ class Course extends BaseModel
     {
     	return $this->hasMany(Assessment::class);
     }
+
+    public function courseType()
+    {
+        return $this->belongsTo(CourseType::class);
+    }
+
+    public function langauge()
+    {
+        return $this->belongsTo(Langauge::class);
+    }
 }

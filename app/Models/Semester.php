@@ -38,6 +38,11 @@ class Semester extends BaseModel
         );
     }
 
+    public function recommendations()
+    {
+        return $this->hasMany(Recommendation::class , 'start_semester_id');
+    }
+
     public function students()
     {
         return $this->hasMany(Student::class, 'start_semester_id');

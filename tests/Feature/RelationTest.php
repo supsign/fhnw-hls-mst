@@ -11,6 +11,8 @@ use App\Models\CrossQualification;
 use App\Models\CourseCrossQualification;
 use App\Models\Event;
 use App\Models\Mentor;
+use App\Models\Recommendation;
+use App\Models\Specialization;
 use App\Models\Skill;
 use App\Models\SkillStundent;
 use App\Models\Student;
@@ -166,6 +168,24 @@ class RelationTest extends TestCase
         $this->assertTrue($student->skillStudentEvents()->first()->id === $event->id);
         $this->assertTrue($event->skillStudentSkills()->first()->id === $skill->id);
         $this->assertTrue($event->skillStudentStudents()->first()->id === $student->id);
+    }
+
+    public function test_recommendationRelations()
+    {
+        $crossQualification = CrossQualification::create();
+        $specialization = Specialization::create();
+
+        $recommendation = Recommendation::create([
+            'cross_qualification_id' => $crossQualification->id,
+            'specialization_id' => $specialization->id,
+            'start_semester_id' => 1,
+            'study_field_id' => 1,
+        ]);
+
+        $this->assertTrue($recommendation->crossQualification->recommendations()->first()->id === $recommendation->id);
+        $this->assertTrue($recommendation->specialization->recommendations()->first()->id === $recommendation->id);
+        $this->assertTrue($recommendation->startSemester->recommendations()->first()->id === $recommendation->id);
+        $this->assertTrue($recommendation->studyField->recommendations()->first()->id === $recommendation->id);
     }
 }
 

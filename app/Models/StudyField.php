@@ -9,6 +9,11 @@ class StudyField extends BaseModel
     	return $this->hasMany(Assessment::class);
     }
 
+    public function recommendations()
+    {
+        return $this->hasMany(Recommendation::class);
+    }
+
     public function students()
     {
         return $this->hasMany(Student::class);

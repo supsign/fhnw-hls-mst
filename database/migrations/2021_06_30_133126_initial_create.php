@@ -145,10 +145,10 @@ class InitialCreate extends Migration
 
         Schema::create('recommendations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('study_field_id')->constrained();
-            $table->foreignId('specialization_id')->constrained();
             $table->foreignId('cross_qualification_id')->constrained();
+            $table->foreignId('specialization_id')->constrained();
             $table->foreignId('start_semester_id')->constrained('semesters');
+            $table->foreignId('study_field_id')->constrained();
             $table->timestampsTz();
         });
 

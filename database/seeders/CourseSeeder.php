@@ -9,6 +9,7 @@ class CourseSeeder extends Seeder
 {
     private $data = [
         ['id' => 1, 'number' => 'A1', 'langauge_id' => 1, 'course_type_id' => 1],
+        ['id' => 2, 'number' => 'B2', 'langauge_id' => 2, 'course_type_id' => 3],
     ];
     /**
      * Run the database seeds.

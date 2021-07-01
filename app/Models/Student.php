@@ -8,4 +8,9 @@ class Student extends BaseModel
     {
     	return $this->hasMany(Completion::class);
     }
+
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 }

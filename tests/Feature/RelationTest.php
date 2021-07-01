@@ -11,7 +11,9 @@ use App\Models\CourseCourseGroup;
 use App\Models\CrossQualification;
 use App\Models\CourseCrossQualification;
 use App\Models\Event;
+use App\Models\Mentor;
 use App\Models\Student;
+use App\Models\User;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -48,13 +50,11 @@ class RelationTest extends TestCase
             'semester_id' => 1,
             'course_id' => 1,
         ]);
-
         $student = Student::create([
             'evento_person_id' => 1,
             'start_semester_id' => 1,
             'study_field_id' => 1,
         ]);
-
         $completion = Completion::create([
             'event_id' => $event->id,
             'student_id' => $student->id,
@@ -66,7 +66,7 @@ class RelationTest extends TestCase
 
     public function test_courseRelations()
     {
-        $course = Course::find(1);
+        $course = Course::find(2);
 
         $this->assertTrue($course->courseType->courses()->first()->id === $course->id);
         $this->assertTrue($course->langauge->courses()->first()->id === $course->id);
@@ -95,4 +95,54 @@ class RelationTest extends TestCase
         $this->assertTrue($course->crossQualificationStartSemesters()->first()->year === 2021);
         $this->assertTrue($course->crossQualificationStartSemesters()->first()->crossQualificationCourses()->first()->id === $course->id);
     }
+
+    public function test_userRelations()
+    {
+        $mentor = Mentor::create(['evento_person_id' => 1]);
+        $student = Student::create([
+            'start_semester_id' => 1,
+            'study_field_id' => 1,
+            'evento_person_id' => 2
+        ]);
+        $user = User::create([
+            'mentor_id' => $mentor->id,
+            'student_id' => $student->id
+        ]);
+
+        $this->assertTrue($user->mentor->users()->first()->id === $user->id);
+        $this->assertTrue($user->student->users()->first()->id === $user->id);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

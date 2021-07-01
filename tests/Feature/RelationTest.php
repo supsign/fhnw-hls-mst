@@ -20,6 +20,7 @@ use App\Models\Student;
 use App\Models\StudyField;
 use App\Models\User;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -141,7 +142,7 @@ class RelationTest extends TestCase
         $this->assertTrue($student->studyField->students()->first()->id === $student->id);
     }
 
-    public function test_skillStudentRelations()
+    public function test_skillstudentRelations()
     {
         $event = Event::create([
             'evento_anlass_id' => 1,
@@ -215,6 +216,23 @@ class RelationTest extends TestCase
         $mentor = $student->mentors()->create(['evento_person_id' => 5]);
 
         $this->assertTrue($mentor->students()->first()->id === $student->id);
+    }
+
+    public function test_eventLessonRelations()
+    {
+        $event = Event::create([
+            'course_id' => 1,
+            'semester_id' => 1,
+            'evento_anlass_id' => 1
+        ]);
+        $lesson = $event->lessons()->create([
+            'start_date' => Carbon::now(),
+            'end_date' => Carbon::now(),
+        ]);
+
+        $this->assertTrue($lesson->event->id === $event->id);
+        $this->assertTrue($event->semester->year === 2021);
+        $this->assertTrue($event->course->number === 'A1');
     }
 }
 

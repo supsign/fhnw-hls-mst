@@ -19,6 +19,28 @@ class Student extends BaseModel
         return $this->belongsTo(StudyField::class);
     }
 
+    public function skills()
+    {
+        return $this->belongsToMany(Skill::class);
+    }
+
+    public function skillStudent()
+    {
+        return $this->hasMany(SkillStundent::class);
+    }
+
+    public function skillStudentEvents()
+    {
+        return $this->hasManyThrough(
+            Event::class,
+            SkillStundent::class,
+            'student_id',
+            'id',
+            'id',
+            'event_id',
+        );
+    }
+
     public function users()
     {
         return $this->hasMany(User::class);

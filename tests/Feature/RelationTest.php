@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-
 use App\Models\Assessment;
 use App\Models\Completion;
 use App\Models\Course;
@@ -12,6 +11,8 @@ use App\Models\CrossQualification;
 use App\Models\CourseCrossQualification;
 use App\Models\Event;
 use App\Models\Mentor;
+use App\Models\Skill;
+use App\Models\SkillStundent;
 use App\Models\Student;
 use App\Models\StudyField;
 use App\Models\User;
@@ -138,6 +139,33 @@ class RelationTest extends TestCase
 
         $this->assertTrue($student->studyField->name === 'Medizintechnik');
         $this->assertTrue($student->studyField->students()->first()->id === $student->id);
+    }
+
+    public function test_skillStudentRelations()
+    {
+        $event = Event::create([
+            'evento_anlass_id' => 1,
+            'semester_id' => 1,
+            'course_id' => 1,
+        ]);
+        $skill = Skill::find(4);
+        $student = Student::create([
+            'start_semester_id' => 1,
+            'study_field_id' => 2,
+            'evento_person_id' => 2,
+        ]);
+        $skillStudent = SkillStundent::create([
+            'event_id' => $event->id,
+            'skill_id' => $skill->id,
+            'student_id' => $student->id,
+        ]);
+
+        $this->assertTrue($skill->students()->first()->id === $student->id);
+        $this->assertTrue($student->skills()->first()->id === $skill->id);
+        $this->assertTrue($skill->skillStudentEvents()->first()->id === $event->id);
+        $this->assertTrue($student->skillStudentEvents()->first()->id === $event->id);
+        $this->assertTrue($event->skillStudentSkills()->first()->id === $skill->id);
+        $this->assertTrue($event->skillStudentStudents()->first()->id === $student->id);
     }
 }
 

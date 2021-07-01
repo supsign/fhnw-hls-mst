@@ -16,6 +16,6 @@ class Assessment extends BaseModel
 
     public function startSemester()
     {
-    	return $this->belongsTo(Semester::class);
+    	return $this->belongsTo(Semester::class, 'start_semester_id');
     }
 }

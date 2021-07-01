@@ -129,6 +129,111 @@ class InitialCreate extends Migration
             $table->foreignId('semester_id')->constrained();
             $table->timestampsTz();
         });
+
+        Schema::create('events', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('course_id')->constrained();
+            $table->foreignId('semester_id')->constrained();
+            $table->unsignedBigInteger('evento_anlass_id');
+            $table->timestampsTz();
+        });
+
+        Schema::create('lessons', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('event_id')->constrained();
+            $table->timestampTz('start_date');
+            $table->timestampTz('end_date');
+            $table->timestampsTz();
+        });
+
+        Schema::create('students', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('start_semester_id')->constrained('semesters');
+            $table->foreignId('study_field_id')->constrained();
+            $table->unsignedBigInteger('evento_person_id');
+            $table->timestampsTz();
+        });
+
+        Schema::create('completions', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('event_id')->constrained();
+            $table->foreignId('student_id')->constrained();
+            $table->integer('credits')->default(0);
+            $table->boolean('is_fulfilled')->default(false);
+            $table->timestampsTz();
+        });
+
+        Schema::create('course_specialization', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('course_id')->constrained();
+            $table->foreignId('start_semester_id')->constrained('semesters');
+            $table->foreignId('specialization_id')->constrained();
+            $table->timestampsTz();
+        });
+
+        Schema::create('course_cross_qualification', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('course_id')->constrained();
+            $table->foreignId('cross_qualification_id')->constrained();
+            $table->foreignId('start_semester_id')->constrained('semesters');
+            $table->timestampsTz();
+        });
+
+        Schema::create('skill_stundent', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('event_id')->constrained();
+            $table->foreignId('skill_id')->constrained();
+            $table->foreignId('student_id')->constrained();
+            $table->timestampsTz();
+        });
+
+        Schema::create('mentors', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('evento_person_id');
+            $table->string('firstname')->nullable();
+            $table->string('lastname')->nullable();
+            $table->timestampsTz();
+        });
+
+        Schema::create('mentor_student', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('mentor_id')->constrained();
+            $table->foreignId('student_id')->constrained();
+            $table->timestampsTz();
+        });
+
+        Schema::create('assessments', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('course_id')->constrained();
+            $table->foreignId('start_semester_id')->constrained('semesters');
+            $table->foreignId('study_field_id')->constrained();
+            $table->timestampsTz();
+        });
+
+        Schema::create('plannings', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('cross_qualification_id')->constrained();
+            $table->foreignId('mentor_id')->constrained();
+            $table->foreignId('specialization_id')->constrained();
+            $table->foreignId('student_id')->constrained();
+            $table->string('name')->nullable();
+            $table->timestampsTz();
+        });
+
+        Schema::create('course_plannings', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('course_id')->constrained();
+            $table->foreignId('planning_id')->constrained();
+            $table->foreignId('semester_id')->constrained();
+            $table->timestampsTz();
+        });
+
+        Schema::create('users', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('mentor_id')->constrained();
+            $table->foreignId('student_id')->constrained();
+            $table->timestampsTz();
+        });
     }
 
     /**
@@ -138,6 +243,19 @@ class InitialCreate extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('users');
+        Schema::dropIfExists('course_plannings');
+        Schema::dropIfExists('plannings');
+        Schema::dropIfExists('assessments');
+        Schema::dropIfExists('mentor_student');
+        Schema::dropIfExists('mentors');
+        Schema::dropIfExists('skill_stundent');
+        Schema::dropIfExists('course_cross_qualification');
+        Schema::dropIfExists('course_specialization');
+        Schema::dropIfExists('completions');
+        Schema::dropIfExists('students');
+        Schema::dropIfExists('lessons');
+        Schema::dropIfExists('events');
         Schema::dropIfExists('course_recommendation');
         Schema::dropIfExists('recommendations');
         Schema::dropIfExists('cross_qualifications');

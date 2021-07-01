@@ -4,9 +4,9 @@ namespace Tests\Feature;
 
 
 use App\Models\Assessment;
-use App\Models\Course;
-use App\Models\Semester;
-use App\Models\StudyField;
+use App\Models\Completion;
+use App\Models\Event;
+use App\Models\Student;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -34,5 +34,31 @@ class RelationTest extends TestCase
         $this->assertTrue($assessment->course->assessments()->first()->id === $assessment->id);
         $this->assertTrue($assessment->studyField()->first()->id === $assessment->id);
         $this->assertTrue($assessment->startSemester()->first()->id === $assessment->id);
+    }
+
+    public function test_completionRelations()
+    {
+        $event = Event::create([
+            'evento_anlass_id' => 1,
+            'semester_id' => 1,
+            'course_id' => 1,
+        ]);
+
+        $student = Student::create([
+            'evento_person_id' => 1,
+            'start_semester_id' => 1,
+            'study_field_id' => 1,
+        ]);
+
+        $completion = Completion::create([
+            'event_id' => $event->id,
+            'student_id' => $student->id,
+        ]);
+
+        $this->assertTrue($completion->student->completions()->first()->id === $completion->id);
+        $this->assertTrue($completion->event->completions()->first()->id === $completion->id);
+
+
+
     }
 }

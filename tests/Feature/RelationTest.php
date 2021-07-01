@@ -136,7 +136,6 @@ class RelationTest extends TestCase
 
         $this->assertTrue($student->startSemester->year === 2021);
         $this->assertTrue($student->startSemester->students()->first()->id === $student->id);
-
         $this->assertTrue($student->studyField->name === 'Medizintechnik');
         $this->assertTrue($student->studyField->students()->first()->id === $student->id);
     }
@@ -160,6 +159,7 @@ class RelationTest extends TestCase
             'student_id' => $student->id,
         ]);
 
+        $this->assertTrue($skill->taxonomy->name === 'anwenden');
         $this->assertTrue($skill->students()->first()->id === $student->id);
         $this->assertTrue($student->skills()->first()->id === $skill->id);
         $this->assertTrue($skill->skillStudentEvents()->first()->id === $event->id);

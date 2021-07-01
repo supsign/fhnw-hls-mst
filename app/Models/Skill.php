@@ -25,4 +25,9 @@ class Skill extends BaseModel
             'event_id',
         );
     }
+
+    public function taxonomy()
+    {
+        return $this->belongsTo(Taxonomy::class);
+    }
 }

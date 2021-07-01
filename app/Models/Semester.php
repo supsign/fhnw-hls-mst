@@ -21,6 +21,11 @@ class Semester extends BaseModel
         );
     }
 
+    public function courseCourseGroups()
+    {
+        return $this->hasMany(CourseCourseGroup::class, 'start_semester_id');
+    }
+
     public function crossQualificationCourses()
     {
         return $this->hasManyThrough(
@@ -33,8 +38,8 @@ class Semester extends BaseModel
         );
     }
 
-    public function courseCourseGroups()
+    public function students()
     {
-        return $this->hasMany(CourseCourseGroup::class, 'start_semester_id');
+        return $this->hasMany(Student::class, 'start_semester_id');
     }
 }

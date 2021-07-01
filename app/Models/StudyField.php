@@ -9,6 +9,11 @@ class StudyField extends BaseModel
     	return $this->hasMany(Assessment::class);
     }
 
+    public function students()
+    {
+        return $this->hasMany(Student::class);
+    }
+
     public function studyProgram()
     {
         return $this->belongsTo(StudyProgram::class);

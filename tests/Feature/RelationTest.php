@@ -124,6 +124,21 @@ class RelationTest extends TestCase
         $this->assertTrue($studyField->studyProgram->name === 'Weitere Certificates of Advanced Studies');
         $this->assertTrue($studyField->studyProgram->studyFields()->first()->id === $studyField->id);
     }
+
+    public function test_studentRelations()
+    {
+        $student = Student::create([
+            'start_semester_id' => 1,
+            'study_field_id' => 2,
+            'evento_person_id' => 2
+        ]);
+
+        $this->assertTrue($student->startSemester->year === 2021);
+        $this->assertTrue($student->startSemester->students()->first()->id === $student->id);
+
+        $this->assertTrue($student->studyField->name === 'Medizintechnik');
+        $this->assertTrue($student->studyField->students()->first()->id === $student->id);
+    }
 }
 
 

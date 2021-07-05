@@ -1,5 +1,7 @@
 <?php
 
+use App\Importers\CourseImporter;
+use App\Importers\CourseGroupImporter;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -38,16 +40,22 @@ class InitialCreate extends Migration
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('course_type_id')->constrained();
-            $table->foreignId('langauge_id')->constrained();
+            $table->foreignId('langauge_id')->default(1)->constrained();
             $table->string('number');
+            $table->string('name')->nullable();
             $table->integer('credits')->default(0);
             $table->timestampsTz();
         });
 
-        Artisan::call('db:seed', [
-            '--class' => CourseSeeder::class,
-            '--force' => true
-        ]);
+        (new CourseImporter)
+            ->setDirectory(storage_path().'/app/')
+            ->setFileName('modul.csv')
+            ->import();
+
+        // Artisan::call('db:seed', [
+        //     '--class' => CourseSeeder::class,
+        //     '--force' => true
+        // ]);
 
         Schema::create('taxonomies', function (Blueprint $table) {
             $table->id();
@@ -119,9 +127,15 @@ class InitialCreate extends Migration
 
         Schema::create('course_groups', function (Blueprint $table) {
             $table->id();
+            $table->string('import_id')->nullable()->unique();
             $table->string('name')->nullable();
             $table->timestampsTz();
         });
+
+        (new CourseGroupImporter)
+            ->setDirectory(storage_path().'/app/')
+            ->setFileName('modulgruppe.csv')
+            ->import();
 
         Schema::create('course_course_group', function (Blueprint $table) {
             $table->id();

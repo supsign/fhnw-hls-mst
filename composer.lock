@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7e9ffe55f979e969560243076bb0e74f",
+    "content-hash": "b93cb10bcbb44e59fc955b3cb01154e0",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2373,6 +2373,48 @@
                 }
             ],
             "time": "2020-08-18T17:17:46+00:00"
+        },
+        {
+            "name": "supsign/laravel-csv-reader",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "ssh://git@bitbucket.org:22/supsign/laravel-csv-reader.git",
+                "reference": "df8c97a58ac13869de5ebdfc320f89b23e75cecf"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Supsign\\LaravelCsvReader\\LaravelCsvReaderServiceProvider"
+                    ],
+                    "aliases": {
+                        "CsvReader": "Supsign\\LaravelCsvReader\\CsvReader"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Supsign\\LaravelCsvReader\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Florian Ratz",
+                    "email": "florian.ratz@supsign.ch"
+                }
+            ],
+            "description": "Laravel Extension for handling CSV files",
+            "keywords": [
+                "composer",
+                "myFactory",
+                "script"
+            ],
+            "time": "2021-03-16T08:04:17+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -7612,7 +7654,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "supsign/laravel-csv-reader": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

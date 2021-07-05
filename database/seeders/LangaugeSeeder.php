@@ -13,7 +13,6 @@ class LangaugeSeeder extends Seeder
         ['id' => 3, 'name' => 'Deutsch oder Englisch'],
         ['id' => 4, 'name' => 'Französisch'],
         ['id' => 5, 'name' => 'Italienisch'],
-        ['id' => 6, 'name' => 'Deutsch mit englischen Unterlagen'],
     ];
     /**
      * Run the database seeds.

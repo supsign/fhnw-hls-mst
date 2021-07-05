@@ -14,6 +14,8 @@ class StudyProgramSeeder extends Seeder
         ['id' => 4, 'name' => 'Bachelor of Science in Life Sciences'],
         ['id' => 5, 'name' => 'Master of Science in Medical Informatics'],
         ['id' => 6, 'name' => 'Weitere Certificates of Advanced Studies'],
+        ['id' => 7, 'name' => ''],
+        ['id' => 8, 'name' => ''],
     ];
     /**
      * Run the database seeds.

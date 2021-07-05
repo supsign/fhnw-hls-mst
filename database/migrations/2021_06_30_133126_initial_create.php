@@ -48,10 +48,7 @@ class InitialCreate extends Migration
             $table->timestampsTz();
         });
 
-        (new CourseImporter)
-            ->setDirectory(storage_path().'/app/')
-            ->setFileName('modul.csv')
-            ->import();
+        (new CourseImporter)->import();
 
         Schema::create('taxonomies', function (Blueprint $table) {
             $table->id();
@@ -128,10 +125,7 @@ class InitialCreate extends Migration
             $table->timestampsTz();
         });
 
-        (new CourseGroupImporter)
-            ->setDirectory(storage_path().'/app/')
-            ->setFileName('modulgruppe.csv')
-            ->import();
+        (new CourseGroupImporter)->import();
 
         Schema::create('course_course_group', function (Blueprint $table) {
             $table->id();
@@ -141,10 +135,7 @@ class InitialCreate extends Migration
             $table->timestampsTz();
         });
 
-        (new CourseCourseGroupImporter)
-            ->setDirectory(storage_path().'/app/')
-            ->setFileName('modul_zu_modulgruppe.csv')
-            ->import();
+        (new CourseCourseGroupImporter)->import();
 
         Schema::create('specializations', function (Blueprint $table) {
             $table->id();

@@ -6,9 +6,16 @@ use App\Models\CourseGroup;
 use Supsign\LaravelCsvReader\CsvReader;
 
 class CourseGroupImporter extends CsvReader {
-	protected 
+	protected
+		$fileNames = ['modulgruppe.csv'],
 		$fieldAddresses = ['modulgruppenbezeichnung', 'id_modulgruppe', 'beschreibung', 'kuerzel', 'neu'],
 		$lineDelimiter = ',';
+
+	public function __construct() {
+		$this->directories = [realpath(__DIR__).'/data/'];
+
+		return $this;
+	}
 
 	public function import() {
 		$this->readFiles();

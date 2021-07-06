@@ -8,14 +8,12 @@ use Illuminate\Support\Facades\DB;
 class StudyProgramSeeder extends Seeder
 {
     private $data = [
-        ['id' => 1, 'name' => 'MAS Umwelttechnik und -management'],
-        ['id' => 2, 'name' => 'Master of Science in Life Sciences'],
-        ['id' => 3, 'name' => 'Administration: Allgemein'],
-        ['id' => 4, 'name' => 'Bachelor of Science in Life Sciences'],
-        ['id' => 5, 'name' => 'Master of Science in Medical Informatics'],
-        ['id' => 6, 'name' => 'Weitere Certificates of Advanced Studies'],
-        ['id' => 7, 'name' => ''],
-        ['id' => 8, 'name' => ''],
+        ['id' => 3, 'name' => 'MAS Umwelttechnik und -management'],
+        ['id' => 4, 'name' => 'Master of Science in Life Sciences'],
+        ['id' => 5, 'name' => 'Administration: Allgemein'],
+        ['id' => 6, 'name' => 'Bachelor of Science in Life Sciences'],
+        ['id' => 7, 'name' => 'Master of Science in Medical Informatics'],
+        ['id' => 8, 'name' => 'Weitere Certificates of Advanced Studies'],
     ];
     /**
      * Run the database seeds.

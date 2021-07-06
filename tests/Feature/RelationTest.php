@@ -40,11 +40,11 @@ class RelationTest extends TestCase
     {
         $assessment = Assessment::create([
             'course_id' => 1,
-            'study_field_id' => 1,
+            'study_field_id' => 13,
             'start_semester_id' => 1
         ]);
 
-        $this->assertTrue($assessment->course->number === 'A1');
+        $this->assertTrue($assessment->course->number === 'B-LS-BZ 005');
         $this->assertTrue($assessment->studyField->name === 'Chemie');
         $this->assertTrue($assessment->startSemester->year === 2021);
         $this->assertTrue($assessment->course->assessments()->first()->id === $assessment->id);
@@ -63,7 +63,7 @@ class RelationTest extends TestCase
         $student = Student::create([
             'evento_person_id' => 1,
             'start_semester_id' => 1,
-            'study_field_id' => 1,
+            'study_field_id' => 7,
         ]);
         $completion = Completion::create([
             'event_id' => $event->id,
@@ -114,7 +114,7 @@ class RelationTest extends TestCase
     {
         $student = Student::create([
             'start_semester_id' => 1,
-            'study_field_id' => 1,
+            'study_field_id' => 7,
             'evento_person_id' => 2
         ]);
         $user = User::create([
@@ -140,7 +140,7 @@ class RelationTest extends TestCase
     {
         $student = Student::create([
             'start_semester_id' => 1,
-            'study_field_id' => 2,
+            'study_field_id' => 8,
             'evento_person_id' => 2
         ]);
 
@@ -160,7 +160,7 @@ class RelationTest extends TestCase
         $skill = Skill::find(4);
         $student = Student::create([
             'start_semester_id' => 1,
-            'study_field_id' => 2,
+            'study_field_id' => 8,
             'evento_person_id' => 2,
         ]);
         $skillStudent = SkillStundent::create([
@@ -184,7 +184,7 @@ class RelationTest extends TestCase
             'cross_qualification_id' => CrossQualification::create()->id,
             'specialization_id' => Specialization::create()->id,
             'start_semester_id' => 1,
-            'study_field_id' => 1,
+            'study_field_id' => 8,
         ]);
 
         $this->assertTrue($recommendation->crossQualification->recommendations()->first()->id === $recommendation->id);
@@ -197,7 +197,7 @@ class RelationTest extends TestCase
     {
         $student = Student::create([
             'start_semester_id' => 1,
-            'study_field_id' => 1,
+            'study_field_id' => 7,
             'evento_person_id' => 2
         ]);
         $planning = Planning::create([
@@ -217,7 +217,7 @@ class RelationTest extends TestCase
     {
         $student = Student::create([
             'start_semester_id' => 1,
-            'study_field_id' => 1,
+            'study_field_id' => 7,
             'evento_person_id' => 4
         ]);
 
@@ -268,7 +268,7 @@ class RelationTest extends TestCase
             'cross_qualification_id' => CrossQualification::create()->id,
             'specialization_id' => Specialization::create()->id,
             'start_semester_id' => 1,
-            'study_field_id' => 1,
+            'study_field_id' => 7,
         ]);
         $courseRecommendation = CourseRecommendation::create([
             'course_id' => $course->id,
@@ -289,7 +289,7 @@ class RelationTest extends TestCase
         $course = Course::find(1);
         $student = Student::create([
             'start_semester_id' => 1,
-            'study_field_id' => 1,
+            'study_field_id' => 7,
             'evento_person_id' => 2
         ]);
         $planning = Planning::create([

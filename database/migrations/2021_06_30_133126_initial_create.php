@@ -3,8 +3,10 @@
 use App\Importers\CourseImporter;
 use App\Importers\CourseGroupImporter;
 use App\Importers\CourseCourseGroupImporter;
+use App\Importers\CourseSpecializationImporter;
 use App\Importers\CrossQualificationImporter;
 use App\Importers\SkillImporter;
+use App\Importers\SpecializationImporter;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -88,6 +90,7 @@ class InitialCreate extends Migration
             $table->foreignId('course_id')->constrained();
             $table->foreignId('to_semester_id')->constrained('semesters');
             $table->foreignId('from_semester_id')->constrained('semesters');
+            $table->integer('goal_number')->nullable();
             $table->boolean('is_acquisition')->default(0);
             $table->timestampsTz();
         });
@@ -141,6 +144,8 @@ class InitialCreate extends Migration
             $table->string('name')->nullable();
             $table->timestampsTz();
         });
+
+        (new SpecializationImporter)->import();
 
         Schema::create('cross_qualifications', function (Blueprint $table) {
             $table->id();
@@ -207,6 +212,8 @@ class InitialCreate extends Migration
             $table->foreignId('specialization_id')->constrained();
             $table->timestampsTz();
         });
+
+        (new CourseSpecializationImporter)->import();
 
         Schema::create('course_cross_qualification', function (Blueprint $table) {
             $table->id();

@@ -19,24 +19,15 @@ class CourseCourseGroupImporter extends CsvReader {
 		return $this;
 	}
 
-	public function import() {
-		$this->readFiles();
+	public function importLine()
+	{
+		$course = Course::where('number', $this->line['laufnummer'])->first();
+		$courseGroup = CourseGroup::where('import_id', $this->line['id_modulgruppe'])->first();
 
-		while ($this->iterateLines() ) {
-			if (array_keys($this->line) == array_values($this->line)) {
-				continue;
-			}
-
-			$course = Course::where('number', $this->line['laufnummer'])->first();
-			$courseGroup = CourseGroup::where('import_id', $this->line['id_modulgruppe'])->first();
-
-			CourseCourseGroup::create([
-				'course_id' => $course->id,
-				'course_group_id' => $courseGroup->id,
-				'start_semester_id' => 1,
-			]);
-		}
-
-		return $this;
+		CourseCourseGroup::create([
+			'course_id' => $course->id,
+			'course_group_id' => $courseGroup->id,
+			'start_semester_id' => 1,
+		]);
 	}
 }

@@ -6,6 +6,7 @@ use App\Importers\CourseCourseGroupImporter;
 use App\Importers\CourseSpecializationImporter;
 use App\Importers\CrossQualificationImporter;
 use App\Importers\SkillImporter;
+use App\Importers\SkillPrerequisiteImporter;
 use App\Importers\SpecializationImporter;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -96,6 +97,7 @@ class InitialCreate extends Migration
         });
 
         (new SkillImporter)->import();
+        (new SkillPrerequisiteImporter)->import();        
 
         Schema::create('study_programs', function (Blueprint $table) {
             $table->id();

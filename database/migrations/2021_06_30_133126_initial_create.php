@@ -3,6 +3,7 @@
 use App\Importers\CourseImporter;
 use App\Importers\CourseGroupImporter;
 use App\Importers\CourseCourseGroupImporter;
+use App\Importers\SkillImporter;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -64,14 +65,9 @@ class InitialCreate extends Migration
         Schema::create('skills', function (Blueprint $table) {
             $table->id();
             $table->foreignId('taxonomy_id')->constrained();
-            $table->string('definition');
+            $table->text('definition');
             $table->timestampsTz();
         });
-
-        Artisan::call('db:seed', [
-            '--class' => SkillSeeder::class,
-            '--force' => true
-        ]);
 
         Schema::create('semesters', function (Blueprint $table) {
             $table->id();
@@ -94,6 +90,8 @@ class InitialCreate extends Migration
             $table->boolean('is_acquisition')->default(0);
             $table->timestampsTz();
         });
+
+        (new SkillImporter)->import();
 
         Schema::create('study_programs', function (Blueprint $table) {
             $table->id();

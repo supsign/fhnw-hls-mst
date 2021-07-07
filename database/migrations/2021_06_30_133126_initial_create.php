@@ -3,6 +3,7 @@
 use App\Importers\CourseImporter;
 use App\Importers\CourseGroupImporter;
 use App\Importers\CourseCourseGroupImporter;
+use App\Importers\CrossQualificationImporter;
 use App\Importers\SkillImporter;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -146,6 +147,8 @@ class InitialCreate extends Migration
             $table->string('name')->nullable();
             $table->timestampsTz();
         });
+
+        (new CrossQualificationImporter)->import();
 
         Schema::create('recommendations', function (Blueprint $table) {
             $table->id();

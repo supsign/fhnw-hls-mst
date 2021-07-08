@@ -15,6 +15,7 @@ class CourseTypeSeeder extends Seeder
         ['id' => 5, 'name' => 'Bachelor-Thesis'],
         ['id' => 6, 'name' => 'Bachelor-Thesis (lang)'],
         ['id' => 7, 'name' => 'Master-Thesis'],
+        ['id' => 8, 'name' => 'Prüfung'],
     ];
     /**
      * Run the database seeds.

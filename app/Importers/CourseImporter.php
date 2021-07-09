@@ -17,30 +17,23 @@ class CourseImporter extends CsvReader {
 		return $this;
 	}
 
-	public function import() {
-		$this->readFiles();
+	public function importLine()
+	{
+		$data = [
+			'number' => $this->line['laufnummer'],
+			'name' => $this->line['modulbezeichnung'],
+			'course_type_id' => $this->line['id_modultyp'],
+		];	
 
-		while ($this->iterateLines() ) {
-			if (array_keys($this->line) == array_values($this->line)) {
-				continue;
-			}
-
-			$data = [
-				'number' => $this->line['laufnummer'],
-				'name' => $this->line['modulbezeichnung'],
-				'course_type_id' => $this->line['id_modultyp'],
-			];	
-
-			if ($this->line['id_sprache']) {
-				$data['langauge_id'] = $this->line['id_sprache'];
-			}
-
-			if ($this->line['kreditpunkte']) {
-				$data['credits'] = $this->line['kreditpunkte'];
-			}
-
-			Course::create($data);
+		if ($this->line['id_sprache']) {
+			$data['langauge_id'] = $this->line['id_sprache'];
 		}
+
+		if ($this->line['kreditpunkte']) {
+			$data['credits'] = $this->line['kreditpunkte'];
+		}
+
+		Course::create($data);
 
 		return $this;
 	}

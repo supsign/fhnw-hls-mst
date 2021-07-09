@@ -90,6 +90,11 @@ class Course extends BaseModel
         return $this->belongsToMany(CrossQualification::class);
     }
 
+    public function courseSkills()
+    {
+        return $this->hasMany(CourseSkill::class);
+    }
+
     public function courseType()
     {
         return $this->belongsTo(CourseType::class);
@@ -108,6 +113,11 @@ class Course extends BaseModel
     public function recommendations()
     {
         return $this->belongsToMany(Recommendation::class);
+    }
+
+    public function skills()
+    {
+        return $this->belongsToMany(Skill::class);
     }
 
     public function specializations()

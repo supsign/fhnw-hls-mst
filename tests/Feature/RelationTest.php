@@ -234,18 +234,12 @@ class RelationTest extends TestCase
     public function test_courseSpecializationRelations()
     {
         $course = Course::find(1);
-        $specialization = Specialization::create();
-        $courseSpecialization = CourseSpecialization::create([
-            'course_id' => $course->id,
-            'start_semester_id' => 1,
-            'specialization_id' => $specialization->id,
-        ]);
+        $specialization = $course->specializations()->first();
 
-        $this->assertTrue($course->specializations()->first()->id === $specialization->id);
+        $this->assertTrue($specialization->name === 'UT - Naturwissenschaft');
         $this->assertTrue($specialization->courses()->first()->id === $course->id);
         $this->assertTrue($course->courseSpecializationStartSemesters()->first()->year === 2021);
         $this->assertTrue($specialization->startSemesters()->first()->year === 2021);
-        $this->assertTrue($course->courseSpecializationStartSemesters()->first()->courseSpecializationSpecializations()->first()->id === $specialization->id);
         $this->assertTrue($specialization->startSemesters()->first()->courseSpecializationCourses()->first()->id === $course->id);
     }
 

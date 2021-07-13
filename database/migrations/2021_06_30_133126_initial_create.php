@@ -48,12 +48,9 @@ class InitialCreate extends Migration
             $table->foreignId('course_type_id')->constrained();
             $table->foreignId('langauge_id')->default(1)->constrained();
             $table->string('number')->unique();
-            // $table->string('name')->nullable();
             $table->integer('credits')->default(0);
             $table->timestampsTz();
         });
-
-        (new CourseImporter)->import();
 
         Schema::create('taxonomies', function (Blueprint $table) {
             $table->id();
@@ -97,9 +94,6 @@ class InitialCreate extends Migration
             $table->timestampsTz();
         });
 
-        (new SkillImporter)->import();
-        (new SkillPrerequisiteImporter)->import();        
-
         Schema::create('study_programs', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
@@ -135,16 +129,12 @@ class InitialCreate extends Migration
             $table->timestampsTz();
         });
 
-        (new CourseGroupImporter)->import();
-
         Schema::create('course_course_group', function (Blueprint $table) {
             $table->id();
             $table->foreignId('course_group_id')->constrained();
             $table->foreignId('course_id')->constrained();
             $table->timestampsTz();
         });
-
-        (new CourseCourseGroupImporter)->import();
 
         Schema::create('specializations', function (Blueprint $table) {
             $table->id();
@@ -170,8 +160,6 @@ class InitialCreate extends Migration
             $table->timestampsTz();
         });
 
-        (new CrossQualificationImporter)->import();
-
         Schema::create('recommendations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('cross_qualification_id')->constrained();
@@ -193,9 +181,17 @@ class InitialCreate extends Migration
             $table->id();
             $table->foreignId('course_id')->constrained();
             $table->foreignId('semester_id')->constrained();
-            $table->unsignedBigInteger('evento_anlass_id');
+            $table->unsignedBigInteger('evento_anlass_id')->nullable();
+            $table->string('name');
             $table->timestampsTz();
         });
+
+        (new CourseImporter)->import();
+        (new CourseGroupImporter)->import();
+        (new CourseCourseGroupImporter)->import();
+        (new SkillImporter)->import();
+        (new SkillPrerequisiteImporter)->import();
+        (new CrossQualificationImporter)->import();
 
         Schema::create('lessons', function (Blueprint $table) {
             $table->id();

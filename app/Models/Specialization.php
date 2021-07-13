@@ -21,6 +21,6 @@ class Specialization extends BaseModel
 
     public function originSpecialization()
     {
-        return $this->belongsTo(Specialization::class, 'origin_specialization_id');
+        return $this->belongsTo(self::class, 'origin_specialization_id');
     }
 }

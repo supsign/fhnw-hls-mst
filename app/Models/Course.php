@@ -33,18 +33,6 @@ class Course extends BaseModel
         );
     }
 
-    public function crossQualificationBeginSemesters()
-    {
-        return $this->hasManyThrough(
-            Semester::class,
-            CourseCrossQualification::class,
-            'course_id',
-            'id',
-            'id',
-            'begin_semester_id',
-        );
-    }
-
     public function courseCourseGroups()
     {
         return $this->hasMany(CourseCourseGroup::class);

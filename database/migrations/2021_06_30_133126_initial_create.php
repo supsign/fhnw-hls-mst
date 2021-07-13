@@ -162,7 +162,12 @@ class InitialCreate extends Migration
 
         Schema::create('cross_qualifications', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('begin_semester_id')->constrained('semesters');
+            $table->foreignId('origin_cross_qualification_id')->nullable()->constrained('cross_qualifications');
+            $table->foreignId('study_field_id')->constrained();
             $table->string('name')->nullable();
+            $table->integer('amount_to_pass')->nullable();
+            $table->integer('credits_to_pass')->nullable();
             $table->timestampsTz();
         });
 
@@ -231,7 +236,6 @@ class InitialCreate extends Migration
             $table->id();
             $table->foreignId('course_id')->constrained();
             $table->foreignId('cross_qualification_id')->constrained();
-            $table->foreignId('begin_semester_id')->constrained('semesters');
             $table->timestampsTz();
         });
 

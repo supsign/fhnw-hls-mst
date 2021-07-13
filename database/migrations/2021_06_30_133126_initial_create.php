@@ -75,8 +75,10 @@ class InitialCreate extends Migration
 
         Schema::create('semesters', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('previous_semester_id')->nullable()->constrained('semesters');
             $table->smallInteger('year');
             $table->boolean('is_hs')->default(0);
+            $table->timestampTz('start_date')->nullable();
             $table->timestampsTz();
         });
 
@@ -262,10 +264,11 @@ class InitialCreate extends Migration
 
         Schema::create('plannings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cross_qualification_id')->constrained();
-            $table->foreignId('mentor_id')->constrained();
-            $table->foreignId('specialization_id')->constrained();
+            $table->foreignId('cross_qualification_id')->nullable()->constrained();
+            $table->foreignId('mentor_id')->nullable()->constrained();
+            $table->foreignId('specialization_id')->nullable()->constrained();
             $table->foreignId('student_id')->constrained();
+            $table->foreignId('study_field_id')->constrained();
             $table->string('name')->nullable();
             $table->timestampsTz();
         });

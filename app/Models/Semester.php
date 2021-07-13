@@ -105,6 +105,11 @@ class Semester extends BaseModel
         );
     }
 
+    public function previousSemester()
+    {
+        return $this->belongsTo(Semester::class, 'previous_semester_id');
+    }
+
     public function recommendations()
     {
         return $this->hasMany(Recommendation::class , 'begin_semester_id');

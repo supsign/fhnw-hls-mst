@@ -16,6 +16,7 @@ use App\Models\Event;
 use App\Models\Mentor;
 use App\Models\Planning;
 use App\Models\Recommendation;
+use App\Models\Semester;
 use App\Models\Specialization;
 use App\Models\Skill;
 use App\Models\SkillStundent;
@@ -192,6 +193,7 @@ class RelationTest extends TestCase
             'mentor_id' => Mentor::create(['evento_person_id' => 3])->id,
             'specialization_id' => Specialization::create()->id,
             'student_id' => $student->id,
+            'study_field_id' => 7,
         ]);
 
         $this->assertTrue($planning->crossQualification->plannings()->first()->id === $planning->id);
@@ -278,6 +280,7 @@ class RelationTest extends TestCase
             'mentor_id' => Mentor::create(['evento_person_id' => 3])->id,
             'specialization_id' => Specialization::create()->id,
             'student_id' => $student->id,
+            'study_field_id' => 7,
         ]);
         $coursePlanning = CoursePlanning::create([
             'course_id' => $course->id,
@@ -291,6 +294,14 @@ class RelationTest extends TestCase
         $this->assertTrue($planning->semesters()->first()->year === 2021);
         $this->assertTrue($course->coursePlanningSemesters()->first()->coursePlanningPlannings()->first()->id === $planning->id);
         $this->assertTrue($planning->semesters()->first()->coursePlanningCourses()->first()->id === $course->id);
+        $this->assertTrue($planning->studyField->id === 7);
+    }
+
+    public function test_semsterRelations()
+    {
+        $semester = Semester::find(2);
+
+        $this->assertTrue($semester->previousSemester->id === 1);
     }
 }
 

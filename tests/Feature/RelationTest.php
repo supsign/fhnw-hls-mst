@@ -81,7 +81,6 @@ class RelationTest extends TestCase
         $this->assertTrue($course->courseType->courses()->first()->id === $course->id);
         $this->assertTrue($course->langauge->courses()->where('id', 2)->first()->id === $course->id);
         $this->assertTrue($course->courseGroups()->count() === 5);
-        $this->assertTrue($course->courseGroupBeginSemesters()->first()->year === 2021);
 
         $crossQualification = CrossQualification::create();
         $ccq = CourseCrossQualification::create([

@@ -129,6 +129,7 @@ class InitialCreate extends Migration
             $table->foreignId('begin_semester_id')->nullable()->constrained('semesters');
             $table->string('import_id')->nullable()->unique();
             $table->string('name')->nullable();
+            $table->integer('courses_to_pass')->default(0);
             $table->integer('credits_to_pass')->default(0);
             $table->timestampsTz();
         });
@@ -139,7 +140,6 @@ class InitialCreate extends Migration
             $table->id();
             $table->foreignId('course_group_id')->constrained();
             $table->foreignId('course_id')->constrained();
-            $table->foreignId('begin_semester_id')->constrained('semesters');
             $table->timestampsTz();
         });
 

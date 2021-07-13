@@ -9,19 +9,6 @@ class Course extends BaseModel
     	return $this->hasMany(Assessment::class);
     }
 
-    public function courseGroupBeginSemesters()
-    {
-        return $this->hasManyThrough(
-            Semester::class,
-            CourseCourseGroup::class,
-            'course_id',
-            'id',
-            'id',
-            'begin_semester_id',
-        );
-    }
-
-
     public function coursePlanningSemesters()
     {
         return $this->hasManyThrough(

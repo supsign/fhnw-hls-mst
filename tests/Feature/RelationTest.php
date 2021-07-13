@@ -40,18 +40,25 @@ class RelationTest extends TestCase
     public function test_assessmentRelations()
     {
         $assessment = Assessment::create([
-            'course_id' => 1,
             'study_field_id' => 13,
             'begin_semester_id' => 1
         ]);
 
-        $this->assertTrue($assessment->course->number === 'B-LS-BZ 005');
+        $assessment->courses()->attach(Course::find(1));
+
+        $assessment2 = Assessment::create([
+            'study_field_id' => 13,
+            'begin_semester_id' => 2,
+            'origin_assessment_id' => $assessment->id
+        ]);
+
+        $this->assertTrue($assessment->courses()->first()->number === 'B-LS-BZ 005');
         $this->assertTrue($assessment->studyField->name === 'Chemie');
         $this->assertTrue($assessment->beginSemester->year === 2021);
-        $this->assertTrue($assessment->course->assessments()->first()->id === $assessment->id);
+        $this->assertTrue($assessment->courses()->first()->assessments()->first()->id === $assessment->id);
         $this->assertTrue($assessment->studyField->assessments()->first()->id === $assessment->id);
         $this->assertTrue($assessment->beginSemester->assessments()->first()->id === $assessment->id);
-        
+        $this->assertTrue($assessment2->originAssesment->id === $assessment->id);
     }
 
     public function test_completionRelations()

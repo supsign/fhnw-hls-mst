@@ -6,7 +6,7 @@ class Course extends BaseModel
 {
     public function assessments()
     {
-    	return $this->hasMany(Assessment::class);
+    	return $this->belongsToMany(Assessment::class);
     }
 
     public function coursePlanningSemesters()

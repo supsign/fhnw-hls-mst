@@ -131,8 +131,8 @@ class InitialCreate extends Migration
             $table->foreignId('begin_semester_id')->nullable()->constrained('semesters');
             $table->string('import_id')->nullable()->unique();
             $table->string('name')->nullable();
-            $table->integer('courses_to_pass')->default(0);
-            $table->integer('credits_to_pass')->default(0);
+            $table->integer('amount_to_pass')->nullable();
+            $table->integer('credits_to_pass')->nullable();
             $table->timestampsTz();
         });
 
@@ -256,9 +256,18 @@ class InitialCreate extends Migration
 
         Schema::create('assessments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('course_id')->constrained();
             $table->foreignId('begin_semester_id')->constrained('semesters');
+            $table->foreignId('origin_assessment_id')->nullable()->constrained('assessments');
             $table->foreignId('study_field_id')->constrained();
+            $table->integer('amount_to_pass')->nullable();
+            $table->integer('credits_to_pass')->nullable();
+            $table->timestampsTz();
+        });
+
+        Schema::create('assessment_course', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('assessment_id')->constrained();
+            $table->foreignId('course_id')->constrained();
             $table->timestampsTz();
         });
 

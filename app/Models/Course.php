@@ -9,7 +9,7 @@ class Course extends BaseModel
     	return $this->hasMany(Assessment::class);
     }
 
-    public function courseGroupStartSemesters()
+    public function courseGroupBeginSemesters()
     {
         return $this->hasManyThrough(
             Semester::class,
@@ -17,7 +17,7 @@ class Course extends BaseModel
             'course_id',
             'id',
             'id',
-            'start_semester_id',
+            'begin_semester_id',
         );
     }
 
@@ -46,7 +46,7 @@ class Course extends BaseModel
         );
     }
 
-    public function courseSpecializationStartSemesters()
+    public function courseSpecializationBeginSemesters()
     {
         return $this->hasManyThrough(
             Semester::class,
@@ -54,11 +54,11 @@ class Course extends BaseModel
             'course_id',
             'id',
             'id',
-            'start_semester_id',
+            'begin_semester_id',
         );
     }
 
-    public function crossQualificationStartSemesters()
+    public function crossQualificationBeginSemesters()
     {
         return $this->hasManyThrough(
             Semester::class,
@@ -66,7 +66,7 @@ class Course extends BaseModel
             'course_id',
             'id',
             'id',
-            'start_semester_id',
+            'begin_semester_id',
         );
     }
 

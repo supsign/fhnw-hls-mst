@@ -19,7 +19,7 @@ class CrossQualification extends BaseModel
         return $this->hasMany(Recommendation::class);
     }
 
-    public function startSemesters()
+    public function beginSemesters()
     {
         return $this->hasManyThrough(
             Semester::class,
@@ -27,7 +27,7 @@ class CrossQualification extends BaseModel
             'cross_qualification_id',
             'id',
             'id',
-            'start_semester_id',
+            'begin_semester_id',
         );
     }
 }

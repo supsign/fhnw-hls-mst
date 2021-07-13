@@ -6,7 +6,7 @@ class Semester extends BaseModel
 {
     public function assessments()
     {
-    	return $this->hasMany(Assessment::class, 'start_semester_id');
+    	return $this->hasMany(Assessment::class, 'begin_semester_id');
     }
 
     public function courseGroupCourses()
@@ -14,7 +14,7 @@ class Semester extends BaseModel
         return $this->hasManyThrough(
             Course::class,
             CourseCourseGroup::class,
-            'start_semester_id',
+            'begin_semester_id',
             'id',
             'id',
             'course_id',
@@ -26,7 +26,7 @@ class Semester extends BaseModel
         return $this->hasManyThrough(
             CourseGroup::class,
             CourseCourseGroup::class,
-            'start_semester_id',
+            'begin_semester_id',
             'id',
             'id',
             'course_group_id',
@@ -62,7 +62,7 @@ class Semester extends BaseModel
         return $this->hasManyThrough(
             Course::class,
             CourseSpecialization::class,
-            'start_semester_id',
+            'begin_semester_id',
             'id',
             'id',
             'course_id',
@@ -98,7 +98,7 @@ class Semester extends BaseModel
         return $this->hasManyThrough(
             Specialization::class,
             CourseSpecialization::class,
-            'start_semester_id',
+            'begin_semester_id',
             'id',
             'id',
             'specialization_id',
@@ -107,7 +107,7 @@ class Semester extends BaseModel
 
     public function courseCourseGroups()
     {
-        return $this->hasMany(CourseCourseGroup::class, 'start_semester_id');
+        return $this->hasMany(CourseCourseGroup::class, 'begin_semester_id');
     }
 
     public function crossQualificationCourses()
@@ -115,7 +115,7 @@ class Semester extends BaseModel
         return $this->hasManyThrough(
             Course::class,
             CourseCrossQualification::class,
-            'start_semester_id',
+            'begin_semester_id',
             'id',
             'id',
             'course_id',
@@ -127,7 +127,7 @@ class Semester extends BaseModel
         return $this->hasManyThrough(
             CrossQualification::class,
             CourseCrossQualification::class,
-            'start_semester_id',
+            'begin_semester_id',
             'id',
             'id',
             'cross_qualification_id',
@@ -136,11 +136,11 @@ class Semester extends BaseModel
 
     public function recommendations()
     {
-        return $this->hasMany(Recommendation::class , 'start_semester_id');
+        return $this->hasMany(Recommendation::class , 'begin_semester_id');
     }
 
     public function students()
     {
-        return $this->hasMany(Student::class, 'start_semester_id');
+        return $this->hasMany(Student::class, 'begin_semester_id');
     }
 }

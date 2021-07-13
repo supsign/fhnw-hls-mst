@@ -27,7 +27,7 @@ class CourseSpecializationImporter extends CsvReader {
 
 		CourseSpecialization::create([
 			'course_id' => Course::where('number', $this->line['laufnummer'])->first()->id,
-			'start_semester_id' => 1,
+			'begin_semester_id' => 1,
 			'specialization_id' => $this->line['id_spezialisierung'],
 		]);
 

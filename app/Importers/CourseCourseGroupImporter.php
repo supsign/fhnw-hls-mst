@@ -27,7 +27,7 @@ class CourseCourseGroupImporter extends CsvReader {
 		CourseCourseGroup::create([
 			'course_id' => $course->id,
 			'course_group_id' => $courseGroup->id,
-			'start_semester_id' => 1,
+			'begin_semester_id' => 1,
 		]);
 	}
 }

@@ -31,8 +31,7 @@ class SkillPrerequisiteImporter extends CsvReader {
 			CourseSkill::create([
 				'skill_id' => $courseSkill->skill_id,
 				'course_id' => Course::where('number', $this->line['laufnummer'])->first()->id,
-				'to_semester_id' => 1,
-				'from_semester_id' => 1,
+				'semester_id' => 1,
 				'is_acquisition' => false,
 			]);
 		}

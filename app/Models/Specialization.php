@@ -18,4 +18,9 @@ class Specialization extends BaseModel
     {
     	return $this->hasMany(Recommendation::class);
     }
+
+    public function originSpecialization()
+    {
+        return $this->belongsTo(Specialization::class, 'origin_specialization_id');
+    }
 }

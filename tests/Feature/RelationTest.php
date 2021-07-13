@@ -177,7 +177,7 @@ class RelationTest extends TestCase
     {
         $recommendation = Recommendation::create([
             'cross_qualification_id' => CrossQualification::create()->id,
-            'specialization_id' => Specialization::create()->id,
+            'specialization_id' => 5,
             'begin_semester_id' => 1,
             'study_field_id' => 8,
         ]);
@@ -198,7 +198,7 @@ class RelationTest extends TestCase
         $planning = Planning::create([
             'cross_qualification_id' => CrossQualification::create()->id,
             'mentor_id' => Mentor::create(['evento_person_id' => 3])->id,
-            'specialization_id' => Specialization::create()->id,
+            'specialization_id' => 6,
             'student_id' => $student->id,
             'study_field_id' => 7,
         ]);
@@ -253,7 +253,7 @@ class RelationTest extends TestCase
         $course = Course::find(1);
         $recommendation = Recommendation::create([
             'cross_qualification_id' => CrossQualification::create()->id,
-            'specialization_id' => Specialization::create()->id,
+            'specialization_id' => 4,
             'begin_semester_id' => 1,
             'study_field_id' => 7,
         ]);
@@ -282,7 +282,7 @@ class RelationTest extends TestCase
         $planning = Planning::create([
             'cross_qualification_id' => CrossQualification::create()->id,
             'mentor_id' => Mentor::create(['evento_person_id' => 3])->id,
-            'specialization_id' => Specialization::create()->id,
+            'specialization_id' => 4,
             'student_id' => $student->id,
             'study_field_id' => 7,
         ]);

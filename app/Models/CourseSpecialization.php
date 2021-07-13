@@ -11,11 +11,6 @@ class CourseSpecialization extends BaseModel
         return $this->belongsTo();
     }
 
-    public function beginSemester()
-    {
-        return $this->belongsTo(Semester::class, 'begin_semester_id');
-    }
-
     public function specialization()
     {
         return $this->belongsTo(Specialization::class);

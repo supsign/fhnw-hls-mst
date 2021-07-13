@@ -9,18 +9,6 @@ class Specialization extends BaseModel
         return $this->belongsToMany(Course::class);
     }
 
-    public function beginSemesters()
-    {
-        return $this->hasManyThrough(
-            Semester::class,
-            CourseSpecialization::class,
-            'specialization_id',
-            'id',
-            'id',
-            'begin_semester_id',
-        );
-    }
-
     public function plannings()
     {
         return $this->hasMany(Planning::class);

@@ -246,9 +246,6 @@ class RelationTest extends TestCase
 
         $this->assertTrue($specialization->name === 'UT - Naturwissenschaft');
         $this->assertTrue($specialization->courses()->first()->id === $course->id);
-        $this->assertTrue($course->courseSpecializationBeginSemesters()->first()->year === 2021);
-        $this->assertTrue($specialization->beginSemesters()->first()->year === 2021);
-        $this->assertTrue($specialization->beginSemesters()->first()->courseSpecializationCourses()->first()->id === $course->id);
     }
 
     public function test_courseRecommendationRelations()

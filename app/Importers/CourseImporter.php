@@ -21,7 +21,7 @@ class CourseImporter extends CsvReader {
 	{
 		$data = [
 			'number' => $this->line['laufnummer'],
-			'name' => $this->line['modulbezeichnung'],
+			// 'name' => $this->line['modulbezeichnung'],
 			'course_type_id' => $this->line['id_modultyp'],
 		];	
 

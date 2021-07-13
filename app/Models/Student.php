@@ -24,9 +24,9 @@ class Student extends BaseModel
         return $this->hasMany(Planning::class);
     }
 
-    public function startSemester()
+    public function beginSemester()
     {
-        return $this->belongsTo(Semester::class, 'start_semester_id');
+        return $this->belongsTo(Semester::class, 'begin_semester_id');
     }
 
     public function studyField()

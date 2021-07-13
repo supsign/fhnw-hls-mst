@@ -14,8 +14,8 @@ class Assessment extends BaseModel
     	return $this->belongsTo(StudyField::class);
     }
 
-    public function startSemester()
+    public function beginSemester()
     {
-    	return $this->belongsTo(Semester::class, 'start_semester_id');
+    	return $this->belongsTo(Semester::class, 'begin_semester_id');
     }
 }

@@ -41,15 +41,15 @@ class RelationTest extends TestCase
         $assessment = Assessment::create([
             'course_id' => 1,
             'study_field_id' => 13,
-            'start_semester_id' => 1
+            'begin_semester_id' => 1
         ]);
 
         $this->assertTrue($assessment->course->number === 'B-LS-BZ 005');
         $this->assertTrue($assessment->studyField->name === 'Chemie');
-        $this->assertTrue($assessment->startSemester->year === 2021);
+        $this->assertTrue($assessment->beginSemester->year === 2021);
         $this->assertTrue($assessment->course->assessments()->first()->id === $assessment->id);
         $this->assertTrue($assessment->studyField->assessments()->first()->id === $assessment->id);
-        $this->assertTrue($assessment->startSemester->assessments()->first()->id === $assessment->id);
+        $this->assertTrue($assessment->beginSemester->assessments()->first()->id === $assessment->id);
         
     }
 
@@ -62,7 +62,7 @@ class RelationTest extends TestCase
         ]);
         $student = Student::create([
             'evento_person_id' => 1,
-            'start_semester_id' => 1,
+            'begin_semester_id' => 1,
             'study_field_id' => 7,
         ]);
         $completion = Completion::create([
@@ -81,27 +81,27 @@ class RelationTest extends TestCase
         $this->assertTrue($course->courseType->courses()->first()->id === $course->id);
         $this->assertTrue($course->langauge->courses()->where('id', 2)->first()->id === $course->id);
         $this->assertTrue($course->courseGroups()->count() === 5);
-        $this->assertTrue($course->courseGroupStartSemesters()->first()->year === 2021);
+        $this->assertTrue($course->courseGroupBeginSemesters()->first()->year === 2021);
 
         $crossQualification = CrossQualification::create();
         $ccq = CourseCrossQualification::create([
             'course_id' => $course->id,
             'cross_qualification_id' => $crossQualification->id,
-            'start_semester_id' => 1,
+            'begin_semester_id' => 1,
         ]);
 
         $this->assertTrue($course->crossQualifications()->first()->id === $crossQualification->id);
         $this->assertTrue($course->crossQualifications()->first()->courses()->first()->id === $course->id);
-        $this->assertTrue($course->crossQualificationStartSemesters()->first()->year === 2021);
-        $this->assertTrue($course->crossQualificationStartSemesters()->first()->crossQualificationCourses()->first()->id === $course->id);
-        $this->assertTrue($course->crossQualificationStartSemesters()->first()->crossQualificationCrossQualifications()->first()->id === $crossQualification->id);
-        $this->assertTrue($course->crossQualificationStartSemesters()->first()->id === $crossQualification->startSemesters()->first()->id);
+        $this->assertTrue($course->crossQualificationBeginSemesters()->first()->year === 2021);
+        $this->assertTrue($course->crossQualificationBeginSemesters()->first()->crossQualificationCourses()->first()->id === $course->id);
+        $this->assertTrue($course->crossQualificationBeginSemesters()->first()->crossQualificationCrossQualifications()->first()->id === $crossQualification->id);
+        $this->assertTrue($course->crossQualificationBeginSemesters()->first()->id === $crossQualification->beginSemesters()->first()->id);
     }
 
     public function test_userRelations()
     {
         $student = Student::create([
-            'start_semester_id' => 1,
+            'begin_semester_id' => 1,
             'study_field_id' => 7,
             'evento_person_id' => 2
         ]);
@@ -127,13 +127,13 @@ class RelationTest extends TestCase
     public function test_studentRelations()
     {
         $student = Student::create([
-            'start_semester_id' => 1,
+            'begin_semester_id' => 1,
             'study_field_id' => 12,
             'evento_person_id' => 2
         ]);
 
-        $this->assertTrue($student->startSemester->year === 2021);
-        $this->assertTrue($student->startSemester->students()->first()->id === $student->id);
+        $this->assertTrue($student->beginSemester->year === 2021);
+        $this->assertTrue($student->beginSemester->students()->first()->id === $student->id);
         $this->assertTrue($student->studyField->name === 'Medizintechnik');
         $this->assertTrue($student->studyField->students()->first()->id === $student->id);
     }
@@ -147,7 +147,7 @@ class RelationTest extends TestCase
         ]);
         $skill = Skill::find(4);
         $student = Student::create([
-            'start_semester_id' => 1,
+            'begin_semester_id' => 1,
             'study_field_id' => 8,
             'evento_person_id' => 2,
         ]);
@@ -171,20 +171,20 @@ class RelationTest extends TestCase
         $recommendation = Recommendation::create([
             'cross_qualification_id' => CrossQualification::create()->id,
             'specialization_id' => Specialization::create()->id,
-            'start_semester_id' => 1,
+            'begin_semester_id' => 1,
             'study_field_id' => 8,
         ]);
 
         $this->assertTrue($recommendation->crossQualification->recommendations()->first()->id === $recommendation->id);
         $this->assertTrue($recommendation->specialization->recommendations()->first()->id === $recommendation->id);
-        $this->assertTrue($recommendation->startSemester->recommendations()->first()->id === $recommendation->id);
+        $this->assertTrue($recommendation->beginSemester->recommendations()->first()->id === $recommendation->id);
         $this->assertTrue($recommendation->studyField->recommendations()->first()->id === $recommendation->id);
     }
 
     public function test_planningRelations()
     {
         $student = Student::create([
-            'start_semester_id' => 1,
+            'begin_semester_id' => 1,
             'study_field_id' => 7,
             'evento_person_id' => 2
         ]);
@@ -204,7 +204,7 @@ class RelationTest extends TestCase
     public function test_mentorStudentRelations()
     {
         $student = Student::create([
-            'start_semester_id' => 1,
+            'begin_semester_id' => 1,
             'study_field_id' => 7,
             'evento_person_id' => 4
         ]);
@@ -238,9 +238,9 @@ class RelationTest extends TestCase
 
         $this->assertTrue($specialization->name === 'UT - Naturwissenschaft');
         $this->assertTrue($specialization->courses()->first()->id === $course->id);
-        $this->assertTrue($course->courseSpecializationStartSemesters()->first()->year === 2021);
-        $this->assertTrue($specialization->startSemesters()->first()->year === 2021);
-        $this->assertTrue($specialization->startSemesters()->first()->courseSpecializationCourses()->first()->id === $course->id);
+        $this->assertTrue($course->courseSpecializationBeginSemesters()->first()->year === 2021);
+        $this->assertTrue($specialization->beginSemesters()->first()->year === 2021);
+        $this->assertTrue($specialization->beginSemesters()->first()->courseSpecializationCourses()->first()->id === $course->id);
     }
 
     public function test_courseRecommendationRelations()
@@ -249,7 +249,7 @@ class RelationTest extends TestCase
         $recommendation = Recommendation::create([
             'cross_qualification_id' => CrossQualification::create()->id,
             'specialization_id' => Specialization::create()->id,
-            'start_semester_id' => 1,
+            'begin_semester_id' => 1,
             'study_field_id' => 7,
         ]);
         $courseRecommendation = CourseRecommendation::create([
@@ -270,7 +270,7 @@ class RelationTest extends TestCase
     {
         $course = Course::find(1);
         $student = Student::create([
-            'start_semester_id' => 1,
+            'begin_semester_id' => 1,
             'study_field_id' => 7,
             'evento_person_id' => 2
         ]);

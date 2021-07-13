@@ -22,7 +22,7 @@ class CourseGroup extends BaseModel
             'course_group_id',
             'id',
             'id',
-            'start_semester_id',
+            'begin_semester_id',
         );
     }
 }

@@ -48,7 +48,7 @@ class InitialCreate extends Migration
             $table->foreignId('course_type_id')->constrained();
             $table->foreignId('langauge_id')->default(1)->constrained();
             $table->string('number')->unique();
-            $table->string('name')->nullable();
+            // $table->string('name')->nullable();
             $table->integer('credits')->default(0);
             $table->timestampsTz();
         });
@@ -240,7 +240,7 @@ class InitialCreate extends Migration
 
         Schema::create('skill_student', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('event_id')->constrained();
+            $table->foreignId('event_id')->constrained()->nullable();
             $table->foreignId('skill_id')->constrained();
             $table->foreignId('student_id')->constrained();
             $table->timestampsTz();
@@ -299,8 +299,8 @@ class InitialCreate extends Migration
 
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('mentor_id')->constrained();
-            $table->foreignId('student_id')->constrained();
+            $table->foreignId('mentor_id')->nullable()->constrained();
+            $table->foreignId('student_id')->nullable()->constrained();
             $table->timestampsTz();
         });
     }
@@ -318,7 +318,7 @@ class InitialCreate extends Migration
         Schema::dropIfExists('assessments');
         Schema::dropIfExists('mentor_student');
         Schema::dropIfExists('mentors');
-        Schema::dropIfExists('skill_stundent');
+        Schema::dropIfExists('skill_student');
         Schema::dropIfExists('course_cross_qualification');
         Schema::dropIfExists('course_specialization');
         Schema::dropIfExists('completions');

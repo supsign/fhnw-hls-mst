@@ -40,4 +40,9 @@ class Planning extends BaseModel
     {
     	return $this->belongsTo(Student::class);
     }
+
+    public function studyField()
+    {
+        return $this->belongsTo(StudyField::class);
+    }
 }

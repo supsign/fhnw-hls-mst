@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\DB;
 class SemesterSeeder extends Seeder
 {
     private $data = [
-        ['id' => 1, 'year' => 2021],
+        ['id' => 1, 'year' => 2021, 'start_date' => '2021-01-01'],
+        ['id' => 2, 'year' => 2021, 'start_date' => '2021-07-01', 'previous_semester_id' => 1],
     ];
     /**
      * Run the database seeds.

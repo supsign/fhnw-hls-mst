@@ -15,9 +15,4 @@ class CourseCrossQualification extends BaseModel
     {
         return $this->belongsTo(CrossQualification::class);
     }
-
-    public function startSemester()
-    {
-    	return $this->belongsTo(Semester::class, 'start_semester_id');
-    }
 }

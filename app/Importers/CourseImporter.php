@@ -3,6 +3,7 @@
 namespace App\Importers;
 
 use App\Models\Course;
+use App\Models\Event;
 use Supsign\LaravelCsvReader\CsvReader;
 
 class CourseImporter extends CsvReader {
@@ -21,9 +22,8 @@ class CourseImporter extends CsvReader {
 	{
 		$data = [
 			'number' => $this->line['laufnummer'],
-			'name' => $this->line['modulbezeichnung'],
 			'course_type_id' => $this->line['id_modultyp'],
-		];	
+		];
 
 		if ($this->line['id_sprache']) {
 			$data['langauge_id'] = $this->line['id_sprache'];
@@ -33,7 +33,11 @@ class CourseImporter extends CsvReader {
 			$data['credits'] = $this->line['kreditpunkte'];
 		}
 
-		Course::create($data);
+		Event::create([
+			'name' => $this->line['modulbezeichnung'],
+			'course_id' => Course::create($data)->id,
+			'semester_id' => 1,
+		]);
 
 		return $this;
 	}

@@ -23,7 +23,11 @@ class SpecializationImporter extends CsvReader {
 			return $this;
 		}
 
-		Specialization::create(['name' => $this->line['bezeichnung']]);
+		Specialization::create([
+			'name' => $this->line['bezeichnung'],
+			'begin_semester_id' => 1,
+			'study_field_id' => $this->line['id_studienrichtung'],
+		]);
 
 		return $this;
 	}

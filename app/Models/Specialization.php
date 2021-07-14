@@ -9,18 +9,6 @@ class Specialization extends BaseModel
         return $this->belongsToMany(Course::class);
     }
 
-    public function startSemesters()
-    {
-        return $this->hasManyThrough(
-            Semester::class,
-            CourseSpecialization::class,
-            'specialization_id',
-            'id',
-            'id',
-            'start_semester_id',
-        );
-    }
-
     public function plannings()
     {
         return $this->hasMany(Planning::class);
@@ -29,5 +17,10 @@ class Specialization extends BaseModel
     public function recommendations()
     {
     	return $this->hasMany(Recommendation::class);
+    }
+
+    public function originSpecialization()
+    {
+        return $this->belongsTo(self::class, 'origin_specialization_id');
     }
 }

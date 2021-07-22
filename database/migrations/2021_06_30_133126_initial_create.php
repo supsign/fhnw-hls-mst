@@ -188,10 +188,9 @@ class InitialCreate extends Migration
             $table->boolean('is_acquisition')->default(0);
             $table->timestampsTz();
         });
-
-        //  remove for testing (performance)
-        // (new SkillImporter)->import();
-        // (new SkillPrerequisiteImporter)->import();
+        
+        (new SkillImporter)->import();
+        (new SkillPrerequisiteImporter)->import();
 
         Schema::create('course_years', function (Blueprint $table) {
             $table->id();

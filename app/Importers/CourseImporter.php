@@ -33,11 +33,13 @@ class CourseImporter extends CsvReader {
 			$data['credits'] = $this->line['kreditpunkte'];
 		}
 
-		Event::create([
-			'name' => $this->line['modulbezeichnung'],
-			'course_id' => Course::create($data)->id,
-			'semester_id' => 1,
-		]);
+		Course::create($data);
+
+		// Event::create([
+		// 	'name' => $this->line['modulbezeichnung'],
+		// 	'course_id' => Course::create($data)->id,
+		// 	'semester_id' => 1,
+		// ]);
 
 		return $this;
 	}

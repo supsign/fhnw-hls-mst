@@ -60,7 +60,6 @@ class RelationTest extends TestCase
                 ])->id,
             ])->id
         );
-
         $this->assertTrue($course->courseGroupYears()->where('course_id', $course->id)->first()->courses()->where('course_group_year_id', $cgyID)->first()->id === $course->id);
 
         $course->crossQualificationYears()->attach(
@@ -69,11 +68,10 @@ class RelationTest extends TestCase
                 'study_field_id' => StudyField::inRandomOrder()->first()->id,
             ])->id
         );
-
         $this->assertTrue($course->crossQualificationYears()->where('course_id', $course->id)->first()->courses()->where('cross_qualification_year_id', $cqyID)->first()->id === $course->id);
 
         $course->specializationYears()->attach(
-            $sID = SpecializationYear::create([
+            $spID = SpecializationYear::create([
                 'cross_qualification_id' => CrossQualification::inRandomOrder()->first()->id,
                 'study_field_year_id' => $sfyID = StudyFieldYear::create([
                     'begin_semseter_id' => Semester::inRandomOrder()->first()->id,
@@ -81,27 +79,24 @@ class RelationTest extends TestCase
                 ])->id,
             ])->id
         );
-
-        $this->assertTrue($course->specializationYears()->where('course_id', $course->id)->first()->courses()->where('specialization_year_id', $sID)->first()->id === $course->id);
+        $this->assertTrue($course->specializationYears()->where('course_id', $course->id)->first()->courses()->where('specialization_year_id', $spID)->first()->id === $course->id);
 
         $course->assessments()->attach(
             $aID = Assessment::create([
                 'cross_qualification_year_id' => $cqyID,
-                'specialization_year_id' => $sID,
+                'specialization_year_id' => $spID,
                 'study_field_year_id' => $sfyID,
             ])->id
         );
-
         $this->assertTrue($course->assessments()->where('course_id', $course->id)->first()->courses()->where('assessment_id', $aID)->first()->id === $course->id);
 
         $course->recommendations()->attach(
             $rID = Recommendation::create([
                 'cross_qualification_year_id' => $cqyID,
-                'specialization_year_id' => $sID,
+                'specialization_year_id' => $spID,
                 'study_field_year_id' => $sfyID,
              ])->id
         );
-
         $this->assertTrue($course->recommendations()->where('course_id', $course->id)->first()->courses()->where('recommendation_id', $rID)->first()->id === $course->id);
 
         $coursePlanning = CoursePlanning::create([
@@ -115,8 +110,9 @@ class RelationTest extends TestCase
                 ])->id
             ])->id
         ]);
-
         $this->assertTrue($course->plannings()->where('course_id', $course->id)->first()->courses()->where('planning_id', $pID)->first()->id === $course->id);
+
+        // TODO courseSkill
     }
 
     public function test_new()

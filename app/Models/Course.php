@@ -9,36 +9,12 @@ class Course extends BaseModel
     	return $this->belongsToMany(Assessment::class);
     }
 
-    public function coursePlanningSemesters()
-    {
-        return $this->hasManyThrough(
-            Semester::class,
-            CoursePlanning::class,
-            'course_id',
-            'id',
-            'id',
-            'semester_id',
-        );
-    }
-
-    public function courseRecommendationSemesters()
-    {
-        return $this->hasManyThrough(
-            Semester::class,
-            CourseRecommendation::class,
-            'course_id',
-            'id',
-            'id',
-            'semester_id',
-        );
-    }
-
     public function courseCourseGroupYears()
     {
         return $this->hasMany(CourseCourseGroupYear::class);
     }
 
-    public function courseCrossQualifications()
+    public function courseCrossQualificationsYears()
     {
         return $this->hasMany(CourseCrossQualification::class);
     }

@@ -152,7 +152,7 @@ class InitialCreate extends Migration
             $table->id();
             $table->foreignId('course_type_id')->constrained();
             $table->foreignId('langauge_id')->default(1)->constrained();
-            $table->foreignId('origin_study_field_id')->nullable()->constrained('study_fields');
+            $table->foreignId('study_field_id')->nullable()->constrained();
             $table->string('number')->unique();
             $table->integer('credits')->default(0);
             $table->timestampsTz();
@@ -299,6 +299,7 @@ class InitialCreate extends Migration
         Schema::create('course_planning', function (Blueprint $table) {
             $table->id();
             $table->foreignId('course_id')->constrained();
+            $table->foreignId('planning_id')->constrained();
             $table->foreignId('semester_id')->constrained();
             $table->timestampsTz();
         });
@@ -310,9 +311,6 @@ class InitialCreate extends Migration
             $table->foreignId('course_year_id')->constrained();
             $table->timestampsTz();
         });
-
-
-
     }
 
     /**

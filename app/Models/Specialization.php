@@ -4,23 +4,8 @@ namespace App\Models;
 
 class Specialization extends BaseModel
 {
-    public function courses()
+    public function studyField()
     {
-        return $this->belongsToMany(Course::class);
-    }
-
-    public function plannings()
-    {
-        return $this->hasMany(Planning::class);
-    }
-    
-    public function recommendations()
-    {
-    	return $this->hasMany(Recommendation::class);
-    }
-
-    public function originSpecialization()
-    {
-        return $this->belongsTo(self::class, 'origin_specialization_id');
+        return $this->belongsToMany(StudyField::class);
     }
 }

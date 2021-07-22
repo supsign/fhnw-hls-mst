@@ -4,8 +4,8 @@ namespace App\Models;
 
 class Lesson extends BaseModel
 {
-    public function event()
+    public function courseYear()
     {
-    	return $this->belongsTo(Event::class);
+    	return $this->belongsTo(CourseYear::class);
     }
 }

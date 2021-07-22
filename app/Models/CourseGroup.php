@@ -14,20 +14,8 @@ class CourseGroup extends BaseModel
         return $this->hasMany(CourseCourseGroup::class);
     }
 
-    public function originCourseGroup()
+    public function studyField()
     {
-        return $this->belongsTo(CourseGroup::class, 'origin_course_group_id');
-    }
-
-    public function startSemesters()
-    {
-        return $this->hasManyThrough(
-            Semester::class,
-            CourseCourseGroup::class,
-            'course_group_id',
-            'id',
-            'id',
-            'begin_semester_id',
-        );
+        return $this->belongsTo(StudyField::class);
     }
 }

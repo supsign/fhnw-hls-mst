@@ -87,4 +87,9 @@ class Course extends BaseModel
     {
         return $this->belongsToMany(Specialization::class);
     }
+
+    public function studyField()
+    {
+        return $this->belongsTo(StudyField::class);
+    }
 }

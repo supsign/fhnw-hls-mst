@@ -29,9 +29,9 @@ class Student extends BaseModel
         return $this->belongsTo(Semester::class, 'begin_semester_id');
     }
 
-    public function studyField()
+    public function studyFieldYear()
     {
-        return $this->belongsTo(StudyField::class);
+        return $this->belongsTo(StudyFieldYear::class);
     }
 
     public function skills()

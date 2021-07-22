@@ -38,11 +38,6 @@ class Course extends BaseModel
         return $this->hasMany(CourseCourseGroup::class);
     }
 
-    public function courseGroups()
-    {
-        return $this->belongsToMany(CourseGroup::class);
-    }
-
     public function courseCrossQualifications()
     {
         return $this->hasMany(CourseCrossQualification::class);

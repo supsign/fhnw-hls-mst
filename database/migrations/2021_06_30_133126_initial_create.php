@@ -223,7 +223,7 @@ class InitialCreate extends Migration
             $table->timestampsTz();
         });
 
-        Schema::create('course_cross_qualification_years', function (Blueprint $table) {
+        Schema::create('course_cross_qualification_year', function (Blueprint $table) {
             $table->id();
             $table->foreignId('course_id')->constrained();
             $table->foreignId('cross_qualification_id')->constrained();
@@ -332,7 +332,7 @@ class InitialCreate extends Migration
         Schema::dropIfExists('assessment_course');
         Schema::dropIfExists('assessments');
         Schema::dropIfExists('lessons');
-        Schema::dropIfExists('course_cross_qualification_years');
+        Schema::dropIfExists('course_cross_qualification_year');
         Schema::dropIfExists('course_recommendation');
         Schema::dropIfExists('recommendations');
         Schema::dropIfExists('course_specialization_year');

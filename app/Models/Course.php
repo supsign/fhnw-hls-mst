@@ -33,9 +33,9 @@ class Course extends BaseModel
         );
     }
 
-    public function courseCourseGroups()
+    public function courseCourseGroupYears()
     {
-        return $this->hasMany(CourseCourseGroup::class);
+        return $this->hasMany(CourseCourseGroupYear::class);
     }
 
     public function courseCrossQualifications()
@@ -43,9 +43,14 @@ class Course extends BaseModel
         return $this->hasMany(CourseCrossQualification::class);
     }
 
-    public function crossQualifications()
+    public function crossQualificationYears()
     {
-        return $this->belongsToMany(CrossQualification::class);
+        return $this->belongsToMany(CrossQualificationYear::class);
+    }
+
+    public function courseGroupYears()
+    {
+        return $this->belongsToMany(CourseGroupYear::class);
     }
 
     public function courseSkills()
@@ -78,9 +83,9 @@ class Course extends BaseModel
         return $this->belongsToMany(Skill::class);
     }
 
-    public function specializations()
+    public function specializationYears()
     {
-        return $this->belongsToMany(Specialization::class);
+        return $this->belongsToMany(SpecializationYear::class);
     }
 
     public function studyField()

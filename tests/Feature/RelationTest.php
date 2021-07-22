@@ -6,8 +6,10 @@ use App\Models\Assessment;
 use App\Models\Completion;
 use App\Models\Course;
 use App\Models\CourseGroup;
+use App\Models\CourseGroupYear;
 use App\Models\CourseCourseGroup;
 use App\Models\CrossQualification;
+use App\Models\CrossQualificationYear;
 use App\Models\CourseCrossQualification;
 use App\Models\CoursePlanning;
 use App\Models\CourseRecommendation;
@@ -18,10 +20,12 @@ use App\Models\Planning;
 use App\Models\Recommendation;
 use App\Models\Semester;
 use App\Models\Specialization;
+use App\Models\SpecializationYear;
 use App\Models\Skill;
 use App\Models\SkillStundent;
 use App\Models\Student;
 use App\Models\StudyField;
+use App\Models\StudyFieldYear;
 use App\Models\User;
 
 use Carbon\Carbon;
@@ -32,326 +36,91 @@ use Tests\TestCase;
 class RelationTest extends TestCase
 {
     use RefreshDatabase;
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function test_assessmentRelations()
+
+    public function test_courses()
     {
-        $assessment = Assessment::create([
-            'study_field_id' => 13,
-            'begin_semester_id' => 1
-        ]);
+        $course = Course::inRandomOrder()->first();
 
-        $assessment->courses()->attach(Course::find(1));
+        //  belongsTo
+        $this->assertTrue($course->courseType->courses()->where('id', $course->id)->first()->id === $course->id);
+        $this->assertTrue($course->langauge->courses()->where('id', $course->id)->first()->id === $course->id);
 
-        $assessment2 = Assessment::create([
-            'study_field_id' => 13,
-            'begin_semester_id' => 2,
-            'origin_assessment_id' => $assessment->id
-        ]);
+        $course->studyField()->associate(StudyField::inRandomOrder()->first());
+        $course->save();
 
-        $this->assertTrue($assessment->courses()->first()->number === 'B-LS-BZ 005');
-        $this->assertTrue($assessment->studyField->name === 'Chemie');
-        $this->assertTrue($assessment->beginSemester->year === 2021);
-        $this->assertTrue($assessment->courses()->first()->assessments()->first()->id === $assessment->id);
-        $this->assertTrue($assessment->studyField->assessments()->first()->id === $assessment->id);
-        $this->assertTrue($assessment->beginSemester->assessments()->first()->id === $assessment->id);
-        $this->assertTrue($assessment2->originAssesment->id === $assessment->id);
-    }
+        $this->assertTrue($course->studyField->courses()->where('id', $course->id)->first()->id === $course->id);
 
-    public function test_completionRelations()
-    {
-        $event = Event::create([
-            'name' => 'test',
-            'evento_anlass_id' => 1,
-            'semester_id' => 1,
-            'course_id' => 1,
-        ]);
-        $student = Student::create([
-            'evento_person_id' => 1,
-            'begin_semester_id' => 1,
-            'study_field_id' => 7,
-        ]);
-        $completion = Completion::create([
-            'event_id' => $event->id,
-            'student_id' => $student->id,
-        ]);
+        // belongsToMany
+        $course->courseGroupYears()->attach(
+            $cgyID = CourseGroupYear::create([
+                'course_group_id' => CourseGroup::inRandomOrder()->first()->id,
+                'study_field_year_id' => StudyFieldYear::create([
+                    'begin_semseter_id' => Semester::inRandomOrder()->first()->id,
+                    'study_field_id' => StudyField::inRandomOrder()->first()->id,
+                ])->id,
+            ])->id
+        );
 
-        $this->assertTrue($completion->student->completions()->first()->id === $completion->id);
-        $this->assertTrue($completion->event->completions()->first()->id === $completion->id);
-    }
+        $this->assertTrue($course->courseGroupYears()->where('course_id', $course->id)->first()->courses()->where('course_group_year_id', $cgyID)->first()->id === $course->id);
 
-    public function test_courseRelations()
-    {
-        $course = Course::find(2);
+        $course->crossQualificationYears()->attach(
+            $cqyID = CrossQualificationYear::create([
+                'cross_qualification_id' => CrossQualification::inRandomOrder()->first()->id,
+                'study_field_id' => StudyField::inRandomOrder()->first()->id,
+            ])->id
+        );
 
-        $this->assertTrue($course->courseType->courses()->first()->id === $course->id);
-        $this->assertTrue($course->langauge->courses()->where('id', 2)->first()->id === $course->id);
-        $this->assertTrue($course->courseGroups()->count() === 5);
+        $this->assertTrue($course->crossQualificationYears()->where('course_id', $course->id)->first()->courses()->where('cross_qualification_year_id', $cqyID)->first()->id === $course->id);
 
-        $crossQualification = CrossQualification::create([
-            'begin_semester_id' => 1,
-            'study_field_id' => 7,
-        ]);
+        $course->specializationYears()->attach(
+            $sID = SpecializationYear::create([
+                'cross_qualification_id' => CrossQualification::inRandomOrder()->first()->id,
+                'study_field_year_id' => $sfyID = StudyFieldYear::create([
+                    'begin_semseter_id' => Semester::inRandomOrder()->first()->id,
+                    'study_field_id' => StudyField::inRandomOrder()->first()->id,
+                ])->id,
+            ])->id
+        );
 
-        $ccq = CourseCrossQualification::create([
-            'course_id' => $course->id,
-            'cross_qualification_id' => $crossQualification->id,
-        ]);
+        $this->assertTrue($course->specializationYears()->where('course_id', $course->id)->first()->courses()->where('specialization_year_id', $sID)->first()->id === $course->id);
 
-        $this->assertTrue($course->crossQualifications()->first()->id === $crossQualification->id);
-        $this->assertTrue($course->crossQualifications()->first()->courses()->first()->id === $course->id);
-    }
+        $course->assessments()->attach(
+            $aID = Assessment::create([
+                'cross_qualification_year_id' => $cqyID,
+                'specialization_year_id' => $sID,
+                'study_field_year_id' => $sfyID,
+            ])->id
+        );
 
-    public function test_userRelations()
-    {
-        $student = Student::create([
-            'begin_semester_id' => 1,
-            'study_field_id' => 7,
-            'evento_person_id' => 2
-        ]);
-        $user = User::create([
-            'mentor_id' => Mentor::create(['evento_person_id' => 1])->id,
-            'student_id' => $student->id
-        ]);
+        $this->assertTrue($course->assessments()->where('course_id', $course->id)->first()->courses()->where('assessment_id', $aID)->first()->id === $course->id);
 
-        $this->assertTrue($user->mentor->evento_person_id === 1);
-        $this->assertTrue($user->student->evento_person_id === 2);
-        $this->assertTrue($user->mentor->users()->first()->id === $user->id);
-        $this->assertTrue($user->student->users()->first()->id === $user->id);
-    }
+        $course->recommendations()->attach(
+            $rID = Recommendation::create([
+                'cross_qualification_year_id' => $cqyID,
+                'specialization_year_id' => $sID,
+                'study_field_year_id' => $sfyID,
+             ])->id
+        );
 
-    public function test_studyfieldRelations()
-    {
-        $studyField = StudyField::find(34);
+        $this->assertTrue($course->recommendations()->where('course_id', $course->id)->first()->courses()->where('recommendation_id', $rID)->first()->id === $course->id);
 
-        $this->assertTrue($studyField->studyProgram->name === 'Weitere Certificates of Advanced Studies');
-        $this->assertTrue($studyField->studyProgram->studyFields()->first()->id === $studyField->id);
-    }
-
-    public function test_studentRelations()
-    {
-        $student = Student::create([
-            'begin_semester_id' => 1,
-            'study_field_id' => 12,
-            'evento_person_id' => 2
-        ]);
-
-        $this->assertTrue($student->beginSemester->year === 2021);
-        $this->assertTrue($student->beginSemester->students()->first()->id === $student->id);
-        $this->assertTrue($student->studyField->name === 'Medizintechnik');
-        $this->assertTrue($student->studyField->students()->first()->id === $student->id);
-    }
-
-    public function test_skillstudentRelations()
-    {
-        $event = Event::create([
-            'name' => 'test',
-            'evento_anlass_id' => 1,
-            'semester_id' => 1,
-            'course_id' => 1,
-        ]);
-        $skill = Skill::find(4);
-        $student = Student::create([
-            'begin_semester_id' => 1,
-            'study_field_id' => 8,
-            'evento_person_id' => 2,
-        ]);
-        $skillStudent = SkillStundent::create([
-            'event_id' => $event->id,
-            'skill_id' => $skill->id,
-            'student_id' => $student->id,
-        ]);
-
-        $this->assertTrue($skill->taxonomy->name === 'anwenden');
-        $this->assertTrue($skill->students()->first()->id === $student->id);
-        $this->assertTrue($student->skills()->first()->id === $skill->id);
-        $this->assertTrue($skill->skillStudentEvents()->first()->id === $event->id);
-        $this->assertTrue($student->skillStudentEvents()->first()->id === $event->id);
-        $this->assertTrue($event->skillStudentSkills()->first()->id === $skill->id);
-        $this->assertTrue($event->skillStudentStudents()->first()->id === $student->id);
-    }
-
-    public function test_recommendationRelations()
-    {
-        $recommendation = Recommendation::create([
-            'cross_qualification_id' => CrossQualification::create([
-                'begin_semester_id' => 1,
-                'study_field_id' => 9,
-            ])->id,
-            'specialization_id' => 5,
-            'begin_semester_id' => 1,
-            'study_field_id' => 8,
-        ]);
-
-        $this->assertTrue($recommendation->crossQualification->recommendations()->first()->id === $recommendation->id);
-        $this->assertTrue($recommendation->specialization->recommendations()->first()->id === $recommendation->id);
-        $this->assertTrue($recommendation->beginSemester->recommendations()->first()->id === $recommendation->id);
-        $this->assertTrue($recommendation->studyField->recommendations()->first()->id === $recommendation->id);
-    }
-
-    public function test_planningRelations()
-    {
-        $student = Student::create([
-            'begin_semester_id' => 1,
-            'study_field_id' => 7,
-            'evento_person_id' => 2
-        ]);
-        $planning = Planning::create([
-            'cross_qualification_id' => CrossQualification::create([
-                'begin_semester_id' => 1,
-                'study_field_id' => 15,
-            ])->id,
-            'mentor_id' => Mentor::create(['evento_person_id' => 3])->id,
-            'specialization_id' => 6,
-            'student_id' => $student->id,
-            'study_field_id' => 7,
-        ]);
-
-        $this->assertTrue($planning->crossQualification->plannings()->first()->id === $planning->id);
-        $this->assertTrue($planning->mentor->plannings()->first()->id === $planning->id);
-        $this->assertTrue($planning->specialization->plannings()->first()->id === $planning->id);
-        $this->assertTrue($planning->student->plannings()->first()->id === $planning->id);
-    }
-
-    public function test_mentorStudentRelations()
-    {
-        $student = Student::create([
-            'begin_semester_id' => 1,
-            'study_field_id' => 7,
-            'evento_person_id' => 4
-        ]);
-
-        $mentor = $student->mentors()->create(['evento_person_id' => 5]);
-
-        $this->assertTrue($mentor->students()->first()->id === $student->id);
-    }
-
-    public function test_eventLessonRelations()
-    {
-        $event = Event::create([
-            'name' => 'test',
-            'course_id' => 1,
-            'semester_id' => 1,
-            'evento_anlass_id' => 1
-        ]);
-        $lesson = $event->lessons()->create([
-            'start_date' => Carbon::now(),
-            'end_date' => Carbon::now(),
-        ]);
-
-        $this->assertTrue($lesson->event->id === $event->id);
-        $this->assertTrue($event->semester->year === 2021);
-        $this->assertTrue($event->course->number === 'B-LS-BZ 005');
-    }
-
-    public function test_courseSpecializationRelations()
-    {
-        $course = Course::find(1);
-        $specialization = $course->specializations()->first();
-
-        $this->assertTrue($specialization->name === 'UT - Naturwissenschaft');
-        $this->assertTrue($specialization->courses()->first()->id === $course->id);
-    }
-
-    public function test_courseRecommendationRelations()
-    {
-        $course = Course::find(1);
-        $recommendation = Recommendation::create([
-            'cross_qualification_id' => CrossQualification::create([
-                'begin_semester_id' => 1,
-                'study_field_id' => 11,
-            ])->id,
-            'specialization_id' => 4,
-            'begin_semester_id' => 1,
-            'study_field_id' => 7,
-        ]);
-        $courseRecommendation = CourseRecommendation::create([
-            'course_id' => $course->id,
-            'semester_id' => 1,
-            'recommendation_id' => $recommendation->id,
-        ]);
-
-        $this->assertTrue($course->recommendations()->first()->id === $recommendation->id);
-        $this->assertTrue($recommendation->courses()->first()->id === $course->id);
-        $this->assertTrue($course->courseRecommendationSemesters()->first()->year === 2021);
-        $this->assertTrue($recommendation->semesters()->first()->year === 2021);
-        $this->assertTrue($course->courseRecommendationSemesters()->first()->courseRecommendationRecommendations()->first()->id === $recommendation->id);
-        $this->assertTrue($recommendation->semesters()->first()->courseRecommendationCourses()->first()->id === $course->id);
-    }
-
-    public function test_coursePlanningRelations()
-    {
-        $course = Course::find(1);
-        $student = Student::create([
-            'begin_semester_id' => 1,
-            'study_field_id' => 7,
-            'evento_person_id' => 2
-        ]);
-        $planning = Planning::create([
-            'cross_qualification_id' => CrossQualification::create([
-                'begin_semester_id' => 1,
-                'study_field_id' => 11,
-            ])->id,
-            'mentor_id' => Mentor::create(['evento_person_id' => 3])->id,
-            'specialization_id' => 4,
-            'student_id' => $student->id,
-            'study_field_id' => 7,
-        ]);
         $coursePlanning = CoursePlanning::create([
             'course_id' => $course->id,
-            'semester_id' => 1,
-            'planning_id' => $planning->id,
+            'semester_id' => Semester::inRandomOrder()->first()->id,
+            'planning_id' => $pID = Planning::create([
+                'study_field_year_id' => $sfyID,
+                'student_id' => Student::create([
+                    'study_field_year_id' => $sfyID,
+                    'evento_person_id' => 1234,
+                ])->id
+            ])->id
         ]);
 
-        $this->assertTrue($course->plannings()->first()->id === $planning->id);
-        $this->assertTrue($planning->courses()->first()->id === $course->id);
-        $this->assertTrue($course->coursePlanningSemesters()->first()->year === 2021);
-        $this->assertTrue($planning->semesters()->first()->year === 2021);
-        $this->assertTrue($course->coursePlanningSemesters()->first()->coursePlanningPlannings()->first()->id === $planning->id);
-        $this->assertTrue($planning->semesters()->first()->coursePlanningCourses()->first()->id === $course->id);
-        $this->assertTrue($planning->studyField->id === 7);
+        $this->assertTrue($course->plannings()->where('course_id', $course->id)->first()->courses()->where('planning_id', $pID)->first()->id === $course->id);
     }
 
-    public function test_semsterRelations()
+    public function test_new()
     {
-        $semester = Semester::find(2);
-
-        $this->assertTrue($semester->previousSemester->id === 1);
+        $this->assertTrue(true);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -311,6 +311,13 @@ class InitialCreate extends Migration
             $table->foreignId('course_year_id')->constrained();
             $table->timestampsTz();
         });
+
+        Schema::create('course_course_group_year', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('course_group_year_id')->constrained();
+            $table->foreignId('course_id')->constrained();
+            $table->timestampsTz();
+        });
     }
 
     /**

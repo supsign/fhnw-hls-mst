@@ -64,6 +64,7 @@ class RelationTest extends TestCase
     public function test_completionRelations()
     {
         $event = Event::create([
+            'name' => 'test',
             'evento_anlass_id' => 1,
             'semester_id' => 1,
             'course_id' => 1,
@@ -147,6 +148,7 @@ class RelationTest extends TestCase
     public function test_skillstudentRelations()
     {
         $event = Event::create([
+            'name' => 'test',
             'evento_anlass_id' => 1,
             'semester_id' => 1,
             'course_id' => 1,
@@ -230,6 +232,7 @@ class RelationTest extends TestCase
     public function test_eventLessonRelations()
     {
         $event = Event::create([
+            'name' => 'test',
             'course_id' => 1,
             'semester_id' => 1,
             'evento_anlass_id' => 1

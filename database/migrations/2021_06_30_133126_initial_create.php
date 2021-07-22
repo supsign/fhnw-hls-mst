@@ -188,7 +188,7 @@ class InitialCreate extends Migration
             $table->boolean('is_acquisition')->default(0);
             $table->timestampsTz();
         });
-        
+
         (new SkillImporter)->import();
         (new SkillPrerequisiteImporter)->import();
 
@@ -303,6 +303,14 @@ class InitialCreate extends Migration
             $table->timestampsTz();
         });
 
+        Schema::create('skill_student', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('skill_id')->constrained();
+            $table->foreignId('student_id')->constrained();
+            $table->foreignId('course_year_id')->constrained();
+            $table->timestampsTz();
+        });
+
 
 
     }
@@ -314,8 +322,7 @@ class InitialCreate extends Migration
      */
     public function down()
     {
-
-
+        Schema::dropIfExists('skill_student');
         Schema::dropIfExists('assessments');
         Schema::dropIfExists('plannings');
         Schema::dropIfExists('completions');

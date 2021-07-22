@@ -124,7 +124,7 @@ class InitialCreate extends Migration
         Schema::create('study_field_years', function (Blueprint $table) {
             $table->id();
             $table->foreignId('begin_semseter_id')->constrained('semesters');
-            $table->foreignId('origin_study_field_year_id')->constrained('study_field_years');
+            $table->foreignId('origin_study_field_year_id')->nullable()->constrained('study_field_years');
             $table->foreignId('study_field_id')->constrained();
             $table->boolean('is_specialization_mandatory')->default(0);
             $table->timestampsTz();
@@ -212,7 +212,7 @@ class InitialCreate extends Migration
             $table->foreignId('cross_qualification_year_id')->constrained();
             $table->foreignId('specialization_year_id')->constrained();
             $table->foreignId('study_field_year_id')->constrained();
-            $table->foreignId('origin_recommendation_id')->constrained('recommendations');
+            $table->foreignId('origin_recommendation_id')->nullable()->constrained('recommendations');
             $table->timestampsTz();
         });
 
@@ -226,7 +226,7 @@ class InitialCreate extends Migration
         Schema::create('course_cross_qualification_year', function (Blueprint $table) {
             $table->id();
             $table->foreignId('course_id')->constrained();
-            $table->foreignId('cross_qualification_id')->constrained();
+            $table->foreignId('cross_qualification_year_id')->constrained();
             $table->timestampsTz();
         });
 

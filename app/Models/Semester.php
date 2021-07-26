@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+
 class Semester extends BaseModel
 {
     public function assessments()
@@ -70,5 +73,32 @@ class Semester extends BaseModel
     public function students()
     {
         return $this->hasMany(Student::class, 'begin_semester_id');
+    }
+
+    public static function __callStatic($method, $parameters)
+    {
+        if ($method === 'create') {
+            $attributes = $parameters[0];
+
+            if (empty($attributes['previous_semester_id'])) {
+                throw new BadRequestHttpException('previous semester is required');
+            }
+
+            if (Semester::where('previous_semester_id', $attributes['previous_semester_id'])->count() > 0) {
+                throw new BadRequestHttpException('previous semester is already in use');
+            } else {
+                $prevSemester = Semester::find($attributes['previous_semester_id']);
+
+                if ($attributes['is_hs'] && $prevSemester->year !== $attributes['year'] OR !$attributes['is_hs'] && $prevSemester->year + 1 !== $attributes['year']) {
+                    throw new BadRequestHttpException('previous semester if doesn\'t refere to the previous year');
+                }
+            }
+
+            if (Carbon::parse($attributes['start_date'])->format('Y') != $attributes['year']) {
+                throw new BadRequestHttpException('year and start date don\'t match');
+            }
+        }
+
+        return (new static)->$method(...$parameters);
     }
 }

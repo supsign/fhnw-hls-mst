@@ -112,8 +112,10 @@ class InitialCreate extends Migration
             $table->foreignId('previous_semester_id')->nullable()->constrained('semesters');
             $table->smallInteger('year');
             $table->boolean('is_hs')->default(0);
-            $table->timestampTz('start_date')->nullable();
+            $table->timestampTz('start_date');
             $table->timestampsTz();
+
+            $table->unique(['year', 'is_hs']);
         });
 
         Artisan::call('db:seed', [

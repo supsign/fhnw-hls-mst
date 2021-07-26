@@ -2,16 +2,16 @@
 
 namespace App\Models;
 
-class CourseGroup extends BaseModel
+class CrossQualificationYear extends BaseModel
 {
     public function courses()
     {
         return $this->belongsToMany(Course::class);
     }
 
-    public function courseCourseGroups()
+    public function crossQualification()
     {
-        return $this->hasMany(CourseCourseGroup::class);
+        return $this->belongsTo(CrossQualification::class);
     }
 
     public function studyField()

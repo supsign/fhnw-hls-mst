@@ -20,7 +20,6 @@ class CrossQualificationImporter extends CsvReader {
 	public function importLine()
 	{
 		CrossQualification::create([
-			'begin_semester_id' => 1,
 			'name' => $this->line['bezeichnung'],
 			'study_field_id' => $this->line['id_studienrichtung'],
 		]);

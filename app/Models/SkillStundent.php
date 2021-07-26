@@ -6,10 +6,10 @@ class SkillStundent extends BaseModel
 {
     protected $table = 'skill_student';
 
-    public function event()
+    public function courseYear()
     {
-    	return $this->belongsTo(Event::class);
-    }
+        return $this->belongsTo(CourseYear::class);
+    }  
 
     public function skill()
     {

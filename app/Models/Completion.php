@@ -4,9 +4,9 @@ namespace App\Models;
 
 class Completion extends BaseModel
 {
-    public function event()
+    public function courseYear()
     {
-    	return $this->belongsTo(Event::class);
+    	return $this->belongsTo(CourseYear::class);
     }
 
     public function student()

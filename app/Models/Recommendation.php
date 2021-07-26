@@ -9,19 +9,19 @@ class Recommendation extends BaseModel
         return $this->belongsToMany(Course::class);
     }
 
-    public function crossQualification()
+    public function crossQualificationYear()
     {
-    	return $this->belongsTo(CrossQualification::class);
+    	return $this->belongsTo(CrossQualificationYear::class);
     }
 
-    public function specialization()
+    public function originRecommendation()
     {
-    	return $this->belongsTo(Specialization::class);
+        return $this->belongsTo(Recommendation::class);
     }
 
-    public function beginSemester()
+    public function specializationYear()
     {
-        return $this->belongsTo(Semester::class, 'begin_semester_id');
+    	return $this->belongsTo(SpecializationYear::class);
     }
 
     public function semesters()
@@ -36,8 +36,8 @@ class Recommendation extends BaseModel
         );
     }
 
-    public function studyField()
+    public function studyFieldYear()
     {
-    	return $this->belongsTo(StudyField::class);
+    	return $this->belongsTo(StudyFieldYear::class);
     }
 }

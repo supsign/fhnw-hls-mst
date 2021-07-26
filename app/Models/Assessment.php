@@ -9,18 +9,18 @@ class Assessment extends BaseModel
     	return $this->belongsToMany(Course::class);
     }
 
-    public function studyField()
+    public function crossQualificationYear()
     {
-    	return $this->belongsTo(StudyField::class);
+        return $this->belongsTo(CrossQualificationYear::class);
     }
 
-    public function beginSemester()
+    public function specializationYear()
     {
-    	return $this->belongsTo(Semester::class, 'begin_semester_id');
+        return $this->belongsTo(SpecializationYear::class);
     }
 
-    public function originAssesment()
+    public function studyFieldYear()
     {
-        return $this->belongsTo(Assessment::class, 'origin_assessment_id');
+    	return $this->belongsTo(StudyFieldYear::class);
     }
 }

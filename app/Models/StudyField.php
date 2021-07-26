@@ -4,19 +4,14 @@ namespace App\Models;
 
 class StudyField extends BaseModel
 {
-    public function assessments()
+    public function courses()
     {
-    	return $this->hasMany(Assessment::class);
+        return $this->hasMany(Course::class);
     }
 
-    public function recommendations()
+    public function specializations()
     {
-        return $this->hasMany(Recommendation::class);
-    }
-
-    public function students()
-    {
-        return $this->hasMany(Student::class);
+        return $this->hasMany(Specialization::class);
     }
 
     public function studyProgram()

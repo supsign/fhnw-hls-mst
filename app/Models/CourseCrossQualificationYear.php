@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
-class CourseCrossQualification extends BaseModel
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class CourseCrossQualificationYear extends Model
 {
-	protected $table = 'course_cross_qualification';
+    protected $table = 'course_cross_qualification_year';
 
     public function course()
     {

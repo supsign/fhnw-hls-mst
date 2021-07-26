@@ -9,48 +9,24 @@ class Course extends BaseModel
     	return $this->belongsToMany(Assessment::class);
     }
 
-    public function coursePlanningSemesters()
+    public function courseCourseGroupYears()
     {
-        return $this->hasManyThrough(
-            Semester::class,
-            CoursePlanning::class,
-            'course_id',
-            'id',
-            'id',
-            'semester_id',
-        );
+        return $this->hasMany(CourseCourseGroupYear::class);
     }
 
-    public function courseRecommendationSemesters()
-    {
-        return $this->hasManyThrough(
-            Semester::class,
-            CourseRecommendation::class,
-            'course_id',
-            'id',
-            'id',
-            'semester_id',
-        );
-    }
-
-    public function courseCourseGroups()
-    {
-        return $this->hasMany(CourseCourseGroup::class);
-    }
-
-    public function courseGroups()
-    {
-        return $this->belongsToMany(CourseGroup::class);
-    }
-
-    public function courseCrossQualifications()
+    public function courseCrossQualificationsYears()
     {
         return $this->hasMany(CourseCrossQualification::class);
     }
 
-    public function crossQualifications()
+    public function crossQualificationYears()
     {
-        return $this->belongsToMany(CrossQualification::class);
+        return $this->belongsToMany(CrossQualificationYear::class);
+    }
+
+    public function courseGroupYears()
+    {
+        return $this->belongsToMany(CourseGroupYear::class);
     }
 
     public function courseSkills()
@@ -83,8 +59,13 @@ class Course extends BaseModel
         return $this->belongsToMany(Skill::class);
     }
 
-    public function specializations()
+    public function specializationYears()
     {
-        return $this->belongsToMany(Specialization::class);
+        return $this->belongsToMany(SpecializationYear::class);
+    }
+
+    public function studyField()
+    {
+        return $this->belongsTo(StudyField::class);
     }
 }

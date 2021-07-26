@@ -4,9 +4,9 @@ namespace App\Models;
 
 class Planning extends BaseModel
 {
-    public function crossQualification()
+    public function crossQualificationYear()
     {
-    	return $this->belongsTo(CrossQualification::class);
+    	return $this->belongsTo(CrossQualificationYear::class);
     }
 
     public function mentor()
@@ -31,9 +31,9 @@ class Planning extends BaseModel
         );
     }
 
-    public function specialization()
+    public function specializationYear()
     {
-    	return $this->belongsTo(Specialization::class);
+    	return $this->belongsTo(SpecializationYear::class);
     }
 
     public function student()
@@ -41,8 +41,8 @@ class Planning extends BaseModel
     	return $this->belongsTo(Student::class);
     }
 
-    public function studyField()
+    public function studyFieldYear()
     {
-        return $this->belongsTo(StudyField::class);
+        return $this->belongsTo(StudyFieldYear::class);
     }
 }

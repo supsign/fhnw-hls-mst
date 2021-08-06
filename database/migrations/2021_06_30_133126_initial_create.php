@@ -1,13 +1,16 @@
 <?php
 
-use App\Importers\CourseImporter;
 use App\Importers\CourseGroupImporter;
-use App\Importers\CourseCourseGroupImporter;
-use App\Importers\CourseSpecializationImporter;
+use App\Importers\CourseImporter;
 use App\Importers\CrossQualificationImporter;
 use App\Importers\SkillImporter;
 use App\Importers\SkillPrerequisiteImporter;
 use App\Importers\SpecializationImporter;
+use Database\Seeders\LanguageSeeder;
+use Database\Seeders\SemesterSeeder;
+use Database\Seeders\StudyFieldSeeder;
+use Database\Seeders\StudyProgramSeeder;
+use Database\Seeders\TaxonomySeeder;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,8 +19,6 @@ class InitialCreate extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
@@ -29,18 +30,18 @@ class InitialCreate extends Migration
 
         Artisan::call('db:seed', [
             '--class' => CourseTypeSeeder::class,
-            '--force' => true
+            '--force' => true,
         ]);
 
-        Schema::create('langauges', function (Blueprint $table) {
+        Schema::create('languages', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
             $table->timestampsTz();
         });
 
         Artisan::call('db:seed', [
-            '--class' => LangaugeSeeder::class,
-            '--force' => true
+            '--class' => LanguageSeeder::class,
+            '--force' => true,
         ]);
 
         Schema::create('taxonomies', function (Blueprint $table) {
@@ -51,7 +52,7 @@ class InitialCreate extends Migration
 
         Artisan::call('db:seed', [
             '--class' => TaxonomySeeder::class,
-            '--force' => true
+            '--force' => true,
         ]);
 
         Schema::create('skills', function (Blueprint $table) {
@@ -74,7 +75,7 @@ class InitialCreate extends Migration
 
         Artisan::call('db:seed', [
             '--class' => StudyProgramSeeder::class,
-            '--force' => true
+            '--force' => true,
         ]);
 
         Schema::create('study_fields', function (Blueprint $table) {
@@ -86,7 +87,7 @@ class InitialCreate extends Migration
 
         Artisan::call('db:seed', [
             '--class' => StudyFieldSeeder::class,
-            '--force' => true
+            '--force' => true,
         ]);
 
         Schema::create('specializations', function (Blueprint $table) {
@@ -96,7 +97,7 @@ class InitialCreate extends Migration
             $table->timestampsTz();
         });
 
-        (new SpecializationImporter)->import();
+        (new SpecializationImporter())->import();
 
         Schema::create('cross_qualifications', function (Blueprint $table) {
             $table->id();
@@ -105,7 +106,7 @@ class InitialCreate extends Migration
             $table->timestampsTz();
         });
 
-        (new CrossQualificationImporter)->import();
+        (new CrossQualificationImporter())->import();
 
         Schema::create('semesters', function (Blueprint $table) {
             $table->id();
@@ -120,7 +121,7 @@ class InitialCreate extends Migration
 
         Artisan::call('db:seed', [
             '--class' => SemesterSeeder::class,
-            '--force' => true
+            '--force' => true,
         ]);
 
         Schema::create('study_field_years', function (Blueprint $table) {
@@ -153,14 +154,14 @@ class InitialCreate extends Migration
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('course_type_id')->constrained();
-            $table->foreignId('langauge_id')->default(1)->constrained();
+            $table->foreignId('language_id')->default(1)->constrained();
             $table->foreignId('study_field_id')->nullable()->constrained();
             $table->string('number')->unique();
             $table->integer('credits')->default(0);
             $table->timestampsTz();
         });
 
-        (new CourseImporter)->import();
+        (new CourseImporter())->import();
 
         Schema::create('course_groups', function (Blueprint $table) {
             $table->id();
@@ -170,7 +171,7 @@ class InitialCreate extends Migration
             $table->timestampsTz();
         });
 
-        (new CourseGroupImporter)->import();
+        (new CourseGroupImporter())->import();
 
         Schema::create('course_group_years', function (Blueprint $table) {
             $table->id();
@@ -191,8 +192,8 @@ class InitialCreate extends Migration
             $table->timestampsTz();
         });
 
-        (new SkillImporter)->import();
-        (new SkillPrerequisiteImporter)->import();
+        (new SkillImporter())->import();
+        (new SkillPrerequisiteImporter())->import();
 
         Schema::create('course_years', function (Blueprint $table) {
             $table->id();
@@ -324,8 +325,6 @@ class InitialCreate extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {
@@ -359,7 +358,7 @@ class InitialCreate extends Migration
         Schema::dropIfExists('mentors');
         Schema::dropIfExists('skills');
         Schema::dropIfExists('taxonomies');
-        Schema::dropIfExists('langauges');
+        Schema::dropIfExists('languages');
         Schema::dropIfExists('course_types');
     }
 }

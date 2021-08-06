@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class LangaugeSeeder extends Seeder
+class LanguageSeeder extends Seeder
 {
     private $data = [
         ['id' => 1, 'name' => 'Deutsch'],
@@ -14,25 +14,24 @@ class LangaugeSeeder extends Seeder
         ['id' => 4, 'name' => 'Französisch'],
         ['id' => 5, 'name' => 'Italienisch'],
     ];
+
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
     public function run()
     {
         foreach ($this->data as $entry) {
-            $data = array();
+            $data = [];
 
-            foreach ($entry AS $key => $value) {
-                if ($key === 'id') {
+            foreach ($entry as $key => $value) {
+                if ('id' === $key) {
                     continue;
                 }
 
                 $data[$key] = $value;
             }
 
-            DB::table('langauges')->updateOrInsert(['id' => $entry['id']], $data);
+            DB::table('languages')->updateOrInsert(['id' => $entry['id']], $data);
         }
     }
 }

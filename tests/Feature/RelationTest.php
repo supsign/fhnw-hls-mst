@@ -3,47 +3,37 @@
 namespace Tests\Feature;
 
 use App\Models\Assessment;
-use App\Models\Completion;
 use App\Models\Course;
 use App\Models\CourseGroup;
 use App\Models\CourseGroupYear;
-use App\Models\CourseCourseGroup;
+use App\Models\CoursePlanning;
 use App\Models\CrossQualification;
 use App\Models\CrossQualificationYear;
-use App\Models\CourseCrossQualification;
-use App\Models\CoursePlanning;
-use App\Models\CourseRecommendation;
-use App\Models\CourseSpecialization;
-use App\Models\Event;
-use App\Models\Mentor;
 use App\Models\Planning;
 use App\Models\Recommendation;
 use App\Models\Semester;
-use App\Models\Specialization;
 use App\Models\SpecializationYear;
-use App\Models\Skill;
-use App\Models\SkillStundent;
 use App\Models\Student;
 use App\Models\StudyField;
 use App\Models\StudyFieldYear;
-use App\Models\User;
-
-use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class RelationTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_courses()
+    public function testCourses()
     {
         $course = Course::inRandomOrder()->first();
 
         //  belongsTo
         $this->assertTrue($course->courseType->courses()->where('id', $course->id)->first()->id === $course->id);
-        $this->assertTrue($course->langauge->courses()->where('id', $course->id)->first()->id === $course->id);
+        $this->assertTrue($course->language->courses()->where('id', $course->id)->first()->id === $course->id);
 
         $course->studyField()->associate(StudyField::inRandomOrder()->first());
         $course->save();
@@ -95,7 +85,7 @@ class RelationTest extends TestCase
                 'cross_qualification_year_id' => $cqyID,
                 'specialization_year_id' => $spID,
                 'study_field_year_id' => $sfyID,
-             ])->id
+            ])->id
         );
         $this->assertTrue($course->recommendations()->where('course_id', $course->id)->first()->courses()->where('recommendation_id', $rID)->first()->id === $course->id);
 
@@ -107,15 +97,15 @@ class RelationTest extends TestCase
                 'student_id' => Student::create([
                     'study_field_year_id' => $sfyID,
                     'evento_person_id' => 1234,
-                ])->id
-            ])->id
+                ])->id,
+            ])->id,
         ]);
         $this->assertTrue($course->plannings()->where('course_id', $course->id)->first()->courses()->where('planning_id', $pID)->first()->id === $course->id);
 
         // TODO courseSkill
     }
 
-    public function test_new()
+    public function testNew()
     {
         $this->assertTrue(true);
     }

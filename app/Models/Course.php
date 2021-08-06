@@ -6,7 +6,7 @@ class Course extends BaseModel
 {
     public function assessments()
     {
-    	return $this->belongsToMany(Assessment::class);
+        return $this->belongsToMany(Assessment::class);
     }
 
     public function courseCourseGroupYears()
@@ -39,9 +39,9 @@ class Course extends BaseModel
         return $this->belongsTo(CourseType::class);
     }
 
-    public function langauge()
+    public function language()
     {
-        return $this->belongsTo(Langauge::class);
+        return $this->belongsTo(Language::class);
     }
 
     public function plannings()

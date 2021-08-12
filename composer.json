@@ -11,7 +11,7 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.40",
         "laravel/tinker": "^2.5",
-        "supsign/laravel-csv-reader": "^1.0"
+        "supsign/laravel-csv-reader": "dev-master"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.3",
@@ -59,7 +59,10 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "repositories": [
-        {"type": "composer", "url": "https://supsign.repo.packagist.com/hls-fhnw/"}
+        {
+            "type": "vcs",
+            "url": "ssh://git@github.com:22/supsign/laravel-csv-reader.git"
+        }
 
     ]
 }

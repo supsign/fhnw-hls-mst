@@ -96,7 +96,7 @@ class RelationTest extends TestCase
                 'study_field_year_id' => $sfyID,
                 'student_id' => Student::create([
                     'study_field_year_id' => $sfyID,
-                    'evento_person_id' => 1234,
+                    'evento_person_id_hash' => 1234,
                 ])->id,
             ])->id,
         ]);

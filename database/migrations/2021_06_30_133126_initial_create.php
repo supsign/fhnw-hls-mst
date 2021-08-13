@@ -64,6 +64,9 @@ class InitialCreate extends Migration
 
         Schema::create('mentors', function (Blueprint $table) {
             $table->id();
+            $table->string('evento_person_id_hash')->unique();
+            $table->string('firstname')->nullable();
+            $table->string('lastname')->nullable();
             $table->timestampsTz();
         });
 
@@ -261,14 +264,15 @@ class InitialCreate extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->foreignId('study_field_year_id')->constrained();
-            $table->unsignedBigInteger('evento_person_id');
+            $table->string('evento_person_id_hash')->unique();
             $table->timestampsTz();
         });
 
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('mentor_id')->constrained();
-            $table->foreignId('student_id')->constrained();
+            $table->string('email_hash')->unique();
+            $table->foreignId('mentor_id')->nullable()->constrained();
+            $table->foreignId('student_id')->nullable()->constrained();
             $table->timestampsTz();
         });
 

@@ -28,7 +28,12 @@ class UserService
             return $user;
         }
 
-        $user->student()->associate($student);
+        // dissociate existing other user from student
+        if ($student->user && $student->user->id != $user->id){
+            $student->user->student()->dissociate()->save();
+        }
+
+        $user->student()->associate($student)->save();
 
         return $user;
     }
@@ -41,7 +46,12 @@ class UserService
 
         $mentor = $this->mentorService->createOrUpdateOnEventoPersonId($eventoPersonId, $firstname, $lastname);
 
-        $user->mentor()->associate($mentor);
+        // dissociate existing other user from mentor
+        if ($mentor->user && $mentor->user->id != $user->id){
+            $mentor->user->mentor()->dissociate()->save();
+        }
+
+        $user->mentor()->associate($mentor)->save();
 
         return $user;
     }

@@ -56,8 +56,8 @@ class Student extends BaseModel
         );
     }
 
-    public function users()
+    public function user()
     {
-        return $this->hasMany(User::class);
+        return $this->hasOne(User::class);
     }
 }

@@ -527,6 +527,9 @@ namespace App\Models{
  * App\Models\Mentor
  *
  * @property int $id
+ * @property string $evento_person_id_hash
+ * @property string|null $firstname
+ * @property string|null $lastname
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\MentorStudent[] $mentorStudent
@@ -535,13 +538,15 @@ namespace App\Models{
  * @property-read int|null $plannings_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Student[] $students
  * @property-read int|null $students_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\User[] $users
- * @property-read int|null $users_count
+ * @property-read \App\Models\User|null $user
  * @method static \Illuminate\Database\Eloquent\Builder|Mentor newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Mentor newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Mentor query()
  * @method static \Illuminate\Database\Eloquent\Builder|Mentor whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Mentor whereEventoPersonIdHash($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Mentor whereFirstname($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mentor whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Mentor whereLastname($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mentor whereUpdatedAt($value)
  */
 	class Mentor extends \Eloquent {}
@@ -796,8 +801,8 @@ namespace App\Models{
  * App\Models\Student
  *
  * @property int $id
- * @property int $study_field_year_id
- * @property int $evento_person_id
+ * @property int|null $study_field_year_id
+ * @property string $evento_person_id_hash
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Semester $beginSemester
@@ -815,14 +820,13 @@ namespace App\Models{
  * @property-read int|null $skill_student_events_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Skill[] $skills
  * @property-read int|null $skills_count
- * @property-read \App\Models\StudyFieldYear $studyFieldYear
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\User[] $users
- * @property-read int|null $users_count
+ * @property-read \App\Models\StudyFieldYear|null $studyFieldYear
+ * @property-read \App\Models\User|null $user
  * @method static \Illuminate\Database\Eloquent\Builder|Student newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Student newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Student query()
  * @method static \Illuminate\Database\Eloquent\Builder|Student whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Student whereEventoPersonId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Student whereEventoPersonIdHash($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Student whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Student whereStudyFieldYearId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Student whereUpdatedAt($value)
@@ -931,16 +935,18 @@ namespace App\Models{
  * App\Models\User
  *
  * @property int $id
- * @property int $mentor_id
- * @property int $student_id
+ * @property string $email_hash
+ * @property int|null $mentor_id
+ * @property int|null $student_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Mentor $mentor
- * @property-read \App\Models\Student $student
+ * @property-read \App\Models\Mentor|null $mentor
+ * @property-read \App\Models\Student|null $student
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User query()
  * @method static \Illuminate\Database\Eloquent\Builder|User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereEmailHash($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereMentorId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereStudentId($value)

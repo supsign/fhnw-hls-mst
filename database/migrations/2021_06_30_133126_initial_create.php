@@ -263,7 +263,7 @@ class InitialCreate extends Migration
 
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('study_field_year_id')->constrained();
+            $table->foreignId('study_field_year_id')->nullable()->constrained();
             $table->string('evento_person_id_hash')->unique();
             $table->timestampsTz();
         });
@@ -333,7 +333,7 @@ class InitialCreate extends Migration
     public function down()
     {
         Schema::dropIfExists('skill_student');
-        Schema::dropIfExists('assessments');
+        Schema::dropIfExists('course_planning');
         Schema::dropIfExists('plannings');
         Schema::dropIfExists('completions');
         Schema::dropIfExists('mentor_student');
@@ -348,6 +348,7 @@ class InitialCreate extends Migration
         Schema::dropIfExists('course_specialization_year');
         Schema::dropIfExists('course_years');
         Schema::dropIfExists('course_skill');
+        Schema::dropIfExists('course_course_group_year');
         Schema::dropIfExists('course_group_years');
         Schema::dropIfExists('course_groups');
         Schema::dropIfExists('courses');

@@ -10,6 +10,7 @@ use App\Services\User\UserService;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use PhpParser\Node\Stmt\TryCatch;
 
 class AuthService
 {
@@ -29,9 +30,6 @@ class AuthService
         }
 
         $shibbolethProperties = $this->tokenService->getShibbolethProperties($jwt);
-
-
-
         $this->login($shibbolethProperties);
 
         return true;
@@ -39,7 +37,12 @@ class AuthService
 
     private function login(ShibbolethProperties $shibbolethProperties): User
     {
-        $role = $this->roleService->evaluate($shibbolethProperties);
+    
+        try {
+            $role = $this->roleService->evaluate($shibbolethProperties);
+        } catch (\Throwable $th) {
+            abort(403,$th->getMessage());
+        }
 
         if ('student' === $role->getName()) {
             $user = $this->userService->updateOrCreateUserAsStudent(

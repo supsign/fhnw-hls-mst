@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Services\Auth\AuthService;
 use App\Services\Student\StudentService;
 use App\Services\Token\ShibbolethProperties;
+use App\Services\Token\TokenService;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
@@ -22,12 +23,14 @@ class AuthServiceTest extends TestCase
     use WithFaker;
     protected AuthService $authService;
     protected StudentService $studentService;
+    protected TokenService $tokenService;
 
     protected function setup():void {
         parent::setUp();
         $this->setUpFaker();
         $this->authService = $this->app->make(AuthService::class);
         $this->studentService = $this->app->make(StudentService::class);
+        $this->tokenService = $this->app->make(TokenService::class);
     }
 
     public function testIsAuthorizedForLogin()
@@ -132,10 +135,11 @@ class AuthServiceTest extends TestCase
         $shibbolethProperties->mail = $this->faker->email();
         $shibbolethProperties->fhnwIDPerson = $this->faker->randomNumber(5);
         $shibbolethProperties->fhnwDetailedAffiliation = 'staff-hls-alle;sldkjf;aslkdfj';
+        $token = $this->tokenService->issue($shibbolethProperties);
 
         $this->assertFalse(Auth::check());
 
-        $this->authService->attempt('asdf');
+        $this->authService->attempt($token->toString());
          
         $this->assertTrue(Auth::check());
 

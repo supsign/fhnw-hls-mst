@@ -17,7 +17,7 @@ class UserService
     ) {
     }
 
-    public function updateOrCreateUserAsStudent(string $email, int $eventoPersonId)
+    public function updateOrCreateUserAsStudent(string $email = null, int $eventoPersonId = null)
     {
         $emailHash = $this->getHash($email);
         $user = $this->updateOrCrateUserOnMailHash($emailHash);

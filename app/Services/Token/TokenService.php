@@ -41,16 +41,23 @@ class TokenService
 
     public function getShibbolethProperties(string $jwt): ShibbolethProperties
     {
+        $claims = $this->parse($jwt)->claims();
+        
+        
         $shibbolethProperties = new ShibbolethProperties();
 
-        
-
-
-
+        $shibbolethProperties->mail = $claims->get('mail');
+        $shibbolethProperties->fhnwIDPerson = $claims->get('fhnwIDPerson');
+        $shibbolethProperties->fhnwDetailedAffiliation = $claims->get('fhnwDetailedAffiliation');
+        $shibbolethProperties->surname = $claims->get('surname');
+        $shibbolethProperties->givenName = $claims->get('givenName');
+        $shibbolethProperties->shibSesssionId = $claims->get('shibSesssionId');
+        $shibbolethProperties->shibIdentityProvider = $claims->get('shibIdentityProvider');
+        $shibbolethProperties->entitlement = $claims->get('entitlement');
         return $shibbolethProperties;
     }
 
-    private function parse(string $jwt)
+    private function parse(string $jwt):Plain
     {
         $parser = new Parser(new JoseEncoder());
         return $parser->parse($jwt);
@@ -71,6 +78,7 @@ class TokenService
         ->canOnlyBeUsedAfter($now)
         ->expiresAt($now->modify('+1 hour'))
         ->withClaim('fhnwIDPerson', $shibbolethProperties->fhnwIDPerson)
+        ->withClaim('mail', $shibbolethProperties->mail)
         ->withClaim('firstname', $shibbolethProperties->givenName)
         ->withClaim('lastname', $shibbolethProperties->surname)
         ->withClaim('fhnwDetailedAffiliation', $shibbolethProperties->fhnwDetailedAffiliation)

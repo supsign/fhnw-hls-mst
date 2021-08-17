@@ -4,8 +4,8 @@ namespace Tests\Feature\Services\Auth;
 
 use App\Services\Auth\Role;
 use App\Services\Auth\RoleService;
-use App\Services\Student\StudentService;
 use App\Services\Token\ShibbolethProperties;
+use Exception;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -24,6 +24,26 @@ class RoleServiceTest extends TestCase
         parent::setUp();
         $this->setUpFaker();
         $this->roleService = $this->app->make(RoleService::class);
+    }
+
+    public function testEvaluateErrorWithoutMailAndFhnwIDPerson() {
+        $this->expectException(Exception::class);
+        $shib = new ShibbolethProperties();
+        $this->roleService->evaluate($shib);   
+    }
+
+    public function testEvaluateErrorWithoutMail() {
+        $this->expectException(Exception::class);
+        $shib = new ShibbolethProperties();
+        $shib->fhnwIDPerson = '1234';
+        $this->roleService->evaluate($shib);   
+    }
+
+    public function testEvaluateErrorWithoutFhnwIDPerson() {
+        $this->expectException(Exception::class);
+        $shib = new ShibbolethProperties();
+        $shib->mail = $this->faker->email;
+        $this->roleService->evaluate($shib);   
     }
 
     public function testEvaluateStudentRole()

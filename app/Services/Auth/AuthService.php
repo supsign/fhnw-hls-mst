@@ -20,8 +20,8 @@ class AuthService
         private RoleService $roleService,
         private UserService $userService,
         private TokenService $tokenService
-    ) {
-    }
+    )
+    {}
 
     public function attempt(string $jwt): bool
     {
@@ -41,7 +41,7 @@ class AuthService
         try {
             $role = $this->roleService->evaluate($shibbolethProperties);
         } catch (\Throwable $th) {
-            abort(403,$th->getMessage());
+            abort(403, $th->getMessage());
         }
 
         if ('student' === $role->getName()) {

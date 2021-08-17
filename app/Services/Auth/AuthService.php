@@ -30,6 +30,8 @@ class AuthService
 
         $shibbolethProperties = $this->tokenService->getShibbolethProperties($jwt);
 
+
+
         $this->login($shibbolethProperties);
 
         return true;
@@ -65,5 +67,17 @@ class AuthService
         Session::push('firstname', $shibbolethProperties->givenName);
 
         return $user;
+    }
+
+    private function isAuthorizedForLogin(ShibbolethProperties $shibbolethProperties){
+        if (!$shibbolethProperties->mail){
+            return false;
+        }
+
+        if (!$shibbolethProperties->fhnwIDPerson){
+            return false;
+        }
+
+        return true;
     }
 }

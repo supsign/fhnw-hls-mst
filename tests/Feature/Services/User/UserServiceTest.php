@@ -34,12 +34,15 @@ class UserServiceTest extends TestCase
 
     }
 
-    public function testupdateOrCreateUserAsStudentWithoutStudent() {
+    public function testUpdateOrCreateUserAsStudentWithoutStudent() {
         $user = $this->userService->updateOrCreateUserAsStudent($this->faker->email, $this->faker->randomNumber(5));
         $this->assertInstanceOf(User::class, $user);
+        $user->refresh();
+        $this->assertNull($user->student_id);
+        $this->assertNull($user->student);
     }
 
-    public function testupdateOrCreateUserAsStudentWithstudent() {
+    public function testUpdateOrCreateUserAsStudentWithstudent() {
         $eventoId = $this->faker->randomNumber(5);
         $this->studentService->createOrUpdateOnEventoPersonId($eventoId);
         $user = $this->userService->updateOrCreateUserAsStudent($this->faker->email, $eventoId);
@@ -48,7 +51,7 @@ class UserServiceTest extends TestCase
         $this->assertInstanceOf(Student::class, $user->student);
     }
 
-    public function testupdateOrCreateUserAsMentor() {
+    public function testUpdateOrCreateUserAsMentor() {
         $email = $this->faker->email;
         $user = $this->userService->udpateOrCreateAsMentor($email, $this->faker->randomNumber(5));
         $this->assertInstanceOf(User::class, $user);

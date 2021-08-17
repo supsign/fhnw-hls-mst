@@ -25,6 +25,7 @@ class UserService
         $student = $this->studentService->getByEventoPersonId($eventoPersonId);
 
         if (!$student) {
+            $user->student_id = null;
             return $user;
         }
 

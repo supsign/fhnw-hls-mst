@@ -64,6 +64,9 @@ class InitialCreate extends Migration
 
         Schema::create('mentors', function (Blueprint $table) {
             $table->id();
+            $table->string('evento_person_id_hash')->unique();
+            $table->string('firstname')->nullable();
+            $table->string('lastname')->nullable();
             $table->timestampsTz();
         });
 
@@ -260,15 +263,16 @@ class InitialCreate extends Migration
 
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('study_field_year_id')->constrained();
-            $table->unsignedBigInteger('evento_person_id');
+            $table->foreignId('study_field_year_id')->nullable()->constrained();
+            $table->string('evento_person_id_hash')->unique();
             $table->timestampsTz();
         });
 
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('mentor_id')->constrained();
-            $table->foreignId('student_id')->constrained();
+            $table->string('email_hash')->unique();
+            $table->foreignId('mentor_id')->nullable()->constrained();
+            $table->foreignId('student_id')->nullable()->constrained();
             $table->timestampsTz();
         });
 
@@ -329,7 +333,7 @@ class InitialCreate extends Migration
     public function down()
     {
         Schema::dropIfExists('skill_student');
-        Schema::dropIfExists('assessments');
+        Schema::dropIfExists('course_planning');
         Schema::dropIfExists('plannings');
         Schema::dropIfExists('completions');
         Schema::dropIfExists('mentor_student');
@@ -344,6 +348,7 @@ class InitialCreate extends Migration
         Schema::dropIfExists('course_specialization_year');
         Schema::dropIfExists('course_years');
         Schema::dropIfExists('course_skill');
+        Schema::dropIfExists('course_course_group_year');
         Schema::dropIfExists('course_group_years');
         Schema::dropIfExists('course_groups');
         Schema::dropIfExists('courses');

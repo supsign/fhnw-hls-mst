@@ -28,8 +28,15 @@ jobs:
       run: |
         mkdir -p database
         touch database/database.sqlite
+    - name: Compile Assets
+      run: |
+        npm install
+        npm run prod
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
+        CACHE_DRIVER: array
+        SESSION_DRIVER: array
+        QUEUE_DRIVER: array
       run: vendor/bin/phpunit

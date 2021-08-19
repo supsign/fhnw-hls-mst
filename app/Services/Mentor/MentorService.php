@@ -7,7 +7,7 @@ use App\Services\Helpers\hashes;
 
 class MentorService
 {
-    use hashes;
+    use Hashes;
 
     public function getByEventoPersonId(int $eventoPersonId)
     {

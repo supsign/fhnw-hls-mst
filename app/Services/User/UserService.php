@@ -9,7 +9,7 @@ use App\Services\Student\StudentService;
 
 class UserService
 {
-    use hashes;
+    use Hashes;
 
     public function __construct(
         private StudentService $studentService,
@@ -26,11 +26,12 @@ class UserService
 
         if (!$student) {
             $user->student_id = null;
+
             return $user;
         }
 
         // dissociate existing other user from student
-        if ($student->user && $student->user->id != $user->id){
+        if ($student->user && $student->user->id != $user->id) {
             $student->user->student()->dissociate()->save();
         }
 
@@ -48,7 +49,7 @@ class UserService
         $mentor = $this->mentorService->createOrUpdateOnEventoPersonId($eventoPersonId, $firstname, $lastname);
 
         // dissociate existing other user from mentor
-        if ($mentor->user && $mentor->user->id != $user->id){
+        if ($mentor->user && $mentor->user->id != $user->id) {
             $mentor->user->mentor()->dissociate()->save();
         }
 

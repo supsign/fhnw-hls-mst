@@ -4,7 +4,7 @@ namespace App\Services\Helpers;
 
 use Exception;
 
-trait hashes
+trait Hashes
 {
     public function getHash(string | int $value)
     {

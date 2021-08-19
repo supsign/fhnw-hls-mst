@@ -14,7 +14,7 @@ use TypeError;
  */
 class HashesTest extends TestCase
 {
-    use hashes;
+    use Hashes;
 
     public function testGetHashFromString()
     {

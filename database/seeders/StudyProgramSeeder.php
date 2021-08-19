@@ -27,6 +27,7 @@ class StudyProgramSeeder extends Seeder
 
             foreach ($entry AS $key => $value) {
                 if ($key === 'id') {
+                    $lastId = $value;
                     continue;
                 }
 
@@ -35,5 +36,7 @@ class StudyProgramSeeder extends Seeder
 
             DB::table('study_programs')->updateOrInsert(['id' => $entry['id']], $data);
         }
+
+        DB::statement('ALTER SEQUENCE "study_programs_id_seq" RESTART WITH '.$lastId + 1);
     }
 }

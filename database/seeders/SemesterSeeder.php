@@ -23,6 +23,7 @@ class SemesterSeeder extends Seeder
 
             foreach ($entry AS $key => $value) {
                 if ($key === 'id') {
+                    $lastId = $value;
                     continue;
                 }
 
@@ -31,5 +32,7 @@ class SemesterSeeder extends Seeder
 
             DB::table('semesters')->updateOrInsert(['id' => $entry['id']], $data);
         }
+
+        DB::statement('ALTER SEQUENCE "semesters_id_seq" RESTART WITH '.$lastId + 1);
     }
 }

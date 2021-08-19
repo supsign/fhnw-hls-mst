@@ -25,6 +25,7 @@ class LanguageSeeder extends Seeder
 
             foreach ($entry as $key => $value) {
                 if ('id' === $key) {
+                    $lastId = $value;
                     continue;
                 }
 
@@ -33,5 +34,7 @@ class LanguageSeeder extends Seeder
 
             DB::table('languages')->updateOrInsert(['id' => $entry['id']], $data);
         }
+
+        DB::statement('ALTER SEQUENCE "languages_id_seq" RESTART WITH '.$lastId + 1);
     }
 }

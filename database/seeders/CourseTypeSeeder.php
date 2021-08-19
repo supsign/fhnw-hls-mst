@@ -29,6 +29,7 @@ class CourseTypeSeeder extends Seeder
 
             foreach ($entry AS $key => $value) {
                 if ($key === 'id') {
+                    $lastId = $value;
                     continue;
                 }
 
@@ -37,5 +38,7 @@ class CourseTypeSeeder extends Seeder
 
             DB::table('course_types')->updateOrInsert(['id' => $entry['id']], $data);
         }
+
+        DB::statement('ALTER SEQUENCE "course_types_id_seq" RESTART WITH '.$lastId + 1);
     }
 }

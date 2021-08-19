@@ -43,6 +43,7 @@ class StudyFieldSeeder extends Seeder
 
             foreach ($entry AS $key => $value) {
                 if ($key === 'id') {
+                    $lastId = $value;
                     continue;
                 }
 
@@ -51,5 +52,7 @@ class StudyFieldSeeder extends Seeder
 
             DB::table('study_fields')->updateOrInsert(['id' => $entry['id']], $data);
         }
+
+        DB::statement('ALTER SEQUENCE "study_fields_id_seq" RESTART WITH '.$lastId + 1);
     }
 }

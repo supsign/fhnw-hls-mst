@@ -27,6 +27,7 @@ class TaxonomySeeder extends Seeder
 
             foreach ($entry AS $key => $value) {
                 if ($key === 'id') {
+                    $lastId = $value;
                     continue;
                 }
 
@@ -35,5 +36,7 @@ class TaxonomySeeder extends Seeder
 
             DB::table('taxonomies')->updateOrInsert(['id' => $entry['id']], $data);
         }
+
+        DB::statement('ALTER SEQUENCE "taxonomies_id_seq" RESTART WITH '.$lastId + 1);
     }
 }

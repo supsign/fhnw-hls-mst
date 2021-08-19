@@ -7,22 +7,22 @@ on:
     branches: [ master ]
 
 jobs:
-  laravel-tests:
-
+  build-laravel:
     runs-on: ubuntu-latest
-
     steps:
+    
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
         php-version: '8.0'
+        
     - uses: actions/checkout@v2
     
     - name: Setup Node.js
       uses: actions/setup-node@v2-beta
       with:
-        node-version: '14'
+        node-version: '15'
         check-latest: true
-    
+        
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       
@@ -40,11 +40,6 @@ jobs:
         mkdir -p database
         touch database/database.sqlite
         
-    - name: Compile Assets
-      run: |
-        npm install
-        npm run prod
-        
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
         DB_CONNECTION: sqlite
@@ -53,3 +48,8 @@ jobs:
         SESSION_DRIVER: array
         QUEUE_DRIVER: array
       run: vendor/bin/phpunit
+      
+    - name: Compile Assets
+      run: |
+        npm install
+        npm run prod

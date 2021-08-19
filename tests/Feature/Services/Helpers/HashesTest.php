@@ -3,8 +3,7 @@
 namespace Tests\Feature\Services\helpers;
 
 use App\Models\Mentor;
-use App\Services\Helpers\hashes;
-use Exception;
+use App\Services\Helpers\Hashes;
 use Tests\TestCase;
 use TypeError;
 
@@ -14,27 +13,26 @@ use TypeError;
  */
 class HashesTest extends TestCase
 {
-    use hashes;
+    use Hashes;
 
     public function testGetHashFromString()
     {
         $hash = $this->getHash('blub');
         $this->assertIsString($hash);
-        $this->assertTrue(strlen($hash) === 128);
+        $this->assertTrue(128 === strlen($hash));
     }
 
     public function testGetHashFromInt()
     {
         $hash = $this->getHash(1234);
         $this->assertIsString($hash);
-        $this->assertTrue(strlen($hash) === 128);
+        $this->assertTrue(128 === strlen($hash));
     }
 
     public function testGetHashFromNull()
     {
         $mentor = new Mentor();
         $this->expectException(TypeError::class);
-        $this->getHash($mentor->blub);       
+        $this->getHash($mentor->blub);
     }
-
 }

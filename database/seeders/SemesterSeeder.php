@@ -11,18 +11,19 @@ class SemesterSeeder extends Seeder
         ['id' => 1, 'year' => 2021, 'start_date' => '2021-01-01'],
         ['id' => 2, 'year' => 2021, 'start_date' => '2021-07-01', 'is_hs' => true, 'previous_semester_id' => 1],
     ];
+
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
     public function run()
     {
         foreach ($this->data as $entry) {
-            $data = array();
+            $data = [];
 
-            foreach ($entry AS $key => $value) {
-                if ($key === 'id') {
+            foreach ($entry as $key => $value) {
+                if ('id' === $key) {
+                    $lastId = $value;
+
                     continue;
                 }
 
@@ -30,6 +31,12 @@ class SemesterSeeder extends Seeder
             }
 
             DB::table('semesters')->updateOrInsert(['id' => $entry['id']], $data);
+        }
+
+        $connection = config('database.default');
+        $driver = config("database.connections.{$connection}.driver");
+        if ('pgsql' === $driver) {
+            DB::statement('ALTER SEQUENCE "semesters_id_seq" RESTART WITH '.$lastId + 1);
         }
     }
 }

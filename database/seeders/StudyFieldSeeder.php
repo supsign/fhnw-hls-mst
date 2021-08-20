@@ -31,18 +31,19 @@ class StudyFieldSeeder extends Seeder
         ['id' => 35, 'name' => 'CAS Molekulare Diagnostik', 'study_program_id' => 8],
         ['id' => 36, 'name' => 'CAS Quality Manager Pharma', 'study_program_id' => 8],
     ];
+
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
     public function run()
     {
         foreach ($this->data as $entry) {
-            $data = array();
+            $data = [];
 
-            foreach ($entry AS $key => $value) {
-                if ($key === 'id') {
+            foreach ($entry as $key => $value) {
+                if ('id' === $key) {
+                    $lastId = $value;
+
                     continue;
                 }
 
@@ -50,6 +51,12 @@ class StudyFieldSeeder extends Seeder
             }
 
             DB::table('study_fields')->updateOrInsert(['id' => $entry['id']], $data);
+        }
+
+        $connection = config('database.default');
+        $driver = config("database.connections.{$connection}.driver");
+        if ('pgsql' === $driver) {
+            DB::statement('ALTER SEQUENCE "study_fields_id_seq" RESTART WITH '.$lastId + 1);
         }
     }
 }

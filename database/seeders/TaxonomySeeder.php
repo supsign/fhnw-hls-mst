@@ -15,18 +15,19 @@ class TaxonomySeeder extends Seeder
         ['id' => 5, 'name' => 'beurteilen'],
         ['id' => 6, 'name' => 'erschaffen'],
     ];
+
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
     public function run()
     {
         foreach ($this->data as $entry) {
-            $data = array();
+            $data = [];
 
-            foreach ($entry AS $key => $value) {
-                if ($key === 'id') {
+            foreach ($entry as $key => $value) {
+                if ('id' === $key) {
+                    $lastId = $value;
+
                     continue;
                 }
 
@@ -34,6 +35,12 @@ class TaxonomySeeder extends Seeder
             }
 
             DB::table('taxonomies')->updateOrInsert(['id' => $entry['id']], $data);
+        }
+
+        $connection = config('database.default');
+        $driver = config("database.connections.{$connection}.driver");
+        if ('pgsql' === $driver) {
+            DB::statement('ALTER SEQUENCE "taxonomies_id_seq" RESTART WITH '.$lastId + 1);
         }
     }
 }

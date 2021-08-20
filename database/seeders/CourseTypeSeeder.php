@@ -17,19 +17,19 @@ class CourseTypeSeeder extends Seeder
         ['id' => 7, 'name' => 'Master-Thesis'],
         ['id' => 8, 'name' => 'Prüfung'],
     ];
+
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
     public function run()
     {
         foreach ($this->data as $entry) {
-            $data = array();
+            $data = [];
 
-            foreach ($entry AS $key => $value) {
-                if ($key === 'id') {
+            foreach ($entry as $key => $value) {
+                if ('id' === $key) {
                     $lastId = $value;
+
                     continue;
                 }
 
@@ -39,6 +39,10 @@ class CourseTypeSeeder extends Seeder
             DB::table('course_types')->updateOrInsert(['id' => $entry['id']], $data);
         }
 
-        DB::statement('ALTER SEQUENCE "course_types_id_seq" RESTART WITH '.$lastId + 1);
+        $connection = config('database.default');
+        $driver = config("database.connections.{$connection}.driver");
+        if ('pgsql' === $driver) {
+            DB::statement('ALTER SEQUENCE "course_types_id_seq" RESTART WITH '.$lastId + 1);
+        }
     }
 }

@@ -7,7 +7,7 @@ use App\Services\Helpers\hashes;
 
 class StudentService
 {
-    use hashes;
+    use Hashes;
 
     public function getByEventoPersonId(int $eventoPersonId): ?Student
     {

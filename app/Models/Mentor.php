@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+/**
+ * @mixin IdeHelperMentor
+ */
 class Mentor extends BaseModel
 {
     public function plannings()

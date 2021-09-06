@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+/**
+ * @mixin IdeHelperStudent
+ */
 class Student extends BaseModel
 {
     public function completions()

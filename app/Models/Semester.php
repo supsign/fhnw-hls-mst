@@ -5,6 +5,9 @@ namespace App\Models;
 use Carbon\Carbon;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
+/**
+ * @mixin IdeHelperSemester
+ */
 class Semester extends BaseModel
 {
     public function assessments()

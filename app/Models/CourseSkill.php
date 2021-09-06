@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+/**
+ * @mixin IdeHelperCourseSkill
+ */
 class CourseSkill extends BaseModel
 {
     protected $table = 'course_skill';

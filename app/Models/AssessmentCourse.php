@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+/**
+ * @mixin IdeHelperAssessmentCourse
+ */
 class AssessmentCourse extends BaseModel
 {
     protected $table = 'assessment_course';

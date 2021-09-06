@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+/**
+ * @mixin IdeHelperCourse
+ */
 class Course extends BaseModel
 {
     public function assessments()
@@ -16,7 +19,7 @@ class Course extends BaseModel
 
     public function courseCrossQualificationsYears()
     {
-        return $this->hasMany(CourseCrossQualification::class);
+        return $this->hasMany(CourseCrossQualificationYear::class);
     }
 
     public function crossQualificationYears()

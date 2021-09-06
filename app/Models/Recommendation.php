@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+/**
+ * @mixin IdeHelperRecommendation
+ */
 class Recommendation extends BaseModel
 {
     public function courses()

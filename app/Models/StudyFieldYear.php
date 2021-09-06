@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+/**
+ * @mixin IdeHelperStudyFieldYear
+ */
 class StudyFieldYear extends BaseModel
 {
 
     public function courseGroupYears()
     {
-        return $this->hasMany(CourseGroupYears::class);
+        return $this->hasMany(CourseGroupYear::class);
     }
 
     public function beginSemester()

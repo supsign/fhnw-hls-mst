@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @mixin IdeHelperCourseCrossQualificationYear
+ */
 class CourseCrossQualificationYear extends Model
 {
     protected $table = 'course_cross_qualification_year';

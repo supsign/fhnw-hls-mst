@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+/**
+ * @mixin IdeHelperPlanning
+ */
 class Planning extends BaseModel
 {
     public function crossQualificationYear()

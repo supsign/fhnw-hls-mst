@@ -16,6 +16,8 @@ $excel->import(new StudyFieldImport, 'Tab1_Studiengang.xlsx');
 
 class StudyFieldImport implements ToModel, WithHeadingRow
 {
+    protected $requiredFields = ['id_anlass', 'anlassnummer', 'anlassbezeichnung'];
+
     /**
     * @param array $row
     *
@@ -23,7 +25,7 @@ class StudyFieldImport implements ToModel, WithHeadingRow
     */
     public function model(array $row): void
     {
-        if (count(array_diff(['id_anlass', 'anlassnummer', 'anlassbezeichnung'], array_keys($row))) !== 0) {
+        if (count(array_intersect($this->requiredFields, array_keys($row))) !== count($this->requiredFields)) {
             //  Throw error? Write log?
             return;
         }

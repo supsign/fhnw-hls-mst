@@ -26,12 +26,12 @@ class StudyFieldImport implements ToModel, WithHeadingRow
     public function model(array $row): void
     {
         if (count(array_intersect($this->requiredFields, array_keys($row))) !== count($this->requiredFields)) {
-            //  Throw error? Write log?
+            //  Todo log with activitylog
             return;
         }
 
         $studyField = StudyField::updateOrCreate(
-            ['evento_id' => $row['id_anlass']], 
+            ['evento_id' => $row['id_anlass']],
             ['evento_number' => $row['anlassnummer']],
         );
 

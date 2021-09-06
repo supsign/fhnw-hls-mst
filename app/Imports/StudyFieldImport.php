@@ -14,7 +14,7 @@ use App\Imports\StudyFieldImport;
 $excel->import(new StudyFieldImport, 'Tab1_Studiengang.xlsx');
 */
 
-class StudyFieldImport implements ToModel, WithHeadingRow
+class StudyFieldImport extends BaseImport implements ToModel, WithHeadingRow
 {
     protected $requiredFields = ['id_anlass', 'anlassnummer', 'anlassbezeichnung'];
 
@@ -25,7 +25,7 @@ class StudyFieldImport implements ToModel, WithHeadingRow
     */
     public function model(array $row): void
     {
-        if (count(array_intersect($this->requiredFields, array_keys($row))) !== count($this->requiredFields)) {
+        if ($this->hasRequiredFields()) {
             //  Throw error? Write log?
             return;
         }

@@ -9,7 +9,7 @@ class Student extends BaseModel
 {
     public function completions()
     {
-    	return $this->hasMany(Completion::class);
+        return $this->hasMany(Completion::class);
     }
 
     public function mentors()

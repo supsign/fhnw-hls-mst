@@ -8,7 +8,7 @@ abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
 
-    protected function invokeMethod(&$object, $methodName, array $parameters = array())
+    protected function invokeMethod(&$object, $methodName, array $parameters = [])
     {
         $reflection = new \ReflectionClass(get_class($object));
         $method = $reflection->getMethod($methodName);

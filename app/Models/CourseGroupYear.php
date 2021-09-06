@@ -7,7 +7,6 @@ namespace App\Models;
  */
 class CourseGroupYear extends BaseModel
 {
-
     public function courses()
     {
         return $this->belongsToMany(Course::class);

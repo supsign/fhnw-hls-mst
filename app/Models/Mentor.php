@@ -14,16 +14,16 @@ class Mentor extends BaseModel
 
     public function mentorStudent()
     {
-    	return $this->hasMany(MentorStudent::class);
+        return $this->hasMany(MentorStudent::class);
     }
 
     public function students()
     {
-    	return $this->belongsToMany(Student::class);
+        return $this->belongsToMany(Student::class);
     }
-	
-	public function user()
-	{
-		return $this->hasOne(User::class);
-	}
+
+    public function user()
+    {
+        return $this->hasOne(User::class);
+    }
 }

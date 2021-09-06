@@ -9,6 +9,6 @@ class Lesson extends BaseModel
 {
     public function courseYear()
     {
-    	return $this->belongsTo(CourseYear::class);
+        return $this->belongsTo(CourseYear::class);
     }
 }

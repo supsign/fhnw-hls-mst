@@ -11,7 +11,6 @@ use Tests\TestCase;
  */
 class StudentServiceTest extends TestCase
 {
-
     public function testUpdateOrCreate()
     {
         $studentService = $this->app->make(StudentService::class);

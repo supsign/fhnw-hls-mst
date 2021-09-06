@@ -11,7 +11,6 @@ use Tests\TestCase;
  */
 class MentorServiceTest extends TestCase
 {
-
     public function testUpdateOrCreate()
     {
         $mentorService = $this->app->make(MentorService::class);

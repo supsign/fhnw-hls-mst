@@ -11,11 +11,11 @@ class MentorStudent extends BaseModel
 
     public function mentor()
     {
-    	return $this->belongsTo(Mentor::class);
+        return $this->belongsTo(Mentor::class);
     }
 
     public function student()
     {
-    	return $this->belongsTo(Student::class);
+        return $this->belongsTo(Student::class);
     }
 }

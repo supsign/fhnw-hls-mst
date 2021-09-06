@@ -19,13 +19,13 @@ use Tests\TestCase;
  */
 class AuthServiceTest extends TestCase
 {
-
     use WithFaker;
     protected AuthService $authService;
     protected StudentService $studentService;
     protected TokenService $tokenService;
 
-    protected function setup():void {
+    protected function setup(): void
+    {
         parent::setUp();
         $this->setUpFaker();
         $this->authService = $this->app->make(AuthService::class);
@@ -39,10 +39,9 @@ class AuthServiceTest extends TestCase
         $shibbolethProperties->mail = $this->faker->email();
         $shibbolethProperties->fhnwIDPerson = $this->faker->randomNumber(5);
 
-        $isAuthorizedForLogin = $this->invokeMethod($this->authService,'isAuthorizedForLogin',[$shibbolethProperties]);
+        $isAuthorizedForLogin = $this->invokeMethod($this->authService, 'isAuthorizedForLogin', [$shibbolethProperties]);
 
         $this->assertTrue($isAuthorizedForLogin);
-        
     }
 
     public function testIsNotAuthorizedForLoginMissingFhnwId()
@@ -50,20 +49,18 @@ class AuthServiceTest extends TestCase
         $shibbolethProperties = new ShibbolethProperties();
         $shibbolethProperties->mail = $this->faker->email();
 
-        $isAuthorizedForLogin = $this->invokeMethod($this->authService,'isAuthorizedForLogin',[$shibbolethProperties]);
+        $isAuthorizedForLogin = $this->invokeMethod($this->authService, 'isAuthorizedForLogin', [$shibbolethProperties]);
 
         $this->assertFalse($isAuthorizedForLogin);
-        
     }
 
     public function testIsNotAuthorizedForLoginMissingAll()
     {
         $shibbolethProperties = new ShibbolethProperties();
 
-        $isAuthorizedForLogin = $this->invokeMethod($this->authService,'isAuthorizedForLogin',[$shibbolethProperties]);
+        $isAuthorizedForLogin = $this->invokeMethod($this->authService, 'isAuthorizedForLogin', [$shibbolethProperties]);
 
         $this->assertFalse($isAuthorizedForLogin);
-        
     }
 
     public function testIsNotAuthorizedForloginMissingMail()
@@ -71,10 +68,9 @@ class AuthServiceTest extends TestCase
         $shibbolethProperties = new ShibbolethProperties();
         $shibbolethProperties->fhnwIDPerson = $this->faker->randomNumber(5);
 
-        $isAuthorizedForLogin = $this->invokeMethod($this->authService,'isAuthorizedForLogin',[$shibbolethProperties]);
+        $isAuthorizedForLogin = $this->invokeMethod($this->authService, 'isAuthorizedForLogin', [$shibbolethProperties]);
 
         $this->assertFalse($isAuthorizedForLogin);
-        
     }
 
     public function testLoginAsStudentNotExiting()
@@ -85,16 +81,15 @@ class AuthServiceTest extends TestCase
 
         $this->assertFalse(Auth::check());
 
-        $user = $this->invokeMethod($this->authService,'login',[$shibbolethProperties]);
+        $user = $this->invokeMethod($this->authService, 'login', [$shibbolethProperties]);
         $this->assertInstanceOf(User::class, $user);
-        
+
         $this->assertTrue(Auth::check());
         $this->assertTrue(Auth::user()->id === $user->id);
     }
 
     public function testLoginAsStudentExiting()
     {
-
         $shibbolethProperties = new ShibbolethProperties();
         $shibbolethProperties->mail = $this->faker->email();
         $shibbolethProperties->fhnwIDPerson = $this->faker->randomNumber(5);
@@ -102,9 +97,9 @@ class AuthServiceTest extends TestCase
 
         $this->assertFalse(Auth::check());
 
-        $user = $this->invokeMethod($this->authService,'login',[$shibbolethProperties]);
+        $user = $this->invokeMethod($this->authService, 'login', [$shibbolethProperties]);
         $this->assertInstanceOf(User::class, $user);
-        
+
         $this->assertTrue(Auth::check());
         $this->assertTrue(Auth::user()->id === $user->id);
         $this->assertInstanceOf(Student::class, $user->student);
@@ -112,7 +107,6 @@ class AuthServiceTest extends TestCase
 
     public function testLoginAsMentor()
     {
-
         $shibbolethProperties = new ShibbolethProperties();
         $shibbolethProperties->mail = $this->faker->email();
         $shibbolethProperties->fhnwIDPerson = $this->faker->randomNumber(5);
@@ -120,9 +114,9 @@ class AuthServiceTest extends TestCase
 
         $this->assertFalse(Auth::check());
 
-        $user = $this->invokeMethod($this->authService,'login',[$shibbolethProperties]);
+        $user = $this->invokeMethod($this->authService, 'login', [$shibbolethProperties]);
         $this->assertInstanceOf(User::class, $user);
-        
+
         $this->assertTrue(Auth::check());
         $this->assertTrue(Auth::user()->id === $user->id);
         $this->assertInstanceOf(Mentor::class, $user->mentor);
@@ -130,7 +124,6 @@ class AuthServiceTest extends TestCase
 
     public function testLoginAttempt()
     {
-
         $shibbolethProperties = new ShibbolethProperties();
         $shibbolethProperties->mail = $this->faker->email();
         $shibbolethProperties->fhnwIDPerson = $this->faker->randomNumber(5);
@@ -140,9 +133,7 @@ class AuthServiceTest extends TestCase
         $this->assertFalse(Auth::check());
 
         $this->authService->attempt($token->toString());
-         
+
         $this->assertTrue(Auth::check());
-
     }
-
 }

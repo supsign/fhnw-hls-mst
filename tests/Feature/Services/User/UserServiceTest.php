@@ -20,7 +20,8 @@ class UserServiceTest extends TestCase
     private UserService $userService;
     private StudentService $studentService;
 
-    protected function setup():void {
+    protected function setup(): void
+    {
         parent::setUp();
         $this->setUpFaker();
         $this->userService = $this->app->make(UserService::class);
@@ -29,12 +30,11 @@ class UserServiceTest extends TestCase
 
     public function testServiceCreation()
     {
-
         $this->assertInstanceOf(UserService::class, $this->userService);
-
     }
 
-    public function testUpdateOrCreateUserAsStudentWithoutStudent() {
+    public function testUpdateOrCreateUserAsStudentWithoutStudent()
+    {
         $user = $this->userService->updateOrCreateUserAsStudent($this->faker->email, $this->faker->randomNumber(5));
         $this->assertInstanceOf(User::class, $user);
         $user->refresh();
@@ -42,7 +42,8 @@ class UserServiceTest extends TestCase
         $this->assertNull($user->student);
     }
 
-    public function testUpdateOrCreateUserAsStudentWithstudent() {
+    public function testUpdateOrCreateUserAsStudentWithstudent()
+    {
         $eventoId = $this->faker->randomNumber(5);
         $this->studentService->createOrUpdateOnEventoPersonId($eventoId);
         $user = $this->userService->updateOrCreateUserAsStudent($this->faker->email, $eventoId);
@@ -51,7 +52,8 @@ class UserServiceTest extends TestCase
         $this->assertInstanceOf(Student::class, $user->student);
     }
 
-    public function testUpdateOrCreateUserAsMentor() {
+    public function testUpdateOrCreateUserAsMentor()
+    {
         $email = $this->faker->email;
         $user = $this->userService->udpateOrCreateAsMentor($email, $this->faker->randomNumber(5));
         $this->assertInstanceOf(User::class, $user);
@@ -59,7 +61,8 @@ class UserServiceTest extends TestCase
         $this->assertInstanceOf(Mentor::class, $user->mentor);
     }
 
-    public function testPreventAssociatingMentorToMultipleUsers(){
+    public function testPreventAssociatingMentorToMultipleUsers()
+    {
         $eventoId = $this->faker->randomNumber(5);
         $userOne = $this->userService->udpateOrCreateAsMentor($this->faker->email, $eventoId);
         $userTwo = $this->userService->udpateOrCreateAsMentor($this->faker->email, $eventoId);
@@ -68,7 +71,8 @@ class UserServiceTest extends TestCase
         $this->assertNull($userOne->mentor);
     }
 
-    public function testPreventAssociatingStudentToMultipleUsers(){
+    public function testPreventAssociatingStudentToMultipleUsers()
+    {
         $eventoId = $this->faker->randomNumber(5);
         $this->studentService->createOrUpdateOnEventoPersonId($eventoId);
         $userOne = $this->userService->updateOrCreateUserAsStudent($this->faker->email, $eventoId);
@@ -77,5 +81,4 @@ class UserServiceTest extends TestCase
         $userTwo->refresh();
         $this->assertNull($userOne->student);
     }
-
 }

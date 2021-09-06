@@ -9,6 +9,6 @@ class StudyProgram extends BaseModel
 {
     public function studyFields()
     {
-    	return $this->hasMany(StudyField::class);
+        return $this->hasMany(StudyField::class);
     }
 }

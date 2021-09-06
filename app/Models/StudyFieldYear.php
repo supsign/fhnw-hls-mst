@@ -7,7 +7,6 @@ namespace App\Models;
  */
 class StudyFieldYear extends BaseModel
 {
-
     public function courseGroupYears()
     {
         return $this->hasMany(CourseGroupYear::class);

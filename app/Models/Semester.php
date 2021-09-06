@@ -12,7 +12,7 @@ class Semester extends BaseModel
 {
     public function assessments()
     {
-    	return $this->hasMany(Assessment::class, 'begin_semester_id');
+        return $this->hasMany(Assessment::class, 'begin_semester_id');
     }
 
     public function coursePlanningCourses()
@@ -38,7 +38,7 @@ class Semester extends BaseModel
             'course_id',
         );
     }
-    
+
     public function coursePlanningPlannings()
     {
         return $this->hasManyThrough(
@@ -70,7 +70,7 @@ class Semester extends BaseModel
 
     public function recommendations()
     {
-        return $this->hasMany(Recommendation::class , 'begin_semester_id');
+        return $this->hasMany(Recommendation::class, 'begin_semester_id');
     }
 
     public function students()
@@ -92,7 +92,7 @@ class Semester extends BaseModel
             } else {
                 $prevSemester = Semester::find($attributes['previous_semester_id']);
 
-                if ($attributes['is_hs'] && $prevSemester->year !== $attributes['year'] OR !$attributes['is_hs'] && $prevSemester->year + 1 !== $attributes['year']) {
+                if ($attributes['is_hs'] && $prevSemester->year !== $attributes['year'] or ! $attributes['is_hs'] && $prevSemester->year + 1 !== $attributes['year']) {
                     throw new BadRequestHttpException('previous semester if doesn\'t refere to the previous year');
                 }
             }

@@ -14,7 +14,7 @@ class Recommendation extends BaseModel
 
     public function crossQualificationYear()
     {
-    	return $this->belongsTo(CrossQualificationYear::class);
+        return $this->belongsTo(CrossQualificationYear::class);
     }
 
     public function originRecommendation()
@@ -24,7 +24,7 @@ class Recommendation extends BaseModel
 
     public function specializationYear()
     {
-    	return $this->belongsTo(SpecializationYear::class);
+        return $this->belongsTo(SpecializationYear::class);
     }
 
     public function semesters()
@@ -41,6 +41,6 @@ class Recommendation extends BaseModel
 
     public function studyFieldYear()
     {
-    	return $this->belongsTo(StudyFieldYear::class);
+        return $this->belongsTo(StudyFieldYear::class);
     }
 }

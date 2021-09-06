@@ -9,7 +9,7 @@ class Assessment extends BaseModel
 {
     public function courses()
     {
-    	return $this->belongsToMany(Course::class);
+        return $this->belongsToMany(Course::class);
     }
 
     public function crossQualificationYear()
@@ -24,6 +24,6 @@ class Assessment extends BaseModel
 
     public function studyFieldYear()
     {
-    	return $this->belongsTo(StudyFieldYear::class);
+        return $this->belongsTo(StudyFieldYear::class);
     }
 }

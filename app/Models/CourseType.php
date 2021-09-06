@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+/**
+ * @mixin IdeHelperCourseType
+ */
 class CourseType extends BaseModel
 {
     public function courses()

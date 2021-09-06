@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+/**
+ * @mixin IdeHelperCompletion
+ */
 class Completion extends BaseModel
 {
     public function courseYear()

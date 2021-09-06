@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+/**
+ * @mixin IdeHelperCrossQualification
+ */
 class CrossQualification extends BaseModel
 {
     public function plannings()

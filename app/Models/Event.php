@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+/**
+ * @mixin IdeHelperEvent
+ */
 class Event extends BaseModel
 {
     public function completions()

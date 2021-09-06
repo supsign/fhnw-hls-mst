@@ -16,6 +16,7 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
         "lcobucci/jwt": "^4.1",
+        "maatwebsite/excel": "^3.1",
         "supsign/laravel-csv-reader": "dev-master"
     },
     "require-dev": {

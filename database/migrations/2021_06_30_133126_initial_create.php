@@ -84,6 +84,8 @@ class InitialCreate extends Migration
         Schema::create('study_fields', function (Blueprint $table) {
             $table->id();
             $table->foreignId('study_program_id')->constrained();
+            $table->unsignedBigInteger('evento_id')->nullable()->unique();
+            $table->string('evento_number')->nullable()->unique();
             $table->string('name')->nullable();
             $table->timestampsTz();
         });

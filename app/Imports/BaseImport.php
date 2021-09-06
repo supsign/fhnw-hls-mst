@@ -10,10 +10,6 @@ class BaseImport
 
     public function hasRequiredFields($row)
     {
-        if (count(array_intersect($this->requiredFields, array_keys($row))) !== count($this->requiredFields)) {
-            return false;
-        }
-
-        return true;
+        return count(array_intersect($this->requiredFields, array_keys($row))) === count($this->requiredFields)
     }
 }

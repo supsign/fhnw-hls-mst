@@ -6,8 +6,11 @@ use Illuminate\Http\Request;
 
 class TestController extends Controller
 {
-    public function test()
+    public function test(Request $request)
     {
-        return view('welcome');
+        $firstname = $request->session()->get('firstname');
+        $lastname = $request->session()->get('lastname');
+        $email = $request->session()->get('email');
+        return view('welcome', ['firstname' => $firstname, 'lastname' => $lastname, 'email' => $email]);
     }
 }

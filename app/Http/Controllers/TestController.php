@@ -11,6 +11,7 @@ class TestController extends Controller
         $firstname = $request->session()->get('firstname');
         $lastname = $request->session()->get('lastname');
         $email = $request->session()->get('email');
+
         return view('welcome', ['firstname' => $firstname, 'lastname' => $lastname, 'email' => $email]);
     }
 }

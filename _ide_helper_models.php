@@ -14,6 +14,7 @@ namespace App\Models{
      * App\Models\Assessment.
      *
      * @mixin IdeHelperAssessment
+     *
      * @property int $id
      * @property int $cross_qualification_year_id
      * @property int $specialization_year_id
@@ -27,6 +28,7 @@ namespace App\Models{
      * @property-read \App\Models\CrossQualificationYear $crossQualificationYear
      * @property-read \App\Models\SpecializationYear $specializationYear
      * @property-read \App\Models\StudyFieldYear $studyFieldYear
+     *
      * @method static \Illuminate\Database\Eloquent\Builder|Assessment newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Assessment newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Assessment query()
@@ -49,6 +51,7 @@ namespace App\Models{
      * App\Models\AssessmentCourse.
      *
      * @mixin IdeHelperAssessmentCourse
+     *
      * @property int $id
      * @property int $course_id
      * @property int $assessment_id
@@ -56,6 +59,7 @@ namespace App\Models{
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property-read \App\Models\Assessment $assessment
      * @property-read \App\Models\Course $course
+     *
      * @method static \Illuminate\Database\Eloquent\Builder|AssessmentCourse newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|AssessmentCourse newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|AssessmentCourse query()
@@ -75,6 +79,7 @@ namespace App\Models{
      * App\Models\BaseModel.
      *
      * @mixin IdeHelperBaseModel
+     *
      * @method static \Illuminate\Database\Eloquent\Builder|BaseModel newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|BaseModel newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|BaseModel query()
@@ -89,6 +94,7 @@ namespace App\Models{
      * App\Models\Completion.
      *
      * @mixin IdeHelperCompletion
+     *
      * @property int $id
      * @property int $course_year_id
      * @property int $student_id
@@ -98,6 +104,7 @@ namespace App\Models{
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property-read \App\Models\CourseYear $courseYear
      * @property-read \App\Models\Student $student
+     *
      * @method static \Illuminate\Database\Eloquent\Builder|Completion newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Completion newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Completion query()
@@ -119,6 +126,7 @@ namespace App\Models{
      * App\Models\Course.
      *
      * @mixin IdeHelperCourse
+     *
      * @property int $id
      * @property int $course_type_id
      * @property int $language_id
@@ -150,6 +158,7 @@ namespace App\Models{
      * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\SpecializationYear[] $specializationYears
      * @property-read int|null $specialization_years_count
      * @property-read \App\Models\StudyField|null $studyField
+     *
      * @method static \Illuminate\Database\Eloquent\Builder|Course newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Course newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Course query()
@@ -172,11 +181,13 @@ namespace App\Models{
      * App\Models\CourseCourseGroupYear.
      *
      * @mixin IdeHelperCourseCourseGroupYear
+     *
      * @property int $id
      * @property int $course_group_year_id
      * @property int $course_id
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property \Illuminate\Support\Carbon|null $updated_at
+     *
      * @method static \Illuminate\Database\Eloquent\Builder|CourseCourseGroupYear newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|CourseCourseGroupYear newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|CourseCourseGroupYear query()
@@ -196,6 +207,7 @@ namespace App\Models{
      * App\Models\CourseCrossQualificationYear.
      *
      * @mixin IdeHelperCourseCrossQualificationYear
+     *
      * @property int $id
      * @property int $course_id
      * @property int $cross_qualification_year_id
@@ -203,6 +215,7 @@ namespace App\Models{
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property-read \App\Models\Course $course
      * @property-read \App\Models\CrossQualification $crossQualification
+     *
      * @method static \Illuminate\Database\Eloquent\Builder|CourseCrossQualificationYear newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|CourseCrossQualificationYear newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|CourseCrossQualificationYear query()
@@ -222,6 +235,7 @@ namespace App\Models{
      * App\Models\CourseGroup.
      *
      * @mixin IdeHelperCourseGroup
+     *
      * @property int $id
      * @property string|null $import_id
      * @property int|null $study_field_id
@@ -233,6 +247,7 @@ namespace App\Models{
      * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Course[] $courses
      * @property-read int|null $courses_count
      * @property-read \App\Models\StudyField|null $studyField
+     *
      * @method static \Illuminate\Database\Eloquent\Builder|CourseGroup newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|CourseGroup newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|CourseGroup query()
@@ -253,6 +268,7 @@ namespace App\Models{
      * App\Models\CourseGroupYear.
      *
      * @mixin IdeHelperCourseGroupYear
+     *
      * @property int $id
      * @property int $course_group_id
      * @property int $study_field_year_id
@@ -263,6 +279,7 @@ namespace App\Models{
      * @property-read CourseGroupYear $courseGroupYear
      * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Course[] $courses
      * @property-read int|null $courses_count
+     *
      * @method static \Illuminate\Database\Eloquent\Builder|CourseGroupYear newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|CourseGroupYear newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|CourseGroupYear query()
@@ -284,6 +301,7 @@ namespace App\Models{
      * App\Models\CoursePlanning.
      *
      * @mixin IdeHelperCoursePlanning
+     *
      * @property int $id
      * @property int $course_id
      * @property int $planning_id
@@ -293,6 +311,7 @@ namespace App\Models{
      * @property-read \App\Models\Course $course
      * @property-read \App\Models\Planning $planning
      * @property-read \App\Models\Semester $semester
+     *
      * @method static \Illuminate\Database\Eloquent\Builder|CoursePlanning newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|CoursePlanning newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|CoursePlanning query()
@@ -313,6 +332,7 @@ namespace App\Models{
      * App\Models\CourseRecommendation.
      *
      * @mixin IdeHelperCourseRecommendation
+     *
      * @property int $id
      * @property int $course_id
      * @property int $recommendation_id
@@ -321,6 +341,7 @@ namespace App\Models{
      * @property-read \App\Models\Course $course
      * @property-read \App\Models\Recommendation $recommendation
      * @property-read \App\Models\Semester $semester
+     *
      * @method static \Illuminate\Database\Eloquent\Builder|CourseRecommendation newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|CourseRecommendation newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|CourseRecommendation query()
@@ -340,6 +361,7 @@ namespace App\Models{
      * App\Models\CourseSkill.
      *
      * @mixin IdeHelperCourseSkill
+     *
      * @property int $id
      * @property int $skill_id
      * @property int $course_id
@@ -351,6 +373,7 @@ namespace App\Models{
      * @property-read \App\Models\Course $course
      * @property-read \App\Models\Semester $semester
      * @property-read \App\Models\Skill $skill
+     *
      * @method static \Illuminate\Database\Eloquent\Builder|CourseSkill newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|CourseSkill newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|CourseSkill query()
@@ -373,6 +396,7 @@ namespace App\Models{
      * App\Models\CourseSpecializationYear.
      *
      * @mixin IdeHelperCourseSpecializationYear
+     *
      * @property int $id
      * @property int $course_id
      * @property int $specialization_year_id
@@ -380,6 +404,7 @@ namespace App\Models{
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property-read \App\Models\Course $course
      * @property-read \App\Models\SpecializationYear $specializationYear
+     *
      * @method static \Illuminate\Database\Eloquent\Builder|CourseSpecializationYear newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|CourseSpecializationYear newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|CourseSpecializationYear query()
@@ -399,12 +424,14 @@ namespace App\Models{
      * App\Models\CourseType.
      *
      * @mixin IdeHelperCourseType
+     *
      * @property int $id
      * @property string|null $name
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Course[] $courses
      * @property-read int|null $courses_count
+     *
      * @method static \Illuminate\Database\Eloquent\Builder|CourseType newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|CourseType newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|CourseType query()
@@ -423,6 +450,7 @@ namespace App\Models{
      * App\Models\CourseYear.
      *
      * @mixin IdeHelperCourseYear
+     *
      * @property int $id
      * @property int $semester_id
      * @property int $study_field_year_id
@@ -433,6 +461,7 @@ namespace App\Models{
      * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\SkillStundent[] $skillStudents
      * @property-read int|null $skill_students_count
      * @property-read \App\Models\StudyFieldYear $studyFieldYear
+     *
      * @method static \Illuminate\Database\Eloquent\Builder|CourseYear newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|CourseYear newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|CourseYear query()
@@ -453,6 +482,7 @@ namespace App\Models{
      * App\Models\CrossQualification.
      *
      * @mixin IdeHelperCrossQualification
+     *
      * @property int $id
      * @property int $study_field_id
      * @property string|null $name
@@ -464,6 +494,7 @@ namespace App\Models{
      * @property-read int|null $recommendations_count
      * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\StudyField[] $studyField
      * @property-read int|null $study_field_count
+     *
      * @method static \Illuminate\Database\Eloquent\Builder|CrossQualification newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|CrossQualification newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|CrossQualification query()
@@ -483,6 +514,7 @@ namespace App\Models{
      * App\Models\CrossQualificationYear.
      *
      * @mixin IdeHelperCrossQualificationYear
+     *
      * @property int $id
      * @property int $cross_qualification_id
      * @property int $study_field_id
@@ -494,6 +526,7 @@ namespace App\Models{
      * @property-read int|null $courses_count
      * @property-read \App\Models\CrossQualification $crossQualification
      * @property-read \App\Models\StudyField $studyField
+     *
      * @method static \Illuminate\Database\Eloquent\Builder|CrossQualificationYear newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|CrossQualificationYear newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|CrossQualificationYear query()
@@ -515,6 +548,7 @@ namespace App\Models{
      * App\Models\Event.
      *
      * @mixin IdeHelperEvent
+     *
      * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Completion[] $completions
      * @property-read int|null $completions_count
      * @property-read \App\Models\Course $course
@@ -527,6 +561,7 @@ namespace App\Models{
      * @property-read int|null $skill_student_skills_count
      * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Student[] $skillStudentStudents
      * @property-read int|null $skill_student_students_count
+     *
      * @method static \Illuminate\Database\Eloquent\Builder|Event newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Event newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Event query()
@@ -541,12 +576,14 @@ namespace App\Models{
      * App\Models\Language.
      *
      * @mixin IdeHelperLanguage
+     *
      * @property int $id
      * @property string|null $name
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Course[] $courses
      * @property-read int|null $courses_count
+     *
      * @method static \Illuminate\Database\Eloquent\Builder|Language newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Language newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Language query()
@@ -565,6 +602,7 @@ namespace App\Models{
      * App\Models\Lesson.
      *
      * @mixin IdeHelperLesson
+     *
      * @property int $id
      * @property int $course_year_id
      * @property string $start_date
@@ -572,6 +610,7 @@ namespace App\Models{
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property-read \App\Models\CourseYear $courseYear
+     *
      * @method static \Illuminate\Database\Eloquent\Builder|Lesson newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Lesson newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Lesson query()
@@ -592,6 +631,7 @@ namespace App\Models{
      * App\Models\Mentor.
      *
      * @mixin IdeHelperMentor
+     *
      * @property int $id
      * @property string $evento_person_id_hash
      * @property string|null $firstname
@@ -605,6 +645,7 @@ namespace App\Models{
      * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Student[] $students
      * @property-read int|null $students_count
      * @property-read \App\Models\User|null $user
+     *
      * @method static \Illuminate\Database\Eloquent\Builder|Mentor newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Mentor newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Mentor query()
@@ -625,6 +666,7 @@ namespace App\Models{
      * App\Models\MentorStudent.
      *
      * @mixin IdeHelperMentorStudent
+     *
      * @property int $id
      * @property int $mentor_id
      * @property int $student_id
@@ -632,6 +674,7 @@ namespace App\Models{
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property-read \App\Models\Mentor $mentor
      * @property-read \App\Models\Student $student
+     *
      * @method static \Illuminate\Database\Eloquent\Builder|MentorStudent newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|MentorStudent newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|MentorStudent query()
@@ -651,6 +694,7 @@ namespace App\Models{
      * App\Models\Planning.
      *
      * @mixin IdeHelperPlanning
+     *
      * @property int $id
      * @property int|null $cross_qualification_year_id
      * @property int|null $mentor_id
@@ -669,6 +713,7 @@ namespace App\Models{
      * @property-read \App\Models\SpecializationYear|null $specializationYear
      * @property-read \App\Models\Student $student
      * @property-read \App\Models\StudyFieldYear $studyFieldYear
+     *
      * @method static \Illuminate\Database\Eloquent\Builder|Planning newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Planning newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Planning query()
@@ -692,6 +737,7 @@ namespace App\Models{
      * App\Models\Recommendation.
      *
      * @mixin IdeHelperRecommendation
+     *
      * @property int $id
      * @property int $cross_qualification_year_id
      * @property int $specialization_year_id
@@ -707,6 +753,7 @@ namespace App\Models{
      * @property-read int|null $semesters_count
      * @property-read \App\Models\SpecializationYear $specializationYear
      * @property-read \App\Models\StudyFieldYear $studyFieldYear
+     *
      * @method static \Illuminate\Database\Eloquent\Builder|Recommendation newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Recommendation newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Recommendation query()
@@ -728,6 +775,7 @@ namespace App\Models{
      * App\Models\Semester.
      *
      * @mixin IdeHelperSemester
+     *
      * @property int $id
      * @property int|null $previous_semester_id
      * @property int $year
@@ -750,6 +798,7 @@ namespace App\Models{
      * @property-read int|null $recommendations_count
      * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Student[] $students
      * @property-read int|null $students_count
+     *
      * @method static \Illuminate\Database\Eloquent\Builder|Semester newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Semester newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Semester query()
@@ -771,6 +820,7 @@ namespace App\Models{
      * App\Models\Skill.
      *
      * @mixin IdeHelperSkill
+     *
      * @property int $id
      * @property int $taxonomy_id
      * @property string $definition
@@ -785,6 +835,7 @@ namespace App\Models{
      * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Student[] $students
      * @property-read int|null $students_count
      * @property-read \App\Models\Taxonomy $taxonomy
+     *
      * @method static \Illuminate\Database\Eloquent\Builder|Skill newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Skill newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Skill query()
@@ -804,6 +855,7 @@ namespace App\Models{
      * App\Models\SkillStundent.
      *
      * @mixin IdeHelperSkillStundent
+     *
      * @property int $id
      * @property int $skill_id
      * @property int $student_id
@@ -813,6 +865,7 @@ namespace App\Models{
      * @property-read \App\Models\CourseYear $courseYear
      * @property-read \App\Models\Skill $skill
      * @property-read \App\Models\Student $student
+     *
      * @method static \Illuminate\Database\Eloquent\Builder|SkillStundent newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|SkillStundent newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|SkillStundent query()
@@ -833,6 +886,7 @@ namespace App\Models{
      * App\Models\Specialization.
      *
      * @mixin IdeHelperSpecialization
+     *
      * @property int $id
      * @property int $study_field_id
      * @property string|null $name
@@ -840,6 +894,7 @@ namespace App\Models{
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\StudyField[] $studyField
      * @property-read int|null $study_field_count
+     *
      * @method static \Illuminate\Database\Eloquent\Builder|Specialization newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Specialization newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Specialization query()
@@ -859,6 +914,7 @@ namespace App\Models{
      * App\Models\SpecializationYear.
      *
      * @mixin IdeHelperSpecializationYear
+     *
      * @property int $id
      * @property int $cross_qualification_id
      * @property int $study_field_year_id
@@ -872,6 +928,7 @@ namespace App\Models{
      * @property-read int|null $courses_count
      * @property-read \App\Models\CrossQualification $crossQualification
      * @property-read \App\Models\StudyFieldYear $studyFieldYear
+     *
      * @method static \Illuminate\Database\Eloquent\Builder|SpecializationYear newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|SpecializationYear newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|SpecializationYear query()
@@ -893,6 +950,7 @@ namespace App\Models{
      * App\Models\Student.
      *
      * @mixin IdeHelperStudent
+     *
      * @property int $id
      * @property int|null $study_field_year_id
      * @property string $evento_person_id_hash
@@ -915,6 +973,7 @@ namespace App\Models{
      * @property-read int|null $skills_count
      * @property-read \App\Models\StudyFieldYear|null $studyFieldYear
      * @property-read \App\Models\User|null $user
+     *
      * @method static \Illuminate\Database\Eloquent\Builder|Student newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Student newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Student query()
@@ -934,6 +993,7 @@ namespace App\Models{
      * App\Models\StudyField.
      *
      * @mixin IdeHelperStudyField
+     *
      * @property int $id
      * @property int $study_program_id
      * @property int|null $evento_id
@@ -946,6 +1006,7 @@ namespace App\Models{
      * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Specialization[] $specializations
      * @property-read int|null $specializations_count
      * @property-read \App\Models\StudyProgram $studyProgram
+     *
      * @method static \Illuminate\Database\Eloquent\Builder|StudyField newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|StudyField newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|StudyField query()
@@ -967,6 +1028,7 @@ namespace App\Models{
      * App\Models\StudyFieldYear.
      *
      * @mixin IdeHelperStudyFieldYear
+     *
      * @property int $id
      * @property int $begin_semseter_id
      * @property int|null $origin_study_field_year_id
@@ -979,6 +1041,7 @@ namespace App\Models{
      * @property-read int|null $course_group_years_count
      * @property-read StudyFieldYear|null $originStudyFieldYear
      * @property-read \App\Models\StudyField $studyField
+     *
      * @method static \Illuminate\Database\Eloquent\Builder|StudyFieldYear newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|StudyFieldYear newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|StudyFieldYear query()
@@ -1000,12 +1063,14 @@ namespace App\Models{
      * App\Models\StudyProgram.
      *
      * @mixin IdeHelperStudyProgram
+     *
      * @property int $id
      * @property string|null $name
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\StudyField[] $studyFields
      * @property-read int|null $study_fields_count
+     *
      * @method static \Illuminate\Database\Eloquent\Builder|StudyProgram newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|StudyProgram newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|StudyProgram query()
@@ -1024,12 +1089,14 @@ namespace App\Models{
      * App\Models\Taxonomy.
      *
      * @mixin IdeHelperTaxonomy
+     *
      * @property int $id
      * @property string|null $name
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Skill[] $skills
      * @property-read int|null $skills_count
+     *
      * @method static \Illuminate\Database\Eloquent\Builder|Taxonomy newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Taxonomy newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Taxonomy query()
@@ -1048,6 +1115,7 @@ namespace App\Models{
      * App\Models\User.
      *
      * @mixin IdeHelperUser
+     *
      * @property int $id
      * @property string $email_hash
      * @property int|null $mentor_id
@@ -1056,6 +1124,7 @@ namespace App\Models{
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property-read \App\Models\Mentor|null $mentor
      * @property-read \App\Models\Student|null $student
+     *
      * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|User query()

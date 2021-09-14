@@ -11,10 +11,9 @@ class StudyFieldYearImport extends BaseImport implements ToModel, WithHeadingRow
     protected $requiredFields = ['id_anlass', 'anlassnummer', 'anlassbezeichnung', 'id_anlass_stdg', 'anlassnummer_stdg'];
 
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
+     * @param  array  $row
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
     public function model(array $row)
     {
         if ($this->hasRequiredFields($row)) {
@@ -27,7 +26,7 @@ class StudyFieldYearImport extends BaseImport implements ToModel, WithHeadingRow
         return;
 
         StudyFieldYear::updateOrCreate(
-            ['evento_id' => $row['id_anlass']], 
+            ['evento_id' => $row['id_anlass']],
             ['evento_number' => $row['anlassnummer']],
         );
     }

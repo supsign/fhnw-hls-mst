@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+/**
+ * @mixin IdeHelperStudyField
+ */
 class StudyField extends BaseModel
 {
     public function courses()

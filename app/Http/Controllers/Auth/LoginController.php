@@ -12,12 +12,12 @@ class LoginController extends Controller
     {
         $jwt = $request->input('jwt');
 
-        if (!$jwt) {
+        if (! $jwt) {
             // oder ein Redeirect??
             abort(403);
         }
 
-        if (!$authService->attempt($jwt)) {
+        if (! $authService->attempt($jwt)) {
             // oder ein Redeirect??
             abort(403);
         }

@@ -5,25 +5,26 @@ namespace App\Importers;
 use App\Models\CrossQualification;
 use Supsign\LaravelCsvReader\CsvReader;
 
-class CrossQualificationImporter extends CsvReader {
-	protected 
-		$fileNames = ['querschnittsqualifikation.csv'],
-		$fieldAddresses = ['id_querschnittsqualifikation', 'bezeichnung', 'id_studienrichtung'],
-		$lineDelimiter = ',';
+class CrossQualificationImporter extends CsvReader
+{
+    protected $fileNames = ['querschnittsqualifikation.csv'];
+    protected $fieldAddresses = ['id_querschnittsqualifikation', 'bezeichnung', 'id_studienrichtung'];
+    protected $lineDelimiter = ',';
 
-	public function __construct() {
-		$this->directories = [realpath(__DIR__).'/data/'];
+    public function __construct()
+    {
+        $this->directories = [realpath(__DIR__).'/data/'];
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function importLine()
-	{
-		CrossQualification::create([
-			'name' => $this->line['bezeichnung'],
-			'study_field_id' => $this->line['id_studienrichtung'],
-		]);
+    public function importLine()
+    {
+        CrossQualification::create([
+            'name' => $this->line['bezeichnung'],
+            'study_field_id' => $this->line['id_studienrichtung'],
+        ]);
 
-		return $this;
-	}
+        return $this;
+    }
 }

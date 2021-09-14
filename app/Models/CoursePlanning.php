@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
+/**
+ * @mixin IdeHelperCoursePlanning
+ */
 class CoursePlanning extends BaseModel
 {
     protected $table = 'course_planning';
 
     public function course()
     {
-        return $this->belongsTo();
+        return $this->belongsTo(Course::class);
     }
 
     public function semester()
@@ -18,6 +21,6 @@ class CoursePlanning extends BaseModel
 
     public function planning()
     {
-        return $this->belongsTo(Plannings::class);
+        return $this->belongsTo(Planning::class);
     }
 }

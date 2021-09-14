@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+/**
+ * @mixin IdeHelperTaxonomy
+ */
 class Taxonomy extends BaseModel
 {
     public function skills()

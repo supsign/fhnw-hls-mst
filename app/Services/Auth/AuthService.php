@@ -37,7 +37,7 @@ class AuthService
 
     private function login(ShibbolethProperties $shibbolethProperties): User
     {
-    
+
         try {
             $role = $this->roleService->evaluate($shibbolethProperties);
         } catch (\Throwable $th) {
@@ -66,8 +66,9 @@ class AuthService
 
         Session::regenerate();
 
-        Session::push('lastname', $shibbolethProperties->surname);
-        Session::push('firstname', $shibbolethProperties->givenName);
+        Session::put('lastname', $shibbolethProperties->surname);
+        Session::put('firstname', $shibbolethProperties->givenName);
+        Session::put('email', $shibbolethProperties->mail);
 
         return $user;
     }

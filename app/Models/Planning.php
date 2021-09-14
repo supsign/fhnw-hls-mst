@@ -2,16 +2,19 @@
 
 namespace App\Models;
 
+/**
+ * @mixin IdeHelperPlanning
+ */
 class Planning extends BaseModel
 {
     public function crossQualificationYear()
     {
-    	return $this->belongsTo(CrossQualificationYear::class);
+        return $this->belongsTo(CrossQualificationYear::class);
     }
 
     public function mentor()
     {
-    	return $this->belongsTo(Mentor::class);
+        return $this->belongsTo(Mentor::class);
     }
 
     public function courses()
@@ -33,12 +36,12 @@ class Planning extends BaseModel
 
     public function specializationYear()
     {
-    	return $this->belongsTo(SpecializationYear::class);
+        return $this->belongsTo(SpecializationYear::class);
     }
 
     public function student()
     {
-    	return $this->belongsTo(Student::class);
+        return $this->belongsTo(Student::class);
     }
 
     public function studyFieldYear()

@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+/**
+ * @mixin IdeHelperCrossQualificationYear
+ */
 class CrossQualificationYear extends BaseModel
 {
     public function courses()

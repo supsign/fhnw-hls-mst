@@ -3,9 +3,10 @@
 namespace App\Services\Mentor;
 
 use App\Models\Mentor;
+use App\Services\Base\BaseService;
 use App\Services\Helpers\hashes;
 
-class MentorService
+class MentorService extends BaseService
 {
     use Hashes;
 

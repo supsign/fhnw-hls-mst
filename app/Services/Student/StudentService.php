@@ -3,9 +3,10 @@
 namespace App\Services\Student;
 
 use App\Models\Student;
+use App\Services\Base\BaseService;
 use App\Services\Helpers\hashes;
 
-class StudentService
+class StudentService extends BaseService
 {
     use Hashes;
 

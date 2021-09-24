@@ -36,7 +36,7 @@ class UserFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-                'student_id' => $this->faker->unique()->randomNumber()
+                'student_id' => $this->faker->unique()->randomNumber(),
             ];
         });
     }

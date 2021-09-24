@@ -10,15 +10,16 @@ class PermissionService
     public function assignStudent(User $user): User
     {
         $user->assignRole('student');
+
         return $user;
     }
 
     public function removeStudent(User $user): User
     {
         $user->removeRole('student');
+
         return $user;
     }
-
 
     public function canShowAppOrAbort(): self
     {

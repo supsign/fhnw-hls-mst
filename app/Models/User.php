@@ -14,7 +14,6 @@ class User extends Authenticatable
     use HasRoles;
     use HasFactory;
 
-
     protected $fillable = ['email_hash'];
 
     public function mentor()

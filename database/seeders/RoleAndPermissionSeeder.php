@@ -9,7 +9,6 @@ use Spatie\Permission\PermissionRegistrar;
 
 class RoleAndPermissionSeeder extends Seeder
 {
-
     /**
      * Run the database seeds.
      */

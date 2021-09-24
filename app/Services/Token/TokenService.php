@@ -23,7 +23,7 @@ class TokenService
 {
     public function isValid(string $jwt): bool
     {
-        if (! $jwt) {
+        if (!$jwt) {
             return false;
         }
 

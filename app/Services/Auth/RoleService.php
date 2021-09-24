@@ -9,11 +9,11 @@ class RoleService
 {
     public function evaluate(ShibbolethProperties $shibbolethProperties): Role
     {
-        if (! $shibbolethProperties->mail) {
+        if (!$shibbolethProperties->mail) {
             throw new Exception('no authorized role identified');
         }
 
-        if (! $shibbolethProperties->fhnwIDPerson) {
+        if (!$shibbolethProperties->fhnwIDPerson) {
             throw new Exception('no authorized role identified');
         }
 

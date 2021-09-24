@@ -6,7 +6,7 @@ use Exception;
 
 trait Hashes
 {
-    public function getHash(string | int $value)
+    public function getHash(string|int $value)
     {
         $hashSalt = config('jwt.hashSalt');
 

@@ -22,7 +22,7 @@ class CourseSpecializationImporter extends CsvReader
 
     public function importLine()
     {
-        if (! Specialization::find($this->line['id_spezialisierung'])) {
+        if (!Specialization::find($this->line['id_spezialisierung'])) {
             return $this;
         }
 

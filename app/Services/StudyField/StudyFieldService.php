@@ -2,8 +2,8 @@
 
 namespace App\Services\StudyField;
 
-use App\Services\Base\BaseService;
+use App\Services\Base\BaseModelService;
 
-class StudyFieldService extends BaseService
+class StudyFieldService extends BaseModelService
 {
 }

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
-    public function home(Request $request)
+    public function index(Request $request)
     {
         if (!Auth::check()) {
             abort(403);
@@ -17,7 +17,7 @@ class HomeController extends Controller
         $lastname = $request->session()->get('lastname');
         $email = $request->session()->get('email');
 
-        return view('welcome', [
+        return view('home', [
             'firstname' => $firstname,
             'lastname' => $lastname,
             'email' => $email,

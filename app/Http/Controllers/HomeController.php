@@ -9,7 +9,7 @@ class HomeController extends Controller
 {
     public function home(Request $request)
     {
-        if (!Auth::check()) {
+        if (! Auth::check()) {
             abort(403);
         }
 
@@ -18,9 +18,9 @@ class HomeController extends Controller
         $email = $request->session()->get('email');
 
         return view('welcome', [
-            'firstname' => $firstname, 
-            'lastname' => $lastname, 
-            'email' => $email
+            'firstname' => $firstname,
+            'lastname' => $lastname,
+            'email' => $email,
         ]);
     }
 }

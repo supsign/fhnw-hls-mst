@@ -3,7 +3,8 @@
         Startseite
     </x-slot>
 
-    <div class="container mt-4 bg-gray-200 p-4">
+    <div class="container bg-gray-200 p-3 mx-auto">
         <x-user.me></x-user.me>
+        <x-user.my-schedules></x-user.my-schedules>
     </div>
 </x-layout.app>

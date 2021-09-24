@@ -3,13 +3,13 @@ const colors = require('tailwindcss/colors');
 module.exports = {
     mode: 'jit',
     important: true,
-  purge: {
-      options: {
-          safelist: [/^media-library/],
-      },
-      content: ['./resources/**/*.blade.php', './resources/**/*.js', './resources/**/*.ts', './resources/**/*.vue'],
-  },
-  darkMode: false, // or 'media' or 'class'
+    purge: {
+        options: {
+            safelist: [/^media-library/],
+        },
+        content: ['./resources/**/*.blade.php', './resources/**/*.js', './resources/**/*.ts', './resources/**/*.vue'],
+    },
+    darkMode: false, // or 'media' or 'class'
     theme: {
         extend: {
             height: {
@@ -24,16 +24,16 @@ module.exports = {
             },
         },
     },
-  variants: {
-    extend: {},
-  },
-  plugins: [
-      require('@tailwindcss/typography'),
-      require('@tailwindcss/forms'),
-      require('@tailwindcss/line-clamp'),
-      require('@tailwindcss/aspect-ratio'),
-      require('tailwindcss-hyphens'),
-      require('autoprefixer'),
-      require('tailwind-scrollbar'),
-  ],
-}
+    variants: {
+        extend: {},
+    },
+    plugins: [
+        require('@tailwindcss/typography'),
+        require('@tailwindcss/forms'),
+        require('@tailwindcss/line-clamp'),
+        require('@tailwindcss/aspect-ratio'),
+        require('tailwindcss-hyphens'),
+        require('autoprefixer'),
+        require('tailwind-scrollbar'),
+    ],
+};

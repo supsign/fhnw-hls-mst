@@ -26,4 +26,3 @@ class App extends Component
         return view('layout.app');
     }
 }
-

@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+/**
+ * @mixin IdeHelperSkillStundent
+ */
 class SkillStundent extends BaseModel
 {
     protected $table = 'skill_student';
@@ -9,15 +12,15 @@ class SkillStundent extends BaseModel
     public function courseYear()
     {
         return $this->belongsTo(CourseYear::class);
-    }  
+    }
 
     public function skill()
     {
-    	return $this->belongsTo(Skill::class);
+        return $this->belongsTo(Skill::class);
     }
 
     public function student()
     {
-    	return $this->belongsTo(Student::class);
-    }    
+        return $this->belongsTo(Student::class);
+    }
 }

@@ -2,21 +2,18 @@
 
 namespace App\Models;
 
+/**
+ * @mixin IdeHelperCourseGroupYear
+ */
 class CourseGroupYear extends BaseModel
 {
-
     public function courses()
     {
         return $this->belongsToMany(Course::class);
     }
 
-    public function courseGroup()
+    public function courseGroupYear()
     {
-        return $this->belongsTo(CourseGroup::class);
-    }
-
-    public function studyFieldYear()
-    {
-        return $this->belongsTo(StudyFieldYear::class);
+        return $this->belongsTo(CourseGroupYear::class);
     }
 }

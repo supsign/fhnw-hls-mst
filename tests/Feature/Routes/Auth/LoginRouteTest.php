@@ -14,13 +14,12 @@ use Tests\TestCase;
  */
 class LoginRouteTest extends TestCase
 {
-
     use WithFaker;
 
     protected TokenService $tokenService;
 
-
-    protected function setup():void {
+    protected function setup(): void
+    {
         parent::setUp();
         $this->setUpFaker();
         $this->tokenService = $this->app->make(TokenService::class);
@@ -29,7 +28,7 @@ class LoginRouteTest extends TestCase
     public function testInvalidLogin()
     {
         $jwt = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
-        $response = $this->post(route('post.auth.login'),['jwt' => $jwt]);
+        $response = $this->post(route('post.auth.login'), ['jwt' => $jwt]);
         $response->assertStatus(403);
     }
 
@@ -39,9 +38,8 @@ class LoginRouteTest extends TestCase
         $shibbolethProperties->mail = $this->faker->email;
         $shibbolethProperties->fhnwIDPerson = $this->faker->randomNumber(5);
         $token = $this->tokenService->issue($shibbolethProperties);
-        $response = $this->post(route('post.auth.login'),['jwt' => $token->toString()]);
+        $response = $this->post(route('post.auth.login'), ['jwt' => $token->toString()]);
         $response->assertStatus(302);
         $this->assertTrue(Auth::check());
     }
-
 }

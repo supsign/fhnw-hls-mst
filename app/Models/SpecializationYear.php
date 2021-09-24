@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+/**
+ * @mixin IdeHelperSpecializationYear
+ */
 class SpecializationYear extends BaseModel
 {
     public function courses()

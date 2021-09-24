@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+/**
+ * @mixin IdeHelperSpecialization
+ */
 class Specialization extends BaseModel
 {
     public function studyField()

@@ -15,35 +15,37 @@ use Tests\TestCase;
  */
 class RoleServiceTest extends TestCase
 {
-
     use WithFaker;
     protected RoleService $roleService;
 
-
-    protected function setup():void {
+    protected function setup(): void
+    {
         parent::setUp();
         $this->setUpFaker();
         $this->roleService = $this->app->make(RoleService::class);
     }
 
-    public function testEvaluateErrorWithoutMailAndFhnwIDPerson() {
+    public function testEvaluateErrorWithoutMailAndFhnwIDPerson()
+    {
         $this->expectException(Exception::class);
         $shib = new ShibbolethProperties();
-        $this->roleService->evaluate($shib);   
+        $this->roleService->evaluate($shib);
     }
 
-    public function testEvaluateErrorWithoutMail() {
+    public function testEvaluateErrorWithoutMail()
+    {
         $this->expectException(Exception::class);
         $shib = new ShibbolethProperties();
         $shib->fhnwIDPerson = '1234';
-        $this->roleService->evaluate($shib);   
+        $this->roleService->evaluate($shib);
     }
 
-    public function testEvaluateErrorWithoutFhnwIDPerson() {
+    public function testEvaluateErrorWithoutFhnwIDPerson()
+    {
         $this->expectException(Exception::class);
         $shib = new ShibbolethProperties();
         $shib->mail = $this->faker->email;
-        $this->roleService->evaluate($shib);   
+        $this->roleService->evaluate($shib);
     }
 
     public function testEvaluateStudentRole()
@@ -54,7 +56,6 @@ class RoleServiceTest extends TestCase
         $role = $this->roleService->evaluate($shibbolethProperties);
         $this->assertInstanceOf(Role::class, $role);
         $this->assertTrue($role->getName() === 'student');
-        
     }
 
     public function testEvaluateStudentMentor()
@@ -66,7 +67,5 @@ class RoleServiceTest extends TestCase
         $role = $this->roleService->evaluate($shibbolethProperties);
         $this->assertInstanceOf(Role::class, $role);
         $this->assertTrue($role->getName() === 'mentor');
-        
     }
-
 }

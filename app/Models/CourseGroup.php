@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+/**
+ * @mixin IdeHelperCourseGroup
+ */
 class CourseGroup extends BaseModel
 {
     public function courses()
@@ -9,9 +12,9 @@ class CourseGroup extends BaseModel
         return $this->belongsToMany(Course::class);
     }
 
-    public function courseCourseGroups()
+    public function courseGroupYears()
     {
-        return $this->hasMany(CourseCourseGroup::class);
+        return $this->hasMany(CourseGroupYear::class);
     }
 
     public function studyField()

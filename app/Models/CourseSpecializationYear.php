@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+/**
+ * @mixin IdeHelperCourseSpecializationYear
+ */
 class CourseSpecializationYear extends BaseModel
 {
     protected $table = 'course_specialization_year';

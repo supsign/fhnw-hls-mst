@@ -23,7 +23,7 @@ class TokenService
 {
     public function isValid(string $jwt): bool
     {
-        if (!$jwt){
+        if (!$jwt) {
             return false;
         }
 
@@ -36,14 +36,13 @@ class TokenService
         $publicKey = InMemory::plainText($public);
         $signer = Signer\Ecdsa\Sha512::create();
 
-        return $validator->validate($token, new SignedWith($signer,$publicKey), new StrictValidAt($now));
+        return $validator->validate($token, new SignedWith($signer, $publicKey), new StrictValidAt($now));
     }
 
     public function getShibbolethProperties(string $jwt): ShibbolethProperties
     {
         $claims = $this->parse($jwt)->claims();
-        
-        
+
         $shibbolethProperties = new ShibbolethProperties();
 
         $shibbolethProperties->mail = $claims->get('mail');
@@ -54,17 +53,20 @@ class TokenService
         $shibbolethProperties->shibSesssionId = $claims->get('shibSesssionId');
         $shibbolethProperties->shibIdentityProvider = $claims->get('shibIdentityProvider');
         $shibbolethProperties->entitlement = $claims->get('entitlement');
+
         return $shibbolethProperties;
     }
 
-    private function parse(string $jwt):Plain
+    private function parse(string $jwt): Plain
     {
         $parser = new Parser(new JoseEncoder());
+
         return $parser->parse($jwt);
     }
 
-    public function issue(ShibbolethProperties $shibbolethProperties): Plain{
-        if (App::environment() === 'production'){
+    public function issue(ShibbolethProperties $shibbolethProperties): Plain
+    {
+        if (App::environment() === 'production') {
             throw new MethodNotFoundException('Method not found', TokenService::class, 'issue', $shibbolethProperties);
         }
 
@@ -72,7 +74,7 @@ class TokenService
         $privateKey = InMemory::plainText($private);
         $builder = new Builder(new JoseEncoder(), ChainedFormatter::default());
         $now = new DateTimeImmutable();
-        
+
         return $builder->issuedBy('https://mst.fhnw.ch')
         ->issuedAt($now)
         ->canOnlyBeUsedAfter($now)
@@ -83,6 +85,5 @@ class TokenService
         ->withClaim('lastname', $shibbolethProperties->surname)
         ->withClaim('fhnwDetailedAffiliation', $shibbolethProperties->fhnwDetailedAffiliation)
         ->getToken(Signer\Ecdsa\Sha512::create(), $privateKey);
-
     }
 }

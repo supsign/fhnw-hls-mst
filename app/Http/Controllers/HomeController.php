@@ -9,7 +9,7 @@ class HomeController extends Controller
 {
     public function home(Request $request)
     {
-        if (! Auth::check()) {
+        if (!Auth::check()) {
             abort(403);
         }
 

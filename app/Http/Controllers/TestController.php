@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Imports\StudyFieldYearImport;
+use Maatwebsite\Excel\Excel;
 
 class TestController extends Controller
 {
-    public function test(Request $request)
+    public function test(Excel $excel)
     {
-        $firstname = $request->session()->get('firstname');
-        $lastname = $request->session()->get('lastname');
-        $email = $request->session()->get('email');
+        $excel->import(new StudyFieldYearImport, 'Tab2_Studienjahrgang.xlsx');
 
-        return view('welcome', ['firstname' => $firstname, 'lastname' => $lastname, 'email' => $email]);
+        return view('welcome');
     }
 }

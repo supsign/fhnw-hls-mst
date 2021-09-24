@@ -24,8 +24,8 @@ class StudyFieldImport extends BaseImport implements ToModel, WithHeadingRow
      */
     public function model(array $row): void
     {
-        if (count(array_intersect($this->requiredFields, array_keys($row))) !== count($this->requiredFields)) {
-            //  Todo log with activitylog
+        if ($this->hasRequiredFields($row)) {
+            //  Throw error? Write log?
             return;
         }
 

@@ -9,7 +9,6 @@
         <meta name="description" content="{{ isset($description) ? $description : '' }}">
         <meta name="msapplication-TileColor" content="#ffffff">
         <meta name="theme-color" content="#ffffff">
-        <meta name="language" content="{{ $locale }}">
 
         <title>{{ str_replace('<br>', ',', $title) }} | HLS MST</title>
 
@@ -21,8 +20,8 @@
 
     </head>
     <body class="font-body">
-    <div id="app" class="w-full bg-blend-darken ">
-        <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
+    <div id="app" class="w-full">
+        <div class="flex flex-col h-screen">
             <x-layout.top/>
             <x-layout.header/>
             <div id="main" class="flex-grow">

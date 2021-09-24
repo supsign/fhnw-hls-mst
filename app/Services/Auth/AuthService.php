@@ -20,8 +20,8 @@ class AuthService
         private RoleService $roleService,
         private UserService $userService,
         private TokenService $tokenService
-    )
-    {}
+    ) {
+    }
 
     public function attempt(string $jwt): bool
     {
@@ -37,7 +37,6 @@ class AuthService
 
     private function login(ShibbolethProperties $shibbolethProperties): User
     {
-
         try {
             $role = $this->roleService->evaluate($shibbolethProperties);
         } catch (\Throwable $th) {
@@ -73,12 +72,13 @@ class AuthService
         return $user;
     }
 
-    private function isAuthorizedForLogin(ShibbolethProperties $shibbolethProperties){
-        if (!$shibbolethProperties->mail){
+    private function isAuthorizedForLogin(ShibbolethProperties $shibbolethProperties)
+    {
+        if (!$shibbolethProperties->mail) {
             return false;
         }
 
-        if (!$shibbolethProperties->fhnwIDPerson){
+        if (!$shibbolethProperties->fhnwIDPerson) {
             return false;
         }
 

@@ -34,7 +34,7 @@ class StudyFieldImport extends BaseImport implements ToModel, WithHeadingRow
             ['evento_number' => $row['anlassnummer']],
         );
 
-        if (! $studyField->name) {
+        if (!$studyField->name) {
             $studyField->name = $row['anlassbezeichnung'];
             $studyField->save();
         }

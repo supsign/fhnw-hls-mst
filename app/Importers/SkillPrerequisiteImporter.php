@@ -24,7 +24,7 @@ class SkillPrerequisiteImporter extends CsvReader
     {
         $prerequisiteCourse = Course::where('number', $this->line['voraussetzung_laufnummer'])->first();
 
-        if (! $prerequisiteCourse) {
+        if (!$prerequisiteCourse) {
             return $this;
         }
 

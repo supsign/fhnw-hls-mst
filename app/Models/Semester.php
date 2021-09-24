@@ -92,7 +92,7 @@ class Semester extends BaseModel
             } else {
                 $prevSemester = Semester::find($attributes['previous_semester_id']);
 
-                if ($attributes['is_hs'] && $prevSemester->year !== $attributes['year'] or ! $attributes['is_hs'] && $prevSemester->year + 1 !== $attributes['year']) {
+                if ($attributes['is_hs'] && $prevSemester->year !== $attributes['year'] or !$attributes['is_hs'] && $prevSemester->year + 1 !== $attributes['year']) {
                     throw new BadRequestHttpException('previous semester if doesn\'t refere to the previous year');
                 }
             }

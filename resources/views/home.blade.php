@@ -3,10 +3,7 @@
         Startseite
     </x-slot>
 
-    <div class="container pt-16 mb-16">
-            Hallo {{$firstname}} {{$lastname}}
-            <a href="mailto:{{$email}}">
-                {{$email}}
-            </a>
+    <div class="container mt-4 bg-gray-200 p-4">
+        <x-user.me></x-user.me>
     </div>
 </x-layout.app>

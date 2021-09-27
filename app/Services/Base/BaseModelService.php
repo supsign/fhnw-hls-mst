@@ -22,11 +22,11 @@ class BaseModelService
         return $this->model::find($ids);
     }
 
-    protected function sanitiseAttributes(array $attributes): array
+    protected function sanitiseAttributes(array $attributes, bool $allowId = false): array
     {
         return array_intersect_key(
             $attributes,
-            array_flip(GeneralHelper::getModelColumns($this->model)),
+            array_flip(GeneralHelper::getModelColumns($this->model, $allowId)),
         );
     }
 }

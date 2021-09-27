@@ -7,16 +7,21 @@ use Illuminate\Support\Facades\Schema;
 
 class GeneralHelper
 {
-    public static function getModelColumns(BaseModel $model): array
+    public static function getModelColumns(BaseModel $model, bool $allowId): array
     {
+        $forbiddenAttributes = [
+            'deleted_at',
+            'created_at',
+            'updated_at',
+        ];
+
+        if (!$allowId) {
+            $forbiddenAttributes[] = 'id';
+        }
+
         return array_diff(
             Schema::getColumnListing($model->getTable()),
-            [
-                'id',
-                'deleted_at',
-                'created_at',
-                'updated_at',
-            ],
+            $forbiddenAttributes,
         );
     }
 

@@ -14,7 +14,7 @@ class ScheduleController extends Controller
             abort(403);
         }
 
-        return view('schedule.list', ['schedules' => Schedule::all()]);
+        return view('schedule.list'/*, ['schedules' => Schedule::all()]*/);
     }
 
     public function newSchedule()

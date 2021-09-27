@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Auth;
 
 class ScheduleController extends Controller
 {
-
     public function showAllSchedules()
     {
         if (!Auth::check()) {

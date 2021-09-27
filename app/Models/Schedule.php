@@ -7,5 +7,4 @@ namespace App\Models;
  */
 class Schedule extends BaseModel
 {
-
 }

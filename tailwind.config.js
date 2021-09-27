@@ -12,6 +12,11 @@ module.exports = {
     darkMode: false, // or 'media' or 'class'
     theme: {
         extend: {
+            colors: {
+                hls: {
+                    DEFAULT: '#FDE70E',
+                },
+            },
             height: {
                 120: '30rem',
             },

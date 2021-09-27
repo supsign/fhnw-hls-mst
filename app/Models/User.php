@@ -21,7 +21,8 @@ class User extends Authenticatable
         return $this->belongsTo(Student::class);
     }
 
-    protected function getEmailAttribute(): ?string     //  ToDo: mock properties from shibboleth request
+    //  ToDo: mock properties from shibboleth request
+    protected function getEmailAttribute(): ?string
     {
         return 'mail@exmaple.com';
     }

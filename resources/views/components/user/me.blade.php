@@ -4,9 +4,9 @@
             Benutzerdaten
         </x-slot>
 
-        <!--ToDo mehr Angaben zum Standartuser hinzufügen-->
+        <!-- ToDo mehr Angaben zum Standartuser hinzufügen -->
         <div>
-            <div>Name: {{ $user->firstname }} {{ $user->lastname }}</div>
+            <div>@lang('l.userName') {{ $user->firstname }} {{ $user->lastname }}</div>
             <div>Rolle: </div>
             <div>Studiengang:</div>
             <div>Studienrichtung:</div>

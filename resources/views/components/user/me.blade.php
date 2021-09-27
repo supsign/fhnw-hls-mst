@@ -4,6 +4,7 @@
             Benutzerdaten
         </x-slot>
 
+        <!--ToDo mehr Angaben zum Standartuser hinzufügen-->
         <div>
             <div>Name: {{ $user->firstname }} {{ $user->lastname }}</div>
             <div>Rolle: </div>

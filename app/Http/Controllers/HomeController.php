@@ -17,7 +17,7 @@ class HomeController extends Controller
         $lastname = $request->session()->get('lastname');
         $email = $request->session()->get('email');
 
-        return view('components.pages.home', [
+        return view('pages.home', [
             'firstname' => $firstname,
             'lastname' => $lastname,
             'email' => $email,

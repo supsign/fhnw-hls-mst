@@ -4,20 +4,20 @@ namespace App\Services\Base\Traits;
 
 use App\Models\BaseModel;
 
-trait UpdateOrCreateTrait 
+trait UpdateOrCreateTrait
 {
-	public function updateOrCreate(array $referenceAttributes, array $otherAttributes): BaseModel
-	{
-		$referenceAttributes = $this->sanitiseAttributes($referenceAttributes, true);
-		$otherAttributes = $this->sanitiseAttributes($otherAttributes);
+    public function updateOrCreate(array $referenceAttributes, array $otherAttributes): BaseModel
+    {
+        $referenceAttributes = $this->sanitiseAttributes($referenceAttributes, true);
+        $otherAttributes = $this->sanitiseAttributes($otherAttributes);
 
-		foreach (array_keys(array_intersect($referenceAttributes, $otherAttributes)) AS $duplicateKey) {
-			unset($otherAttributes[$duplicateKey]);
-		}
+        foreach (array_keys(array_intersect($referenceAttributes, $otherAttributes)) AS $duplicateKey) {
+            unset($otherAttributes[$duplicateKey]);
+        }
 
-		return $this->model::updateOrCreate(
-			$referenceAttributes,
-			$otherAttributes,
-		);
-	}
+        return $this->model::updateOrCreate(
+            $referenceAttributes,
+            $otherAttributes,
+        );
+    }
 }

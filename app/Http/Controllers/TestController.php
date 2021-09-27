@@ -10,7 +10,6 @@ class TestController extends Controller
 {
     public function test(Excel $excel, StudyFieldYearService $studyFieldYearService)
     {
-
         $sfy = StudyFieldYear::find(4);
 
         $tets = $studyFieldYearService->updateOrCreate(

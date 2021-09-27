@@ -8,10 +8,10 @@ use App\Services\Base\Traits\UpdateTrait;
 
 class StudyFieldService extends BaseModelService
 {
-	use UpdateTrait;
+    use UpdateTrait;
 
-	public function __construct(protected StudyField $model)
-	{
-		parent::__construct($model);
-	}
+    public function __construct(protected StudyField $model)
+    {
+        parent::__construct($model);
+    }
 }

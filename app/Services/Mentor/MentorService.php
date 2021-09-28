@@ -22,7 +22,7 @@ class MentorService extends BaseModelService
     public function createOrUpdateOnEventoPersonId(int $eventoPersonId, string $lastname = null, string $firstname = null): Mentor
     {
         return $this->createOrUpdateOnEventoPersonIdTrait($eventoPersonId, [
-            'firstname' => $firstname, 'lastname' => $lastname
+            'firstname' => $firstname, 'lastname' => $lastname,
         ]);
     }
 }

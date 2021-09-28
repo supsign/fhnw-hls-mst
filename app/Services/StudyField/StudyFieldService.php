@@ -25,19 +25,17 @@ class StudyFieldService extends BaseModelService
         return str_pad(
             (int)filter_var(
                 substr($eventoNumber, strpos($eventoNumber, '/')),
-                FILTER_SANITIZE_NUMBER_INT  
+                FILTER_SANITIZE_NUMBER_INT
             ),
             4,
             '20',
             STR_PAD_LEFT
-        );   
+        );
     }
 
     public function getSemesterFromEventoNumber(string $eventoNumber): Semester
     {
         $year = $this->extractYearFromEventoNumber($eventoNumber);
-
-
 
         return new Semester;
     }

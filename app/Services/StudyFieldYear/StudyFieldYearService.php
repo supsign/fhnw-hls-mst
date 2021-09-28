@@ -32,6 +32,7 @@ class StudyFieldYearService extends BaseModelService
         // );
 
         return new StudyFieldYear;
+
         return $this->createOrUpdateOnEventoIdTrait($eventId, $attributes);
     }
 }

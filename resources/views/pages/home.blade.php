@@ -3,11 +3,13 @@
         Startseite
     </x-slot>
 
-    <div class="container bg-gray-200 p-3 mx-auto">
+    <div class="container p-3 mx-auto">
         <x-user.me></x-user.me>
         <x-user.my-schedules></x-user.my-schedules>
-        <div class="flex justify-end">
-            <a href="{{ route('schedule.new') }}" class="button-primary w-auto items-end m-3">+</a>
+        <div class="fixed z-30 cursor-pointer right-5 bottom-14">
+            <a href="{{ route('schedule.new') }}" class="button-primary m-3 text-sm">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+            </a>
         </div>
     </div>
 </x-layout.app>

@@ -7,9 +7,9 @@
         <!-- ToDo mehr Angaben zum Standartuser hinzufügen -->
         <div>
             <div>@lang('l.userName') {{ $user->firstname }} {{ $user->lastname }}</div>
-            <div>Rolle: </div>
-            <div>Studiengang:</div>
-            <div>Studienrichtung:</div>
+            <div>@lang('l.userRole') </div>
+            <div>@lang('l.userStudyCourse')</div>
+            <div>@lang('l.userStudyField')</div>
         </div>
     </x-app.card>
 </div>

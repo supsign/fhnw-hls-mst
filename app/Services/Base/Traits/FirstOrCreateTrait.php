@@ -19,7 +19,7 @@ trait FirstOrCreateTrait
             $referenceAttributes, $insertAttributes
         );
 
-        $test =  $this->model::firstOrCreate(
+        $test = $this->model::firstOrCreate(
             $referenceAttributes,
             $insertAttributes,
         );

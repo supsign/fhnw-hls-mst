@@ -1,0 +1,5 @@
+<div>
+    <vue-input
+
+    />
+</div>

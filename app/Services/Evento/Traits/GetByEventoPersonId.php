@@ -12,7 +12,7 @@ trait GetByEventoPersonId
     public function getByEventoPersonId(int $eventoPersonId): ?BaseModel
     {
         return $this->model::where([
-            'evento_person_id_hash' => $this->getHash($eventoPersonId)
+            'evento_person_id_hash' => $this->getHash($eventoPersonId),
         ])->first();
     }
 }

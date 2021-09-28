@@ -37,5 +37,4 @@ class SemesterService extends BaseModelService
     {
         return $this->firstOrCreateTrait($referenceAttributes, $updateAttributes);
     }
-
 }

@@ -3,18 +3,17 @@
 namespace App\Services\User;
 
 use App\Models\User;
-use App\Services\Base\BaseModelService;
 use App\Services\Helpers\hashes;
 use App\Services\Mentor\MentorService;
 use App\Services\Student\StudentService;
 
-class UserService extends BaseModelService
+class UserService
 {
     use Hashes;
 
     public function __construct(
-        private StudentService $studentService,
-        private MentorService $mentorService
+        protected StudentService $studentService,
+        protected MentorService $mentorService,
     ) {
     }
 

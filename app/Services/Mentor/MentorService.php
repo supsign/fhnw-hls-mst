@@ -4,26 +4,25 @@ namespace App\Services\Mentor;
 
 use App\Models\Mentor;
 use App\Services\Base\BaseModelService;
-use App\Services\Helpers\hashes;
+use App\Services\Evento\Traits\CreateOrUpdateOnEventoPersonId;
+use App\Services\Evento\Traits\GetByEventoPersonId;
 
 class MentorService extends BaseModelService
 {
-    use Hashes;
+    use CreateOrUpdateOnEventoPersonId {
+        createOrUpdateOnEventoPersonId AS createOrUpdateOnEventoPersonIdTrait;
+    }
+    use GetByEventoPersonId;
 
-    public function getByEventoPersonId(int $eventoPersonId)
+    public function __construct(protected Mentor $model)
     {
-        $eventoPersonIdHash = $this->getHash($eventoPersonId);
-
-        return Mentor::where(['evento_person_id_hash' => $eventoPersonIdHash])->first();
+        parent::__construct($model);
     }
 
-    public function createOrUpdateOnEventoPersonId(int $eventoPersonId, string $lastname = null, string $firstname = null)
+    public function createOrUpdateOnEventoPersonId(int $eventoPersonId, string $lastname = null, string $firstname = null): Mentor
     {
-        $eventoPersonIdHash = $this->getHash($eventoPersonId);
-
-        return Mentor::updateOrCreate(
-            ['evento_person_id_hash' => $eventoPersonIdHash],
-            ['firstname' => $firstname, 'lastname' => $lastname]
-        );
+        return $this->createOrUpdateOnEventoPersonIdTrait($eventoPersonId, [
+            'firstname' => $firstname, 'lastname' => $lastname
+        ]);
     }
 }

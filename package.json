@@ -28,6 +28,7 @@
         "@vue/eslint-config-typescript": "^7.0.0",
         "autoprefixer": "^10.3.5",
         "axios": "^0.21",
+        "email-validator": "^2.0.4",
         "eslint": "^7.32.0",
         "eslint-plugin-prettier": "^4.0.0",
         "eslint-plugin-vue": "^7.18.0",

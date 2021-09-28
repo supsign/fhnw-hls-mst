@@ -9,4 +9,5 @@ return [
     'schedule' => 'Stundenplan',
     'scheduleCurrent' => 'aktuelle Stundenplanung',
     'allSchedules' => 'Alle',
+    'save' => 'Speichern',
 ];

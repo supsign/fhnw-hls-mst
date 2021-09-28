@@ -19,22 +19,15 @@ class SemesterService extends BaseModelService
 
     public function firstOrcreateByYear(int $year, bool $isHs = true): Semester
     {
-        var_dump($year, $isHs);
-
-        $semester = $year <= 2018 ? null : $this->firstOrcreateByYear($isHs ? $year : $year - 1, !$isHs);
         $startDate = ($isHs ? '01.09.' : '01.02.').$year;
+        $previousSemester = $year <= 2018 ? null : $this->firstOrcreateByYear($isHs ? $year : $year - 1, !$isHs);
 
-        return $this->firstOrCreate([
+        return $this->firstOrCreateTrait([
             'year' => $year,
             'is_hs' => $isHs,
         ], [
             'start_date' => $startDate,
-            'previous_semester_id' => $semester?->id,
+            'previous_semester_id' => $previousSemester?->id,
         ]);
-    }
-
-    protected function firstOrCreate(array $referenceAttributes, array $updateAttributes = []): Semester
-    {
-        return $this->firstOrCreateTrait($referenceAttributes, $updateAttributes);
     }
 }

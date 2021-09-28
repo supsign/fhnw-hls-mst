@@ -7,6 +7,7 @@ use App\Services\Base\BaseModelService;
 use App\Services\Evento\Traits\CreateOrUpdateOnEventoId;
 use App\Services\Evento\Traits\GetByEventoId;
 use App\Services\StudyField\StudyFieldService;
+use Exception;
 
 class StudyFieldYearService extends BaseModelService
 {
@@ -22,12 +23,23 @@ class StudyFieldYearService extends BaseModelService
 
     public function createOrUpdateOnEventoId(int $eventId, array $attributes): StudyFieldYear
     {
-        $attributes['begin_semseter_id'] = $this
-            ->studyFieldService
-                ->getSemesterFromEventoNumber($attributes['evento_number'])
-                    ->id;
+        if (empty($attributes['study_field_id']) && !empty($attributes['study_field_evento_id'])) {
+            $attributes['study_field_id'] = $this
+                ->studyFieldService
+                    ->getByEventoId($attributes['study_field_evento_id'])
+                        ->id;
+        } else {
+            throw new Exception('study_field_id field is required');
+        }
 
-        return new StudyFieldYear;      //  debug code
+        if (empty($attributes['begin_semseter_id']) && !empty($attributes['evento_number'])) {
+            $attributes['begin_semseter_id'] = $this
+                ->studyFieldService
+                    ->getSemesterFromEventoNumber($attributes['evento_number'])
+                        ->id;
+        } else {
+            throw new Exception('begin_semseter_id field is required');
+        }
 
         return $this->createOrUpdateOnEventoIdTrait($eventId, $attributes);
     }

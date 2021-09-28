@@ -40,7 +40,7 @@ class StudyFieldYearImport extends BaseImport implements ToModel, WithHeadingRow
             $row['id_anlass'],
             [
                 'evento_number' => $row['anlassnummer'],
-                'study_field_id' => $row['id_anlass_stdg'],
+                'study_field_evento_id' => $row['id_anlass_stdg'],
             ],
         );
     }

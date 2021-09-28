@@ -1,3 +1,4 @@
+/*
 import { TransLation } from "../../translation";
 import * as EmailValidator from "email-validator";
 import { ICreateValidationRuleOption } from "../../../store/createValidationRuleOption.interface";
@@ -133,3 +134,4 @@ export class ValidationRule {
         return this.rule(value);
     }
 }
+*/

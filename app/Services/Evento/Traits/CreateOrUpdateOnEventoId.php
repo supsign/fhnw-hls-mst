@@ -10,7 +10,7 @@ trait CreateOrUpdateOnEventoId
 {
     use UpdateOrCreateTrait;
 
-    public function createOrUpdateOnEventoId(int $eventoId, array $attributes): BaseModel
+    public function createOrUpdateOnEventoId(int $eventoId, array $attributes = []): BaseModel
     {
         return $this->updateOrCreate(
             ['evento_id' => $eventoId],

@@ -21,7 +21,7 @@ class StudyFieldService extends BaseModelService
         parent::__construct($model);
     }
 
-    public function extractYearFromEventoNumber(string $eventoNumber): int  //  should be protected
+    protected function extractYearFromEventoNumber(string $eventoNumber): int
     {
         return str_pad(
             (int)filter_var(

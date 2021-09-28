@@ -1,7 +1,5 @@
 <?php
 
 return [
-
-    'userName' => 'Nome',
-
+    'userName' => 'Nome:',
 ];

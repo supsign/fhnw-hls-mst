@@ -1,7 +1,8 @@
 <?php
 
 return [
-
-    'userName' => 'Name',
-
+    'userName' => 'Name:',
+    'userRole' => 'Role:',
+    'userStudyCourse' => 'Course of study:',
+    'userStudyField' => 'Field of study:',
 ];

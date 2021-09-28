@@ -2,7 +2,8 @@
 
 namespace App\Imports;
 
-use App\Models\StudyField;
+use App\Services\StudyField\StudyFieldService;
+use Illuminate\Support\Facades\App;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
@@ -24,19 +25,26 @@ class StudyFieldImport extends BaseImport implements ToModel, WithHeadingRow
      */
     public function model(array $row): void
     {
-        if ($this->hasRequiredFields($row)) {
+        if (!$this->hasRequiredFields($row) || $this->isEmptyRow($row)) {
             //  Throw error? Write log?
             return;
         }
 
-        $studyField = StudyField::updateOrCreate(
-            ['evento_id' => $row['id_anlass']],
-            ['evento_number' => $row['anlassnummer']],
+        $service = App::make(StudyFieldService::class);
+        $studyField = $service->createOrUpdateOnEventoId(
+            $row['id_anlass'],
+            [
+                'evento_number' => $row['anlassnummer']
+            ],
         );
 
         if (!$studyField->name) {
-            $studyField->name = $row['anlassbezeichnung'];
-            $studyField->save();
+            $service->update(
+                $studyField, 
+                [
+                    'name' => $row['anlassbezeichnung']
+                ]
+            );
         }
     }
 }

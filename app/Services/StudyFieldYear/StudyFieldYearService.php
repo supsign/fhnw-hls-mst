@@ -21,9 +21,9 @@ class StudyFieldYearService extends BaseModelService
         parent::__construct($model);
     }
 
-    public function createOrUpdateOnEventoId(int $eventId, array $attributes): StudyFieldYear
+    public function createOrUpdateOnEventoId(int $eventId, array $attributes): StudyFieldYear   //  method mehr specific machen
     {
-        if (empty($attributes['study_field_id']) && !empty($attributes['study_field_evento_id'])) {
+        if (empty($attributes['study_field_id']) && !empty($attributes['study_field_evento_id'])) { //  auslagern
             $attributes['study_field_id'] = $this
                 ->studyFieldService
                     ->getByEventoId($attributes['study_field_evento_id'])
@@ -32,7 +32,7 @@ class StudyFieldYearService extends BaseModelService
             throw new Exception('study_field_id field is required');
         }
 
-        if (empty($attributes['begin_semseter_id']) && !empty($attributes['evento_number'])) {
+        if (empty($attributes['begin_semseter_id']) && !empty($attributes['evento_number'])) {  //  auslagern
             $attributes['begin_semseter_id'] = $this
                 ->studyFieldService
                     ->getSemesterFromEventoNumber($attributes['evento_number'])

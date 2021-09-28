@@ -29,7 +29,7 @@ class StudyFieldService extends BaseModelService
                 FILTER_SANITIZE_NUMBER_INT
             ),
             4,
-            '20',
+            '20',           //  expected value hast to be in the year 20xx, fix before 2100
             STR_PAD_LEFT
         );
     }

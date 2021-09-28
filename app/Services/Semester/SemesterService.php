@@ -24,7 +24,7 @@ class SemesterService extends BaseModelService
             'is_hs' => $isHs,
         ], [
             'start_date' => ($isHs ? '01.09.' : '01.02.').$year,
-            'previous_semester_id' => $year < 2018 ? $this->firstOrcreateByYear($year - 1, !$isHs) : null
+            'previous_semester_id' => $year < 2018 ? $this->firstOrcreateByYear($year - 1, !$isHs) : null,
         ]);
     }
 
@@ -32,5 +32,4 @@ class SemesterService extends BaseModelService
     {
         return $this->firstOrCreateTrait($referenceAttributes, $updateAttributes);
     }
-
 }

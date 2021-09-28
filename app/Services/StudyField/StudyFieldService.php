@@ -13,5 +13,3 @@ class StudyFieldService extends BaseModelService
         parent::__construct($model);
     }
 }
-
-

@@ -25,6 +25,15 @@ class ScheduleController extends Controller
         return view('schedule.new');
     }
 
+    public function createSchedule()
+    {
+        if (!Auth::check()) {
+            abort(403);
+        }
+
+        return redirect()->route('home');
+    }
+
     public function getById(Schedule $schedule)
     {
         if (!Auth::check()) {

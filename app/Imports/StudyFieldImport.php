@@ -34,15 +34,15 @@ class StudyFieldImport extends BaseImport implements ToModel, WithHeadingRow
         $studyField = $service->createOrUpdateOnEventoId(
             $row['id_anlass'],
             [
-                'evento_number' => $row['anlassnummer']
+                'evento_number' => $row['anlassnummer'],
             ],
         );
 
         if (!$studyField->name) {
             $service->update(
-                $studyField, 
+                $studyField,
                 [
-                    'name' => $row['anlassbezeichnung']
+                    'name' => $row['anlassbezeichnung'],
                 ]
             );
         }

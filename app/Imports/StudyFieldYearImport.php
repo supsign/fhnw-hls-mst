@@ -12,7 +12,8 @@ class StudyFieldYearImport extends BaseImport implements ToModel, WithHeadingRow
     protected $requiredFields = ['id_anlass', 'anlassnummer', 'anlassbezeichnung', 'id_anlass_stdg', 'anlassnummer_stdg'];
 
     public function __construct()
-    {}
+    {
+    }
 
     /**
      * @param  array  $row

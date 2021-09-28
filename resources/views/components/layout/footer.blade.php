@@ -1,3 +1,7 @@
-<div>
-    <!-- Very little is needed to make a happy life. - Marcus Antoninus -->
-</div>
+<footer class="p-3 mt-auto text-xs text-white bg-gray-700">
+    <div class="text-center sm:flex sm:justify-between">
+        <a href="https://supsign.ch" target="_blank" rel="noopener noreferrer" class="block mb-2 sm:mb-0">
+            &copy; Made with &hearts; in Switzerland by Supsign GmbH
+        </a>
+    </div>
+</footer>

@@ -9,7 +9,7 @@ use App\Services\Base\Traits\FirstOrCreateTrait;
 class SemesterService extends BaseModelService
 {
     use FirstOrCreateTrait {
-        firstOrCreate AS firstOrCreateTrait;
+        firstOrCreate AS protected firstOrCreateTrait;
     }
 
     public function __construct(protected Semester $model)
@@ -19,12 +19,17 @@ class SemesterService extends BaseModelService
 
     public function firstOrcreateByYear(int $year, bool $isHs = true): Semester
     {
+        var_dump($year, $isHs);
+
+        $semester = $year <= 2018 ? null : $this->firstOrcreateByYear($isHs ? $year : $year - 1, !$isHs);
+        $startDate = ($isHs ? '01.09.' : '01.02.').$year;
+
         return $this->firstOrCreate([
             'year' => $year,
             'is_hs' => $isHs,
         ], [
-            'start_date' => ($isHs ? '01.09.' : '01.02.').$year,
-            'previous_semester_id' => $year < 2018 ? $this->firstOrcreateByYear($year - 1, !$isHs) : null
+            'start_date' => $startDate,
+            'previous_semester_id' => $semester?->id,
         ]);
     }
 

@@ -10,7 +10,7 @@ use App\Services\Evento\Traits\GetByEventoPersonId;
 class StudentService extends BaseModelService
 {
     use CreateOrUpdateOnEventoPersonId {
-        createOrUpdateOnEventoPersonId AS createOrUpdateOnEventoPersonIdTrait;
+        createOrUpdateOnEventoPersonId AS protected createOrUpdateOnEventoPersonIdTrait;
     }
     use GetByEventoPersonId;
 

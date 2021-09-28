@@ -11,7 +11,7 @@ use App\Services\StudyField\StudyFieldService;
 class StudyFieldYearService extends BaseModelService
 {
     use CreateOrUpdateOnEventoId {
-        createOrUpdateOnEventoId AS createOrUpdateOnEventoIdTrait;
+        createOrUpdateOnEventoId AS protected createOrUpdateOnEventoIdTrait;
     }
     use GetByEventoId;
 

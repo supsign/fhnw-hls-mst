@@ -15,9 +15,17 @@ trait FirstOrCreateTrait
             unset($insertAttributes[$duplicateKey]);
         }
 
-        return $this->model::firstOrCreate(
+        var_dump(
+            $referenceAttributes, $insertAttributes
+        );
+
+        $test =  $this->model::firstOrCreate(
             $referenceAttributes,
             $insertAttributes,
         );
+
+        var_dump($test->id);
+
+        return $test;
     }
 }

@@ -8,6 +8,7 @@ use App\Services\Base\BaseModelService;
 use App\Services\Base\Traits\UpdateTrait;
 use App\Services\Evento\Traits\CreateOrUpdateOnEventoId;
 use App\Services\Evento\Traits\GetByEventoId;
+use App\Services\Semester\SemesterService;
 
 class StudyFieldService extends BaseModelService
 {
@@ -15,7 +16,7 @@ class StudyFieldService extends BaseModelService
     use GetByEventoId;
     use UpdateTrait;
 
-    public function __construct(protected StudyField $model)
+    public function __construct(protected StudyField $model, protected SemesterService $semesterService)
     {
         parent::__construct($model);
     }
@@ -35,10 +36,8 @@ class StudyFieldService extends BaseModelService
 
     public function getSemesterFromEventoNumber(string $eventoNumber): Semester
     {
-        $year = $this->extractYearFromEventoNumber($eventoNumber);
-
-
-
-        return new Semester;
+        return $this->semesterService->firstOrcreateByYear(
+            $this->extractYearFromEventoNumber($eventoNumber)
+        );
     }
 }

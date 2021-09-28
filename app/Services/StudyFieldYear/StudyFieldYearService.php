@@ -27,11 +27,7 @@ class StudyFieldYearService extends BaseModelService
                 ->getSemesterFromEventoNumber($attributes['evento_number'])
                     ->id;
 
-        // var_dump(
-        //     $attributes
-        // );
-
-        return new StudyFieldYear;
+        return new StudyFieldYear;      //  debug code
         return $this->createOrUpdateOnEventoIdTrait($eventId, $attributes);
     }
 }

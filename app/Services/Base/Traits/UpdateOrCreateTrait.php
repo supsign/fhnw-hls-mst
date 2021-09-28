@@ -6,7 +6,7 @@ use App\Models\BaseModel;
 
 trait UpdateOrCreateTrait
 {
-    public function updateOrCreate(array $referenceAttributes, array $updateAttributes): BaseModel
+    public function updateOrCreate(array $referenceAttributes, array $updateAttributes = []): BaseModel
     {
         $referenceAttributes = $this->sanitiseAttributes($referenceAttributes, true);
         $updateAttributes = $this->sanitiseAttributes($updateAttributes);

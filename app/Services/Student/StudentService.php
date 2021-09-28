@@ -21,6 +21,6 @@ class StudentService extends BaseModelService
 
     public function createOrUpdateOnEventoPersonId(int $eventoPersonId): Student
     {
-        return $this->createOrUpdateOnEventoPersonIdTrait($eventoPersonId, []);
+        return $this->createOrUpdateOnEventoPersonIdTrait($eventoPersonId);
     }
 }

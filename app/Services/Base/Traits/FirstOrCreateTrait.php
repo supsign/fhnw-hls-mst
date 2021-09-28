@@ -14,18 +14,10 @@ trait FirstOrCreateTrait
         foreach (array_keys(array_intersect($referenceAttributes, $insertAttributes)) AS $duplicateKey) {
             unset($insertAttributes[$duplicateKey]);
         }
-
-        var_dump(
-            $referenceAttributes, $insertAttributes
-        );
-
-        $test = $this->model::firstOrCreate(
+        
+        return $this->model::firstOrCreate(
             $referenceAttributes,
             $insertAttributes,
         );
-
-        var_dump($test->id);
-
-        return $test;
     }
 }

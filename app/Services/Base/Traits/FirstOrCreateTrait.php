@@ -14,7 +14,7 @@ trait FirstOrCreateTrait
         foreach (array_keys(array_intersect($referenceAttributes, $insertAttributes)) AS $duplicateKey) {
             unset($insertAttributes[$duplicateKey]);
         }
-        
+
         return $this->model::firstOrCreate(
             $referenceAttributes,
             $insertAttributes,

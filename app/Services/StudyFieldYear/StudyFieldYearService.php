@@ -9,9 +9,6 @@ use App\Services\Base\Traits\UpdateTrait;
 
 class StudyFieldYearService extends BaseModelService
 {
-    use UpdateTrait;
-    use UpdateOrCreateTrait;
-
     public function __construct(protected StudyFieldYear $model)
     {
         parent::__construct($model);

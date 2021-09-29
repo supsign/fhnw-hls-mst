@@ -678,6 +678,18 @@ namespace App\Models{
 
 namespace App\Models{
 /**
+ * App\Models\Schedule
+ *
+ * @mixin IdeHelperSchedule
+ * @method static \Illuminate\Database\Eloquent\Builder|Schedule newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Schedule newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Schedule query()
+ */
+	class IdeHelperSchedule extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
  * App\Models\Semester
  *
  * @mixin IdeHelperSemester
@@ -988,10 +1000,17 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Mentor|null $mentor
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Permission[] $permissions
+ * @property-read int|null $permissions_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Role[] $roles
+ * @property-read int|null $roles_count
  * @property-read \App\Models\Student|null $student
+ * @method static \Database\Factories\UserFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|User permission($permissions)
  * @method static \Illuminate\Database\Eloquent\Builder|User query()
+ * @method static \Illuminate\Database\Eloquent\Builder|User role($roles, $guard = null)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereEmailHash($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereId($value)

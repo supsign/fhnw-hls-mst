@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\User\PermissionService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
+
+    public function __construct(private PermissionService $permissionService)
+    {
+    }
+
     public function index(Request $request)
     {
-        if (!Auth::check()) {
-            abort(403);
-        }
+        $this->permissionService->canShowAppOrAbort();
 
         $firstname = $request->session()->get('firstname');
         $lastname = $request->session()->get('lastname');

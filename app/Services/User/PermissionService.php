@@ -21,6 +21,35 @@ class PermissionService
         return $user;
     }
 
+    public function assignMentor(User $user): User
+    {
+        $user->assignRole('mentor');
+
+        return $user;
+    }
+
+    public function removeMentor(User $user): User
+    {
+        $user->removeRole('mentor');
+
+        return $user;
+    }
+
+    public function assignAppAdmin(User $user): User
+    {
+        $user->assignRole('app-admin');
+
+        return $user;
+    }
+
+    public function removeAppAdmin(User $user): User
+    {
+        $user->removeRole('app-admin');
+
+        return $user;
+    }
+
+
     public function canShowAppOrAbort(): self
     {
         if (!Auth::user()->hasPermissionTo('show app')) {

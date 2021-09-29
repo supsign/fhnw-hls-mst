@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Student;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
@@ -34,9 +35,10 @@ class UserFactory extends Factory
      */
     public function asStudent()
     {
-        return $this->state(function (array $attributes) {
+        $student = Student::factory()->create();
+        return $this->state(function (array $attributes) use ($student) {
             return [
-                'student_id' => $this->faker->unique()->randomNumber(),
+                'student_id' => $student->id,
             ];
         });
     }

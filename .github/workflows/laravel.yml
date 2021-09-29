@@ -19,16 +19,10 @@ jobs:
       postgres:
         image: postgres:latest
         env:
-          POSTGRES_DB: postgres        
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: lehre_test        
+          POSTGRES_PASSWORD: ""
           POSTGRES_USER: postgres
-          DB_CONNECTION:  pgsql
-          DB_HOST: localhost
-          DB_PORT: 5432
-          DB_DATABASE: postgres
-          DB_USERNAME: postgres
-          DB_PASSWORD: postgres
-          DB_SCHEMA:  ""
+          POSTGRES_SCHEMA: mst
         ports:
           - 5432:5432
         # Set health checks to wait until postgres has started
@@ -62,6 +56,9 @@ jobs:
 
       - name: Directory Permissions
         run: chmod -R 777 storage bootstrap/cache
+
+      - name: Run Migration
+        run: php artisan migrate:fresh 
 
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         run: vendor/bin/phpunit

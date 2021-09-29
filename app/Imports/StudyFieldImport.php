@@ -35,6 +35,7 @@ class StudyFieldImport extends BaseImport implements ToModel, WithHeadingRow
             $row['id_anlass'],
             [
                 'evento_number' => $row['anlassnummer'],
+                'study_program_id' => 6,                    //  Todo: Anhand von 'anlassbezeichnung' mit name comparen? 
             ],
         );
 

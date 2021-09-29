@@ -26,4 +26,5 @@ Route::get('test', [TestController::class, 'test'])->name('test');
 // Schedules
 Route::get('schedules', [ScheduleController::class, 'showAllSchedules'])->name('schedule.show');
 Route::get('schedules/new', [ScheduleController::class, 'newSchedule'])->name('schedule.new');
+Route::post('schedules/create', [ScheduleController::class, 'createSchedule'])->name('schedule.create');
 Route::get('schedules/list/{schedule}', [ScheduleController::class, 'getById'])->name('schedule.getById');

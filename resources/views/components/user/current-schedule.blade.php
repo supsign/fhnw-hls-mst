@@ -7,7 +7,8 @@
             <div class="font-bold">
                 {{ $i }}. Semester
             </div>
-            @foreach($modules as $module)
+            
+            @foreach($attributes['modules'] as $module)
                 <div class="bg-gray-200 p-2 m-2 rounded">
                     Modul {{ $module }}
                 </div>

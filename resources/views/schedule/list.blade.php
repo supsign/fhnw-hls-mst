@@ -5,7 +5,6 @@
 
     <div class="container p-3 mx-auto">
         <x-user.me></x-user.me>
-
-        <x-user.current-schedule :modules="{{$modules}}"></x-user.current-schedule>
+        <x-user.current-schedule :modules="$modules"/>
     </div>
 </x-layout.app>

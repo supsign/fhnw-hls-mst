@@ -14,6 +14,8 @@ jobs:
         image: postgres:latest
         env:
           POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: lehre_test
+          POSTGRES_SCHEMA: mst
         ports:
           - 5432:5432
         # Set health checks to wait until postgres has started

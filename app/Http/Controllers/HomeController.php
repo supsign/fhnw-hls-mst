@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-
     public function __construct(private PermissionService $permissionService)
     {
     }

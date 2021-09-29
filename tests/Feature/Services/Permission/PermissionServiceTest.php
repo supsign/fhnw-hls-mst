@@ -52,6 +52,6 @@ class PermissionServiceTest extends TestCase
         $this->assertFalse($user->hasRole('app-admin'));
     }
 
-// ToDo
+    // ToDo
 // Write Permission Tests similar to icon project
 }

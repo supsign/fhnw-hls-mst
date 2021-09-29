@@ -49,7 +49,6 @@ class PermissionService
         return $user;
     }
 
-
     public function canShowAppOrAbort(): self
     {
         if (!Auth::user()->hasPermissionTo('show app')) {

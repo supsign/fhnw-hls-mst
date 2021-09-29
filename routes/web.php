@@ -39,5 +39,3 @@ Route::middleware(['web', 'auth'])->group(
         Route::get('schedules/{schedule}', [ScheduleController::class, 'show'])->name('schedule.show');
     }
 );
-
-

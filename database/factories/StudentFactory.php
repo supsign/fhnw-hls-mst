@@ -26,5 +26,4 @@ class StudentFactory extends Factory
             'evento_person_id_hash' => Hash::make($this->faker->unique()->randomNumber(8)),
         ];
     }
-
 }

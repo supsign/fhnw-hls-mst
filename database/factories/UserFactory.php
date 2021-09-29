@@ -36,6 +36,7 @@ class UserFactory extends Factory
     public function asStudent()
     {
         $student = Student::factory()->create();
+
         return $this->state(function (array $attributes) use ($student) {
             return [
                 'student_id' => $student->id,

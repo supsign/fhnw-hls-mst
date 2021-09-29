@@ -3,11 +3,11 @@
 return [
     'userData' => 'Benutzerdaten',
     'userName' => 'Name:',
-    'userRole' => 'Rolle:',
-    'userStudyCourse' => 'Studiengang:',
-    'userStudyField' => 'Studienrichtung:',
+    'role' => 'Rolle:',
+    'studyField' => 'Studiengang:',
+    'studyProgram' => 'Studienrichtung:',
     'schedule' => 'Stundenplan',
     'scheduleCurrent' => 'aktuelle Stundenplanung',
-    'allSchedules' => 'Alle',
+    'schedulesAll' => 'Alle',
     'save' => 'Speichern',
 ];

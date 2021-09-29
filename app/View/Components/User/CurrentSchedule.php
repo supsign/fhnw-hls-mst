@@ -4,7 +4,7 @@ namespace App\View\Components\User;
 
 use Illuminate\View\Component;
 
-class currentSchedule extends Component
+class CurrentSchedule extends Component
 {
     /**
      * Create a new component instance.

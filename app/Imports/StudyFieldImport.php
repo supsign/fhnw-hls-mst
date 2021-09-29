@@ -2,7 +2,8 @@
 
 namespace App\Imports;
 
-use App\Models\StudyField;
+use App\Services\StudyField\StudyFieldService;
+use Illuminate\Support\Facades\App;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
@@ -14,7 +15,7 @@ use App\Imports\StudyFieldImport;
 $excel->import(new StudyFieldImport, 'Tab1_Studiengang.xlsx');
 */
 
-class StudyFieldImport implements ToModel, WithHeadingRow
+class StudyFieldImport extends BaseImport implements ToModel, WithHeadingRow
 {
     protected $requiredFields = ['id_anlass', 'anlassnummer', 'anlassbezeichnung'];
 
@@ -24,19 +25,26 @@ class StudyFieldImport implements ToModel, WithHeadingRow
      */
     public function model(array $row): void
     {
-        if (count(array_intersect($this->requiredFields, array_keys($row))) !== count($this->requiredFields)) {
-            //  Todo log with activitylog
+        if (!$this->hasRequiredFields($row) || $this->isEmptyRow($row)) {
+            //  Throw error? Write log?
             return;
         }
 
-        $studyField = StudyField::updateOrCreate(
-            ['evento_id' => $row['id_anlass']],
-            ['evento_number' => $row['anlassnummer']],
+        $service = App::make(StudyFieldService::class);
+        $studyField = $service->createOrUpdateOnEventoId(
+            $row['id_anlass'],
+            [
+                'evento_number' => $row['anlassnummer'],
+            ],
         );
 
         if (!$studyField->name) {
-            $studyField->name = $row['anlassbezeichnung'];
-            $studyField->save();
+            $service->update(
+                $studyField,
+                [
+                    'name' => $row['anlassbezeichnung'],
+                ]
+            );
         }
     }
 }

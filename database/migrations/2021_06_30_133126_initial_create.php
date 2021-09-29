@@ -6,14 +6,17 @@ use App\Importers\CrossQualificationImporter;
 use App\Importers\SkillImporter;
 use App\Importers\SkillPrerequisiteImporter;
 use App\Importers\SpecializationImporter;
+use App\Imports\StudyFieldImport;
+use App\Imports\StudyFieldYearImport;
 use Database\Seeders\LanguageSeeder;
-use Database\Seeders\SemesterSeeder;
 use Database\Seeders\StudyFieldSeeder;
 use Database\Seeders\StudyProgramSeeder;
 use Database\Seeders\TaxonomySeeder;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Excel;
 
 class InitialCreate extends Migration
 {
@@ -95,6 +98,12 @@ class InitialCreate extends Migration
             '--force' => true,
         ]);
 
+        $excel = App::make(Excel::class);
+
+        if (Storage::exists('Tab1_Studiengang.xlsx')) {
+            $excel->import(new StudyFieldImport, 'Tab1_Studiengang.xlsx');
+        }
+
         Schema::create('specializations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('study_field_id')->constrained();
@@ -124,11 +133,6 @@ class InitialCreate extends Migration
             $table->unique(['year', 'is_hs']);
         });
 
-        Artisan::call('db:seed', [
-            '--class' => SemesterSeeder::class,
-            '--force' => true,
-        ]);
-
         Schema::create('study_field_years', function (Blueprint $table) {
             $table->id();
             $table->foreignId('begin_semseter_id')->constrained('semesters');
@@ -139,6 +143,10 @@ class InitialCreate extends Migration
             $table->boolean('is_specialization_mandatory')->default(0);
             $table->timestampsTz();
         });
+
+        if (Storage::exists('Tab2_Studienjahrgang.xlsx')) {
+            $excel->import(new StudyFieldYearImport, 'Tab2_Studienjahrgang.xlsx');
+        }
 
         Schema::create('specialization_years', function (Blueprint $table) {
             $table->id();

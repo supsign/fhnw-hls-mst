@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'accepted' => 'The :attribute must be accepted.',
+    'accepted' => ':attribute muss akkzeptiert werden.',
     'active_url' => 'The :attribute is not a valid URL.',
     'after' => 'The :attribute must be a date after :date.',
     'after_or_equal' => 'The :attribute must be a date after or equal to :date.',
@@ -31,7 +31,6 @@ return [
     ],
     'boolean' => 'The :attribute field must be true or false.',
     'confirmed' => 'The :attribute confirmation does not match.',
-    'current_password' => 'The password is incorrect.',
     'date' => 'The :attribute is not a valid date.',
     'date_equals' => 'The :attribute must be a date equal to :date.',
     'date_format' => 'The :attribute does not match the format :format.',
@@ -140,6 +139,16 @@ return [
         ],
     ],
 
+    'below' => [
+        'email' => 'Falsches Email Format',
+        'max' => [
+            'string' => 'Maximallänge: :max',
+        ],
+        'min' => [
+            'string' => 'Mindestlänge: :min',
+        ],
+        'required' => 'Pflichtfeld',
+    ],
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Attributes

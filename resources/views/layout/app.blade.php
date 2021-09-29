@@ -20,11 +20,11 @@
 
     </head>
     <body class="font-body">
-    <div id="app" class="w-full">
+    <div id="app" class="w-full h-cover bg-gray-200 overflow-auto">
         <div class="flex flex-col h-screen">
             <x-layout.top/>
             <x-layout.header/>
-            <div id="main" class="flex-grow">
+            <div id="main" class="flex-grow mb-4">
                 {{ $slot }}
             </div>
             <x-layout.footer/>

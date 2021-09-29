@@ -134,6 +134,8 @@ class InitialCreate extends Migration
             $table->foreignId('begin_semseter_id')->constrained('semesters');
             $table->foreignId('origin_study_field_year_id')->nullable()->constrained('study_field_years');
             $table->foreignId('study_field_id')->constrained();
+            $table->unsignedBigInteger('evento_id')->nullable()->unique();
+            $table->string('evento_number')->nullable()->unique();
             $table->boolean('is_specialization_mandatory')->default(0);
             $table->timestampsTz();
         });

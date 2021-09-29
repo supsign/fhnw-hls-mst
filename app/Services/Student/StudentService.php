@@ -3,25 +3,24 @@
 namespace App\Services\Student;
 
 use App\Models\Student;
-use App\Services\Helpers\hashes;
+use App\Services\Base\BaseModelService;
+use App\Services\Evento\Traits\CreateOrUpdateOnEventoPersonId;
+use App\Services\Evento\Traits\GetByEventoPersonId;
 
-class StudentService
+class StudentService extends BaseModelService
 {
-    use Hashes;
+    use CreateOrUpdateOnEventoPersonId {
+        createOrUpdateOnEventoPersonId AS protected createOrUpdateOnEventoPersonIdTrait;
+    }
+    use GetByEventoPersonId;
 
-    public function getByEventoPersonId(int $eventoPersonId): ?Student
+    public function __construct(protected Student $model)
     {
-        $eventoPersonenIdHash = $this->getHash($eventoPersonId);
-
-        return Student::where(['evento_person_id_hash' => $eventoPersonenIdHash])->first();
+        parent::__construct($model);
     }
 
-    public function createOrUpdateOnEventoPersonId(int $eventoPersonId)
+    public function createOrUpdateOnEventoPersonId(int $eventoPersonId): Student
     {
-        $eventoPersonIdHash = $this->getHash($eventoPersonId);
-
-        return Student::updateOrCreate(
-            ['evento_person_id_hash' => $eventoPersonIdHash]
-        );
+        return $this->createOrUpdateOnEventoPersonIdTrait($eventoPersonId);
     }
 }

@@ -5,7 +5,7 @@
         </x-slot>
 
         <div class="flex flex-col mb-4">
-            <!-- ToDo Beispiel-Stundenpläne erstellen -->
+{{--            ToDo Beispiel-Stundenpläne erstellen --}}
             @for ($i = 1; $i < 6; $i++)
                 <x-schedule.single-item></x-schedule.single-item>
             @endfor

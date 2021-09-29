@@ -7,7 +7,7 @@ return [
     'studyField' => 'Studiengang:',
     'studyProgram' => 'Studienrichtung:',
     'schedule' => 'Stundenplan',
-    'scheduleCurrent' => 'aktuelle Stundenplanung',
+    'scheduleCurrent' => 'aktuelle Studienplanung',
     'schedulesAll' => 'Alle',
     'save' => 'Speichern',
 ];

@@ -117,7 +117,7 @@ export default class VueCheckbox extends BaseComponent {
     })
     value: boolean | string | number;
 
-    internalValue: boolean = false;
+    internalValue = false;
 
     public get requiredLabel() {
         return this.label + (this.required ? " *" : "");

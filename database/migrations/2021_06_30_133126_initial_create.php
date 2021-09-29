@@ -83,7 +83,7 @@ class InitialCreate extends Migration
 
         Schema::create('study_fields', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('study_program_id')->constrained();
+            $table->foreignId('study_program_id')->nullable()->constrained();
             $table->unsignedBigInteger('evento_id')->nullable()->unique();
             $table->string('evento_number')->nullable()->unique();
             $table->string('name')->nullable();
@@ -117,7 +117,7 @@ class InitialCreate extends Migration
             $table->id();
             $table->foreignId('previous_semester_id')->nullable()->constrained('semesters');
             $table->smallInteger('year');
-            $table->boolean('is_hs')->default(0);
+            $table->boolean('is_hs')->default(1);
             $table->timestampTz('start_date');
             $table->timestampsTz();
 

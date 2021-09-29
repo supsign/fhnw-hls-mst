@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\DB;
 class SemesterSeeder extends Seeder
 {
     private $data = [
-        ['id' => 1, 'year' => 2021, 'start_date' => '2021-01-01'],
-        ['id' => 2, 'year' => 2021, 'start_date' => '2021-07-01', 'is_hs' => true, 'previous_semester_id' => 1],
+        ['id' => 1, 'year' => 2021, 'start_date' => '2021-01-01', 'is_hs' => false,],
+        ['id' => 2, 'year' => 2021, 'start_date' => '2021-07-01', 'previous_semester_id' => 1],
     ];
 
     /**
@@ -35,6 +35,7 @@ class SemesterSeeder extends Seeder
 
         $connection = config('database.default');
         $driver = config("database.connections.{$connection}.driver");
+
         if ('pgsql' === $driver) {
             DB::statement('ALTER SEQUENCE "semesters_id_seq" RESTART WITH '.$lastId + 1);
         }

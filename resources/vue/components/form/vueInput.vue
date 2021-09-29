@@ -10,11 +10,7 @@
                 :type="type"
                 :name="name"
                 v-on="listeners"
-                v-mask="mask"
                 class="w-full input__field"
-                :class="{
-                    'is-invalid': showError
-                }"
                 autofocus
                 :autocomplete="'current-' + name"
                 placeholder=" "
@@ -24,19 +20,85 @@
                 <i v-if="tooltipp" class="fas fa-info-circle"></i>
             </span>
 
-            <span class="text-xs input__error" role="alert" v-if="showError">
-                {{ initialError || fieldControl.errors[0] }}
-            </span>
         </label>
     </div>
 </template>
 
 <script lang="ts">
-import { Component } from "vue-property-decorator";
+import {Component, Model, Prop} from "vue-property-decorator";
 import BaseComponent from "../base/baseComponent";
+import {FieldControl} from "../../helpers/validation/fieldControl";
 
 @Component
 export default class VueInput extends BaseComponent {
+    fieldControl: FieldControl = null;
+    isDirty = false;
+    isTouched = false;
+    initialError: string = null;
 
+    @Prop({
+        type: String,
+        default: ""
+    })
+    validationRules: string;
+
+    @Prop({
+        type: String
+    })
+    name: string;
+
+    @Prop({
+        type: String
+    })
+    id: string;
+
+    @Prop({
+        type: String
+    })
+    label: string;
+
+    @Prop({
+        type: String
+    })
+    initError: string;
+
+    @Prop({
+        type: Boolean
+    })
+    required: boolean;
+
+    @Prop({
+        type: Boolean
+    })
+    disabled: boolean;
+
+    @Prop({ type: String, default: "text" })
+    type: string;
+
+    @Prop({
+        type: String
+    })
+    tooltipp: string;
+
+    @Prop({
+        type: Boolean,
+        default: false
+    })
+    blade: boolean;
+
+    @Prop({
+        type: String
+    })
+    initValue: string;
+
+    @Model("input")
+    value: string;
+
+    internValue = "";
+
+    get listeners() {
+        const { input, blur, ...listeners } = this.$listeners;
+        return listeners;
+    }
 }
 </script>

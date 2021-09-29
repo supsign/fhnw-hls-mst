@@ -39,6 +39,7 @@ class TaxonomySeeder extends Seeder
 
         $connection = config('database.default');
         $driver = config("database.connections.{$connection}.driver");
+
         if ('pgsql' === $driver) {
             DB::statement('ALTER SEQUENCE "taxonomies_id_seq" RESTART WITH '.$lastId + 1);
         }

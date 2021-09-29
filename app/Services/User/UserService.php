@@ -12,8 +12,8 @@ class UserService
     use Hashes;
 
     public function __construct(
-        private StudentService $studentService,
-        private MentorService $mentorService
+        protected StudentService $studentService,
+        protected MentorService $mentorService,
     ) {
     }
 

@@ -10,7 +10,7 @@
                 <x-schedule.single-item></x-schedule.single-item>
             @endfor
                 <div class="mt-2">
-                    <a href="" class="button-primary w-auto">@lang('l.allSchedules')</a>
+                    <a href="" class="button-primary w-auto">@lang('l.schedulesAll')</a>
                 </div>
         </div>
     </x-app.card>

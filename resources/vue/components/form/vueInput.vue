@@ -4,8 +4,6 @@
             <input
                 :disabled="disabled"
                 :value="internValue"
-                @input="input"
-                @blur="blur"
                 :id="id"
                 :type="type"
                 :name="name"

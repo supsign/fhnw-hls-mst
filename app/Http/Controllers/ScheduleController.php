@@ -16,7 +16,7 @@ class ScheduleController extends Controller
         $modules = ['Technik', 'Synthese & Analytik', 'Mathematik', 'Physik', 'Informatik', 'Biochemie'];
 
         return view('schedule.list', [
-            'modules' => $modules
+            'modules' => $modules,
         ]);
     }
 

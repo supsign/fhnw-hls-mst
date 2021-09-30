@@ -2,6 +2,7 @@
 
 namespace App\Services\User;
 
+use App;
 use App\Models\User;
 use App\Services\Helpers\hashes;
 use App\Services\Mentor\MentorService;
@@ -14,6 +15,7 @@ class UserService
     public function __construct(
         protected StudentService $studentService,
         protected MentorService $mentorService,
+        protected PermissionService $permissionService,
     ) {
     }
 
@@ -22,13 +24,18 @@ class UserService
         $emailHash = $this->getHash($email);
         $user = $this->updateOrCrateUserOnMailHash($emailHash);
 
-        $student = $this->studentService->getByEventoPersonId($eventoPersonId);
+        //  Todo: Remove when we have real Student data
+        $student = App::environment() === 'local'
+            ? $student = $this->studentService->createOrUpdateOnEventoPersonId($eventoPersonId)
+            : $student = $this->studentService->getByEventoPersonId($eventoPersonId);
 
         if (!$student) {
             $user->student_id = null;
 
             return $user;
         }
+
+        $this->permissionService->assignStudent($user);
 
         // dissociate existing other user from student
         if ($student->user && $student->user->id != $user->id) {
@@ -47,6 +54,14 @@ class UserService
         $user = $this->updateOrCrateUserOnMailHash($emailHash);
 
         $mentor = $this->mentorService->createOrUpdateOnEventoPersonId($eventoPersonId, $firstname, $lastname);
+
+        if (!$mentor) {
+            $user->mentor_id = null;
+
+            return $user;
+        }
+
+        $this->permissionService->assignMentor($user);
 
         // dissociate existing other user from mentor
         if ($mentor->user && $mentor->user->id != $user->id) {

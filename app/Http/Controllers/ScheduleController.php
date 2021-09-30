@@ -13,11 +13,7 @@ class ScheduleController extends Controller
             abort(403);
         }
 
-        $modules = ['Technik', 'Synthese & Analytik', 'Mathematik', 'Physik', 'Informatik', 'Biochemie'];
-
-        return view('schedule.list', [
-            'modules' => $modules,
-        ]);
+        return view('schedule.list');
     }
 
     public function newSchedule()

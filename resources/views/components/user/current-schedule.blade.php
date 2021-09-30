@@ -1,14 +1,15 @@
+@dd($modules)
 <x-app.card>
     <x-slot name="title">
         @lang('l.scheduleCurrent')
     </x-slot>
-    @for ($i = 1; $i < 6; $i++)
+    @for($i = 1; $i < 6; $i++)
         <div class="flex flex-col mb-4">
             <div class="font-bold">
                 {{ $i }}. Semester
             </div>
-            
-            @foreach($attributes['modules'] as $module)
+
+            @foreach($modules as $module)
                 <div class="bg-gray-200 p-2 m-2 rounded">
                     Modul {{ $module }}
                 </div>

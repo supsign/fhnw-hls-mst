@@ -1,4 +1,4 @@
-@dd($modules)
+
 <x-app.card>
     <x-slot name="title">
         @lang('l.scheduleCurrent')

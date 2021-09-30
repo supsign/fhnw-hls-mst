@@ -7,5 +7,6 @@
             {{ $attributes->get('searchable') ? 'searchable' : '' }}
             {{ $attributes->get('required') ? 'required' : '' }}
             {{ $attributes->get('disabled') ? 'disabled' : '' }}
+            init-error="{{ $initError }}"
             is-blade>
 </vue-select>

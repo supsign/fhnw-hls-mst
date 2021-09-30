@@ -77,4 +77,10 @@ class UserService
     {
         return User::updateOrCreate(['email_hash' => $emailHash]);
     }
+
+    public function makeAdmin(User $user, PermissionService $permissionService)
+    {
+        $permissionService->assignAppAdmin($user);
+        return $user;
+    }
 }

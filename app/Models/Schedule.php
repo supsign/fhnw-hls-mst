@@ -3,7 +3,7 @@
 namespace App\Models;
 
 /**
- * @mixin IdeHelperCourse
+ * @mixin IdeHelperSchedule
  */
 class Schedule extends BaseModel
 {

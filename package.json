@@ -10,7 +10,8 @@
         "production": "mix --production"
     },
     "devDependencies": {
-        "laravel-mix": "^6.0.6",
+        "@types/vue-select": "^3.11.2",
+        "laravel-mix": "^6.0.31",
         "lodash": "^4.17.19",
         "postcss": "^8.3.7",
         "sass": "^1.42.1",
@@ -32,6 +33,7 @@
         "@vue/eslint-config-typescript": "^7.0.0",
         "autoprefixer": "^10.3.5",
         "axios": "^0.21",
+        "email-validator": "^2.0.4",
         "eslint": "^7.32.0",
         "eslint-plugin-prettier": "^4.0.0",
         "eslint-plugin-vue": "^7.18.0",

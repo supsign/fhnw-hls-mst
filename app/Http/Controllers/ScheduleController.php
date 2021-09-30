@@ -3,42 +3,38 @@
 namespace App\Http\Controllers;
 
 use App\Models\Schedule;
-use Illuminate\Support\Facades\Auth;
+use App\Services\User\PermissionService;
 
 class ScheduleController extends Controller
 {
-    public function showAllSchedules()
+    public function __construct(private PermissionService $permissionService)
     {
-        if (!Auth::check()) {
-            abort(403);
-        }
+    }
+
+    public function index()
+    {
+        $this->permissionService->canPlanScheduleOrAbort();
 
         return view('schedule.list');
     }
 
-    public function newSchedule()
+    public function create()
     {
-        if (!Auth::check()) {
-            abort(403);
-        }
+        $this->permissionService->canPlanScheduleOrAbort();
 
         return view('schedule.new');
     }
 
-    public function createSchedule()
+    public function store()
     {
-        if (!Auth::check()) {
-            abort(403);
-        }
+        $this->permissionService->canPlanScheduleOrAbort();
 
         return redirect()->route('home');
     }
 
-    public function getById(Schedule $schedule)
+    public function show(Schedule $schedule)
     {
-        if (!Auth::check()) {
-            abort(403);
-        }
+        $this->permissionService->canPlanScheduleOrAbort();
 
         return view('schedule.list', ['schedule' => $schedule]);
     }

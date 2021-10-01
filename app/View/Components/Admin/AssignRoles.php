@@ -9,7 +9,6 @@ use Spatie\Permission\Models\Permission;
 
 class AssignRoles extends Component
 {
-    
     /**
      * Create a new component instance.
      *

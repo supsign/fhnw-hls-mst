@@ -58,7 +58,7 @@ class PermissionService
 
     public function assignServerAdmin(User $user): User
     {
-        if(!Auth::user()->hasRole('server-admin')) {
+        if (!Auth::user()->hasRole('server-admin')) {
             return $user;
         }
 
@@ -69,10 +69,10 @@ class PermissionService
 
     public function removeServerAdmin(User $user): User
     {
-        if(!Auth::user()->hasRole('server-admin')) {
+        if (!Auth::user()->hasRole('server-admin')) {
             return $user;
         }
-        
+
         $user->removeRole('server-admin');
 
         return $user;

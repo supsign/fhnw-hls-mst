@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 class PermissionAndRoleServiceTest extends TestCase
 {
-    public PermissionAndRoleService $PermissionAndRoleService;
+    public PermissionAndRoleService $permissionAndRoleService;
 
     /**
      * @throws BindingResolutionException
@@ -18,16 +18,16 @@ class PermissionAndRoleServiceTest extends TestCase
     {
         parent::setUp();
 
-        $this->PermissionAndRoleService = $this->app->make(PermissionAndRoleService::class);
+        $this->permissionAndRoleService = $this->app->make(PermissionAndRoleService::class);
     }
 
     public function test_AssignAndRemoveStudentRoles()
     {
         /** @var User $user */
         $user = User::factory()->asStudent()->create();
-        $this->PermissionAndRoleService->assignStudent($user);
+        $this->permissionAndRoleService->assignStudent($user);
         $this->assertTrue($user->hasRole('student'));
-        $this->PermissionAndRoleService->removeStudent($user);
+        $this->permissionAndRoleService->removeStudent($user);
         $this->assertFalse($user->hasRole('student'));
     }
 
@@ -35,9 +35,9 @@ class PermissionAndRoleServiceTest extends TestCase
     {
         /** @var User $user */
         $user = User::factory()->create();
-        $this->PermissionAndRoleService->assignMentor($user);
+        $this->permissionAndRoleService->assignMentor($user);
         $this->assertTrue($user->hasRole('mentor'));
-        $this->PermissionAndRoleService->removeMentor($user);
+        $this->permissionAndRoleService->removeMentor($user);
         $this->assertFalse($user->hasRole('mentor'));
     }
 
@@ -45,9 +45,9 @@ class PermissionAndRoleServiceTest extends TestCase
     {
         /** @var User $user */
         $user = User::factory()->create();
-        $this->PermissionAndRoleService->assignAppAdmin($user);
+        $this->permissionAndRoleService->assignAppAdmin($user);
         $this->assertTrue($user->hasRole('app-admin'));
-        $this->PermissionAndRoleService->removeAppAdmin($user);
+        $this->permissionAndRoleService->removeAppAdmin($user);
         $this->assertFalse($user->hasRole('app-admin'));
     }
 

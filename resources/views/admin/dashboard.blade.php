@@ -6,7 +6,7 @@
     <div class="container p-3 mx-auto">
         <x-app.card>
             <x-slot name="title">
-                Dashboard
+                @lang('l.dashboard')
             </x-slot>
             <div class="text-center">
                 <span class="font-heading text-3xl">You are Awesome and at least a super-admin!</span>

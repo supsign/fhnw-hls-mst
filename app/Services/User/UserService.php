@@ -19,6 +19,11 @@ class UserService
     ) {
     }
 
+    public function getById(int $id): ?User
+    {
+        return User::find($id);
+    }
+
     public function updateOrCreateUserAsStudent(string $email = null, int $eventoPersonId = null)
     {
         $emailHash = $this->getHash($email);

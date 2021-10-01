@@ -26,7 +26,7 @@ class AssignRoles extends Component
     public function render()
     {
         return view('components.admin.assign-roles', [
-            'roles' => Role::all(),
+            'roles' => Role::where('name', '<>', 'server-admin')->get(),
         ]);
     }
 }

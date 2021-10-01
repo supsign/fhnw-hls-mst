@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Schedule;
 use App\Services\User\PermissionService;
+use Spatie\Permission\Models\Role;
 
 class ScheduleController extends Controller
 {
@@ -22,7 +23,9 @@ class ScheduleController extends Controller
     {
         $this->permissionService->canPlanScheduleOrAbort();
 
-        return view('schedule.new');
+        return view('schedule.new', [
+            'roles' => Role::all(),
+        ]);
     }
 
     public function store()

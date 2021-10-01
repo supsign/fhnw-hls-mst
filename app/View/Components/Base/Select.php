@@ -11,9 +11,29 @@ class Select extends Component
      *
      * @return void
      */
-    public function __construct()
-    {
-        //
+    public $options;
+    public $optionKey;
+    public $label;
+    public $value;
+    public $initError;
+    public $name;
+
+    public function __construct(
+        $options = null,
+        $optionKey = 'id',
+        $label = null,
+        $value = null,
+        $initErrors = null
+    ) {
+        if (isset($options)) {
+            $this->options = $options->values();
+        }
+        $this->optionKey = $optionKey;
+        $this->label = $label;
+        $this->value = $value;
+        if (isset($initErrors[0])) {
+            $this->initError = $initErrors[0];
+        }
     }
 
     /**

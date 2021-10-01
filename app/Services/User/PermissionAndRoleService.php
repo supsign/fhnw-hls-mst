@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-class PermissionService
+class PermissionAndRoleService
 {
     public function getRoleById(int $id): ?Role
     {
@@ -52,28 +52,6 @@ class PermissionService
     public function removeAppAdmin(User $user): User
     {
         $user->removeRole('app-admin');
-
-        return $user;
-    }
-
-    public function assignServerAdmin(User $user): User
-    {
-        if (!Auth::user()->hasRole('server-admin')) {
-            return $user;
-        }
-
-        $user->assignRole('server-admin');
-
-        return $user;
-    }
-
-    public function removeServerAdmin(User $user): User
-    {
-        if (!Auth::user()->hasRole('server-admin')) {
-            return $user;
-        }
-
-        $user->removeRole('server-admin');
 
         return $user;
     }

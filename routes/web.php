@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ScheduleController;
@@ -37,5 +38,11 @@ Route::middleware(['web', 'auth'])->group(
         Route::get('schedules/create', [ScheduleController::class, 'create'])->name('schedule.create');
         Route::post('schedules', [ScheduleController::class, 'store'])->name('schedule.store');
         Route::get('schedules/{schedule}', [ScheduleController::class, 'show'])->name('schedule.show');
+    }
+);
+
+Route::middleware(['web', 'auth', 'backend'])->group(
+    function () {
+        Route::get('admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     }
 );

@@ -1,9 +1,8 @@
 <?php
 
-namespace Tests\Feature\Permission;
+namespace Tests\Feature\Services\Permission;
 
 use App\Models\User;
-use App\Services\User\CustomerUserService;
 use App\Services\User\PermissionService;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Tests\TestCase;

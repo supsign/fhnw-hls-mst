@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Services\User\PermissionService;
 use App\Services\User\UserService;
-use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 
 class AdminController extends Controller

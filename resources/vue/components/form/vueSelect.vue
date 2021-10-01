@@ -158,6 +158,7 @@ export default class VueSelect extends BaseComponent {
 
     // ToDo Matthias
     public created() {
+        console.log(this.options);
         this.initialError = this.initError;
 
         if (this.initValue) {

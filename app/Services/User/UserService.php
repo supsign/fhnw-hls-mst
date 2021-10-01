@@ -81,6 +81,7 @@ class UserService
     public function makeAdmin(User $user, PermissionService $permissionService)
     {
         $permissionService->assignAppAdmin($user);
+
         return $user;
     }
 }

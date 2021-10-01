@@ -8,20 +8,20 @@ use Spatie\Permission\Models\Role;
 
 class ScheduleController extends Controller
 {
-    public function __construct(private PermissionAndRoleService $PermissionAndRoleService)
+    public function __construct(private PermissionAndRoleService $permissionAndRoleService)
     {
     }
 
     public function index()
     {
-        $this->PermissionAndRoleService->canPlanScheduleOrAbort();
+        $this->permissionAndRoleService->canPlanScheduleOrAbort();
 
         return view('schedule.list');
     }
 
     public function create()
     {
-        $this->PermissionAndRoleService->canPlanScheduleOrAbort();
+        $this->permissionAndRoleService->canPlanScheduleOrAbort();
 
         return view('schedule.new', [
             'roles' => Role::all(),
@@ -30,14 +30,14 @@ class ScheduleController extends Controller
 
     public function store()
     {
-        $this->PermissionAndRoleService->canPlanScheduleOrAbort();
+        $this->permissionAndRoleService->canPlanScheduleOrAbort();
 
         return redirect()->route('home');
     }
 
     public function show(Schedule $schedule)
     {
-        $this->PermissionAndRoleService->canPlanScheduleOrAbort();
+        $this->permissionAndRoleService->canPlanScheduleOrAbort();
 
         return view('schedule.list', ['schedule' => $schedule]);
     }

@@ -15,7 +15,7 @@ class UserService
     public function __construct(
         protected StudentService $studentService,
         protected MentorService $mentorService,
-        protected PermissionAndRoleService $PermissionAndRoleService,
+        protected PermissionAndRoleService $permissionAndRoleService,
     ) {
     }
 
@@ -40,7 +40,7 @@ class UserService
             return $user;
         }
 
-        $this->PermissionAndRoleService->assignStudent($user);
+        $this->permissionAndRoleService->assignStudent($user);
 
         // dissociate existing other user from student
         if ($student->user && $student->user->id != $user->id) {
@@ -66,7 +66,7 @@ class UserService
             return $user;
         }
 
-        $this->PermissionAndRoleService->assignMentor($user);
+        $this->permissionAndRoleService->assignMentor($user);
 
         // dissociate existing other user from mentor
         if ($mentor->user && $mentor->user->id != $user->id) {

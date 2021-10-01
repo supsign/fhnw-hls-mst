@@ -10,26 +10,26 @@ use Spatie\Permission\Models\Role;
 
 class AdminController extends Controller
 {
-    public function __construct(protected PermissionAndRoleService $PermissionAndRoleService, protected UserService $userService)
+    public function __construct(protected PermissionAndRoleService $permissionAndRoleService, protected UserService $userService)
     {
     }
 
     public function dashboard(): View
     {
-        $this->PermissionAndRoleService->canManageBackendOrAbort();
+        $this->permissionAndRoleService->canManageBackendOrAbort();
 
         return view('admin.dashboard');
     }
 
     public function assignRoleToUser(Request $request)
     {
-        $this->PermissionAndRoleService->canManageBackendOrAbort();
+        $this->permissionAndRoleService->canManageBackendOrAbort();
         $user = $this->userService->getById($request->user_id);
-        $role = $this->PermissionAndRoleService->getRoleById($request->role_id);
+        $role = $this->permissionAndRoleService->getRoleById($request->role_id);
         $method = 'assign'.str_replace('-', '', $role->name);
 
-        if ($user && $role && method_exists($this->PermissionAndRoleService, $method)) {
-            $this->PermissionAndRoleService->$method($user);
+        if ($user && $role && method_exists($this->permissionAndRoleService, $method)) {
+            $this->permissionAndRoleService->$method($user);
         }
         // Todo: Fehler werfen/Log schreiben?
 
@@ -38,13 +38,13 @@ class AdminController extends Controller
 
     public function removeRoleFromUser(Request $request)
     {
-        $this->PermissionAndRoleService->canManageBackendOrAbort();
+        $this->permissionAndRoleService->canManageBackendOrAbort();
         $user = $this->userService->getById($request->user_id);
-        $role = $this->PermissionAndRoleService->getRoleById($request->role_id);
+        $role = $this->permissionAndRoleService->getRoleById($request->role_id);
         $method = 'remove'.str_replace('-', '', $role->name);
 
-        if ($user && $role && method_exists($this->PermissionAndRoleService, $method)) {
-            $this->PermissionAndRoleService->$method($user);
+        if ($user && $role && method_exists($this->permissionAndRoleService, $method)) {
+            $this->permissionAndRoleService->$method($user);
         }
         // Todo: Fehler werfen/Log schreiben?
 

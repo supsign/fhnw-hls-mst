@@ -7,13 +7,13 @@ use Illuminate\Contracts\View\View;
 
 class UserController extends Controller
 {
-    public function __construct(private PermissionAndRoleService $PermissionAndRoleService)
+    public function __construct(private PermissionAndRoleService $permissionAndRoleService)
     {
     }
 
     public function index(): View
     {
-        $this->PermissionAndRoleService->canShowAppOrAbort();
+        $this->permissionAndRoleService->canShowAppOrAbort();
 
         return view('user.index');
     }

@@ -7,13 +7,13 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function __construct(private PermissionAndRoleService $PermissionAndRoleService)
+    public function __construct(private PermissionAndRoleService $permissionAndRoleService)
     {
     }
 
     public function index(Request $request)
     {
-        $this->PermissionAndRoleService->canShowAppOrAbort();
+        $this->permissionAndRoleService->canShowAppOrAbort();
 
         $firstname = $request->session()->get('firstname');
         $lastname = $request->session()->get('lastname');

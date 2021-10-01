@@ -24,7 +24,7 @@ class ScheduleController extends Controller
         $this->permissionService->canPlanScheduleOrAbort();
 
         return view('schedule.new', [
-            'roles' => Role::all()
+            'roles' => Role::all(),
         ]);
     }
 

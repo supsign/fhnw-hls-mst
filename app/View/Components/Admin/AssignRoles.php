@@ -27,8 +27,7 @@ class AssignRoles extends Component
     public function render()
     {
         return view('components.admin.assign-roles', [
-            // 'roles' => Permission::all(),
-            'roles' => StudyField::all(),
+            'roles' => Permission::all(),
         ]);
     }
 }

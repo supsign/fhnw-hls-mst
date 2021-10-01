@@ -18,12 +18,14 @@
                     <x-base.select
                         clearable
                         name="select_stuff"
+                        :options="$roles"
                         optionKey="name"
                         label="select stuff">
                     </x-base.select>
                     <x-base.select
                         clearable
                         name="select_stuff2"
+                        :options="$roles"
                         optionKey="name"
                         label="select stuff">
                     </x-base.select>

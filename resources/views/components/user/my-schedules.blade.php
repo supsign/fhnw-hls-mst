@@ -1,7 +1,7 @@
 <div>
     <x-app.card>
         <x-slot name="title">
-            <x-base.link href="{{ route('schedule.show') }}">@lang('l.scheduleCurrent')</x-base.link>
+            <x-base.link href="{{ route('schedule.index') }}">@lang('l.scheduleCurrent')</x-base.link>
         </x-slot>
 
         <div class="flex flex-col mb-4">

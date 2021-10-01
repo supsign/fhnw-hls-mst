@@ -11,7 +11,7 @@ class CurrentSchedule extends Component
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(public array $modules = ['Technik', 'Synthese & Analytik', 'Mathematik', 'Physik', 'Informatik', 'Biochemie'])
     {
         //
     }

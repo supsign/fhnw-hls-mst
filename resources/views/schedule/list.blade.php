@@ -4,10 +4,7 @@
     </x-slot>
 
     <div class="container p-3 mx-auto">
-        <x-app.card>
-            <x-slot name="title">
-                @lang('l.scheduleCurrent')
-            </x-slot>
-        </x-app.card>
+        <x-user.me></x-user.me>
+        <x-user.current-schedule></x-user.current-schedule>
     </div>
 </x-layout.app>

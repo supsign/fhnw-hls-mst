@@ -15,8 +15,13 @@ class UserService
     public function __construct(
         protected StudentService $studentService,
         protected MentorService $mentorService,
-        protected PermissionService $permissionService,
+        protected PermissionAndRoleService $permissionAndRoleService,
     ) {
+    }
+
+    public function getById(int $id): ?User
+    {
+        return User::find($id);
     }
 
     public function updateOrCreateUserAsStudent(string $email = null, int $eventoPersonId = null)
@@ -35,7 +40,7 @@ class UserService
             return $user;
         }
 
-        $this->permissionService->assignStudent($user);
+        $this->permissionAndRoleService->assignStudent($user);
 
         // dissociate existing other user from student
         if ($student->user && $student->user->id != $user->id) {
@@ -61,7 +66,7 @@ class UserService
             return $user;
         }
 
-        $this->permissionService->assignMentor($user);
+        $this->permissionAndRoleService->assignMentor($user);
 
         // dissociate existing other user from mentor
         if ($mentor->user && $mentor->user->id != $user->id) {

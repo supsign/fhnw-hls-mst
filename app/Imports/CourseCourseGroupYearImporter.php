@@ -5,7 +5,7 @@ namespace App\Imports;
 use App;
 use App\Services\CourseCourseGroupYear\CourseCourseGroupYearService;
 
-class CourseCourseGroupImporter extends BaseCsvImport
+class CourseCourseGroupYearImporter extends BaseCsvImport
 {
     protected CourseCourseGroupYearService $courseCourseGroupYearService;
     protected $fileNames = ['modul_zu_modulgruppe.csv'];

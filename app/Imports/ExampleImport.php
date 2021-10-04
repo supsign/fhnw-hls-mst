@@ -2,7 +2,7 @@
 
 namespace App\Imports;
 
-class CourseCourseGroupImporter extends BaseCsvImport
+class ExampleImport extends BaseCsvImport
 {
     protected $fileNames = ['exmaple.csv'];
     protected $fieldAddresses = ['field1', 'field1'];

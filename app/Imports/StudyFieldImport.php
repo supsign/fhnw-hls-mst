@@ -15,7 +15,7 @@ use App\Imports\StudyFieldImport;
 $excel->import(new StudyFieldImport, 'Tab1_Studiengang.xlsx');
 */
 
-class StudyFieldImport extends BaseImport implements ToModel, WithHeadingRow
+class StudyFieldImport extends BaseExcelImport implements ToModel, WithHeadingRow
 {
     protected $requiredFields = ['id_anlass', 'anlassnummer', 'anlassbezeichnung'];
 

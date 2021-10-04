@@ -1,11 +1,5 @@
 <?php
 
-use App\Importers\CourseGroupImporter;
-use App\Importers\CourseImporter;
-use App\Importers\CrossQualificationImporter;
-use App\Importers\SkillImporter;
-use App\Importers\SkillPrerequisiteImporter;
-use App\Importers\SpecializationImporter;
 use App\Imports\StudyFieldImport;
 use App\Imports\StudyFieldYearImport;
 use Database\Seeders\LanguageSeeder;
@@ -111,16 +105,12 @@ class InitialCreate extends Migration
             $table->timestampsTz();
         });
 
-        (new SpecializationImporter())->import();
-
         Schema::create('cross_qualifications', function (Blueprint $table) {
             $table->id();
             $table->foreignId('study_field_id')->constrained();
             $table->string('name')->nullable();
             $table->timestampsTz();
         });
-
-        (new CrossQualificationImporter())->import();
 
         Schema::create('semesters', function (Blueprint $table) {
             $table->id();
@@ -176,8 +166,6 @@ class InitialCreate extends Migration
             $table->timestampsTz();
         });
 
-        (new CourseImporter())->import();
-
         Schema::create('course_groups', function (Blueprint $table) {
             $table->id();
             $table->string('import_id')->nullable()->unique();
@@ -185,8 +173,6 @@ class InitialCreate extends Migration
             $table->string('name');
             $table->timestampsTz();
         });
-
-        (new CourseGroupImporter())->import();
 
         Schema::create('course_group_years', function (Blueprint $table) {
             $table->id();
@@ -206,9 +192,6 @@ class InitialCreate extends Migration
             $table->boolean('is_acquisition')->default(0);
             $table->timestampsTz();
         });
-
-        (new SkillImporter())->import();
-        (new SkillPrerequisiteImporter())->import();
 
         Schema::create('course_years', function (Blueprint $table) {
             $table->id();

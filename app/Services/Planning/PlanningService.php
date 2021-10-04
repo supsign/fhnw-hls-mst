@@ -7,7 +7,6 @@ use App\Services\Base\BaseModelService;
 
 class PlanningService extends BaseModelService
 {
-
     public function __construct(protected Planning $model)
     {
         parent::__construct($model);

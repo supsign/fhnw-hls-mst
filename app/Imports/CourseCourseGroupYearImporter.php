@@ -2,23 +2,16 @@
 
 namespace App\Imports;
 
-use App;
-use App\Services\CourseCourseGroupYear\CourseCourseGroupYearService;
+use App\Models\StudyFieldYear;
 
-class CourseCourseGroupYearImporter extends BaseCsvImport
+class CourseCourseGroupYearImporter
 {
-    protected CourseCourseGroupYearService $courseCourseGroupYearService;
-    protected $fileNames = ['modul_zu_modulgruppe.csv'];
-    protected $fieldAddresses = ['laufnummer', 'id_modulgruppe', 'semester'];
-
-    public function __construct()
+    public function import()
     {
-        $this->courseCourseGroupYearService = App::make(CourseCourseGroupYearService::class);
+        foreach (StudyFieldYear::all() AS $studyFieldYear) {
 
-        parent::__construct();
-    }
+            $studyFieldYear;
 
-    public function importLine()
-    {
+        } 
     }
 }

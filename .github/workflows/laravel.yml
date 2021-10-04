@@ -42,8 +42,8 @@ jobs:
 
       - name: Install Dependencies
         run: |
-        npm config set '//npm.fontawesome.com/:_authToken' "${{ secrets.NPM_TOKEN }}"
-        composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+          npm config set '//npm.fontawesome.com/:_authToken' "${{ secrets.NPM_TOKEN }}"
+          composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
       - name: Generate key
         run: php artisan key:generate

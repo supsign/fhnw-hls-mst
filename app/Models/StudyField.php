@@ -21,4 +21,9 @@ class StudyField extends BaseModel
     {
         return $this->belongsTo(StudyProgram::class);
     }
+
+    public function studyFieldYears()
+    {
+        return $this->hasMany(StudyFieldYear::class);
+    }
 }

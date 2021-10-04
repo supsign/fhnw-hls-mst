@@ -1,5 +1,6 @@
 <?php
 
+use App\Imports\CourseGroupImport;
 use App\Imports\SpecializationImport;
 use App\Imports\StudyFieldImport;
 use App\Imports\StudyFieldYearImport;
@@ -176,6 +177,8 @@ class InitialCreate extends Migration
             $table->string('name');
             $table->timestampsTz();
         });
+
+        (new CourseGroupImport)->import();
 
         Schema::create('course_group_years', function (Blueprint $table) {
             $table->id();

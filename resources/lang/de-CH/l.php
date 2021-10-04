@@ -8,9 +8,8 @@ return [
     'roleRemove' => 'Rolle entfernen',
     'studyField' => 'Studiengang:',
     'studyProgram' => 'Studienrichtung:',
-    'schedule' => 'Stundenplan',
-    'scheduleCurrent' => 'aktuelle Studienplanung',
-    'schedulesAll' => 'Alle',
+    'planning' => 'Studienplanung',
+    'planningsAll' => 'Alle',
     'save' => 'Speichern',
     'dashboard' => 'Dashboard',
 ];

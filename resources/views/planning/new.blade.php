@@ -8,7 +8,7 @@
             <x-slot name="title">
                 neuer Stundenplan
             </x-slot>
-            <vue-form id="new_schedule" method="POST" action="{{ route('schedule.create') }}">
+            <vue-form id="new_planning" method="POST" action="{{ route('planning.create') }}">
                 @csrf
                 <div class="flex flex-col space-y-4">
 {{--                    <x-base.input type="text" name="course" label="Course" value="{{ old('course') }}" :init-errors="$errors->get('course')"/>--}}

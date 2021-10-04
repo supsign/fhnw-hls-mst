@@ -23,6 +23,6 @@ class MySchedules extends Component
      */
     public function render()
     {
-        return view('components.user.my-schedules');
+        return view('components.user.my-plannings');
     }
 }

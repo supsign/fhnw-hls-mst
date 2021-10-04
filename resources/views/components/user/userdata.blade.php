@@ -1,7 +1,7 @@
 <div>
     <x-app.card>
         <x-slot name="title">
-            Benutzerdaten
+            @lang('l.userData')
         </x-slot>
 
         <!-- ToDo mehr Angaben zum Standartuser hinzufügen -->

@@ -4,9 +4,16 @@ namespace App\Services\User;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
-class PermissionService
+class PermissionAndRoleService
 {
+    public function getRoleById(int $id): ?Role
+    {
+        return Role::find($id);
+    }
+
     public function assignStudent(User $user): User
     {
         $user->assignRole('student');

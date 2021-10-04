@@ -3,38 +3,41 @@
 namespace App\Http\Controllers;
 
 use App\Models\Schedule;
-use App\Services\User\PermissionService;
+use App\Services\User\PermissionAndRoleService;
+use Spatie\Permission\Models\Role;
 
 class ScheduleController extends Controller
 {
-    public function __construct(private PermissionService $permissionService)
+    public function __construct(private PermissionAndRoleService $permissionAndRoleService)
     {
     }
 
     public function index()
     {
-        $this->permissionService->canPlanScheduleOrAbort();
+        $this->permissionAndRoleService->canPlanScheduleOrAbort();
 
         return view('schedule.list');
     }
 
     public function create()
     {
-        $this->permissionService->canPlanScheduleOrAbort();
+        $this->permissionAndRoleService->canPlanScheduleOrAbort();
 
-        return view('schedule.new');
+        return view('schedule.new', [
+            'roles' => Role::all(),
+        ]);
     }
 
     public function store()
     {
-        $this->permissionService->canPlanScheduleOrAbort();
+        $this->permissionAndRoleService->canPlanScheduleOrAbort();
 
         return redirect()->route('home');
     }
 
     public function show(Schedule $schedule)
     {
-        $this->permissionService->canPlanScheduleOrAbort();
+        $this->permissionAndRoleService->canPlanScheduleOrAbort();
 
         return view('schedule.list', ['schedule' => $schedule]);
     }

@@ -1,17 +1,17 @@
 <?php
 
-namespace App\View\Components\User;
+namespace App\View\Components\Admin;
 
 use Illuminate\View\Component;
 
-class CurrentSchedule extends Component
+class Top extends Component
 {
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(public array $modules = ['Technik', 'Synthese & Analytik', 'Mathematik', 'Physik', 'Informatik', 'Biochemie'])
+    public function __construct()
     {
         //
     }
@@ -23,6 +23,6 @@ class CurrentSchedule extends Component
      */
     public function render()
     {
-        return view('components.user.current-schedule');
+        return view('components.admin.top');
     }
 }

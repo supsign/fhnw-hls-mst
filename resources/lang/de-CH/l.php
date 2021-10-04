@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'landingPage' => 'Startseite',
     'userData' => 'Benutzerdaten',
     'userName' => 'Name:',
     'role' => 'Rolle:',

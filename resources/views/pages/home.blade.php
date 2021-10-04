@@ -1,6 +1,6 @@
 <x-layout.app>
     <x-slot name="title">
-        Startseite
+        @lang('l.landingPage')
     </x-slot>
 
     <div class="container p-3 mx-auto">

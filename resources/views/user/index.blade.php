@@ -6,7 +6,7 @@
     <div class="container p-3 mx-auto">
         <x-app.card>
             <x-slot name="title">
-                User Data
+                @lang('l.userData')
             </x-slot>
             <div>
                 <div>User-Number: {{ $user->student_id }}</div>

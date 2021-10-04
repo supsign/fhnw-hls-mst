@@ -2,6 +2,8 @@
 
 namespace App\View\Components\Planning;
 
+use App\Models\Planning;
+use App\View\Components\User\MyPlanning;
 use Illuminate\View\Component;
 
 class SingleItem extends Component
@@ -11,7 +13,7 @@ class SingleItem extends Component
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(public Planning $planning)
     {
     }
 

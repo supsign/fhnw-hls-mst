@@ -28,6 +28,3 @@ class CourseGroupImport extends BaseCsvImport
         );
     }
 }
-
-
-

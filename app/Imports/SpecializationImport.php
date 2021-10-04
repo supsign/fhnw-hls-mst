@@ -30,6 +30,3 @@ class SpecializationImport extends BaseCsvImport
         ]);
     }
 }
-
-
-

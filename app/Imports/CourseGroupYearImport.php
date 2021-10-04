@@ -44,6 +44,3 @@ class CourseGroupYearImport extends BaseCsvImport
         }
     }
 }
-
-
-

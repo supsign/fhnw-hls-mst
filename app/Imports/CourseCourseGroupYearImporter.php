@@ -20,9 +20,5 @@ class CourseCourseGroupYearImporter extends BaseCsvImport
 
     public function importLine()
     {
-
     }
 }
-
-
-

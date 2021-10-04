@@ -14,7 +14,10 @@ use Illuminate\Http\Request;
 
 class PlanningController extends Controller
 {
-    public function __construct(private PermissionAndRoleService $permissionAndRoleService, protected StudyFieldService $studyFieldService, protected SemesterService $semesterService, protected PlanningService $planningService)
+    public function __construct(private PermissionAndRoleService $permissionAndRoleService,
+                                protected StudyFieldService $studyFieldService,
+                                protected SemesterService $semesterService,
+                                protected PlanningService $planningService)
     {
     }
 

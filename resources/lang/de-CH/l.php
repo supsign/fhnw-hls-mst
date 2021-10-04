@@ -3,7 +3,7 @@
 return [
     'landingPage' => 'Startseite',
     'userData' => 'Benutzerdaten',
-    'userName' => 'Name',
+    'name' => 'Name',
     'role' => 'Rolle',
     'roleAssign' => 'Rolle hinzufügen',
     'roleRemove' => 'Rolle entfernen',
@@ -15,4 +15,5 @@ return [
     'dashboard' => 'Dashboard',
     'term' => 'Semester',
     'ects' => 'ECTS',
+    'startDate' => 'Start',
 ];

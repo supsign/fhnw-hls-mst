@@ -1,7 +1,12 @@
 <div>
     <x-app.card>
         <x-slot name="title">
-            @lang('l.planning')
+            <div class="my-auto">
+                @lang('l.planning')
+            </div>
+            <a href="{{ route('planning.create') }}" class="">
+                <i class="fas fa-plus-circle text-blue-700 fa-2x" aria-hidden="true"></i>
+            </a>
         </x-slot>
 
         <div class="flex flex-col mb-4">

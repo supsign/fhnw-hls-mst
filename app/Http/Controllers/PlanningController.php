@@ -18,7 +18,7 @@ class PlanningController extends Controller
                                 protected StudyFieldService $studyFieldService,
                                 protected SemesterService $semesterService,
                                 protected PlanningService $planningService
-    ){
+    ) {
     }
 
     public function create()

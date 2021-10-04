@@ -2,13 +2,13 @@ name: Laravel
 
 on:
   push:
-    branches: [master]
+    branches: [ master ]
   pull_request:
-    branches: [master]
+    branches: [ master ]
 jobs:
   build-laravel:
     runs-on: ubuntu-latest
-    
+
     services:
       postgres:
         image: postgres:latest
@@ -23,7 +23,7 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-    
+
     steps:
       - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
         with:
@@ -36,15 +36,14 @@ jobs:
         with:
           node-version: "15"
           check-latest: true
-          registry-url: https://npm.fontawesome.com/
 
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.testing', '.env');"
 
       - name: Install Dependencies
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+        run: |
+        npm config set '//npm.fontawesome.com/:_authToken' "${{ secrets.NPM_TOKEN }}"
+        composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
       - name: Generate key
         run: php artisan key:generate
@@ -57,5 +56,6 @@ jobs:
 
       - name: Compile Assets
         run: |
+          npm config set '//npm.fontawesome.com/:_authToken' "${{ secrets.NPM_TOKEN }}"
           npm install
           npm run prod

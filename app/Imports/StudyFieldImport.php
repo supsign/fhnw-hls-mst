@@ -19,6 +19,11 @@ class StudyFieldImport extends BaseExcelImport implements ToModel, WithHeadingRo
 {
     protected $requiredFields = ['id_anlass', 'anlassnummer', 'anlassbezeichnung'];
 
+    public function __construct()
+    {
+        $this->service = App::make(StudyFieldService::class);
+    }
+
     /**
      * @param  array  $row
      * @return \Illuminate\Database\Eloquent\Model|null
@@ -30,8 +35,7 @@ class StudyFieldImport extends BaseExcelImport implements ToModel, WithHeadingRo
             return;
         }
 
-        $service = App::make(StudyFieldService::class);
-        $studyField = $service->createOrUpdateOnEventoId(
+        $studyField = $this->service->createOrUpdateOnEventoId(
             $row['id_anlass'],
             [
                 'evento_number' => $row['anlassnummer'],
@@ -40,7 +44,7 @@ class StudyFieldImport extends BaseExcelImport implements ToModel, WithHeadingRo
         );
 
         if (!$studyField->name) {
-            $service->update(
+            $this->service->update(
                 $studyField,
                 [
                     'name' => $row['anlassbezeichnung'],

@@ -1,5 +1,6 @@
 <?php
 
+use App\Imports\SpecializationImport;
 use App\Imports\StudyFieldImport;
 use App\Imports\StudyFieldYearImport;
 use Database\Seeders\LanguageSeeder;
@@ -104,6 +105,8 @@ class InitialCreate extends Migration
             $table->string('name')->nullable();
             $table->timestampsTz();
         });
+
+        (new SpecializationImport)->import();
 
         Schema::create('cross_qualifications', function (Blueprint $table) {
             $table->id();

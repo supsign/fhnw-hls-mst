@@ -9,9 +9,6 @@ class CourseCourseGroupYearImporter
     public function import()
     {
         foreach (StudyFieldYear::all() AS $studyFieldYear) {
-
-            $studyFieldYear;
-
-        } 
+        }
     }
 }

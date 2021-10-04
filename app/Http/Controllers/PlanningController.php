@@ -3,12 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Planning;
+use App\Models\Semester;
+use App\Models\StudyField;
+use App\Models\StudyProgram;
+use App\Services\Planning\PlanningService;
+use App\Services\Semester\SemesterService;
+use App\Services\StudyField\StudyFieldService;
 use App\Services\User\PermissionAndRoleService;
-use Spatie\Permission\Models\Role;
+use Illuminate\Http\Request;
 
 class PlanningController extends Controller
 {
-    public function __construct(private PermissionAndRoleService $permissionAndRoleService)
+    public function __construct(private PermissionAndRoleService $permissionAndRoleService, protected StudyFieldService $studyFieldService, protected SemesterService $semesterService, protected PlanningService $planningService)
     {
     }
 
@@ -17,13 +23,21 @@ class PlanningController extends Controller
         $this->permissionAndRoleService->canPlanScheduleOrAbort();
 
         return view('planning.new', [
-            'roles' => Role::all(),
+            'studyFields' => StudyField::where('study_program_id', 6)->get(),
+            'studyPrograms' => StudyProgram::where('id', 6)->get(),
+            'semesters' => Semester::where('is_hs', true)->get(),
         ]);
     }
 
-    public function store()
+    public function store(Request $request, Planning $planning)
     {
+        // Todo in der Datenbank speichern
         $this->permissionAndRoleService->canPlanScheduleOrAbort();
+        $studyProgram = $request->studyProgram;
+        $studyField = $this->studyFieldService->getById($request->studyField)->name;
+        $semester = $this->semesterService->getById($request->semester)->year;
+
+        // $this->planningService->update($planning, $request->validated());
 
         return redirect()->route('home');
     }

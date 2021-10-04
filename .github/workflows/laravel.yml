@@ -36,12 +36,15 @@ jobs:
         with:
           node-version: "15"
           check-latest: true
+          registry-url: https://npm.fontawesome.com/
 
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.testing', '.env');"
 
       - name: Install Dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
       - name: Generate key
         run: php artisan key:generate

@@ -50,7 +50,7 @@ class RelationTest extends TestCase
                 ])->id,
             ])->id
         );
-        $this->assertTrue($course->courseGroupYears()->where('course_id', $course->id)->first()->courses()->where('course_group_year_id', $cgyID)->first()->id === $course->id);
+        $this->assertTrue($course->courseGroupYears()->where('course_id', $course->id)->orderByDesc('id')->first()->courses()->where('course_group_year_id', $cgyID)->first()->id === $course->id);
 
         $course->crossQualificationYears()->attach(
             $cqyID = CrossQualificationYear::create([
@@ -89,7 +89,7 @@ class RelationTest extends TestCase
         );
         $this->assertTrue($course->recommendations()->where('course_id', $course->id)->first()->courses()->where('recommendation_id', $rID)->first()->id === $course->id);
 
-        $coursePlanning = CoursePlanning::create([
+        CoursePlanning::create([
             'course_id' => $course->id,
             'semester_id' => Semester::inRandomOrder()->first()->id,
             'planning_id' => $pID = Planning::create([

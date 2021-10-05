@@ -25,9 +25,7 @@ class Select extends Component
         $value = null,
         $initErrors = null
     ) {
-        if (isset($options)) {
-            $this->options = $options->values();
-        }
+        $this->options = $options->values();
         $this->optionKey = $optionKey;
         $this->label = $label;
         $this->value = $value;

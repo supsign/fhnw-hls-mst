@@ -1,6 +1,8 @@
 <?php
 
+use App\Imports\CourseCourseGroupYearImporter;
 use App\Imports\CourseGroupImport;
+use App\Imports\CourseGroupYearImport;
 use App\Imports\CourseImport;
 use App\Imports\CrossQualificationImport;
 use App\Imports\SkillImport;
@@ -197,7 +199,7 @@ class InitialCreate extends Migration
             $table->timestampsTz();
         });
 
-        (new CourseGroupImport)->import();
+        (new CourseGroupYearImport)->import();
 
         Schema::create('course_skill', function (Blueprint $table) {
             $table->id();
@@ -339,6 +341,8 @@ class InitialCreate extends Migration
             $table->foreignId('course_id')->constrained();
             $table->timestampsTz();
         });
+
+        (new CourseCourseGroupYearImporter)->import();
     }
 
     /**

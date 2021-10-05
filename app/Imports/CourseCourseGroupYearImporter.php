@@ -4,8 +4,8 @@ namespace App\Imports;
 
 use App;
 use App\Services\Course\CourseService;
-use App\Services\CourseGroup\CourseGroupService;
 use App\Services\CourseCourseGroupYear\CourseCourseGroupYearService;
+use App\Services\CourseGroup\CourseGroupService;
 
 class CourseCourseGroupYearImporter extends BaseCsvImport
 {
@@ -32,6 +32,3 @@ class CourseCourseGroupYearImporter extends BaseCsvImport
         ]);
     }
 }
-
-
-

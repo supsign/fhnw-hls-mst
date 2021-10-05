@@ -15,5 +15,5 @@ class CourseService extends BaseModelService
     public function getByNumber(string $number): ?Course
     {
         return $this->model->where('number', $number)->first();
-    }    
+    }
 }

@@ -35,7 +35,7 @@ class SemesterService extends BaseModelService
         ]);
     }
 
-    public function countSemesterFromSemesterToNow(Semester $semester): int
+    public function countSemestersFromSemesterToNow(Semester $semester): int
     {
         $today = Carbon::today();
 

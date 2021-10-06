@@ -50,7 +50,7 @@ class SemesterService extends BaseModelService
             return $i;
         }
 
-        while(true) {
+        while (true) {
             $i++;
 
             if (!$currentSemester->previousSemester) {

@@ -63,7 +63,5 @@ class SemesterService extends BaseModelService
 
             $currentSemester = $currentSemester->previousSemester;
         }
-
-        return $i;
     }
 }

@@ -26,8 +26,11 @@
                     {{$courseGroupYear->courseGroup->name}}
                 </x-slot>
                 @foreach($courseGroupYear->courseCourseGroupYears as $courseCourseGroupYear)
-                    <div>
-                        {{$courseCourseGroupYear->course->name}}
+                    <div class="flex flex-row justify-between">
+                        <div class="text-sm">
+                            {{$courseCourseGroupYear->course->name}}
+                        </div>
+                        <vue-plan-course></vue-plan-course>
                     </div>
                 @endforeach
             </x-app.card>

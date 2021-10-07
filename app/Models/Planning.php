@@ -46,6 +46,6 @@ class Planning extends BaseModel
 
     public function studyFieldYear()
     {
-        return $this->belongsTo(StudyFieldYear::class);
+        return $this->belongsTo(StudyFieldYear::class)->with(['beginSemester', 'studyField']);
     }
 }

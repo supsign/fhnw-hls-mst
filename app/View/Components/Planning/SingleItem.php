@@ -1,8 +1,9 @@
 <?php
 
-namespace App\View\Components\Schedule;
+namespace App\View\Components\Planning;
 
-use App\Models\Schedule;
+use App\Models\Planning;
+use App\View\Components\User\MyPlanning;
 use Illuminate\View\Component;
 
 class SingleItem extends Component
@@ -12,7 +13,7 @@ class SingleItem extends Component
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(public Planning $planning)
     {
     }
 
@@ -23,6 +24,6 @@ class SingleItem extends Component
      */
     public function render()
     {
-        return view('components.schedule.single-item');
+        return view('components.planning.single-item');
     }
 }

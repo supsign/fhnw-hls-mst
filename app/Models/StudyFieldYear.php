@@ -14,7 +14,7 @@ class StudyFieldYear extends BaseModel
 
     public function beginSemester()
     {
-        return $this->belongsTo(Semester::class, 'begin_semseter_id');
+        return $this->belongsTo(Semester::class, 'begin_semester_id');
     }
 
     public function originStudyFieldYear()

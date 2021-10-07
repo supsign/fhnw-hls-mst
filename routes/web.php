@@ -3,7 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\PlanningController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -34,11 +34,10 @@ Route::middleware(['web', 'auth'])->group(
     function () {
         Route::get('/', [HomeController::class, 'index'])->name('home');
 
-        // Schedules
-        Route::get('schedules', [ScheduleController::class, 'index'])->name('schedule.index');
-        Route::get('schedules/create', [ScheduleController::class, 'create'])->name('schedule.create');
-        Route::post('schedules', [ScheduleController::class, 'store'])->name('schedule.store');
-        Route::get('schedules/{schedule}', [ScheduleController::class, 'show'])->name('schedule.show');
+        // Plannings
+        Route::get('plannings/create', [PlanningController::class, 'create'])->name('planning.create');
+        Route::post('plannings', [PlanningController::class, 'store'])->name('planning.store');
+        Route::get('plannings/{planning}', [PlanningController::class, 'show'])->name('planning.show');
 
         Route::get('user', [UserController::class, 'index'])->name('user.index');
     }

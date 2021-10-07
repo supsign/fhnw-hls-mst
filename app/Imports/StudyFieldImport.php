@@ -15,9 +15,14 @@ use App\Imports\StudyFieldImport;
 $excel->import(new StudyFieldImport, 'Tab1_Studiengang.xlsx');
 */
 
-class StudyFieldImport extends BaseImport implements ToModel, WithHeadingRow
+class StudyFieldImport extends BaseExcelImport implements ToModel, WithHeadingRow
 {
     protected $requiredFields = ['id_anlass', 'anlassnummer', 'anlassbezeichnung'];
+
+    public function __construct()
+    {
+        $this->service = App::make(StudyFieldService::class);
+    }
 
     /**
      * @param  array  $row
@@ -30,16 +35,16 @@ class StudyFieldImport extends BaseImport implements ToModel, WithHeadingRow
             return;
         }
 
-        $service = App::make(StudyFieldService::class);
-        $studyField = $service->createOrUpdateOnEventoId(
+        $studyField = $this->service->createOrUpdateOnEventoId(
             $row['id_anlass'],
             [
                 'evento_number' => $row['anlassnummer'],
+                'study_program_id' => 6,                    //  Todo: Anhand von 'anlassbezeichnung' mit name comparen?
             ],
         );
 
         if (!$studyField->name) {
-            $service->update(
+            $this->service->update(
                 $studyField,
                 [
                     'name' => $row['anlassbezeichnung'],

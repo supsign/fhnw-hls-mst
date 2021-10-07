@@ -2,7 +2,7 @@
 
 namespace App\Imports;
 
-class BaseImport
+class BaseExcelImport
 {
     protected $requiredFields = [];
 

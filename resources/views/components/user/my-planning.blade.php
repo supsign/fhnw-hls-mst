@@ -12,7 +12,9 @@
         <div class="flex flex-col mb-4">
 {{--            ToDo Beispiel-Stundenpläne erstellen --}}
             @foreach($plannings as $planning)
-                <x-planning.single-item :planning=$planning></x-planning.single-item>
+                <a href="{{ route('planning.show', $planning) }}">
+                    <x-planning.single-item :planning=$planning></x-planning.single-item>
+                </a>
             @endforeach
             <div class="mt-2">
                 <a href="" class="button-primary w-auto">@lang('l.planningsAll')</a>

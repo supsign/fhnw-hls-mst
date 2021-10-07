@@ -5,8 +5,8 @@ namespace App\Services\Semester;
 use App\Models\Semester;
 use App\Services\Base\BaseModelService;
 use App\Services\Base\Traits\FirstOrCreateTrait;
-use Exception;
 use Carbon\Carbon;
+use Exception;
 
 class SemesterService extends BaseModelService
 {
@@ -30,7 +30,7 @@ class SemesterService extends BaseModelService
         if ($year >= $this->cutOffYearMax || $year <= $this->cutOffYearMin) {
             throw new Exception('year value "'.$year.'" is out of range');
         }
-      
+
         $startDate = ($isHs ? $this->semesterStartDateHs : $this->semesterStartDateFs).$year;
         $previousSemester = $year <= 2018 ? null : $this->firstOrcreateByYear($isHs ? $year : $year - 1, !$isHs);
 

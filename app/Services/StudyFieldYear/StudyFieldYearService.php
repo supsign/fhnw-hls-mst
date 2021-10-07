@@ -32,13 +32,13 @@ class StudyFieldYearService extends BaseModelService
             throw new Exception('study_field_id field is required');
         }
 
-        if (empty($attributes['begin_semseter_id']) && !empty($attributes['evento_number'])) {  //  auslagern
-            $attributes['begin_semseter_id'] = $this
+        if (empty($attributes['begin_semester_id']) && !empty($attributes['evento_number'])) {  //  auslagern
+            $attributes['begin_semester_id'] = $this
                 ->studyFieldService
                     ->getSemesterFromEventoNumber($attributes['evento_number'])
                         ->id;
         } else {
-            throw new Exception('begin_semseter_id field is required');
+            throw new Exception('begin_semester_id field is required');
         }
 
         return $this->createOrUpdateOnEventoIdTrait($eventId, $attributes);

@@ -45,7 +45,7 @@ class RelationTest extends TestCase
             $cgyID = CourseGroupYear::create([
                 'course_group_id' => CourseGroup::inRandomOrder()->first()->id,
                 'study_field_year_id' => StudyFieldYear::create([
-                    'begin_semseter_id' => Semester::inRandomOrder()->first()->id,
+                    'begin_semester_id' => Semester::inRandomOrder()->first()->id,
                     'study_field_id' => StudyField::inRandomOrder()->first()->id,
                 ])->id,
             ])->id
@@ -64,7 +64,7 @@ class RelationTest extends TestCase
             $spID = SpecializationYear::create([
                 'cross_qualification_id' => CrossQualification::inRandomOrder()->first()->id,
                 'study_field_year_id' => $sfyID = StudyFieldYear::create([
-                    'begin_semseter_id' => Semester::inRandomOrder()->first()->id,
+                    'begin_semester_id' => Semester::inRandomOrder()->first()->id,
                     'study_field_id' => StudyField::inRandomOrder()->first()->id,
                 ])->id,
             ])->id

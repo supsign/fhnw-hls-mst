@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Importers;
+namespace App\Imports;
 
-use App\Models\Specialization;
-use Supsign\LaravelCsvReader\CsvReader;
+use App;
+use App\Services\Specialization\SpecializationService;
 
-class SpecializationImporter extends CsvReader
+class SpecializationImport extends BaseCsvImport
 {
+    protected SpecializationService $specializationService;
     protected $fileNames = ['spezialisierung.csv'];
     protected $fieldAddresses = ['id_spezialisierung', 'bezeichnung', 'id_studienrichtung'];
-    protected $lineDelimiter = ',';
 
     public function __construct()
     {
-        $this->directories = [realpath(__DIR__).'/data/'];
+        $this->specializationService = App::make(SpecializationService::class);
 
-        return $this;
+        parent::__construct();
     }
 
     public function importLine()
@@ -24,11 +24,9 @@ class SpecializationImporter extends CsvReader
             return $this;
         }
 
-        Specialization::create([
+        $this->specializationService->firstOrCreate([
             'name' => $this->line['bezeichnung'],
             'study_field_id' => $this->line['id_studienrichtung'],
         ]);
-
-        return $this;
     }
 }

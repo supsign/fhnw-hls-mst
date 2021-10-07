@@ -1,24 +1,14 @@
 <?php
 
-namespace App\Importers;
+namespace App\Imports;
 
 use App\Models\Course;
 use App\Models\CourseSkill;
-use App\Models\Skill;
-use Supsign\LaravelCsvReader\CsvReader;
 
-class SkillPrerequisiteImporter extends CsvReader
+class SkillPrerequisiteImport extends BaseCsvImport
 {
     protected $fileNames = ['modulvoraussetzung.csv'];
     protected $fieldAddresses = ['id_modulvoraussetzung', 'laufnummer', 'voraussetzung_laufnummer', 'bemerkung', 'ziel1', 'ziel2', 'ziel3', 'ziel4', 'ziel5'];
-    protected $lineDelimiter = ',';
-
-    public function __construct()
-    {
-        $this->directories = [realpath(__DIR__).'/data/'];
-
-        return $this;
-    }
 
     public function importLine()
     {

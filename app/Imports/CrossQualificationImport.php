@@ -1,22 +1,13 @@
 <?php
 
-namespace App\Importers;
+namespace App\Imports;
 
 use App\Models\CrossQualification;
-use Supsign\LaravelCsvReader\CsvReader;
 
-class CrossQualificationImporter extends CsvReader
+class CrossQualificationImport extends BaseCsvImport
 {
     protected $fileNames = ['querschnittsqualifikation.csv'];
     protected $fieldAddresses = ['id_querschnittsqualifikation', 'bezeichnung', 'id_studienrichtung'];
-    protected $lineDelimiter = ',';
-
-    public function __construct()
-    {
-        $this->directories = [realpath(__DIR__).'/data/'];
-
-        return $this;
-    }
 
     public function importLine()
     {

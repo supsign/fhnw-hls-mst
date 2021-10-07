@@ -15,11 +15,10 @@ use Illuminate\Http\Request;
 class PlanningController extends Controller
 {
     public function __construct(private PermissionAndRoleService $permissionAndRoleService,
-                                protected StudyFieldService      $studyFieldService,
-                                protected SemesterService        $semesterService,
-                                protected PlanningService        $planningService
-    )
-    {
+                                protected StudyFieldService $studyFieldService,
+                                protected SemesterService $semesterService,
+                                protected PlanningService $planningService
+    ) {
     }
 
     public function create()
@@ -53,6 +52,7 @@ class PlanningController extends Controller
             'planning' => $planning,
             'courseGroupYears' => $planning->studyFieldYear->courseGroupYears,
         ];
+
         return view('planning.showOne', $viewParameter);
     }
 }

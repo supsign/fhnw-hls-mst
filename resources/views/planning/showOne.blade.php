@@ -19,5 +19,18 @@
                 </vue-form>
             </div>
         </x-app.card>
+
+        @foreach($courseGroupYears as $courseGroupYear)
+            <x-app.card>
+                <x-slot name="title">
+                    {{$courseGroupYear->courseGroup->name}}
+                </x-slot>
+                @foreach($courseGroupYear->courseCourseGroupYears as $courseCourseGroupYear)
+                    <div>
+                        {{$courseCourseGroupYear->course->name}}
+                    </div>
+                @endforeach
+            </x-app.card>
+        @endforeach
     </div>
 </x-layout.app>

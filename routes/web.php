@@ -37,7 +37,7 @@ Route::middleware(['web', 'auth'])->group(
         // Plannings
         Route::get('plannings/create', [PlanningController::class, 'create'])->name('planning.create');
         Route::post('plannings', [PlanningController::class, 'store'])->name('planning.store');
-        Route::get('plannings/{planning}', [PlanningController::class, 'show'])->name('planning.show');
+        Route::get('plannings/{planning}', [PlanningController::class, 'showOne'])->name('planning.showOne');
 
         Route::get('user', [UserController::class, 'index'])->name('user.index');
     }

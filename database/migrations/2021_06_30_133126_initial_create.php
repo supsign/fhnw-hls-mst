@@ -174,6 +174,7 @@ class InitialCreate extends Migration
             $table->foreignId('language_id')->default(1)->constrained();
             $table->foreignId('study_field_id')->nullable()->constrained();
             $table->string('number')->unique();
+            $table->string('name')->nullable();
             $table->integer('credits')->default(0);
             $table->timestampsTz();
         });

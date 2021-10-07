@@ -10,9 +10,9 @@
         </x-slot>
 
         <div class="flex flex-col mb-4">
-{{--            ToDo Beispiel-Stundenpläne erstellen --}}
+            {{--            ToDo Beispiel-Stundenpläne erstellen --}}
             @foreach($plannings as $planning)
-                <a href="{{ route('planning.show', $planning) }}">
+                <a href="{{ route('planning.showOne', $planning) }}">
                     <x-planning.single-item :planning=$planning></x-planning.single-item>
                 </a>
             @endforeach

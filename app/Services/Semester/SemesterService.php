@@ -25,21 +25,20 @@ class SemesterService extends BaseModelService
         parent::__construct($model);
     }
 
-    public function firstOrcreateByYear(int $year, bool $isHs = true): ?Semester
+    public function firstOrcreateByYear(int $year, bool $isHs = true): Semester
     {
-        if ($year >= $this->cutOffYearMax || $year <= $this->cutOffYearMin) {
+        if ($year >= $this->cutOffYearMax) {
             throw new Exception('year value "'.$year.'" is out of range');
         }
 
-        $startDate = ($isHs ? $this->semesterStartDateHs : $this->semesterStartDateFs).$year;
-        $previousSemester = $year <= 2018 ? null : $this->firstOrcreateByYear($isHs ? $year : $year - 1, !$isHs);
+        $previousSemester = $year <= $this->cutOffYearMin ? null : $this->firstOrcreateByYear($isHs ? $year : $year - 1, !$isHs);
 
         return $this->firstOrCreateTrait([
             'year' => $year,
             'is_hs' => $isHs,
         ], [
-            'start_date' => ($isHs ? '01.09.' : '01.02.').$year,
-            'previous_semester_id' => $this->firstOrcreateByYear($isHs ? $year : $year - 1, !$isHs)?->id,
+            'start_date' => ($isHs ? $this->semesterStartDateHs : $this->semesterStartDateFs).$year,
+            'previous_semester_id' => $previousSemester?->id,
         ]);
     }
 

@@ -1,16 +1,19 @@
 <?php
 
 return [
+    'landingPage' => 'Startseite',
     'userData' => 'Benutzerdaten',
-    'userName' => 'Name:',
-    'role' => 'Rolle:',
+    'name' => 'Name',
+    'role' => 'Rolle',
     'roleAssign' => 'Rolle hinzufügen',
     'roleRemove' => 'Rolle entfernen',
-    'studyField' => 'Studiengang:',
-    'studyProgram' => 'Studienrichtung:',
-    'schedule' => 'Stundenplan',
-    'scheduleCurrent' => 'aktuelle Studienplanung',
-    'schedulesAll' => 'Alle',
+    'studyField' => 'Studiengang',
+    'studyProgram' => 'Studienrichtung',
+    'planning' => 'Studienplanung',
+    'planningsAll' => 'Alle',
     'save' => 'Speichern',
     'dashboard' => 'Dashboard',
+    'term' => 'Semester',
+    'ects' => 'ECTS',
+    'startDate' => 'Start',
 ];

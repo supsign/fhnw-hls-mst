@@ -10,6 +10,8 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  */
 class Semester extends BaseModel
 {
+    protected $dates = ['start_date'];
+
     public function assessments()
     {
         return $this->hasMany(Assessment::class, 'begin_semester_id');

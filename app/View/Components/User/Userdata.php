@@ -5,7 +5,7 @@ namespace App\View\Components\User;
 use App\Models\User;
 use Illuminate\View\Component;
 
-class Me extends Component
+class Userdata extends Component
 {
     /**
      * Create a new component instance.
@@ -24,7 +24,7 @@ class Me extends Component
      */
     public function render()
     {
-        return view('components.user.me', [
+        return view('components.user.userdata', [
             'users' => User::all(),
         ]);
     }

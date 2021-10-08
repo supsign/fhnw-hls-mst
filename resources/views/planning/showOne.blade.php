@@ -42,7 +42,7 @@
                                 {{$courseCourseGroupYear->course->name}}
                             </div>
                             <div class="flex-none">
-                                <vue-plan-course></vue-plan-course>
+                                <vue-plan-course :planning-id="{{$planning->id}}" :course-id="{{$courseCourseGroupYear->course->id}}"></vue-plan-course>
                             </div>
                         </div>
                     @endforeach

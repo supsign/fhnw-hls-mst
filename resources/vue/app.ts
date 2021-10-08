@@ -12,6 +12,8 @@ import VueInput from "./components/form/vueInput.vue";
 import VueSelect from "./components/form/vueSelect.vue";
 import VueCheckbox from "./components/form/vueCheckbox.vue";
 import VuePlanCourse from "./components/planning/vuePlanCourse.vue";
+import {coursePlanningStore} from "./store/coursePlanning/coursePlanning.store";
+import VueStoreFill from "./components/store/vueStoreFill.vue"
 
 library.add(faUserSecret);
 library.add(faCheck);
@@ -21,7 +23,9 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
     strict: true,
-    modules: {},
+    modules: {
+        coursePlanning: coursePlanningStore
+    },
 });
 
 const app = new Vue({
@@ -31,7 +35,8 @@ const app = new Vue({
         VueInput,
         VueSelect,
         VueCheckbox,
-        VuePlanCourse
+        VuePlanCourse,
+        VueStoreFill
     },
     store
 });

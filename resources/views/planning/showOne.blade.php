@@ -19,7 +19,7 @@
                 </vue-form>
             </div>
         </x-app.card>
-
+        <vue-store-fill model="coursePlanning" :entities="{{$planning->coursePlannings}}"></vue-store-fill>
         @foreach($courseGroupYears as $courseGroupYear)
             <x-app.card>
                 <x-slot name="title">

@@ -9,6 +9,10 @@ export class CoursePlanningModel extends EntityModel<IBaseState<ICoursePlanning>
     typeof coursePlanningRequestModel,
     ICoursePlanning> {
     constructor(store: Store<IBaseState<ICoursePlanning>>) {
-        super("product", store, coursePlanningRequestModel);
+        super("coursePlanning", store, coursePlanningRequestModel);
+    }
+
+    public getCoursePlanning(planningId:number, courseId:number) {
+        return this._store.getters[`${this._modelName}/getCoursePlanning`](planningId, courseId);
     }
 }

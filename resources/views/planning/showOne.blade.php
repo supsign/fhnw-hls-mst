@@ -41,7 +41,7 @@
                             <div class="my-auto break-words flex-grow">
                                 {{$courseCourseGroupYear->course->name}}
                             </div>
-                            <div class="flex-none">
+                            <div class="flex-none my-auto">
                                 <vue-plan-course :planning-id="{{$planning->id}}" :course-id="{{$courseCourseGroupYear->course->id}}"></vue-plan-course>
                             </div>
                         </div>

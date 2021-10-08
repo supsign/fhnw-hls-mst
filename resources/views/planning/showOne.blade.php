@@ -41,7 +41,7 @@
                             <div class="my-auto break-words">
                                 {{$courseCourseGroupYear->course->name}}
                             </div>
-                            <vue-plan-course></vue-plan-course>
+                            <vue-plan-course :planning-id="{{$planning->id}}" :course-id="{{$courseCourseGroupYear->course->id}}"></vue-plan-course>
                         </div>
                     @endforeach
                 </div>

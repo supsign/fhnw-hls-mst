@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-import {Component} from "vue-property-decorator";
+import {Component, Prop} from "vue-property-decorator";
 import BaseComponent from "../base/baseComponent";
 import {ICoursePlanning} from "../../store/coursePlanning/coursePlanning.interface";
 

@@ -34,14 +34,16 @@
                 </x-slot>
                 <div class="text-sm lg:text-base">
                     @foreach($courseGroupYear->courseCourseGroupYears as $courseCourseGroupYear)
-                        <div class="flex flex-row justify-between space-x-3 border-b p-1 text-center">
-                            <div class="my-auto text-lg">
+                        <div class="flex flex-row space-x-5 border-b p-1 text-left">
+                            <div class="my-auto text-lg flex-none">
                                 <i class="far fa-check-circle" aria-hidden="true"></i>
                             </div>
-                            <div class="my-auto break-words">
+                            <div class="my-auto break-words flex-grow">
                                 {{$courseCourseGroupYear->course->name}}
                             </div>
-                            <vue-plan-course :planning-id="{{$planning->id}}" :course-id="{{$courseCourseGroupYear->course->id}}"></vue-plan-course>
+                            <div class="flex-none">
+                                <vue-plan-course :planning-id="{{$planning->id}}" :course-id="{{$courseCourseGroupYear->course->id}}"></vue-plan-course>
+                            </div>
                         </div>
                     @endforeach
                 </div>

@@ -1,6 +1,11 @@
 <template>
     <div>
-        <slot name="titel"></slot>
+        <div>
+            <slot name="titel"></slot>
+        </div>
+        <div>
+            <slot name ="content"></slot>
+        </div>
     </div>
 </template>
 

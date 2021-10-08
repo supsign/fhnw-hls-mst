@@ -11,7 +11,7 @@ import VueForm from "./components/form/vueForm.vue";
 import VueInput from "./components/form/vueInput.vue";
 import VueSelect from "./components/form/vueSelect.vue";
 import VueCheckbox from "./components/form/vueCheckbox.vue";
-import VuePlanCourse from "./component/planning/vuePlanCourse.vue";
+import VuePlanCourse from "./components/planning/vuePlanCourse.vue";
 
 library.add(faUserSecret);
 library.add(faCheck);

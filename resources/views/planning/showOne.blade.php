@@ -19,7 +19,7 @@
                 </vue-form>
             </div>
         </x-app.card>
-
+        <vue-store-fill model="coursePlanning" :entities="{{$planning->coursePlannings}}"></vue-store-fill>
         @foreach($courseGroupYears as $courseGroupYear)
             <x-app.card>
                 <x-slot name="title">
@@ -29,8 +29,9 @@
                     <div class="flex flex-row justify-between">
                         <div class="text-sm">
                             {{$courseCourseGroupYear->course->name}}
+                            {{$courseCourseGroupYear->course->id}}
                         </div>
-                        <vue-plan-course></vue-plan-course>
+                        <vue-plan-course :course-id="{{$courseCourseGroupYear->course->id}}" :planning-id="{{$planning->id}}"></vue-plan-course>
                     </div>
                 @endforeach
             </x-app.card>

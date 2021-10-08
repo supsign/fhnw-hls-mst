@@ -8,9 +8,9 @@
             <x-slot name="title">
                 Studienplanung
             </x-slot>
-            <div class="border-2 mt-4 p-4 rounded text-lg">
+            <div class="border-2 mt-4 p-4 rounded">
                 <vue-form>
-                    <div class="py-2 px-4 bg-red-500 rounded-md text-sm text-white float-right">
+                    <div class="py-2 px-4 bg-red-500 rounded-md text-sm text-white float-right ml-2">
                         <span class="">Delete</span>
                     </div>
                     <div>{{ $planning->studyFieldYear->studyField->studyProgram->name }}</div>
@@ -23,16 +23,28 @@
         @foreach($courseGroupYears as $courseGroupYear)
             <x-app.card>
                 <x-slot name="title">
-                    {{$courseGroupYear->courseGroup->name}}
-                </x-slot>
-                @foreach($courseGroupYear->courseCourseGroupYears as $courseCourseGroupYear)
-                    <div class="flex flex-row justify-between">
-                        <div class="text-sm">
-                            {{$courseCourseGroupYear->course->name}}
+                    <div class="flex flex-row space-x-2">
+                        <div class="my-auto">
+                            <i class="fas fa-arrow-down" aria-hidden="true"></i>
                         </div>
-                        <vue-plan-course></vue-plan-course>
+                        <div class="my-auto">
+                            {{$courseGroupYear->courseGroup->name}}
+                        </div>
                     </div>
-                @endforeach
+                </x-slot>
+                <div class="text-sm lg:text-base">
+                    @foreach($courseGroupYear->courseCourseGroupYears as $courseCourseGroupYear)
+                        <div class="flex flex-row justify-between space-x-3 border-b p-1 text-center">
+                            <div class="my-auto text-lg">
+                                <i class="far fa-check-circle" aria-hidden="true"></i>
+                            </div>
+                            <div class="my-auto break-words">
+                                {{$courseCourseGroupYear->course->name}}
+                            </div>
+                            <vue-plan-course></vue-plan-course>
+                        </div>
+                    @endforeach
+                </div>
             </x-app.card>
         @endforeach
     </div>

@@ -8,7 +8,7 @@
             <x-slot name="title">
                 Studienplanung
             </x-slot>
-            <div class="border-2 mt-4 p-4 rounded">
+            <div class="mt-2">
                 <vue-form>
                     <div class="py-2 px-4 bg-red-500 rounded-md text-sm text-white float-right ml-2">
                         <span class="">Delete</span>

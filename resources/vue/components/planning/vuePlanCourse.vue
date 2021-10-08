@@ -1,6 +1,6 @@
 <template>
-    <div v-if="!coursePlanning" class="text-sm">
-        planen
+    <div v-if="!coursePlanning" class="">
+        <img class="cursor-pointer w-8 h-8 my-auto" :src="'/img/calendarIcon.svg'" alt="module_icon" >
     </div>
     <div v-else class="text-sm">
         geplant
@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-import {Component, Prop} from "vue-property-decorator";
+import {Component} from "vue-property-decorator";
 import BaseComponent from "../base/baseComponent";
 import {ICoursePlanning} from "../../store/coursePlanning/coursePlanning.interface";
 

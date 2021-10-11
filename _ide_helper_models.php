@@ -88,23 +88,46 @@ namespace App\Models{
  * @property int $course_year_id
  * @property int $student_id
  * @property int $credits
- * @property bool $is_fulfilled
+ * @property int $completion_type_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\CompletionType $completionType
  * @property-read \App\Models\CourseYear $courseYear
  * @property-read \App\Models\Student $student
  * @method static \Illuminate\Database\Eloquent\Builder|Completion newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Completion newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Completion query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Completion whereCompletionTypeId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Completion whereCourseYearId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Completion whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Completion whereCredits($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Completion whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Completion whereIsFulfilled($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Completion whereStudentId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Completion whereUpdatedAt($value)
  */
 	class IdeHelperCompletion extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * App\Models\CompletionType
+ *
+ * @mixin IdeHelperCompletion
+ * @property int $id
+ * @property string $name
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Completion[] $completions
+ * @property-read int|null $completions_count
+ * @method static \Illuminate\Database\Eloquent\Builder|CompletionType newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|CompletionType newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|CompletionType query()
+ * @method static \Illuminate\Database\Eloquent\Builder|CompletionType whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CompletionType whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CompletionType whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CompletionType whereUpdatedAt($value)
+ */
+	class IdeHelperCompletionType extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -117,6 +140,7 @@ namespace App\Models{
  * @property int $language_id
  * @property int|null $study_field_id
  * @property string $number
+ * @property string|null $name
  * @property int $credits
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -151,6 +175,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Course whereCredits($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Course whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Course whereLanguageId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Course whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Course whereNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Course whereStudyFieldId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Course whereUpdatedAt($value)
@@ -168,6 +193,8 @@ namespace App\Models{
  * @property int $course_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Course $course
+ * @property-read \App\Models\CourseGroupYear $courseGroupYear
  * @method static \Illuminate\Database\Eloquent\Builder|CourseCourseGroupYear newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CourseCourseGroupYear newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CourseCourseGroupYear query()
@@ -245,7 +272,9 @@ namespace App\Models{
  * @property int|null $credits_to_pass
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read CourseGroupYear $courseGroupYear
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\CourseCourseGroupYear[] $courseCourseGroupYears
+ * @property-read int|null $course_course_group_years_count
+ * @property-read \App\Models\CourseGroup $courseGroup
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Course[] $courses
  * @property-read int|null $courses_count
  * @method static \Illuminate\Database\Eloquent\Builder|CourseGroupYear newModelQuery()
@@ -617,6 +646,8 @@ namespace App\Models{
  * @property string|null $name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\CoursePlanning[] $coursePlannings
+ * @property-read int|null $course_plannings_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Course[] $courses
  * @property-read int|null $courses_count
  * @property-read \App\Models\CrossQualificationYear|null $crossQualificationYear
@@ -697,7 +728,7 @@ namespace App\Models{
  * @property int|null $previous_semester_id
  * @property int $year
  * @property bool $is_hs
- * @property string $start_date
+ * @property \Illuminate\Support\Carbon $start_date
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Assessment[] $assessments
@@ -888,7 +919,7 @@ namespace App\Models{
  *
  * @mixin IdeHelperStudyField
  * @property int $id
- * @property int $study_program_id
+ * @property int|null $study_program_id
  * @property int|null $evento_id
  * @property string|null $evento_number
  * @property string|null $name
@@ -898,7 +929,9 @@ namespace App\Models{
  * @property-read int|null $courses_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Specialization[] $specializations
  * @property-read int|null $specializations_count
- * @property-read \App\Models\StudyProgram $studyProgram
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\StudyFieldYear[] $studyFieldYears
+ * @property-read int|null $study_field_years_count
+ * @property-read \App\Models\StudyProgram|null $studyProgram
  * @method static \Illuminate\Database\Eloquent\Builder|StudyField newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|StudyField newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|StudyField query()
@@ -919,9 +952,11 @@ namespace App\Models{
  *
  * @mixin IdeHelperStudyFieldYear
  * @property int $id
- * @property int $begin_semseter_id
+ * @property int $begin_semester_id
  * @property int|null $origin_study_field_year_id
  * @property int $study_field_id
+ * @property int|null $evento_id
+ * @property string|null $evento_number
  * @property bool $is_specialization_mandatory
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -933,8 +968,10 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|StudyFieldYear newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|StudyFieldYear newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|StudyFieldYear query()
- * @method static \Illuminate\Database\Eloquent\Builder|StudyFieldYear whereBeginSemseterId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|StudyFieldYear whereBeginSemesterId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|StudyFieldYear whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|StudyFieldYear whereEventoId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|StudyFieldYear whereEventoNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder|StudyFieldYear whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|StudyFieldYear whereIsSpecializationMandatory($value)
  * @method static \Illuminate\Database\Eloquent\Builder|StudyFieldYear whereOriginStudyFieldYearId($value)

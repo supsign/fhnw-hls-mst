@@ -10,23 +10,12 @@ use App\Services\User\UserService;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-/**
- * @internal
- * @coversNothing
- */
 class UserServiceTest extends TestCase
 {
     use WithFaker;
+
     private UserService $userService;
     private StudentService $studentService;
-
-    protected function setup(): void
-    {
-        parent::setUp();
-        $this->setUpFaker();
-        $this->userService = $this->app->make(UserService::class);
-        $this->studentService = $this->app->make(StudentService::class);
-    }
 
     public function testServiceCreation()
     {
@@ -80,5 +69,13 @@ class UserServiceTest extends TestCase
         $userOne->refresh();
         $userTwo->refresh();
         $this->assertNull($userOne->student);
+    }
+
+    protected function setup(): void
+    {
+        parent::setUp();
+        $this->setUpFaker();
+        $this->userService = $this->app->make(UserService::class);
+        $this->studentService = $this->app->make(StudentService::class);
     }
 }

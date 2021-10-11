@@ -3,7 +3,7 @@
 namespace App\Models;
 
 /**
- * @mixin IdeHelperCompletion
+ * @mixin IdeHelperCompletionType
  */
 class CompletionType extends BaseModel
 {

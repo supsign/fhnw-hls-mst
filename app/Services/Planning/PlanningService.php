@@ -23,7 +23,7 @@ class PlanningService extends BaseModelService
     {
         $attributes = [
             'student_id' => $studentId,
-            'study_field_year_id' => $studyFieldYearId
+            'study_field_year_id' => $studyFieldYearId,
         ];
 
         return $this->model::create($attributes);

@@ -9,7 +9,6 @@ use App\Models\Semester;
 
 class CoursePlanningService
 {
-
     public function __construct(protected CoursePlanning $coursePlanningModel)
     {
     }

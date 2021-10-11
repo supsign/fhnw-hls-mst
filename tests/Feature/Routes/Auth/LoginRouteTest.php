@@ -18,7 +18,7 @@ class LoginRouteTest extends TestCase
 
     protected TokenService $tokenService;
 
-    protected function setup(): void
+    public function setup(): void
     {
         parent::setUp();
         $this->setUpFaker();

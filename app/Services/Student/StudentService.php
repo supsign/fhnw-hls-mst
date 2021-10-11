@@ -19,8 +19,8 @@ class StudentService extends BaseModelService
         parent::__construct($model);
     }
 
-    public function createOrUpdateOnEventoPersonId(int $eventoPersonId): Student
+    public function createOrUpdateOnEventoPersonId(int $eventoPersonId, array $attributes = []): Student
     {
-        return $this->createOrUpdateOnEventoPersonIdTrait($eventoPersonId);
+        return $this->createOrUpdateOnEventoPersonIdTrait($eventoPersonId, $attributes);
     }
 }

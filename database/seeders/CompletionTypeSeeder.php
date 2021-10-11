@@ -40,7 +40,7 @@ class CompletionTypeSeeder extends Seeder
         $connection = config('database.default');
         $driver = config("database.connections.{$connection}.driver");
         if ('pgsql' === $driver) {
-            DB::statement('ALTER SEQUENCE "completion_types_id_seq" RESTART WITH ' . $lastId + 1);
+            DB::statement('ALTER SEQUENCE "completion_types_id_seq" RESTART WITH '.$lastId + 1);
         }
     }
 }

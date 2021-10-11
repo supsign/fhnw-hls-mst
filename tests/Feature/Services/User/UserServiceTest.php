@@ -17,10 +17,11 @@ use Tests\TestCase;
 class UserServiceTest extends TestCase
 {
     use WithFaker;
+
     private UserService $userService;
     private StudentService $studentService;
 
-    protected function setup(): void
+    public function setup(): void
     {
         parent::setUp();
         $this->setUpFaker();

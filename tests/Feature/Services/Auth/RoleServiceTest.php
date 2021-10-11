@@ -16,9 +16,10 @@ use Tests\TestCase;
 class RoleServiceTest extends TestCase
 {
     use WithFaker;
+
     protected RoleService $roleService;
 
-    protected function setup(): void
+    public function setup(): void
     {
         parent::setUp();
         $this->setUpFaker();

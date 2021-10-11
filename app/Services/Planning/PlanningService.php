@@ -18,4 +18,14 @@ class PlanningService extends BaseModelService
 
         return $this;
     }
+
+    public function createEmptyPlanning(int $studentId, int $studyFieldYearId): Planning
+    {
+        $attributes = [
+            'student_id' => $studentId,
+            'study_field_year_id' => $studyFieldYearId
+        ];
+
+        return $this->model::create($attributes);
+    }
 }

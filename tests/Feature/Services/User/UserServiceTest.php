@@ -17,6 +17,14 @@ class UserServiceTest extends TestCase
     private UserService $userService;
     private StudentService $studentService;
 
+    public function setup(): void
+    {
+        parent::setUp();
+        $this->setUpFaker();
+        $this->userService = $this->app->make(UserService::class);
+        $this->studentService = $this->app->make(StudentService::class);
+    }
+
     public function testServiceCreation()
     {
         $this->assertInstanceOf(UserService::class, $this->userService);
@@ -69,13 +77,5 @@ class UserServiceTest extends TestCase
         $userOne->refresh();
         $userTwo->refresh();
         $this->assertNull($userOne->student);
-    }
-
-    protected function setup(): void
-    {
-        parent::setUp();
-        $this->setUpFaker();
-        $this->userService = $this->app->make(UserService::class);
-        $this->studentService = $this->app->make(StudentService::class);
     }
 }

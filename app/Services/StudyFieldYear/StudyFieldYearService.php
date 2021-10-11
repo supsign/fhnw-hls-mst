@@ -9,6 +9,9 @@ use App\Services\Evento\Traits\GetByEventoId;
 use App\Services\StudyField\StudyFieldService;
 use Exception;
 
+/**
+ *  @method \App\Models\StudyFieldYear getByEventoId(int $eventoId)
+ */
 class StudyFieldYearService extends BaseModelService
 {
     use CreateOrUpdateOnEventoId {

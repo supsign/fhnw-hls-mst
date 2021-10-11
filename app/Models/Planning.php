@@ -48,4 +48,9 @@ class Planning extends BaseModel
     {
         return $this->belongsTo(StudyFieldYear::class)->with(['beginSemester', 'studyField']);
     }
+
+    public function coursePlannings()
+    {
+        return $this->hasMany(CoursePlanning::class);
+    }
 }

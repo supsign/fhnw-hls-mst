@@ -12,8 +12,13 @@ class CourseGroupYear extends BaseModel
         return $this->belongsToMany(Course::class);
     }
 
-    public function courseGroupYear()
+    public function courseGroup()
     {
-        return $this->belongsTo(CourseGroupYear::class);
+        return $this->belongsTo(CourseGroup::class);
+    }
+
+    public function courseCourseGroupYears()
+    {
+        return $this->hasMany(CourseCourseGroupYear::class);
     }
 }

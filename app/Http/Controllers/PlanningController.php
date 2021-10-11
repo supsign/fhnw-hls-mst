@@ -45,10 +45,14 @@ class PlanningController extends Controller
         return redirect()->route('home');
     }
 
-    public function show(Planning $planning)
+    public function showOne(Planning $planning)
     {
         $this->permissionAndRoleService->canPlanScheduleOrAbort();
+        $viewParameter = [
+            'planning' => $planning,
+            'courseGroupYears' => $planning->studyFieldYear->courseGroupYears,
+        ];
 
-        return view('planning.list', ['planning' => $planning]);
+        return view('planning.showOne', $viewParameter);
     }
 }

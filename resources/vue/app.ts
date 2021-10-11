@@ -1,27 +1,30 @@
 import "./bootstrap";
 
-import { Vue } from "vue-property-decorator";
+import {Vue} from "vue-property-decorator";
 import Vuex from "vuex";
 
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { faUserSecret, faCheck } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import {library} from "@fortawesome/fontawesome-svg-core";
+import {faCheck, faUserSecret} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
 import VueForm from "./components/form/vueForm.vue";
 import VueInput from "./components/form/vueInput.vue";
 import VueSelect from "./components/form/vueSelect.vue";
 import VueCheckbox from "./components/form/vueCheckbox.vue";
+import VuePlanCourse from "./components/planning/vuePlanCourse.vue";
+import {coursePlanningStore} from "./store/coursePlanning/coursePlanning.store";
+import VueStoreFill from "./components/store/vueStoreFill.vue"
 
-library.add( faUserSecret );
-library.add( faCheck );
+library.add(faUserSecret);
+library.add(faCheck);
 
-Vue.component( "font-awesome-icon", FontAwesomeIcon );
-Vue.use( Vuex );
+Vue.component("font-awesome-icon", FontAwesomeIcon);
+Vue.use(Vuex);
 
 const store = new Vuex.Store({
     strict: true,
     modules: {
-
+        coursePlanning: coursePlanningStore
     },
 });
 
@@ -32,6 +35,8 @@ const app = new Vue({
         VueInput,
         VueSelect,
         VueCheckbox,
+        VuePlanCourse,
+        VueStoreFill
     },
     store
 });

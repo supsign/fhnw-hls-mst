@@ -37,7 +37,7 @@ class CoursePlanningServiceTest extends TestCase
     public function testPlanCourse()
     {
         $student = $this->studentService->createOrUpdateOnEventoPersonId(5);
-        $studyFieldYear = $this->studyFieldYearService->getByEventoId('9311735');
+        $studyFieldYear = $this->studyFieldYearService->getByEventoId('1252215');
         $planning = $this->planningService->createEmptyPlanning($student->id, $studyFieldYear->id);
         $course = $studyFieldYear->courseGroupYears[0]->courses[0];
         $semester = Semester::first();

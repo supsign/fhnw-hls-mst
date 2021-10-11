@@ -100,9 +100,16 @@ class InitialCreate extends Migration
 
         $excel = App::make(Excel::class);
 
-        if (Storage::exists('Tab1_Studiengang.xlsx')) {
-            $excel->import(new StudyFieldImport, 'Tab1_Studiengang.xlsx');
+        if (App::environment('production')) {
+            if (Storage::exists('Tab1_Studiengang.xlsx')) {
+                $excel->import(new StudyFieldImport, 'Tab1_Studiengang.xlsx');
+            }
+        } else {
+            if (Storage::exists('Testingdata\Tab1_Studiengang.xlsx')) {
+                $excel->import(new StudyFieldImport, 'Testingdata\Tab1_Studiengang.xlsx');
+            }
         }
+
 
         Schema::create('specializations', function (Blueprint $table) {
             $table->id();
@@ -144,9 +151,16 @@ class InitialCreate extends Migration
             $table->timestampsTz();
         });
 
-        if (Storage::exists('Tab2_Studienjahrgang.xlsx')) {
-            $excel->import(new StudyFieldYearImport, 'Tab2_Studienjahrgang.xlsx');
+        if (App::environment('production')) {
+            if (Storage::exists('Tab2_Studienjahrgang.xlsx')) {
+                $excel->import(new StudyFieldYearImport, 'Tab2_Studienjahrgang.xlsx');
+            }
+        } else {
+            if (Storage::exists('Testingdata\Tab2_Studienjahrgang.xlsx')) {
+                $excel->import(new StudyFieldYearImport, 'Testingdata\Tab2_Studienjahrgang.xlsx');
+            }
         }
+
 
         Schema::create('specialization_years', function (Blueprint $table) {
             $table->id();

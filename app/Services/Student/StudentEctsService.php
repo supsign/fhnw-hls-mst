@@ -18,8 +18,6 @@ class StudentEctsService
         }
 
         return (string)$this->getPoints($completions);
-
-
     }
 
     public function getPoints(Collection $completions): int

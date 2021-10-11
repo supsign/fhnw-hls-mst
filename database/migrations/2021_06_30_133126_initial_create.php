@@ -110,7 +110,6 @@ class InitialCreate extends Migration
             }
         }
 
-
         Schema::create('specializations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('study_field_id')->constrained();
@@ -160,7 +159,6 @@ class InitialCreate extends Migration
                 $excel->import(new StudyFieldYearImport, 'Testingdata\Tab2_Studienjahrgang.xlsx');
             }
         }
-
 
         Schema::create('specialization_years', function (Blueprint $table) {
             $table->id();

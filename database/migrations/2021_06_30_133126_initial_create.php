@@ -5,8 +5,6 @@ use App\Imports\CourseGroupImport;
 use App\Imports\CourseGroupYearImport;
 use App\Imports\CourseImport;
 use App\Imports\CrossQualificationImport;
-use App\Imports\SkillImport;
-use App\Imports\SkillPrerequisiteImport;
 use App\Imports\SpecializationImport;
 use App\Imports\StudyFieldImport;
 use App\Imports\StudyFieldYearImport;
@@ -212,8 +210,8 @@ class InitialCreate extends Migration
             $table->timestampsTz();
         });
 
-        (new SkillImport())->import();
-        (new SkillPrerequisiteImport())->import();
+//        (new SkillImport())->import();
+//        (new SkillPrerequisiteImport())->import();
 
         Schema::create('course_years', function (Blueprint $table) {
             $table->id();

@@ -321,7 +321,6 @@ class InitialCreate extends Migration
             $table->timestampsTz();
         });
 
-
         Schema::create('plannings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('cross_qualification_year_id')->nullable()->constrained();

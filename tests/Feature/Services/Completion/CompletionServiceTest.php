@@ -25,6 +25,5 @@ class CompletionServiceTest extends TestCase
     public function testCountEctsService()
     {
         $student = $this->studentService->createOrUpdateOnEventoPersonId(5);
-
     }
 }

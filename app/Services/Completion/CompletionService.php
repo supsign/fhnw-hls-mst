@@ -23,12 +23,11 @@ class CompletionService extends BaseModelService
         return $this->firstOrCreate(
             [
                 'student_id' => $student_id,
-                'course_year_id' => $course_year_id
+                'course_year_id' => $course_year_id,
             ],
             [
                 'credits' => $credits,
-                'completion_id' => 4
+                'completion_id' => 4,
             ]);
     }
-
 }

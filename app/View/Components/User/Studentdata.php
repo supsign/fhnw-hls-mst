@@ -11,7 +11,6 @@ class Studentdata extends Component
 {
     public $studentCredits;
 
-
     /**
      * Create a new component instance.
      *
@@ -30,7 +29,7 @@ class Studentdata extends Component
      */
     public function render()
     {
-        if(is_null($this->student)) {
+        if (is_null($this->student)) {
             return;
         }
 

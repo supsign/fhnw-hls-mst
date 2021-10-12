@@ -3,7 +3,7 @@
         <x-slot name="title">
             <div class="flex flex-row justify-between">
                 <div class="my-auto">
-                    @lang('l.planning')
+                    @lang('l.plannings')
                 </div>
                 <a href="{{ route('planning.create') }}" class="">
                     <i class="fas fa-plus-circle text-blue-700 fa-2x" aria-hidden="true"></i>

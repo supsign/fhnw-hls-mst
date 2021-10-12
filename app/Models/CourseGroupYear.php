@@ -21,4 +21,11 @@ class CourseGroupYear extends BaseModel
     {
         return $this->hasMany(CourseCourseGroupYear::class);
     }
+
+    public function getCourses()
+    {
+        return $this->courseCourseGroupYears->map(function ($courseCourseGroupYear) {
+            return $courseCourseGroupYear->course;
+        });
+    }
 }

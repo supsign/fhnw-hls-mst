@@ -17,16 +17,21 @@ class BaseModel extends Model
 
     protected $guarded = [];
 
+    public function newCollection(array $models = [])
+    {
+        return new BaseCollection($models);
+    }
+
     public function getService(): ?BaseModelService
     {
         $className = GeneralHelper::getModelClassShortName($this);
-        $serviceName = $className.'Service';
+        $serviceName = $className . 'Service';
 
-        if (!file_exists(dirname(__DIR__).'/Services/'.$className.'/'.$serviceName.'.php')) {
+        if (!file_exists(dirname(__DIR__) . '/Services/' . $className . '/' . $serviceName . '.php')) {
             return null;
         }
 
-        $fullyQualifiedServiceName = 'App\Services\\'.$className.'\\'.$serviceName;
+        $fullyQualifiedServiceName = 'App\Services\\' . $className . '\\' . $serviceName;
 
         if (!class_exists($fullyQualifiedServiceName)) {
             return null;

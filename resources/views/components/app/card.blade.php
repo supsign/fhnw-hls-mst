@@ -2,7 +2,7 @@
     <div class="p-2 bg-white rounded shadow mb-4">
 
         @isset($title)
-            <div class="content-center p-2 border-b rounded-t text-lg">
+            <div class="p-2 border-b rounded-t text-base md:text-lg">
                 {{ $title }}
             </div>
         @endisset

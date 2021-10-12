@@ -59,7 +59,7 @@ class PlanningController extends Controller
     public function delete(PlanningService $planningService, Planning $planning)
     {
         $this->permissionAndRoleService->canPlanScheduleOrAbort();
-        $planningService->delete($planning);
+        $planningService->cascadingDelete($planning);
 
         return  redirect()->route('home');
     }

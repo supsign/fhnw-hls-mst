@@ -5,7 +5,7 @@
             <div class="pb-2">
                 <div>{{ $user->firstname }} {{ $user->lastname }}</div>
                 @if($user->role !== 'student')
-                    <div>@lang('l.role'):</div>
+                    <div>@lang('l.role'): {{ $user->role }}</div>
                 @endif
             </div>
 

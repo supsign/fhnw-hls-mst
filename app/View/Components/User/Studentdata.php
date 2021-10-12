@@ -30,8 +30,7 @@ class Studentdata extends Component
      */
     public function render()
     {
-        if(is_null($this->student))
-        {
+        if(is_null($this->student)) {
             return;
         }
 

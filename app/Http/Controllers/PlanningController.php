@@ -47,7 +47,7 @@ class PlanningController extends Controller
         }
 
         $this->planningService->createEmptyPlanning(
-            Auth::user()->id,
+            Auth::user()->student->id,
             $studyFieldYear->id,
         );
 

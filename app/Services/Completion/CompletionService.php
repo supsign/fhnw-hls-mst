@@ -34,5 +34,4 @@ class CompletionService extends BaseModelService
         $student->load('completions');
         return $completion;
     }
-
 }

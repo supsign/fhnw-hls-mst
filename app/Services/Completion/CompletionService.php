@@ -35,4 +35,10 @@ class CompletionService extends BaseModelService
 
         return $completion;
     }
+
+    public function getCompletionsAndType()
+    {
+
+    }
+
 }

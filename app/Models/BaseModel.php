@@ -17,6 +17,11 @@ class BaseModel extends Model
 
     protected $guarded = [];
 
+    public function newCollection(array $models = [])
+    {
+        return new BaseCollection($models);
+    }
+
     public function getService(): ?BaseModelService
     {
         $className = GeneralHelper::getModelClassShortName($this);

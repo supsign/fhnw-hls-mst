@@ -16,4 +16,9 @@ class Completion extends BaseModel
     {
         return $this->belongsTo(Student::class);
     }
+
+    public function completionType()
+    {
+        return $this->belongsTo(CompletionType::class);
+    }
 }

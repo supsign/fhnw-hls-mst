@@ -11,10 +11,10 @@ class UserController extends Controller
     {
     }
 
-    public function index(): View
-    {
-        $this->permissionAndRoleService->canShowAppOrAbort();
-
-        return view('user.index');
-    }
+//    public function index(): View
+//    {
+//        $this->permissionAndRoleService->canShowAppOrAbort();
+//
+//        return view('user.index');
+//    }
 }

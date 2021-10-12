@@ -39,7 +39,7 @@ Route::middleware(['web', 'auth'])->group(
         Route::post('plannings', [PlanningController::class, 'store'])->name('planning.store');
         Route::get('plannings/{planning}', [PlanningController::class, 'showOne'])->name('planning.showOne');
 
-        Route::get('user', [UserController::class, 'index'])->name('user.index');
+        // Route::get('user', [UserController::class, 'index'])->name('user.index');
     }
 );
 

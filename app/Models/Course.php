@@ -71,4 +71,9 @@ class Course extends BaseModel
     {
         return $this->belongsTo(StudyField::class);
     }
+
+    public function courseYears()
+    {
+        return $this->hasMany(CourseYear::class);
+    }
 }

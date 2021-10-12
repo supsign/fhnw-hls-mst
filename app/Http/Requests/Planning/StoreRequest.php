@@ -22,7 +22,7 @@ class StoreRequest extends FormRequest
      * @return array
      */
     public function rules()
-    {   
+    {
         return [
             'studyField' => 'required|int',
             'semester' => 'required|int',

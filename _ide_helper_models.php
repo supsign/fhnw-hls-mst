@@ -88,23 +88,46 @@ namespace App\Models{
  * @property int $course_year_id
  * @property int $student_id
  * @property int $credits
- * @property bool $is_fulfilled
+ * @property int $completion_type_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\CompletionType $completionType
  * @property-read \App\Models\CourseYear $courseYear
  * @property-read \App\Models\Student $student
  * @method static \Illuminate\Database\Eloquent\Builder|Completion newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Completion newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Completion query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Completion whereCompletionTypeId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Completion whereCourseYearId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Completion whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Completion whereCredits($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Completion whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Completion whereIsFulfilled($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Completion whereStudentId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Completion whereUpdatedAt($value)
  */
 	class IdeHelperCompletion extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * App\Models\CompletionType
+ *
+ * @mixin IdeHelperCompletionType
+ * @property int $id
+ * @property string $name
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Completion[] $completions
+ * @property-read int|null $completions_count
+ * @method static \Illuminate\Database\Eloquent\Builder|CompletionType newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|CompletionType newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|CompletionType query()
+ * @method static \Illuminate\Database\Eloquent\Builder|CompletionType whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CompletionType whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CompletionType whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CompletionType whereUpdatedAt($value)
+ */
+	class IdeHelperCompletionType extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -132,6 +155,8 @@ namespace App\Models{
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\CourseSkill[] $courseSkills
  * @property-read int|null $course_skills_count
  * @property-read \App\Models\CourseType $courseType
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\CourseYear[] $courseYears
+ * @property-read int|null $course_years_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\CrossQualificationYear[] $crossQualificationYears
  * @property-read int|null $cross_qualification_years_count
  * @property-read \App\Models\Language $language
@@ -404,22 +429,24 @@ namespace App\Models{
  * @mixin IdeHelperCourseYear
  * @property int $id
  * @property int $semester_id
- * @property int $study_field_year_id
+ * @property int $course_id
  * @property int|null $evento_anlass_id
+ * @property string|null $name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Course $course
  * @property-read \App\Models\Semester $semester
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\SkillStundent[] $skillStudents
  * @property-read int|null $skill_students_count
- * @property-read \App\Models\StudyFieldYear $studyFieldYear
  * @method static \Illuminate\Database\Eloquent\Builder|CourseYear newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CourseYear newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CourseYear query()
+ * @method static \Illuminate\Database\Eloquent\Builder|CourseYear whereCourseId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CourseYear whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CourseYear whereEventoAnlassId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CourseYear whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CourseYear whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CourseYear whereSemesterId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CourseYear whereStudyFieldYearId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CourseYear whereUpdatedAt($value)
  */
 	class IdeHelperCourseYear extends \Eloquent {}

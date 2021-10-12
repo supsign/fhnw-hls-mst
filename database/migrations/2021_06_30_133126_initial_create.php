@@ -8,6 +8,8 @@ use App\Imports\CrossQualificationImport;
 use App\Imports\SpecializationImport;
 use App\Imports\StudyFieldImport;
 use App\Imports\StudyFieldYearImport;
+use Database\Seeders\CompletionTypeSeeder;
+use Database\Seeders\CourseTypeSeeder;
 use Database\Seeders\LanguageSeeder;
 use Database\Seeders\StudyFieldSeeder;
 use Database\Seeders\StudyProgramSeeder;
@@ -228,8 +230,9 @@ class InitialCreate extends Migration
         Schema::create('course_years', function (Blueprint $table) {
             $table->id();
             $table->foreignId('semester_id')->constrained();
-            $table->foreignId('study_field_year_id')->constrained();
+            $table->foreignId('course_id')->constrained();
             $table->unsignedBigInteger('evento_anlass_id')->nullable();
+            $table->string('name')->nullable();
             $table->timestampsTz();
         });
 
@@ -310,12 +313,23 @@ class InitialCreate extends Migration
             $table->timestampsTz();
         });
 
+        Schema::create('completion_types', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->timestampsTz();
+        });
+
+        Artisan::call('db:seed', [
+            '--class' => CompletionTypeSeeder::class,
+            '--force' => true,
+        ]);
+
         Schema::create('completions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('course_year_id')->constrained();
             $table->foreignId('student_id')->constrained();
             $table->integer('credits')->default(0);
-            $table->boolean('is_fulfilled')->default(false);
+            $table->foreignId('completion_type_id')->default(1)->constrained();
             $table->timestampsTz();
         });
 
@@ -394,5 +408,6 @@ class InitialCreate extends Migration
         Schema::dropIfExists('taxonomies');
         Schema::dropIfExists('languages');
         Schema::dropIfExists('course_types');
+        Schema::dropIfExists('completion_types');
     }
 }

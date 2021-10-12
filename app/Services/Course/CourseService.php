@@ -16,4 +16,19 @@ class CourseService extends BaseModelService
     {
         return $this->model->where('number', $number)->first();
     }
+
+    public function firstOrCreateByNumber(string $number, int $courseTypeId, int $languageId = 1, string $name = null, int $credits = 0): Course
+    {
+        return $this->model::firstOrCreate(
+            [
+                'number' => $number
+            ],
+            [
+                'course_type_id' => $courseTypeId,
+                'language_id' => $languageId,
+                'name' => $name,
+                'credits' => $credits
+            ]
+        );
+    }
 }

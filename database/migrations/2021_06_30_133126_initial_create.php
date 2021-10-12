@@ -9,6 +9,7 @@ use App\Imports\SpecializationImport;
 use App\Imports\StudyFieldImport;
 use App\Imports\StudyFieldYearImport;
 use Database\Seeders\CompletionTypeSeeder;
+use Database\Seeders\CourseTypeSeeder;
 use Database\Seeders\LanguageSeeder;
 use Database\Seeders\StudyFieldSeeder;
 use Database\Seeders\StudyProgramSeeder;
@@ -229,8 +230,9 @@ class InitialCreate extends Migration
         Schema::create('course_years', function (Blueprint $table) {
             $table->id();
             $table->foreignId('semester_id')->constrained();
-            $table->foreignId('study_field_year_id')->constrained();
+            $table->foreignId('course_id')->constrained();
             $table->unsignedBigInteger('evento_anlass_id')->nullable();
+            $table->string('name')->nullable();
             $table->timestampsTz();
         });
 

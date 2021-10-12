@@ -8,8 +8,11 @@ use Illuminate\Support\Collection;
 
 class StudentEctsService
 {
-    public function getPointsAsString(Student $student): string
+    public function getPointsAsString(Student $student = null): string
     {
+        if (!$student) {
+            return '-';
+        }
         $completions = $student->completions;
         $countCompletions = $completions->count();
 
@@ -28,13 +31,13 @@ class StudentEctsService
         foreach ($completions as $completion) {
             // bestanden
             if ($completion->completion_type_id === 2) {
-                $pooints += $completion->credits;
+                $points += $completion->credits;
                 continue;
             }
 
             // angerechnet
             if ($completion->completion_type_id === 4) {
-                $pooints += $completion->credits;
+                $points += $completion->credits;
             }
         }
 

@@ -29,10 +29,10 @@ class PlanningService extends BaseModelService
         return $this->model::create($attributes);
     }
 
-    public function delete(Planning $planning)
+    public function delete(Planning $planning): static
     {
         foreach ($planning->coursePlannings as $coursePlanning) {
-            $this->coursePlanningService->delete($coursePlanning);
+            $this->coursePlanningService->deleteRecursive($coursePlanning);
         }
 
         $planning->delete();

@@ -18,7 +18,7 @@ class CoursePlanningService
         return $this->coursePlanningModel::firstOrCreate(['planning_id' => $planning->id, 'course_id' => $course->id], ['semester_id' => $semester->id]);
     }
 
-    public function delete(CoursePlanning $coursePlanning): self
+    public function deleteRecursive(CoursePlanning $coursePlanning): self
     {
         $coursePlanning->delete();
 

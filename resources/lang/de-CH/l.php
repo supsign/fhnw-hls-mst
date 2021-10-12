@@ -10,10 +10,10 @@ return [
     'studyField' => 'Studiengang',
     'studyProgram' => 'Studienrichtung',
     'planning' => 'Studienplanung',
-    'planningsAll' => 'Alle',
+    'plannings' => 'Studienplanungen',
     'save' => 'Speichern',
     'dashboard' => 'Dashboard',
     'term' => 'Semester',
-    'ects' => 'ECTS',
+    'credits' => 'ECTS-Punkte',
     'startDate' => 'Start',
 ];

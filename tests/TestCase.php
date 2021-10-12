@@ -16,7 +16,7 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
         if (!static::$setUpHasRunOnce) {
-            Artisan::call('migrate');
+            Artisan::call('migrate:fresh');
             static::$setUpHasRunOnce = true;
         }
     }

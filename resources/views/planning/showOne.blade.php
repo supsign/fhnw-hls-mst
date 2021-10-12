@@ -11,7 +11,7 @@
                     <vue-form method="POST" action="{{ route('planning.delete', $planning) }}">
                         @csrf
                         @method('DELETE')
-                        <button class="" type="submit" name="delete_planning"><i class="fas fa-trash text-red-600" aria-hidden="true"></i></button>
+                        <button class="" type="submit" name="delete_planning"><i class="fas fa-trash text-red-600 text-xl" aria-hidden="true"></i></button>
                     </vue-form>
                 </div>
             </x-slot>

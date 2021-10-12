@@ -56,10 +56,10 @@ class PlanningController extends Controller
         return view('planning.showOne', $viewParameter);
     }
 
-    public function delete(Planning $planning)
+    public function delete(PlanningService $planningService, Planning $planning)
     {
         $this->permissionAndRoleService->canPlanScheduleOrAbort();
-        $planning->delete();
+        $planningService->delete($planning);
 
         return  redirect()->route('home');
     }

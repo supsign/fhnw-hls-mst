@@ -5,21 +5,21 @@
 
     <div class="container p-3 mx-auto">
         <x-app.card>
-            <vue-form>
-                <x-slot name="title">
-                    <div class="flex flex-row justify-between">
-                        <div class="my-auto">@lang('l.planning')</div>
-                        <div class="">
-                            <span class=""><i class="fas fa-trash" aria-hidden="true"></i></span>
-                        </div>
-                    </div>
-                </x-slot>
-                <div class="mt-2">
-                    <div>{{ $planning->studyFieldYear->studyField->studyProgram->name }}</div>
-                    <div>{{ $planning->studyFieldYear->studyField->name }}</div>
-                    <div>@lang('l.startDate'): {{ $planning->studyFieldYear->beginSemester->year }}</div>
+            <x-slot name="title">
+                <div class="flex flex-row justify-between">
+                    <div class="my-auto">@lang('l.planning')</div>
+                    <vue-form method="POST" action="{{ route('planning.delete', $planning) }}">
+                        @csrf
+                        @method('DELETE')
+                        <button class="" type="submit" name="delete_planning"><i class="fas fa-trash" aria-hidden="true"></i></button>
+                    </vue-form>
                 </div>
-            </vue-form>
+            </x-slot>
+            <div class="mt-2">
+                <div>{{ $planning->studyFieldYear->studyField->studyProgram->name }}</div>
+                <div>{{ $planning->studyFieldYear->studyField->name }}</div>
+                <div>@lang('l.startDate'): {{ $planning->studyFieldYear->beginSemester->year }}</div>
+            </div>
         </x-app.card>
         <vue-store-fill model="coursePlanning" :entities="{{$planning->coursePlannings}}"></vue-store-fill>
         @foreach($courseGroupYears as $courseGroupYear)

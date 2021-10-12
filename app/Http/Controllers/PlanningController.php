@@ -55,4 +55,11 @@ class PlanningController extends Controller
 
         return view('planning.showOne', $viewParameter);
     }
+
+    public function delete(Planning $planning)
+    {
+        $this->permissionAndRoleService->canPlanScheduleOrAbort();
+        $planning->delete();
+        return  redirect()->route('home');
+    }
 }

@@ -24,14 +24,15 @@ class CompletionService extends BaseModelService
         $completion = $this->updateOrCreate(
             [
                 'student_id' => $student->id,
-                'course_year_id' => $course_year_id
+                'course_year_id' => $course_year_id,
             ],
             [
                 'credits' => $credits,
-                'completion_type_id' => 4
+                'completion_type_id' => 4,
             ]);
 
         $student->load('completions');
+
         return $completion;
     }
 }

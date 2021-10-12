@@ -43,14 +43,12 @@ class StudentEctsServiceTest extends TestCase
         $this->completionService->createOrUpdateAsCredit($student, $courseYear->id, $course->credits);
         $ectsPoints = $this->studentEctsService->getPoints($student->completions()->get());
         $this->assertEquals($course->credits, $ectsPoints);
-
     }
 
     public function testCountEctsServiceAsString()
     {
         $studentEventoId = $this->faker->unique->numberBetween(1, 9999999);
         $student = $this->studentService->createOrUpdateOnEventoPersonId($studentEventoId);
-
 
         $uniqueNumber = $this->faker->unique()->name;
         $course = $this->courseService->firstOrCreateByNumber($uniqueNumber, 1, 1, 'blub', 3);
@@ -62,6 +60,5 @@ class StudentEctsServiceTest extends TestCase
         $this->completionService->createOrUpdateAsCredit($student, $courseYear->id, $course->credits);
         $ectsPoints = $this->studentEctsService->getPointsAsString($student);
         $this->assertEquals((string)$course->credits, $ectsPoints);
-
     }
 }

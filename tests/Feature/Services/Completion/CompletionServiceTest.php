@@ -39,6 +39,5 @@ class CompletionServiceTest extends TestCase
         $this->assertNotNull($completion);
         $this->assertNotNull($completion->id);
         $this->assertEquals(4, $completion->completion_type_id);
-
     }
 }

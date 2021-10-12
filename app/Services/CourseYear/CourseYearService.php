@@ -22,7 +22,7 @@ class CourseYearService extends BaseModelService
         $courseYear = $this->model::create([
             'semester_id' => $semester->id,
             'course_id' => $course->id,
-            'evento_anlass_id' => $eventoAnlassId
+            'evento_anlass_id' => $eventoAnlassId,
         ]);
 
         if ($latestCourseYear) {
@@ -30,13 +30,13 @@ class CourseYearService extends BaseModelService
         }
 
         return $this->copyCourseDataFromCourse($courseYear, $course);
-
     }
 
     protected function copyCourseDataFromCourseYear(CourseYear $targetCourseYear, CourseYear $sourceCourseYear): CourseYear
     {
         $targetCourseYear->name = $sourceCourseYear->name;
         $targetCourseYear->save();
+
         return $targetCourseYear;
     }
 
@@ -44,6 +44,7 @@ class CourseYearService extends BaseModelService
     {
         $targetCourseYear->name = $sourceCourse->name;
         $targetCourseYear->save();
+
         return $targetCourseYear;
     }
 }

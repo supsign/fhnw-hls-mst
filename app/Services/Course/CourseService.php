@@ -21,13 +21,13 @@ class CourseService extends BaseModelService
     {
         return $this->model::firstOrCreate(
             [
-                'number' => $number
+                'number' => $number,
             ],
             [
                 'course_type_id' => $courseTypeId,
                 'language_id' => $languageId,
                 'name' => $name,
-                'credits' => $credits
+                'credits' => $credits,
             ]
         );
     }

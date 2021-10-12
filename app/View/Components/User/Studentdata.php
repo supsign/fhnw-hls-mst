@@ -7,7 +7,6 @@ use Illuminate\View\Component;
 
 class Studentdata extends Component
 {
-
     /**
      * Create a new component instance.
      *
@@ -25,8 +24,7 @@ class Studentdata extends Component
      */
     public function render()
     {
-        if(is_null($this->student))
-        {
+        if (is_null($this->student)) {
             return;
         }
 

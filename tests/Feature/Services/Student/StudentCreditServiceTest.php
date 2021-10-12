@@ -6,16 +6,16 @@ use App\Models\Semester;
 use App\Services\Completion\CompletionService;
 use App\Services\Course\CourseService;
 use App\Services\CourseYear\CourseYearService;
-use App\Services\Student\StudentEctsService;
+use App\Services\Student\StudentCreditService;
 use App\Services\Student\StudentService;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class StudentEctsServiceTest extends TestCase
+class StudentCreditServiceTest extends TestCase
 {
     use WithFaker;
 
-    private StudentEctsService $studentEctsService;
+    private StudentCreditService $studentEctsService;
     private StudentService $studentService;
     private CompletionService $completionService;
     private courseService $courseService;
@@ -25,7 +25,7 @@ class StudentEctsServiceTest extends TestCase
     {
         parent::setUp();
         $this->setUpFaker();
-        $this->studentEctsService = $this->app->make(StudentEctsService::class);
+        $this->studentEctsService = $this->app->make(StudentCreditService::class);
         $this->studentService = $this->app->make(StudentService::class);
         $this->completionService = $this->app->make(CompletionService::class);
         $this->courseYearService = $this->app->make(CourseYearService::class);
@@ -40,9 +40,9 @@ class StudentEctsServiceTest extends TestCase
         $uniqueNumber = $this->faker->unique()->name;
         $course = $this->courseService->firstOrCreateByNumber($uniqueNumber, 1, 1, 'blub', 3);
         $courseYear = $this->courseYearService->createCourseYear($course, Semester::first());
-        $this->completionService->createOrUpdateAsCredit($student, $courseYear->id, $course->credits);
-        $ectsPoints = $this->studentEctsService->getPoints($student->completions()->get());
-        $this->assertEquals($course->credits, $ectsPoints);
+        $this->completionService->createOrUpdateAsCredited($student, $courseYear->id, $course->credits);
+        $credits = $this->studentEctsService->getCredits($student->completions()->get());
+        $this->assertEquals($course->credits, $credits);
     }
 
     public function testCountEctsServiceAsString()
@@ -54,11 +54,11 @@ class StudentEctsServiceTest extends TestCase
         $course = $this->courseService->firstOrCreateByNumber($uniqueNumber, 1, 1, 'blub', 3);
         $courseYear = $this->courseYearService->createCourseYear($course, Semester::first());
 
-        $ectsPoints = $this->studentEctsService->getPointsAsString($student);
-        $this->assertEquals('-', $ectsPoints);
+        $credits = $this->studentEctsService->getCreditsAsString($student);
+        $this->assertEquals('-', $credits);
 
-        $this->completionService->createOrUpdateAsCredit($student, $courseYear->id, $course->credits);
-        $ectsPoints = $this->studentEctsService->getPointsAsString($student);
-        $this->assertEquals((string)$course->credits, $ectsPoints);
+        $this->completionService->createOrUpdateAsCredited($student, $courseYear->id, $course->credits);
+        $credits = $this->studentEctsService->getCreditsAsString($student);
+        $this->assertEquals((string)$course->credits, $credits);
     }
 }

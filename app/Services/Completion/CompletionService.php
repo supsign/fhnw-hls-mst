@@ -19,7 +19,7 @@ class CompletionService extends BaseModelService
         parent::__construct($model);
     }
 
-    public function createOrUpdateAsCredit(Student $student, int $course_year_id, int $credits): Completion
+    public function createOrUpdateAsCredited(Student $student, int $course_year_id, int $credits): Completion
     {
         $completion = $this->updateOrCreate(
             [

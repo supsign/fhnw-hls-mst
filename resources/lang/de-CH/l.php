@@ -14,6 +14,6 @@ return [
     'save' => 'Speichern',
     'dashboard' => 'Dashboard',
     'term' => 'Semester',
-    'ects' => 'ECTS',
+    'credits' => 'ECTS-Punkte',
     'startDate' => 'Start',
 ];

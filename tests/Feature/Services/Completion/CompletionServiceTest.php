@@ -35,7 +35,7 @@ class CompletionServiceTest extends TestCase
         $uniqueNumber = $this->faker->unique()->name;
         $course = $this->courseService->firstOrCreateByNumber($uniqueNumber, 1, 1, 'blub', 3);
         $courseYear = $this->courseYearService->createCourseYear($course, Semester::first());
-        $completion = $this->completionService->createOrUpdateAsCredit($student, $courseYear->id, $course->credits);
+        $completion = $this->completionService->createOrUpdateAsCredited($student, $courseYear->id, $course->credits);
         $this->assertNotNull($completion);
         $this->assertNotNull($completion->id);
         $this->assertEquals(4, $completion->completion_type_id);

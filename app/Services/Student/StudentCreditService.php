@@ -6,9 +6,9 @@ use App\Models\Completion;
 use App\Models\Student;
 use Illuminate\Support\Collection;
 
-class StudentEctsService
+class StudentCreditService
 {
-    public function getPointsAsString(Student $student = null): string
+    public function getCreditsAsString(Student $student = null): string
     {
         if (!$student) {
             return '-';
@@ -20,27 +20,27 @@ class StudentEctsService
             return '-';
         }
 
-        return (string)$this->getPoints($completions);
+        return (string)$this->getCredits($completions);
     }
 
-    public function getPoints(Collection $completions): int
+    public function getCredits(Collection $completions): int
     {
-        $points = 0;
+        $credits = 0;
 
         /** @var $completion Completion * */
         foreach ($completions as $completion) {
             // bestanden
             if ($completion->completion_type_id === 2) {
-                $points += $completion->credits;
+                $credits += $completion->credits;
                 continue;
             }
 
             // angerechnet
             if ($completion->completion_type_id === 4) {
-                $points += $completion->credits;
+                $credits += $completion->credits;
             }
         }
 
-        return $points;
+        return $credits;
     }
 }

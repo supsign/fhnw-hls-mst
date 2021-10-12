@@ -60,6 +60,7 @@ class PlanningController extends Controller
     {
         $this->permissionAndRoleService->canPlanScheduleOrAbort();
         $planning->delete();
+
         return  redirect()->route('home');
     }
 }

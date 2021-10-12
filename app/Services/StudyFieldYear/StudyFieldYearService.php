@@ -46,4 +46,12 @@ class StudyFieldYearService extends BaseModelService
 
         return $this->createOrUpdateOnEventoIdTrait($eventId, $attributes);
     }
+
+    public function getByStudyFieldIdAndSemesterId($studyFieldId, $semesterId): ?StudyFieldYear
+    {
+        return $this->model::where([
+            'begin_semester_id' => $semesterId,
+            'study_field_id' => $studyFieldId,
+        ])->first();
+    }
 }

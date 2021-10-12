@@ -30,6 +30,9 @@
                         <div class="my-auto">
                             {{$courseGroupYear->courseGroup->name}}
                         </div>
+                        <vue-course-group-state :course-group-year="{{$courseGroupYear}}"
+                                                :courses="{{$courseGroupYear->getCourses()}}"
+                                                :completions="{{$planning->student->completions}}"></vue-course-group-state>
                     </div>
                 </x-slot>
                 <div class="text-sm lg:text-base">
@@ -42,7 +45,8 @@
                                 {{$courseCourseGroupYear->course->name}}
                             </div>
                             <div class="flex-none my-auto">
-                                <vue-plan-course :planning-id="{{$planning->id}}" :course-id="{{$courseCourseGroupYear->course->id}}"></vue-plan-course>
+                                <vue-plan-course :planning-id="{{$planning->id}}"
+                                                 :course-id="{{$courseCourseGroupYear->course->id}}"></vue-plan-course>
                             </div>
                         </div>
                     @endforeach

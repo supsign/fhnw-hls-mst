@@ -38,7 +38,5 @@ class CompletionService extends BaseModelService
 
     public function getCompletionsAndType()
     {
-
     }
-
 }

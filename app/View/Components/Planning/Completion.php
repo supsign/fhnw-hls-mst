@@ -19,14 +19,12 @@ class Completion extends Component
         $icon = 0;
         $completions = $student->completions;
         foreach ($completions as $completion) {
-            if($completion->completion_type_id === 2) {
+            if ($completion->completion_type_id === 2) {
                 $icon = 2;
 //                @dump('bestanden');
-            }
-            elseif ($completion->completion_type_id === 3) {
+            } elseif ($completion->completion_type_id === 3) {
 //                @dump('durchgefallen');
-            }
-            else {
+            } else {
 //                @dump('rest');
             }
         }

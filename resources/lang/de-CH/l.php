@@ -3,6 +3,8 @@
 return [
     'landingPage' => 'Startseite',
     'userData' => 'Benutzerdaten',
+    'mentor' => 'Mentor',
+    'student' => 'Student',
     'name' => 'Name',
     'role' => 'Rolle',
     'roleAssign' => 'Rolle hinzufügen',

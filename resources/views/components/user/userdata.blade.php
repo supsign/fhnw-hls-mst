@@ -4,8 +4,8 @@
         <div class="divide-y">
             <div class="pb-2">
                 <div>{{ $user->firstname }} {{ $user->lastname }}</div>
-                @if($user->role !== 'student')
-                    <div>@lang('l.role'): {{ $user->role }}</div>
+                @if($user->hasRole('mentor'))
+                    <div>@lang('l.role'): @lang('l.mentor')</div>
                 @endif
             </div>
 

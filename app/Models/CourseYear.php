@@ -17,8 +17,8 @@ class CourseYear extends BaseModel
         return $this->hasMany(SkillStundent::class);
     }
 
-    public function studyFieldYear()
+    public function course()
     {
-        return $this->belongsTo(StudyFieldYear::class);
+        return $this->belongsTo(Course::class);
     }
 }

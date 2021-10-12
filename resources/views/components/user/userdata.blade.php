@@ -13,7 +13,7 @@
                 <div>@lang('l.studyField'):</div>
                 <div>@lang('l.studyProgram'):</div>
                 <div>@lang('l.term'):</div>
-                <div>@lang('l.ects'):</div>
+                <div>@lang('l.credtis'): {{$studentCredits}}</div>
                 <div class="mt-4">
                     <a href="{{ route('user.index') }}" class="button-primary ">Details</a>
                 </div>

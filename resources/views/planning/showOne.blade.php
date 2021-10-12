@@ -23,12 +23,14 @@
         @foreach($courseGroupYears as $courseGroupYear)
             <x-app.card>
                 <x-slot name="title">
-                    <div class="flex flex-row space-x-2">
-                        <div class="my-auto">
-                            <i class="fas fa-arrow-down" aria-hidden="true"></i>
-                        </div>
-                        <div class="my-auto">
-                            {{$courseGroupYear->courseGroup->name}}
+                    <div class="flex justify-between">
+                        <div class="flex flex-row space-x-2">
+                            <div class="my-auto">
+                                <i class="fas fa-arrow-down" aria-hidden="true"></i>
+                            </div>
+                            <div class="my-auto">
+                                {{$courseGroupYear->courseGroup->name}}
+                            </div>
                         </div>
                         <vue-course-group-state :course-group-year="{{$courseGroupYear}}"
                                                 :courses="{{$courseGroupYear->getCourses()}}"

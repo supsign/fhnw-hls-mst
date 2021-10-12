@@ -10,10 +10,6 @@ use App\Services\User\UserService;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-/**
- * @internal
- * @coversNothing
- */
 class UserServiceTest extends TestCase
 {
     use WithFaker;

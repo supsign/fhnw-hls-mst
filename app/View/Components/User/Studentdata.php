@@ -3,19 +3,24 @@
 namespace App\View\Components\User;
 
 use App\Models\Student;
+use App\Services\Student\StudentCreditService;
+use Auth;
 use Illuminate\View\Component;
 
 class Studentdata extends Component
 {
+    public $studentCredits;
+
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(protected ?Student $student = null)
+    public function __construct(protected ?Student $student = null, StudentCreditService $studentCreditService)
     {
-        //
+        $user = Auth::user();
+        $this->studentCredits = $studentCreditService->getCreditsAsString($user->student);
     }
 
     /**

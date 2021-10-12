@@ -2,8 +2,8 @@
     <div>{{ $student->studyFieldYear->studyField->studyProgram->name ?? __("l.studyField") . ': -' }}</div>
     <div>{{ $student->studyFieldYear->studyField->name ?? __("l.studyProgram") .  ': -' }}</div>
     <div>{{ $student->studyFieldYear->beginSemester->year ?? __("l.term") .  ': -' }}</div>
-    <div>@lang('l.ects'):</div>
-    <div class="mt-4">
-        <a href="{{ route('user.index') }}" class="button-primary ">Details</a>
+    <div>@lang('l.credits'): {{ $studentCredits ?? '-'}}</div>
+    <div class="mt-4 flex md:flex-none text-center">
+        <a href="" class="button-primary md:w-auto">@lang('l.currentStatus')</a>
     </div>
 </div>

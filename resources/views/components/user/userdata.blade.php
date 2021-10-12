@@ -9,15 +9,7 @@
                 @endif
             </div>
 
-            <div class="py-2">
-                <div>@lang('l.studyField'):</div>
-                <div>@lang('l.studyProgram'):</div>
-                <div>@lang('l.term'):</div>
-                <div>@lang('l.credtis'): {{$studentCredits}}</div>
-                <div class="mt-4 flex md:flex-none text-center">
-                    <a href="" class="button-primary md:w-auto">aktueller Studienstand</a>
-                </div>
-            </div>
+            <x-user.studentdata :student="$user->student"></x-user.studentdata>
         </div>
     </x-app.card>
 </div>

@@ -42,9 +42,7 @@
                 <div class="text-sm lg:text-base">
                     @foreach($courseGroupYear->courseCourseGroupYears as $courseCourseGroupYear)
                         <div class="flex flex-row space-x-5 border-b p-1 text-left">
-                            <div class="my-auto text-lg flex-none">
-                                <i class="far fa-check-circle" aria-hidden="true"></i>
-                            </div>
+                            <x-planning.completion :student="$user->student" :course="$courseCourseGroupYear->course"></x-planning.completion>
                             <div class="my-auto break-words flex-grow">
                                 {{$courseCourseGroupYear->course->name}}
                             </div>

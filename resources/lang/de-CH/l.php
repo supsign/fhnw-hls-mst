@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'mst' => 'Modul-Selektionstool',
     'landingPage' => 'Startseite',
     'userData' => 'Benutzerdaten',
     'mentor' => 'Mentor',

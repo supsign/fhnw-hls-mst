@@ -41,4 +41,11 @@ class CoursePlanningService extends BaseModelService
             'semester_id' => $semesterId,
         ]);
     }
+
+    public function delete(CoursePlanning $coursePlanning): self
+    {
+        $coursePlanning->delete();
+
+        return $this;
+    }
 }

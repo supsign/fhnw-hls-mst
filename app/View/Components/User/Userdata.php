@@ -3,25 +3,20 @@
 namespace App\View\Components\User;
 
 use App\Models\User;
-use App\Services\Student\StudentCreditService;
-use Auth;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class Userdata extends Component
 {
-    public $studentCredits;
-
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(StudentCreditService $studentCreditService)
+    public function __construct()
     {
-        $user = Auth::user();
-        $this->studentCredits = $studentCreditService->getCreditsAsString($user->student);
+        //
     }
 
     /**

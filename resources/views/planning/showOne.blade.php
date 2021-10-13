@@ -21,22 +21,43 @@
                 <div>@lang('l.startDate'): {{ $planning->studyFieldYear->beginSemester->year }}</div>
             </div>
         </x-app.card>
+        <x-app.card>
+            <x-slot name="title">
+                <div class="my-auto">@lang('l.legend')</div>
+            </x-slot>
+            <div class="">
+                <div class="my-auto flex flex-row space-x-3">
+                    <i class="far fa-check-circle my-auto" aria-hidden="true"></i>
+                    <div class="my-auto">Bestanden / Angerechnet</div>
+                </div>
+
+                <div class="my-auto flex flex-row space-x-3">
+                    <i class="far fa-times-circle my-auto" aria-hidden="true"></i>
+                    <div class="my-auto">Durchgefallen</div>
+                </div>
+                <div class="flex flex-row space-x-3">
+                    <i class="far fa-circle my-auto" aria-hidden="true"></i>
+                    <div class="my-auto">Kein Abschluss / Angemeldet</div>
+                </div>
+            </div>
+
+        </x-app.card>
         <vue-store-fill model="coursePlanning" :entities="{{$planning->coursePlannings}}"></vue-store-fill>
         @foreach($courseGroupYears as $courseGroupYear)
             <x-app.card>
                 <x-slot name="title">
                     <div class="flex justify-between">
-                        <div class="flex flex-row space-x-2">
+                        <div class="flex flex-row space-x-3 w-full">
                             <div class="my-auto">
                                 <i class="fas fa-arrow-down" aria-hidden="true"></i>
                             </div>
-                            <div class="my-auto">
+                            <div class="my-auto flex-grow">
                                 {{$courseGroupYear->courseGroup->name}}
                             </div>
+                            <vue-course-group-state :course-group-year="{{$courseGroupYear}}"
+                                                    :courses="{{$courseGroupYear->getCourses()}}"
+                                                    :completions="{{$planning->student->completions}}"></vue-course-group-state>
                         </div>
-                        <vue-course-group-state :course-group-year="{{$courseGroupYear}}"
-                                                :courses="{{$courseGroupYear->getCourses()}}"
-                                                :completions="{{$planning->student->completions}}"></vue-course-group-state>
                     </div>
                 </x-slot>
                 <div class="text-sm lg:text-base">

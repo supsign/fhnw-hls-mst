@@ -19,4 +19,5 @@ return [
     'term' => 'Semester',
     'credits' => 'ECTS-Punkte',
     'startDate' => 'Startsemester',
+    'legend' => 'Legende',
 ];

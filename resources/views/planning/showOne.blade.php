@@ -38,7 +38,7 @@
                 <div class="text-sm lg:text-base">
                     @foreach($courseGroupYear->courseCourseGroupYears as $courseCourseGroupYear)
                         <div class="flex flex-row space-x-5 border-b p-1 text-left">
-                            <x-planning.completion :student="$user->student" :planning="$planning"></x-planning.completion>
+                            <x-planning.completion :student="$user->student" :course="$courseCourseGroupYear->course"></x-planning.completion>
                             <div class="my-auto break-words flex-grow">
                                 {{$courseCourseGroupYear->course->name}}
                             </div>

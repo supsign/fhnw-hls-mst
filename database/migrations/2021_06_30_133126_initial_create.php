@@ -1,10 +1,10 @@
 <?php
 
 use App\Imports\CourseCourseGroupYearImporter;
-use App\Imports\CourseGroupImport;
-use App\Imports\CourseGroupYearImport;
 use App\Imports\CourseCsvImport;
 use App\Imports\CourseExcelImport;
+use App\Imports\CourseGroupImport;
+use App\Imports\CourseGroupYearImport;
 use App\Imports\CrossQualificationImport;
 use App\Imports\SpecializationImport;
 use App\Imports\StudyFieldImport;

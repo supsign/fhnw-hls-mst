@@ -4,7 +4,7 @@ namespace App\Imports;
 
 class BaseExcelImport
 {
-    protected $requiredFields = [];
+    protected array $requiredFields = [];
 
     protected function hasRequiredFields($row): bool
     {

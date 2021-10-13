@@ -3,7 +3,8 @@
 use App\Imports\CourseCourseGroupYearImporter;
 use App\Imports\CourseGroupImport;
 use App\Imports\CourseGroupYearImport;
-use App\Imports\CourseImport;
+use App\Imports\CourseCsvImport;
+use App\Imports\CourseExcelImport;
 use App\Imports\CrossQualificationImport;
 use App\Imports\SpecializationImport;
 use App\Imports\StudyFieldImport;
@@ -191,7 +192,17 @@ class InitialCreate extends Migration
             $table->timestampsTz();
         });
 
-        (new CourseImport())->import();
+        (new CourseCsvImport())->import();
+
+        if (App::environment('production')) {
+            if (Storage::exists('Tab3_Modul.xlsx')) {
+                $excel->import(new CourseExcelImport, 'Tab3_Modul.xlsx');
+            }
+        } else {
+            if (Storage::exists('Testingdata\Tab3_Modul.xlsx')) {
+                $excel->import(new CourseExcelImport, 'Testingdata\Tab3_Modul.xlsx');
+            }
+        }
 
         Schema::create('course_groups', function (Blueprint $table) {
             $table->id();

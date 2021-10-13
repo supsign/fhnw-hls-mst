@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Services\helpers;
+namespace Tests\Feature\Services\Helpers;
 
 use App\Models\Mentor;
 use App\Services\Helpers\Hashes;

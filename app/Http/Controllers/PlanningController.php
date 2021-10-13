@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Planning\StoreRequest;
 use App\Models\Planning;
 use App\Models\Semester;
 use App\Models\StudyField;
@@ -9,17 +10,20 @@ use App\Models\StudyProgram;
 use App\Services\Planning\PlanningService;
 use App\Services\Semester\SemesterService;
 use App\Services\StudyField\StudyFieldService;
+use App\Services\StudyFieldYear\StudyFieldYearService;
 use App\Services\User\PermissionAndRoleService;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PlanningController extends Controller
 {
     public function __construct(
         private PermissionAndRoleService $permissionAndRoleService,
-        protected StudyFieldService $studyFieldService,
-        protected SemesterService $semesterService,
-        protected PlanningService $planningService,
-    ) {
+        protected StudyFieldService      $studyFieldService,
+        protected SemesterService        $semesterService,
+        protected PlanningService        $planningService,
+        protected StudyFieldYearService  $studyFieldYearService,
+    )
+    {
     }
 
     public function create()
@@ -33,16 +37,24 @@ class PlanningController extends Controller
         ]);
     }
 
-    public function store(Request $request, Planning $planning)
+    public function store(StoreRequest $request)
     {
-        // Todo in der Datenbank speichern
         $this->permissionAndRoleService->canPlanScheduleOrAbort();
 
-        $studyProgram = $request->studyProgram;
-        $studyField = $this->studyFieldService->getById($request->studyField)->name;
-        $semester = $this->semesterService->getById($request->semester)->year;
+        $studyFieldYear = $this->studyFieldYearService->getByStudyFieldIdAndSemesterId(
+            $request->studyField,
+            $request->semester,
+        );
 
-        // $this->planningService->update($planning, $request->validated());
+        if (!$studyFieldYear) {
+            //  Todo: Swal Einbauen
+            return redirect()->route('planning.create');
+        }
+
+        $this->planningService->createEmptyPlanning(
+            Auth::user()->student->id,
+            $studyFieldYear->id,
+        );
 
         return redirect()->route('home');
     }
@@ -64,6 +76,6 @@ class PlanningController extends Controller
         $this->permissionAndRoleService->canPlanScheduleOrAbort();
         $planningService->cascadingDelete($planning);
 
-        return  redirect()->route('home');
+        return redirect()->route('home');
     }
 }

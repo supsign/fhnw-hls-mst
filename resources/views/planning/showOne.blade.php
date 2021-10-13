@@ -23,28 +23,23 @@
         </x-app.card>
         <vue-store-fill model="coursePlanning" :entities="{{$planning->coursePlannings}}"></vue-store-fill>
         @foreach($courseGroupYears as $courseGroupYear)
-            <x-app.card>
-                <x-slot name="title">
-                    <div class="flex justify-between">
-                        <div class="flex flex-row space-x-2">
-                            <div class="my-auto">
-                                <i class="fas fa-arrow-down" aria-hidden="true"></i>
-                            </div>
-                            <div class="my-auto">
-                                {{$courseGroupYear->courseGroup->name}}
-                            </div>
-                        </div>
-                        <vue-course-group-state :course-group-year="{{$courseGroupYear}}"
-                                                :courses="{{$courseGroupYear->getCourses()}}"
-                                                :completions="{{$planning->student->completions}}"></vue-course-group-state>
+            <vue-plan-wrapper>
+                <template v-slot:header>
+
+                    
+                    <div class="my-auto">
+                        {{$courseGroupYear->courseGroup->name}}
+      
                     </div>
-                </x-slot>
+                    <vue-course-group-state :course-group-year="{{$courseGroupYear}}"
+                                            :courses="{{$courseGroupYear->getCourses()}}"
+                                            :completions="{{$planning->student->completions}}"></vue-course-group-state>
+
+                </template>
                 <div class="text-sm lg:text-base">
                     @foreach($courseGroupYear->courseCourseGroupYears as $courseCourseGroupYear)
                         <div class="flex flex-row space-x-5 border-b p-1 text-left">
-                            <div class="my-auto text-lg flex-none">
-                                <i class="far fa-check-circle" aria-hidden="true"></i>
-                            </div>
+                            <x-planning.completion :student="$user->student" :course="$courseCourseGroupYear->course"></x-planning.completion>
                             <div class="my-auto break-words flex-grow">
                                 {{$courseCourseGroupYear->course->name}}
                             </div>
@@ -56,7 +51,7 @@
                         </div>
                     @endforeach
                 </div>
-            </x-app.card>
+            </vue-plan-wrapper>
         @endforeach
     </div>
 </x-layout.app>

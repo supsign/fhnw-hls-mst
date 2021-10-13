@@ -18,9 +18,6 @@
                     <x-planning.single-item :planning=$planning></x-planning.single-item>
                 </a>
             @endforeach
-            <div class="mt-4 flex md:flex-none text-center">
-                <a href="" class="button-primary md:w-auto">@lang('l.planningsAll')</a>
-            </div>
         </div>
     </x-app.card>
 </div>

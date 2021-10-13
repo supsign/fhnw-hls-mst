@@ -44,8 +44,8 @@
                         </g>
                     </svg>
                 </div>
-                Hallo {{ $firstname }} {{ $lastname }}<a href="mailto:{{ $email }}">
-                    {{ $email }}
+                Hallo {{ $user->firstname }} {{ $user->lastname }}<a href="mailto:{{ $user->email }}">
+                    {{ $user->email }}
                 </a>
                 <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
                     <div class="grid grid-cols-1 md:grid-cols-2">

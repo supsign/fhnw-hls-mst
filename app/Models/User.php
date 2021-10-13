@@ -29,16 +29,16 @@ class User extends Authenticatable
     //  ToDo: mock properties from shibboleth request
     protected function getEmailAttribute(): ?string
     {
-        return 'mail@exmaple.com';
+        return session()->get('email');
     }
 
     protected function getFirstnameAttribute(): ?string
     {
-        return 'Firstname';
+        return session()->get('firstname');
     }
 
     protected function getLastnameAttribute(): ?string
     {
-        return 'Lastname';
+        return session()->get('lastname');
     }
 }

@@ -14,10 +14,11 @@ use Illuminate\Http\Request;
 
 class PlanningController extends Controller
 {
-    public function __construct(private PermissionAndRoleService $permissionAndRoleService,
-                                protected StudyFieldService $studyFieldService,
-                                protected SemesterService $semesterService,
-                                protected PlanningService $planningService
+    public function __construct(
+        private PermissionAndRoleService $permissionAndRoleService,
+        protected StudyFieldService $studyFieldService,
+        protected SemesterService $semesterService,
+        protected PlanningService $planningService,
     ) {
     }
 
@@ -36,6 +37,7 @@ class PlanningController extends Controller
     {
         // Todo in der Datenbank speichern
         $this->permissionAndRoleService->canPlanScheduleOrAbort();
+
         $studyProgram = $request->studyProgram;
         $studyField = $this->studyFieldService->getById($request->studyField)->name;
         $semester = $this->semesterService->getById($request->semester)->year;
@@ -48,6 +50,7 @@ class PlanningController extends Controller
     public function showOne(Planning $planning)
     {
         $this->permissionAndRoleService->canPlanScheduleOrAbort();
+        
         $viewParameter = [
             'planning' => $planning,
             'courseGroupYears' => $planning->studyFieldYear->courseGroupYears,

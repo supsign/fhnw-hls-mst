@@ -75,9 +75,7 @@ class SemesterService extends BaseModelService
 
     public function getCurrentAndFutureSemesters(): Collection
     {
-        $result = $this->model::whereDate('start_date', '>=', Carbon::now())->orderBy('start_date')->get();
-
-        
+        $result = $this->model::whereDate('start_date', '>', Carbon::now())->orderBy('start_date')->get();
 
         return $result->push($result->first()->previousSemester)->sortBy('start_date');
     }

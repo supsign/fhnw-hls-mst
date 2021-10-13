@@ -7,7 +7,7 @@ use App\Services\Base\BaseModelService;
 
 class PlanningService extends BaseModelService
 {
-    public function __construct(protected Planning $model)
+    public function __construct(protected Planning $model, protected CoursePlanningService $coursePlanningService)
     {
         parent::__construct($model);
     }
@@ -27,5 +27,16 @@ class PlanningService extends BaseModelService
         ];
 
         return $this->model::create($attributes);
+    }
+
+    public function cascadingDelete(Planning $planning): static
+    {
+        foreach ($planning->coursePlannings as $coursePlanning) {
+            $this->coursePlanningService->delete($coursePlanning);
+        }
+
+        $planning->delete();
+
+        return $this;
     }
 }

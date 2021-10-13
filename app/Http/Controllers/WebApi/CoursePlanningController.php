@@ -33,5 +33,4 @@ class CoursePlanningController extends Controller
             $request->semester_id,
         );
     }
-
 }

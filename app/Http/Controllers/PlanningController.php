@@ -50,7 +50,7 @@ class PlanningController extends Controller
     public function showOne(Planning $planning)
     {
         $this->permissionAndRoleService->canPlanScheduleOrAbort();
-        
+
         $viewParameter = [
             'planning' => $planning,
             'courseGroupYears' => $planning->studyFieldYear->courseGroupYears,

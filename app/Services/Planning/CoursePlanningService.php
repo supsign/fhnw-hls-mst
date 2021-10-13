@@ -36,9 +36,9 @@ class CoursePlanningService extends BaseModelService
     {
         return $this->updateOrCreateTrait([
             'course_id' => $courseId,
-            'planning_id' => $planningId
+            'planning_id' => $planningId,
         ], [
-            'semester_id' => $semesterId
+            'semester_id' => $semesterId,
         ]);
     }
 }

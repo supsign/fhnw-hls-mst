@@ -12,8 +12,9 @@ class CoursePlanningController extends Controller
 {
     public function __construct(
         protected PermissionAndRoleService $permissionAndRoleService,
-        protected CoursePlanningService $coursePlanningService,
-    ) {
+        protected CoursePlanningService    $coursePlanningService,
+    )
+    {
     }
 
     public function delete(CoursePlanning $coursePlanning)
@@ -27,10 +28,12 @@ class CoursePlanningController extends Controller
     {
         $this->permissionAndRoleService->canPlanScheduleOrAbort();
 
-        $this->coursePlanningService->updateOrCreate(
+        $coursePlanning = $this->coursePlanningService->updateOrCreate(
             $request->course_id,
             $request->planning_id,
             $request->semester_id,
         );
+
+        return $coursePlanning;
     }
 }

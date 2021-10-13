@@ -46,7 +46,8 @@
                             </div>
                             <div class="flex-none my-auto">
                                 <vue-plan-course :planning-id="{{$planning->id}}"
-                                                 :course-id="{{$courseCourseGroupYear->course->id}}"></vue-plan-course>
+                                                 :course-id="{{$courseCourseGroupYear->course->id}}"
+                                                 :semesters="{{\App\Models\Semester::all()}}"></vue-plan-course>
                             </div>
                         </div>
                     @endforeach

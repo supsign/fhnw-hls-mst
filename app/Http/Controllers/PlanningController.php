@@ -50,12 +50,12 @@ class PlanningController extends Controller
             return redirect()->route('planning.create');
         }
 
-        $this->planningService->createEmptyPlanning(
+        $planning = $this->planningService->createEmptyPlanning(
             Auth::user()->student->id,
             $studyFieldYear->id,
         );
 
-        return redirect()->route('home');
+        return redirect()->route('planning.showOne', $planning);
     }
 
     public function showOne(Planning $planning)

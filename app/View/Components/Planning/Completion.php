@@ -10,6 +10,7 @@ use Illuminate\View\Component;
 class Completion extends Component
 {
     public int $icon = 0;
+
     /**
      * Create a new component instance.
      *
@@ -23,32 +24,33 @@ class Completion extends Component
         });
 
         $this->evaluateSymbol($completionsOfCourse);
-
     }
 
     public function evaluateSymbol(Collection $completions)
     {
-        if ($this->hasNoCompletedCompletions($completions)){
+        if ($this->hasNoCompletedCompletions($completions)) {
             $this->icon = 1;
+
             return;
         }
 
-        if ($this->hasOneSuccessfulCompletion($completions)){
+        if ($this->hasOneSuccessfulCompletion($completions)) {
             $this->icon = 2;
+
             return;
         }
 
         $this->icon = 3;
-
     }
 
-    public function hasNoCompletedCompletions(Collection $completions){
+    public function hasNoCompletedCompletions(Collection $completions)
+    {
         if ($completions->count() === 0) {
             return true;
         }
 
-        foreach ($completions as $completion){
-            if ($completion->completion_type_id !== 1){
+        foreach ($completions as $completion) {
+            if ($completion->completion_type_id !== 1) {
                 return false;
             }
         }
@@ -62,7 +64,7 @@ class Completion extends Component
             return $completion->completion_type_id === 2 || $completion->completion_type_id === 4;
         });
 
-        if ($successfulCompletions->count() !== 0){
+        if ($successfulCompletions->count() !== 0) {
             return true;
         }
 

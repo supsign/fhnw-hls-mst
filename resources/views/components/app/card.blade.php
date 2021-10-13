@@ -2,12 +2,12 @@
     <div class="p-2 bg-white rounded shadow mb-4">
 
         @isset($title)
-            <div class="p-2 border-b rounded-t text-base md:text-lg">
+            <div class="content-center p-2 border-b rounded-t text-base md:text-lg">
                 {{ $title }}
             </div>
         @endisset
 
-        <div class="p-3">
+        <div class="p-3 text-sm md:text-base">
             {{ $slot }}
         </div>
 

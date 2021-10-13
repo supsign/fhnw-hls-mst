@@ -15,14 +15,6 @@ class HomeController extends Controller
     {
         $this->permissionAndRoleService->canShowAppOrAbort();
 
-        $firstname = $request->session()->get('firstname');
-        $lastname = $request->session()->get('lastname');
-        $email = $request->session()->get('email');
-
-        return view('pages.home', [
-            'firstname' => $firstname,
-            'lastname' => $lastname,
-            'email' => $email,
-        ]);
+        return view('pages.home');
     }
 }

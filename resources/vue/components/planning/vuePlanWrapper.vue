@@ -1,6 +1,6 @@
 <template>
     <div class="p-2 bg-white rounded shadow mb-4">
-        <div class="content-center p-2 rounded-t text-base" @click="toggleCollapse">
+        <div class="content-center p-2 rounded-t text-base md:text-lg" @click="toggleCollapse">
 
             <div class="flex flex-row justify-between space-x-2">
                 <div class="my-auto">

@@ -6,17 +6,19 @@
     <div class="container p-3 mx-auto">
         <x-app.card>
             <x-slot name="title">
-                Studienplanung
+                <div class="flex flex-row justify-between">
+                    <div class="my-auto">@lang('l.planning')</div>
+                    <vue-form method="POST" action="{{ route('planning.delete', $planning) }}">
+                        @csrf
+                        @method('DELETE')
+                        <button class="" type="submit" name="delete_planning"><i class="fas fa-trash text-red-600 text-xl" aria-hidden="true"></i></button>
+                    </vue-form>
+                </div>
             </x-slot>
             <div class="mt-2">
-                <vue-form>
-                    <div class="py-2 px-4 bg-red-500 rounded-md text-sm text-white float-right ml-2">
-                        <span class="">Delete</span>
-                    </div>
-                    <div>{{ $planning->studyFieldYear->studyField->studyProgram->name }}</div>
-                    <div>{{ $planning->studyFieldYear->studyField->name }}</div>
-                    <div>@lang('l.startDate'): {{ $planning->studyFieldYear->beginSemester->year }}</div>
-                </vue-form>
+                <div>{{ $planning->studyFieldYear->studyField->studyProgram->name }}</div>
+                <div>{{ $planning->studyFieldYear->studyField->name }}</div>
+                <div>@lang('l.startDate'): {{ $planning->studyFieldYear->beginSemester->year }}</div>
             </div>
         </x-app.card>
         <vue-store-fill model="coursePlanning" :entities="{{$planning->coursePlannings}}"></vue-store-fill>

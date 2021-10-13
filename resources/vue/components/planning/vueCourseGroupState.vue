@@ -1,6 +1,6 @@
 <template>
-    <div>
-        {{ countCredits }}&nbsp;/&nbsp;{{ courseGroupYear.credits_to_pass }}
+    <div class="w-auto">
+        <div class="border p-2 md:w-full p-2 mx-auto">{{ countCredits }}&nbsp;/&nbsp;{{ courseGroupYear.credits_to_pass }}</div>
     </div>
 </template>
 

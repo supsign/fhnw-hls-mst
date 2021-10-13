@@ -22,6 +22,27 @@
                 <div>@lang('l.startDate'): {{ $planning->studyFieldYear->beginSemester->year }}</div>
             </div>
         </x-app.card>
+        <x-app.card>
+            <x-slot name="title">
+                <div class="my-auto">@lang('l.legend')</div>
+            </x-slot>
+            <div class="flex flex-col space-y-2">
+                <div class="my-auto flex flex-row space-x-3">
+                    <i class="far fa-check-circle my-auto" aria-hidden="true"></i>
+                    <div class="my-auto">@lang('l.completionPassed')</div>
+                </div>
+
+                <div class="my-auto flex flex-row space-x-3">
+                    <i class="far fa-times-circle my-auto" aria-hidden="true"></i>
+                    <div class="my-auto">@lang('l.completionFailed')</div>
+                </div>
+                <div class="flex flex-row space-x-3">
+                    <i class="far fa-circle my-auto" aria-hidden="true"></i>
+                    <div class="my-auto">@lang('l.completionNone')</div>
+                </div>
+            </div>
+
+        </x-app.card>
         <vue-store-fill model="coursePlanning" :entities="{{$planning->coursePlannings}}"></vue-store-fill>
         @foreach($courseGroupYears as $courseGroupYear)
             <vue-plan-wrapper>

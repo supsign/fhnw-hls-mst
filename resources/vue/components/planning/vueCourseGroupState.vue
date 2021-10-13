@@ -1,6 +1,6 @@
 <template>
     <div>
-        {{ countCredits }} / {{ courseGroupYear.credits_to_pass }}
+        {{ countCredits }}&nbsp;/&nbsp;{{ courseGroupYear.credits_to_pass }}
     </div>
 </template>
 

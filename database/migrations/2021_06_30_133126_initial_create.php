@@ -8,6 +8,8 @@ use App\Imports\CrossQualificationImport;
 use App\Imports\SpecializationImport;
 use App\Imports\StudyFieldImport;
 use App\Imports\StudyFieldYearImport;
+use App\Services\Semester\SemesterService;
+use Carbon\Carbon;
 use Database\Seeders\CompletionTypeSeeder;
 use Database\Seeders\CourseTypeSeeder;
 use Database\Seeders\LanguageSeeder;
@@ -140,6 +142,9 @@ class InitialCreate extends Migration
 
             $table->unique(['year', 'is_hs']);
         });
+
+        $semesterService = App::make(SemesterService::class);
+        $semesterService->firstOrcreateByYear(Carbon::now()->year + 5);
 
         Schema::create('study_field_years', function (Blueprint $table) {
             $table->id();

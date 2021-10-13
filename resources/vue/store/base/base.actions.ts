@@ -1,8 +1,8 @@
-import { ActionContext } from "vuex";
+import {ActionContext} from "vuex";
 
-import { IBaseState } from "./baseState.interface";
-import { IModel } from "../model.interface";
-import { BaseRequestModel } from "../base.requestModel";
+import {IBaseState} from "./baseState.interface";
+import {IModel} from "../model.interface";
+import {BaseRequestModel} from "../base.requestModel";
 
 export const patch = (
     context: ActionContext<IBaseState<IModel>, any>,
@@ -58,6 +58,7 @@ export const post = (
     context: ActionContext<IBaseState<IModel>, any>,
     payload: Partial<IModel>
 ) => {
+    console.log('action post payload: ', payload)
     if (payload.id) {
         return null;
     }

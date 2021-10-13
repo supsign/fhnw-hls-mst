@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function __construct(private PermissionAndRoleService $permissionAndRoleService)
+    public function __construct(protected PermissionAndRoleService $permissionAndRoleService)
     {
     }
 

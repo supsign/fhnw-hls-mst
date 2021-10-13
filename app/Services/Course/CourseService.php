@@ -4,9 +4,12 @@ namespace App\Services\Course;
 
 use App\Models\Course;
 use App\Services\Base\BaseModelService;
+use App\Services\Base\Traits\UpdateOrCreateTrait;
 
 class CourseService extends BaseModelService
 {
+    use UpdateOrCreateTrait;
+
     public function __construct(protected Course $model)
     {
         parent::__construct($model);

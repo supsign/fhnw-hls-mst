@@ -192,17 +192,7 @@ class InitialCreate extends Migration
             $table->timestampsTz();
         });
 
-        (new CourseCsvImport())->import();
-
-        if (App::environment('production')) {
-            if (Storage::exists('Tab3_Modul.xlsx')) {
-                $excel->import(new CourseExcelImport, 'Tab3_Modul.xlsx');
-            }
-        } else {
-            if (Storage::exists('Testingdata\Tab3_Modul.xlsx')) {
-                $excel->import(new CourseExcelImport, 'Testingdata\Tab3_Modul.xlsx');
-            }
-        }
+        (new CourseCsvImport)->import();
 
         Schema::create('course_groups', function (Blueprint $table) {
             $table->id();
@@ -379,6 +369,16 @@ class InitialCreate extends Migration
         });
 
         (new CourseCourseGroupYearImporter)->import();
+
+        if (App::environment('production')) {
+            if (Storage::exists('Tab3_Modul.xlsx')) {
+                $excel->import(new CourseExcelImport, 'Tab3_Modul.xlsx');
+            }
+        } else {
+            if (Storage::exists('Testingdata\Tab3_Modul.xlsx')) {
+                $excel->import(new CourseExcelImport, 'Testingdata\Tab3_Modul.xlsx');
+            }
+        }
     }
 
     /**

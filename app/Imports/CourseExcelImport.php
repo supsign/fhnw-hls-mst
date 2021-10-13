@@ -28,11 +28,32 @@ class CourseExcelImport extends BaseExcelImport implements ToModel, WithHeadingR
             return;
         }
 
-        $this->service->firstOrCreateByNumber(
-            $row['anlassnummer'],
-            6,
-            1,
-            $row['anlassbezeichnung'],
+        $course = $this->service->getByNumber(
+            $this->formatEventoNumber($row['anlassnummer'])
         );
+
+        if ($course) {
+            $this->service->updateOrCreate([
+                'id' => $course->id,
+            ], [
+                'number' => $row['anlassnummer'],
+                'name' => $row['anlassbezeichnung'],    //  name updaten?
+            ]);
+
+            return;
+        }
+
+        echo 'new none-matching '.$row['anlassnummer'].PHP_EOL;
+
+        $course = $this->service->updateOrCreate([
+            'number' => $row['anlassnummer'],
+        ], [
+            'course_type_id' => 6,
+            'name' => $row['anlassbezeichnung'],    //  name updaten?
+        ]);
+
+        if ($course->wasRecentlyCreated) {
+            echo 'newly created '.$row['anlassnummer'].PHP_EOL;
+        }
     }
 }

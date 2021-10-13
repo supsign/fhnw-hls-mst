@@ -7,6 +7,7 @@ use App\Services\Base\BaseModelService;
 use App\Services\Base\Traits\FirstOrCreateTrait;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Database\Eloquent\Collection;
 
 class SemesterService extends BaseModelService
 {
@@ -23,23 +24,6 @@ class SemesterService extends BaseModelService
     public function __construct(protected Semester $model)
     {
         parent::__construct($model);
-    }
-
-    public function firstOrcreateByYear(int $year, bool $isHs = true): Semester
-    {
-        if ($year >= $this->cutOffYearMax) {
-            throw new Exception('year value "'.$year.'" is out of range');
-        }
-
-        $previousSemester = $year <= $this->cutOffYearMin ? null : $this->firstOrcreateByYear($isHs ? $year : $year - 1, !$isHs);
-
-        return $this->firstOrCreateTrait([
-            'year' => $year,
-            'is_hs' => $isHs,
-        ], [
-            'start_date' => ($isHs ? $this->semesterStartDateHs : $this->semesterStartDateFs).$year,
-            'previous_semester_id' => $previousSemester?->id,
-        ]);
     }
 
     public function countSemestersFromSemesterToNow(Semester $semester): int
@@ -70,5 +54,31 @@ class SemesterService extends BaseModelService
 
             $currentSemester = $currentSemester->previousSemester;
         }
+    }
+
+    public function firstOrcreateByYear(int $year, bool $isHs = true): Semester
+    {
+        if ($year >= $this->cutOffYearMax) {
+            throw new Exception('year value "'.$year.'" is out of range');
+        }
+
+        $previousSemester = $year <= $this->cutOffYearMin ? null : $this->firstOrcreateByYear($isHs ? $year : $year - 1, !$isHs);
+
+        return $this->firstOrCreateTrait([
+            'year' => $year,
+            'is_hs' => $isHs,
+        ], [
+            'start_date' => ($isHs ? $this->semesterStartDateHs : $this->semesterStartDateFs).$year,
+            'previous_semester_id' => $previousSemester?->id,
+        ]);
+    }
+
+    public function getCurrentAndFutureSemesters(): Collection
+    {
+        $result = $this->model::whereDate('start_date', '>=', Carbon::now())->orderBy('start_date')->get();
+
+        
+
+        return $result->push($result->first()->previousSemester)->sortBy('start_date');
     }
 }

@@ -25,19 +25,19 @@
             <x-slot name="title">
                 <div class="my-auto">@lang('l.legend')</div>
             </x-slot>
-            <div class="">
+            <div class="flex flex-col space-y-2">
                 <div class="my-auto flex flex-row space-x-3">
                     <i class="far fa-check-circle my-auto" aria-hidden="true"></i>
-                    <div class="my-auto">Bestanden / Angerechnet</div>
+                    <div class="my-auto">@lang('l.completionPassed')</div>
                 </div>
 
                 <div class="my-auto flex flex-row space-x-3">
                     <i class="far fa-times-circle my-auto" aria-hidden="true"></i>
-                    <div class="my-auto">Durchgefallen</div>
+                    <div class="my-auto">@lang('l.completionFailed')</div>
                 </div>
                 <div class="flex flex-row space-x-3">
                     <i class="far fa-circle my-auto" aria-hidden="true"></i>
-                    <div class="my-auto">Kein Abschluss / Angemeldet</div>
+                    <div class="my-auto">@lang('l.completionNone')</div>
                 </div>
             </div>
 

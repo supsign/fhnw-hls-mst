@@ -20,4 +20,7 @@ return [
     'credits' => 'ECTS-Punkte',
     'startDate' => 'Startsemester',
     'legend' => 'Legende',
+    'completionPassed' => 'Bestanden oder angerechnet',
+    'completionFailed' => 'Durchgefallen - nicht bestanden',
+    'completionNone' => 'Kein Abschluss oder angemeldet',
 ];

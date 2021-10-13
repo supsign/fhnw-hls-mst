@@ -7,6 +7,8 @@ namespace App\Models;
  */
 class Completion extends BaseModel
 {
+    protected $appends = ['course_id'];
+
     public function courseYear()
     {
         return $this->belongsTo(CourseYear::class);
@@ -20,5 +22,10 @@ class Completion extends BaseModel
     public function completionType()
     {
         return $this->belongsTo(CompletionType::class);
+    }
+
+    public function getCourseIdAttribute()
+    {
+        return $this->courseYear->course_id;
     }
 }

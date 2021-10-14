@@ -44,12 +44,13 @@ class CourseExcelImport extends BaseExcelImport implements ToModel, WithHeadingR
             return;
         }
 
-        $this->service->updateOrCreate([
-            'evento_id' => $row['id_anlass'],
-        ], [
-            'course_type_id' => 6,
-            'number' => $row['anlassnummer'],
-            'name' => $row['anlassbezeichnung'],
-        ]);
+        $this->service->createOrUpdateOnEventoId(
+            $row['id_anlass'],
+            [
+                'course_type_id' => 6,
+                'number' => $row['anlassnummer'],
+                'name' => $row['anlassbezeichnung'],
+            ]
+        );
     }
 }

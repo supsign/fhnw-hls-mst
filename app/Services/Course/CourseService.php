@@ -5,10 +5,14 @@ namespace App\Services\Course;
 use App\Models\Course;
 use App\Services\Base\BaseModelService;
 use App\Services\Base\Traits\UpdateOrCreateTrait;
+use App\Services\Evento\Traits\CreateOrUpdateOnEventoId;
+use App\Services\Evento\Traits\GetByEventoId;
 
 class CourseService extends BaseModelService
 {
     use UpdateOrCreateTrait;
+    use GetByEventoId;
+    use CreateOrUpdateOnEventoId;
 
     public function __construct(protected Course $model)
     {

@@ -56,13 +56,13 @@ class SemesterService extends BaseModelService
         }
     }
 
-    public function firstOrcreateByYear(int $year, bool $isHs = true): Semester
+    public function firstOrCreateByYear(int $year, bool $isHs = true): Semester
     {
         if ($year >= $this->cutOffYearMax) {
             throw new Exception('year value "'.$year.'" is out of range');
         }
 
-        $previousSemester = $year <= $this->cutOffYearMin ? null : $this->firstOrcreateByYear($isHs ? $year : $year - 1, !$isHs);
+        $previousSemester = $year <= $this->cutOffYearMin ? null : $this->firstOrCreateByYear($isHs ? $year : $year - 1, !$isHs);
 
         return $this->firstOrCreateTrait([
             'year' => $year,
@@ -78,5 +78,13 @@ class SemesterService extends BaseModelService
         $result = $this->model::whereDate('start_date', '>', Carbon::now())->orderBy('start_date')->get();
 
         return $result->push($result->first()->previousSemester)->sortBy('start_date');
+    }
+
+    public function getSemesterFromEventoNumber(string $number): Semester
+    {
+        $year = 2000 + substr($number, 2, 2);   //  fix before 2100
+        $isHs = substr($number, 4, 2) === 'HS';
+
+        return $this->firstOrCreateByYear($year, $isHs);
     }
 }

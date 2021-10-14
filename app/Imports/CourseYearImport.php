@@ -31,9 +31,17 @@ class CourseYearImport extends BaseExcelImport implements ToModel, WithHeadingRo
             return;
         }
 
-        var_dump(
-            $row,
-            $this->courseService->getByNumber($row['anlassnummer_modul'])?->id,
+        $course = $this->courseService->getByNumber($row['anlassnummer_modul']);
+
+        if (!$course) {
+            return;
+        }
+
+        $this->courseYearSerivce->createOrUpdateOnEventoId(
+            $row['id_anlass'],
+            $course,
+            $row['anlassnummer'],
+            $row['anlassbezeichnung']
         );
     }
 }

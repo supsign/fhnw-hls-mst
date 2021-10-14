@@ -43,17 +43,11 @@ class CourseExcelImport extends BaseExcelImport implements ToModel, WithHeadingR
             return;
         }
 
-        echo 'new none-matching '.$row['anlassnummer'].PHP_EOL;
-
-        $course = $this->service->updateOrCreate([
+        $this->service->updateOrCreate([
             'number' => $row['anlassnummer'],
         ], [
             'course_type_id' => 6,
             'name' => $row['anlassbezeichnung'],    //  name updaten?
-        ]);
-
-        if ($course->wasRecentlyCreated) {
-            echo 'newly created '.$row['anlassnummer'].PHP_EOL;
-        }
+        ]);    
     }
 }

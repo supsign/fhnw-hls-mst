@@ -48,6 +48,6 @@ class CourseExcelImport extends BaseExcelImport implements ToModel, WithHeadingR
         ], [
             'course_type_id' => 6,
             'name' => $row['anlassbezeichnung'],    //  name updaten?
-        ]);    
+        ]);
     }
 }

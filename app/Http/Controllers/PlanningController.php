@@ -8,6 +8,8 @@ use App\Models\Semester;
 use App\Models\StudyField;
 use App\Models\StudyProgram;
 use App\Services\Planning\PlanningService;
+use App\Services\Semester\SemesterService;
+use App\Services\StudyField\StudyFieldService;
 use App\Services\StudyFieldYear\StudyFieldYearService;
 use App\Services\User\PermissionAndRoleService;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +17,9 @@ use Illuminate\Support\Facades\Auth;
 class PlanningController extends Controller
 {
     public function __construct(
-        protected PermissionAndRoleService $permissionAndRoleService,
+        private PermissionAndRoleService $permissionAndRoleService,
+        protected StudyFieldService $studyFieldService,
+        protected SemesterService $semesterService,
         protected PlanningService $planningService,
         protected StudyFieldYearService $studyFieldYearService,
     ) {
@@ -46,17 +50,18 @@ class PlanningController extends Controller
             return redirect()->route('planning.create');
         }
 
-        $this->planningService->createEmptyPlanning(
+        $planning = $this->planningService->createEmptyPlanning(
             Auth::user()->student->id,
             $studyFieldYear->id,
         );
 
-        return redirect()->route('home');
+        return redirect()->route('planning.showOne', $planning);
     }
 
     public function showOne(Planning $planning)
     {
         $this->permissionAndRoleService->canPlanScheduleOrAbort();
+
         $viewParameter = [
             'planning' => $planning,
             'courseGroupYears' => $planning->studyFieldYear->courseGroupYears,
@@ -70,6 +75,6 @@ class PlanningController extends Controller
         $this->permissionAndRoleService->canPlanScheduleOrAbort();
         $planningService->cascadingDelete($planning);
 
-        return  redirect()->route('home');
+        return redirect()->route('home');
     }
 }

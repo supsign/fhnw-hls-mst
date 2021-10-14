@@ -4,20 +4,20 @@ namespace App\Imports;
 
 use App;
 use App\Services\Course\CourseService;
-use App\Services\CourseGroupYear\CourseGroupYearService;
+use App\Services\CourseYear\CourseYearService;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class CourseGroupYearExcelImport extends BaseExcelImport implements ToModel, WithHeadingRow
+class CourseYearImport extends BaseExcelImport implements ToModel, WithHeadingRow
 {
     protected array $requiredFields = ['id_anlass', 'anlassnummer', 'anlassbezeichnung', 'id_anlass_modul', 'anlassnummer_modul'];
     protected CourseService $courseService;
-    protected CourseGroupYearService $courseGroupYearService;
+    protected CourseYearService $courseYearSerivce;
 
     public function __construct()
     {
         $this->courseService = App::make(CourseService::class);
-        $this->courseGroupYearService = App::make(CourseGroupYearService::class);
+        $this->courseYearSerivce = App::make(CourseYearService::class);
     }
 
     /**
@@ -33,7 +33,7 @@ class CourseGroupYearExcelImport extends BaseExcelImport implements ToModel, Wit
 
         var_dump(
             $row,
-            $this->courseService->getByNumber($row['anlassnummer_modul'])->id,
+            $this->courseService->getByNumber($row['anlassnummer_modul'])?->id,
         );
     }
 }

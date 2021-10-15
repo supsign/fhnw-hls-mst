@@ -28,8 +28,12 @@ class CourseYearServiceTest extends TestCase
         $uniqueNumber = $this->faker->unique()->name;
         $name = $this->faker->name;
         $course = $this->courseService->firstOrCreateByNumber($uniqueNumber, 1, 1, $name);
-        $semester = Semester::first();
-        $courseYear = $this->courseYearService->createCourseYear($course, $semester);
+        $courseYear = $this->courseYearService->createOrUpdateOnEventoId(
+            $this->faker->unique->numberBetween(1, 9999999), 
+            $course, 
+            '2-21FS.TEST1234.EN/a',
+            $name,
+        );
         $this->assertNotNull($courseYear);
         $this->assertEquals($name, $courseYear->name);
     }

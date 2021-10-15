@@ -8,6 +8,7 @@ use App\Imports\CourseGroupYearCsvImport;
 use App\Imports\CourseYearImport;
 use App\Imports\CrossQualificationImport;
 use App\Imports\SpecializationImport;
+use App\Imports\StudentImport;
 use App\Imports\StudyFieldImport;
 use App\Imports\StudyFieldYearImport;
 use App\Services\Semester\SemesterService;

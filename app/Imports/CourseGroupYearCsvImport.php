@@ -7,7 +7,7 @@ use App\Services\CourseGroup\CourseGroupService;
 use App\Services\CourseGroupYear\CourseGroupYearService;
 use App\Services\StudyField\StudyFieldService;
 
-class CourseGroupYearImport extends BaseCsvImport
+class CourseGroupYearCsvImport extends BaseCsvImport
 {
     protected CourseGroupService $courseGroupService;
     protected CourseGroupYearService $courseGroupYearService;

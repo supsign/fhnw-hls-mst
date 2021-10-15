@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Services\Completion;
 
-use App\Models\Semester;
+use App\Models\CourseYear;
 use App\Services\Completion\CompletionService;
 use App\Services\Course\CourseService;
 use App\Services\CourseYear\CourseYearService;
@@ -16,7 +16,7 @@ class CompletionServiceTest extends TestCase
 
     private StudentService $studentService;
     private CompletionService $completionService;
-    private courseService $courseService;
+    private CourseService $courseService;
     private CourseYearService $courseYearService;
 
     public function setup(): void
@@ -25,8 +25,8 @@ class CompletionServiceTest extends TestCase
         $this->setUpFaker();
         $this->studentService = $this->app->make(StudentService::class);
         $this->completionService = $this->app->make(CompletionService::class);
-        $this->courseYearService = $this->app->make(CourseYearService::class);
         $this->courseService = $this->app->make(CourseService::class);
+        $this->courseYearService = $this->app->make(CourseYearService::class);
     }
 
     public function testAddCompletionAsCredit()
@@ -34,7 +34,11 @@ class CompletionServiceTest extends TestCase
         $student = $this->studentService->createOrUpdateOnEventoPersonId(5);
         $uniqueNumber = $this->faker->unique()->name;
         $course = $this->courseService->firstOrCreateByNumber($uniqueNumber, 1, 1, 'blub', 3);
-        $courseYear = $this->courseYearService->createCourseYear($course, Semester::first());
+        $courseYear = $this->courseYearService->createOrUpdateOnEventoId(
+            $this->faker->unique->numberBetween(1, 9999999),
+            $course,
+            '2-21FS.BlubbBlah.EN/a',
+        );
         $completion = $this->completionService->createOrUpdateAsCredited($student, $courseYear->id, $course->credits);
         $this->assertNotNull($completion);
         $this->assertNotNull($completion->id);

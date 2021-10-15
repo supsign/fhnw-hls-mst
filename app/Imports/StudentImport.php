@@ -53,7 +53,7 @@ class StudentImport extends BaseExcelImport implements ToModel, WithHeadingRow
         if ($studyFieldYear) {
             $attributes['study_field_year_id'] = $studyFieldYear->id;
         }
-        
+
         $this->studentService->createOrUpdateOnEventoPersonId(
             $row['id_person'],
             $attributes

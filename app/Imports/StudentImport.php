@@ -10,7 +10,7 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class StudentImport extends BaseExcelImport implements ToModel, WithHeadingRow
 {
-    protected $requiredFields = [
+    protected array $requiredFields = [
         'id_anmeldung',
         'id_person',
         'id_anlass',

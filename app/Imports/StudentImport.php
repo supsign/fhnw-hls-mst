@@ -2,12 +2,15 @@
 
 namespace App\Imports;
 
+use App;
+use App\Services\Student\StudentService;
+use App\Services\StudyFieldYear\StudyFieldYearService;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class StudentImport extends BaseExcelImport implements ToModel, WithHeadingRow
 {
-    protected array $requiredFields = [
+    protected $requiredFields = [
         'id_anmeldung',
         'id_person',
         'id_anlass',
@@ -19,10 +22,13 @@ class StudentImport extends BaseExcelImport implements ToModel, WithHeadingRow
         'eintritt_in_periode',
         'status_anmeldung',
     ];
+    protected StudentService $studentService;
+    protected StudyFieldYearService $studyFieldYearService;
 
     public function __construct()
     {
-
+        $this->studentService = App::make(StudentService::class);
+        $this->studyFieldYearService = App::make(StudyFieldYearService::class);
     }
 
     /**
@@ -36,6 +42,23 @@ class StudentImport extends BaseExcelImport implements ToModel, WithHeadingRow
             return;
         }
 
-        var_dump($row);
+        $attributes = [];
+
+        if (!in_array($row['status_anmeldung'], ['jA.Immatrikuliert', 'jA.Angemeldet'])) {
+            return;
+        }
+
+        $studyFieldYear = $this->studyFieldYearService->getByEventoId($row['id_anlass']);
+
+        if ($studyFieldYear) {
+            $attributes['study_field_year_id'] = $studyFieldYear->id;
+        }
+
+        var_dump($attributes); return;
+
+        $this->studentService->createOrUpdateOnEventoPersonId(
+            $row['id_person'],
+            $attributes
+        );
     }
 }

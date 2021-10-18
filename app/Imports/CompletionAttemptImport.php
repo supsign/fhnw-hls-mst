@@ -9,7 +9,7 @@ use App\Services\Student\StudentService;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class CompletionImport extends BaseExcelImport implements ToModel, WithHeadingRow
+class CompletionAttemptImport extends BaseExcelImport implements ToModel, WithHeadingRow
 {
     protected array $requiredFields = ['id_anmeldung', 'id_person', 'id_anlass', 'anlassnummer', 'note', 'credits_anmeldung', 'status_anmeldung'];
     protected CourseYearService $courseYearService;

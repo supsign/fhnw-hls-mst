@@ -4,6 +4,7 @@ namespace App\Services\Completion;
 
 use App\Models\Completion;
 use App\Models\Course;
+use App\Models\CourseYear;
 use App\Models\Student;
 use App\Services\Base\BaseModelService;
 use App\Services\Evento\Traits\CreateOrUpdateOnEventoId;

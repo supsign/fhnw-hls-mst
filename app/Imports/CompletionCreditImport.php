@@ -37,8 +37,6 @@ class CompletionCreditImport extends BaseExcelImport implements ToModel, WithHea
         $course = $this->courseService->getByEventoId($row['id_anlass']);
 
         if (!$course || !$course->courseYears()->count()) {
-            echo 'course year '.$row['id_anlass'].' not found'.PHP_EOL;
-
             return;
         }
 

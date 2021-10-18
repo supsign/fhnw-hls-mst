@@ -16,7 +16,7 @@ class CompletionService extends BaseModelService
 {
     use GetByEventoId;
     use CreateOrUpdateOnEventoId {
-        createOrUpdateOnEventoId as protected createOrUpdateOnEventoId;
+        createOrUpdateOnEventoId as protected createOrUpdateOnEventoIdTrait;
     }
 
     public function __construct(protected Completion $model)
@@ -24,7 +24,7 @@ class CompletionService extends BaseModelService
         parent::__construct($model);
     }
 
-    public function createUpdateOrDeleteOnEventoId(int $eventoId, Student $student, CourseYear $courseYear, int $credits, string $status, string $grade): ?Completion
+    public function createUpdateOrDeleteOnEventoId(int $eventoId, Student $student, CourseYear $courseYear, int $credits, string $status, string $grade = ''): ?Completion
     {
         switch (true) {
             case empty($grade):                             $completionTypeId = 1; break;
@@ -38,7 +38,7 @@ class CompletionService extends BaseModelService
             return null;
         }
 
-        return $this->createOrUpdateOnEventoId($eventoId, [
+        return $this->createOrUpdateOnEventoIdTrait($eventoId, [
             'student_id' => $student->id,
             'course_year_id' => $courseYear->id,
             'credits' => $credits,

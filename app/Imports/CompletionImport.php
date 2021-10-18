@@ -4,6 +4,7 @@ namespace App\Imports;
 
 use App;
 use App\Services\Completion\CompletionService;
+use App\Services\CourseYear\CourseYearService;
 use App\Services\Student\StudentService;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -11,11 +12,13 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 class CompletionImport extends BaseExcelImport implements ToModel, WithHeadingRow
 {
     protected array $requiredFields = ['id_anmeldung', 'id_person', 'id_anlass', 'anlassnummer', 'note', 'credits_anmeldung', 'status_anmeldung'];
+    protected CourseYearService $courseYearService;
     protected CompletionService $completionService;
     protected StudentService $studentService;
 
     public function __construct()
     {
+        $this->courseYearService = App::make(CourseYearService::class);
         $this->completionService = App::make(CompletionService::class);
         $this->studentService = App::make(StudentService::class);
     }
@@ -26,19 +29,25 @@ class CompletionImport extends BaseExcelImport implements ToModel, WithHeadingRo
      */
     public function model(array $row)
     {
-        var_dump($row);
-
         if (!$this->hasRequiredFields($row) || $this->isEmptyRow($row)) {
             //  Throw error? Write log?
             return;
         }
 
+        $courseYear = $this->courseYearService->getByEventoId($row['id_anlass']);
 
-        // $this->completionService->createUpdateOrDeleteOnEventoId(
-        //     $row['id_anmeldung'],
-        //     $this->studentService->getByEventoPersonId($row['id_person']),
-            
-        // );
+        if (!$courseYear) {
+            echo 'course year '.$row['id_anlass'].' not found</br>';
+            return;
+        }
 
+        $this->completionService->createUpdateOrDeleteOnEventoId(
+            $row['id_anmeldung'],
+            $this->studentService->createOrUpdateOnEventoPersonId($row['id_person']),
+            $courseYear,
+            $row['credits_anmeldung'],
+            $row['status_anmeldung'],
+            (string)$row['note'],
+        );
     }
 }

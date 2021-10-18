@@ -4,7 +4,6 @@ namespace App\Services\CourseYear;
 
 use App\Models\Course;
 use App\Models\CourseYear;
-use App\Models\Semester;
 use App\Services\Base\BaseModelService;
 use App\Services\Evento\Traits\CreateOrUpdateOnEventoId;
 use App\Services\Evento\Traits\GetByEventoId;

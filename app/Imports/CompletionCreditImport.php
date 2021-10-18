@@ -4,21 +4,21 @@ namespace App\Imports;
 
 use App;
 use App\Services\Completion\CompletionService;
-use App\Services\CourseYear\CourseYearService;
+use App\Services\Course\CourseService;
 use App\Services\Student\StudentService;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class CompletionImport extends BaseExcelImport implements ToModel, WithHeadingRow
+class CompletionCreditImport extends BaseExcelImport implements ToModel, WithHeadingRow
 {
-    protected array $requiredFields = ['id_anmeldung', 'id_person', 'id_anlass', 'anlassnummer', 'note', 'credits_anmeldung', 'status_anmeldung'];
-    protected CourseYearService $courseYearService;
+    protected array $requiredFields = ['id_anmeldung', 'id_person', 'id_anlass', 'anlassnummer', 'credits_anmeldung'];
+    protected CourseService $courseService;
     protected CompletionService $completionService;
     protected StudentService $studentService;
 
     public function __construct()
     {
-        $this->courseYearService = App::make(CourseYearService::class);
+        $this->courseService = App::make(CourseService::class);
         $this->completionService = App::make(CompletionService::class);
         $this->studentService = App::make(StudentService::class);
     }
@@ -34,21 +34,19 @@ class CompletionImport extends BaseExcelImport implements ToModel, WithHeadingRo
             return;
         }
 
-        $courseYear = $this->courseYearService->getByEventoId($row['id_anlass']);
+        $course = $this->courseService->getByEventoId($row['id_anlass']);
 
-        if (!$courseYear) {
-            echo 'course year '.$row['id_anlass'].' not found</br>';
+        if (!$course || !$course->courseYears()->count()) {
+            echo 'course year '.$row['id_anlass'].' not found'.PHP_EOL;
 
             return;
         }
 
-        $this->completionService->createUpdateOrDeleteOnEventoId(
+        $this->completionService->createUpdateOrDeleteOnEventoIdAsCredit(
             $row['id_anmeldung'],
             $this->studentService->createOrUpdateOnEventoPersonId($row['id_person']),
-            $courseYear,
+            $course,
             $row['credits_anmeldung'],
-            $row['status_anmeldung'],
-            (string)$row['note'],
         );
     }
 }

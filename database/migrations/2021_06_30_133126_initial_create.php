@@ -1,5 +1,6 @@
 <?php
 
+use App\Imports\CompletionAttemptImport;
 use App\Imports\CourseCourseGroupYearImporter;
 use App\Imports\CourseCsvImport;
 use App\Imports\CourseExcelImport;
@@ -394,7 +395,11 @@ class InitialCreate extends Migration
             }
 
             if (Storage::exists('Tab6_AnmMA.xlsx')) {
-                $excel->import(new StudentImport, 'Tab6_AnmMA.xlsx');
+                $excel->import(new CompletionAttemptImport, 'Tab6_AnmMA.xlsx');
+            }
+
+            if (Storage::exists('Tab7_Anrechnungen.xlsx')) {
+                $excel->import(new CompletionCreditImport, 'Tab7_Anrechnungen.xlsx');
             }
         } else {
             if (Storage::exists('Testingdata\Tab3_Modul.xlsx')) {

@@ -3,7 +3,7 @@
 namespace App\Services\Completion;
 
 use App\Models\Completion;
-use App\Models\CourseYear;
+use App\Models\Course;
 use App\Models\Student;
 use App\Services\Base\BaseModelService;
 use App\Services\Evento\Traits\CreateOrUpdateOnEventoId;
@@ -24,7 +24,7 @@ class CompletionService extends BaseModelService
         parent::__construct($model);
     }
 
-    public function createUpdateOrDeleteOnEventoId(int $eventoId, Student $student, CourseYear $courseYear, int $credits, string $status, string $grade = ''): ?Completion
+    public function createUpdateOrDeleteOnEventoIdAsAttempt(int $eventoId, Student $student, CourseYear $courseYear, int $credits, string $status, string $grade = ''): ?Completion
     {
         switch (true) {
             case empty($grade):                             $completionTypeId = 1; break;
@@ -39,11 +39,33 @@ class CompletionService extends BaseModelService
             return null;
         }
 
-        return $this->createOrUpdateOnEventoIdTrait($eventoId, [
+        $completion = $this->createOrUpdateOnEventoIdTrait($eventoId, [
             'student_id' => $student->id,
             'course_year_id' => $courseYear->id,
             'credits' => $credits,
             'completion_type_id' => $completionTypeId,
         ]);
+
+        if (!$completion->wasRecentlyCreated) {
+            $student->load('completions');
+        }
+
+        return $completion;
+    }
+
+    public function createUpdateOrDeleteOnEventoIdAsCredit(int $eventoId, Student $student, Course $course, int $credits): Completion
+    {
+        $completion = $this->createOrUpdateOnEventoIdTrait($eventoId, [
+            'student_id' => $student->id,
+            'course_year_id' => $course->courseYears()->first()->id,
+            'credits' => $credits,
+            'completion_type_id' => 4,
+        ]);
+
+        if (!$completion->wasRecentlyCreated) {
+            $student->load('completions');
+        }
+
+        return $completion;
     }
 }

@@ -338,6 +338,7 @@ class InitialCreate extends Migration
             $table->id();
             $table->foreignId('course_year_id')->constrained();
             $table->foreignId('student_id')->constrained();
+            $table->unsignedBigInteger('evento_id')->nullable()->unique();
             $table->integer('credits')->default(0);
             $table->foreignId('completion_type_id')->default(1)->constrained();
             $table->timestampsTz();

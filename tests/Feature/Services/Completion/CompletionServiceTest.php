@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Services\Completion;
 
-use App\Models\CourseYear;
 use App\Services\Completion\CompletionService;
 use App\Services\Course\CourseService;
 use App\Services\CourseYear\CourseYearService;

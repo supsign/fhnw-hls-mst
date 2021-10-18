@@ -40,7 +40,7 @@ class CompletionAttemptImport extends BaseExcelImport implements ToModel, WithHe
             return;
         }
 
-        $test = $this->completionService->createUpdateOrDeleteOnEventoIdAsAttempt(
+        $this->completionService->createUpdateOrDeleteOnEventoIdAsAttempt(
             $row['id_anmeldung'],
             $this->studentService->createOrUpdateOnEventoPersonId($row['id_person']),
             $courseYear,

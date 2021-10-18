@@ -392,6 +392,10 @@ class InitialCreate extends Migration
             if (Storage::exists('Tab5_AnmStdjg.xlsx')) {
                 $excel->import(new StudentImport, 'Tab5_AnmStdjg.xlsx');
             }
+
+            if (Storage::exists('Tab6_AnmMA.xlsx')) {
+                $excel->import(new StudentImport, 'Tab6_AnmMA.xlsx');
+            }
         } else {
             if (Storage::exists('Testingdata\Tab3_Modul.xlsx')) {
                 $excel->import(new CourseExcelImport, 'Testingdata\Tab3_Modul.xlsx');

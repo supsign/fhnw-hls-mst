@@ -47,14 +47,14 @@ class CompletionService extends BaseModelService
             'completion_type_id' => $completionTypeId,
         ]);
 
-        if (!$completion->wasRecentlyCreated) {
+        if (isset($student->completions)) {
             $student->load('completions');
         }
 
         return $completion;
     }
 
-    public function createUpdateOrDeleteOnEventoIdAsCredit(int $eventoId, Student $student, Course $course, int $credits): Completion
+    public function createOrUpdateOnEventoIdAsCredit(int $eventoId, Student $student, Course $course, int $credits): Completion
     {
         $completion = $this->createOrUpdateOnEventoIdTrait($eventoId, [
             'student_id' => $student->id,
@@ -63,7 +63,7 @@ class CompletionService extends BaseModelService
             'completion_type_id' => 4,
         ]);
 
-        if (!$completion->wasRecentlyCreated) {
+        if (isset($student->completions)) {
             $student->load('completions');
         }
 

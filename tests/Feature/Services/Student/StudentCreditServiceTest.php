@@ -18,7 +18,8 @@ class StudentCreditServiceTest extends TestCase
     private StudentCreditService $studentEctsService;
     private StudentService $studentService;
     private CompletionService $completionService;
-    private courseService $courseService;
+    private CourseService $courseService;
+    private CourseYearService $courseYearService;
 
     public function setup(): void
     {
@@ -28,17 +29,22 @@ class StudentCreditServiceTest extends TestCase
         $this->studentService = $this->app->make(StudentService::class);
         $this->completionService = $this->app->make(CompletionService::class);
         $this->courseService = $this->app->make(CourseService::class);
+        $this->courseYearService = $this->app->make(CourseYearService::class);
     }
 
     public function testCountEctsService()
     {
         $studentEventoId = $this->faker->unique->numberBetween(1, 9999999);
         $student = $this->studentService->createOrUpdateOnEventoPersonId($studentEventoId);
-
         $uniqueNumber = $this->faker->unique()->name;
         $course = $this->courseService->firstOrCreateByNumber($uniqueNumber, 1, 1, 'blub', 3);
         $courseYear = CourseYear::first();
-        $this->completionService->createOrUpdateAsCredited($student, $courseYear->id, $course->credits);
+        $this->completionService->createOrUpdateOnEventoIdAsCredit(
+            $this->faker->unique->numberBetween(1, 9999999),
+            $student, 
+            $courseYear->course,
+            $course->credits,
+        );
         $credits = $this->studentEctsService->getCredits($student->completions()->get());
         $this->assertEquals($course->credits, $credits);
     }
@@ -47,16 +53,27 @@ class StudentCreditServiceTest extends TestCase
     {
         $studentEventoId = $this->faker->unique->numberBetween(1, 9999999);
         $student = $this->studentService->createOrUpdateOnEventoPersonId($studentEventoId);
-
-        $uniqueNumber = $this->faker->unique()->name;
-        $course = $this->courseService->firstOrCreateByNumber($uniqueNumber, 1, 1, 'blub', 3);
-        $courseYear = CourseYear::first();
-
         $credits = $this->studentEctsService->getCreditsAsString($student);
         $this->assertEquals('-', $credits);
-
-        $this->completionService->createOrUpdateAsCredited($student, $courseYear->id, $course->credits);
+        $course = $course = $this->courseService->firstOrCreateByNumber(
+            $this->faker->unique->numberBetween(1, 9999999), 
+            1, 
+            1, 
+            'blub', 
+            3
+        );
+        $this->courseYearService->createOrUpdateOnEventoId(
+            $this->faker->unique->numberBetween(1, 9999999),
+            $course, 
+            '2-21FS.somestupiduniquestring.EN/a',
+        );
+        $this->completionService->createOrUpdateOnEventoIdAsCredit(
+            $this->faker->unique->numberBetween(1, 9999999),
+            $student, 
+            $course,
+            $course->credits,
+        );
         $credits = $this->studentEctsService->getCreditsAsString($student);
-        $this->assertEquals((string)$course->credits, $credits);
+        $this->assertEquals($course->credits, $credits);
     }
 }

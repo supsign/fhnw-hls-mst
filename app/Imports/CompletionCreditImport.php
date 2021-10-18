@@ -40,7 +40,7 @@ class CompletionCreditImport extends BaseExcelImport implements ToModel, WithHea
             return;
         }
 
-        $this->completionService->createUpdateOrDeleteOnEventoIdAsCredit(
+        $this->completionService->createOrUpdateOnEventoIdAsCredit(
             $row['id_anmeldung'],
             $this->studentService->createOrUpdateOnEventoPersonId($row['id_person']),
             $course,

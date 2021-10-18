@@ -2,7 +2,6 @@
 
 namespace App\Services\Student;
 
-use App\Models\Completion;
 use App\Models\Student;
 use Illuminate\Support\Collection;
 

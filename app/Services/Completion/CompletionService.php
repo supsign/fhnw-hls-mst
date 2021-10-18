@@ -28,13 +28,14 @@ class CompletionService extends BaseModelService
     {
         switch (true) {
             case empty($grade):                             $completionTypeId = 1; break;
-            case $grade === 'erfüllt' || $grade >= 4;       $completionTypeId = 2; break;
-            case $grade === 'nicht erfüllt' || $grade < 4;  $completionTypeId = 3; break;
+            case $grade === 'erfüllt' || $grade >= 4:       $completionTypeId = 2; break;
+            case $grade === 'nicht erfüllt' || $grade < 4:  $completionTypeId = 3; break;
             default: $status = '';
         }
 
         if ($status !== 'aA.Angemeldet') {
             $this->getByEventoId($eventoId)?->delete();
+
             return null;
         }
 

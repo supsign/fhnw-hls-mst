@@ -41,7 +41,7 @@ class StudentCreditServiceTest extends TestCase
         $courseYear = CourseYear::first();
         $this->completionService->createOrUpdateOnEventoIdAsCredit(
             $this->faker->unique->numberBetween(1, 9999999),
-            $student, 
+            $student,
             $courseYear->course,
             $course->credits,
         );
@@ -56,20 +56,20 @@ class StudentCreditServiceTest extends TestCase
         $credits = $this->studentEctsService->getCreditsAsString($student);
         $this->assertEquals('-', $credits);
         $course = $course = $this->courseService->firstOrCreateByNumber(
-            $this->faker->unique->numberBetween(1, 9999999), 
-            1, 
-            1, 
-            'blub', 
+            $this->faker->unique->numberBetween(1, 9999999),
+            1,
+            1,
+            'blub',
             3
         );
         $this->courseYearService->createOrUpdateOnEventoId(
             $this->faker->unique->numberBetween(1, 9999999),
-            $course, 
+            $course,
             '2-21FS.somestupiduniquestring.EN/a',
         );
         $this->completionService->createOrUpdateOnEventoIdAsCredit(
             $this->faker->unique->numberBetween(1, 9999999),
-            $student, 
+            $student,
             $course,
             $course->credits,
         );

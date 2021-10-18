@@ -39,9 +39,9 @@ class CompletionServiceTest extends TestCase
             '2-21FS.BlubbBlah.EN/a',
         );
         $completion = $this->completionService->createOrUpdateOnEventoIdAsCredit(
-            $this->faker->unique->numberBetween(1, 9999999), 
-            $student, 
-            $course, 
+            $this->faker->unique->numberBetween(1, 9999999),
+            $student,
+            $course,
             $course->credits
         );
         $this->assertNotNull($completion);

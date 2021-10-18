@@ -38,6 +38,7 @@ class CompletionImport extends BaseExcelImport implements ToModel, WithHeadingRo
 
         if (!$courseYear) {
             echo 'course year '.$row['id_anlass'].' not found</br>';
+
             return;
         }
 

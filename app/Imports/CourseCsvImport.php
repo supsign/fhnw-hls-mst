@@ -12,7 +12,7 @@ class CourseCsvImport extends BaseCsvImport
     public function importLine()
     {
         $data = [
-            'number' => $this->line['laufnummer'],      //str_replace(' ', '', ),        //  '2-L-'.
+            'number' => $this->line['laufnummer'],
             'name' => $this->line['modulbezeichnung'],
             'course_type_id' => $this->line['id_modultyp'],
         ];

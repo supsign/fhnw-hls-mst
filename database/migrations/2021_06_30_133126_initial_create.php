@@ -1,6 +1,7 @@
 <?php
 
 use App\Imports\CompletionAttemptImport;
+use App\Imports\CompletionCreditImport;
 use App\Imports\CourseCourseGroupYearImporter;
 use App\Imports\CourseCsvImport;
 use App\Imports\CourseExcelImport;

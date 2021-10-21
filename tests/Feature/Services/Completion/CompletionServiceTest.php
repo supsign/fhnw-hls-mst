@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Services\Completion;
 
-use App\Models\CourseYear;
 use App\Services\Completion\CompletionService;
 use App\Services\Course\CourseService;
 use App\Services\CourseYear\CourseYearService;
@@ -34,12 +33,17 @@ class CompletionServiceTest extends TestCase
         $student = $this->studentService->createOrUpdateOnEventoPersonId(5);
         $uniqueNumber = $this->faker->unique()->name;
         $course = $this->courseService->firstOrCreateByNumber($uniqueNumber, 1, 1, 'blub', 3);
-        $courseYear = $this->courseYearService->createOrUpdateOnEventoId(
+        $this->courseYearService->createOrUpdateOnEventoId(
             $this->faker->unique->numberBetween(1, 9999999),
             $course,
             '2-21FS.BlubbBlah.EN/a',
         );
-        $completion = $this->completionService->createOrUpdateAsCredited($student, $courseYear->id, $course->credits);
+        $completion = $this->completionService->createOrUpdateOnEventoIdAsCredit(
+            $this->faker->unique->numberBetween(1, 9999999),
+            $student,
+            $course,
+            $course->credits
+        );
         $this->assertNotNull($completion);
         $this->assertNotNull($completion->id);
         $this->assertEquals(4, $completion->completion_type_id);

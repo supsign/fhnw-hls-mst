@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Services\Student;
 
-use App\Models\Semester;
+use App\Models\CourseYear;
 use App\Services\Completion\CompletionService;
 use App\Services\Course\CourseService;
 use App\Services\CourseYear\CourseYearService;
@@ -19,7 +19,6 @@ class StudentCreditServiceTest extends TestCase
     private StudentService $studentService;
     private CompletionService $completionService;
     private courseService $courseService;
-    private CourseYearService $courseYearService;
 
     public function setup(): void
     {
@@ -28,7 +27,6 @@ class StudentCreditServiceTest extends TestCase
         $this->studentEctsService = $this->app->make(StudentCreditService::class);
         $this->studentService = $this->app->make(StudentService::class);
         $this->completionService = $this->app->make(CompletionService::class);
-        $this->courseYearService = $this->app->make(CourseYearService::class);
         $this->courseService = $this->app->make(CourseService::class);
     }
 
@@ -39,7 +37,7 @@ class StudentCreditServiceTest extends TestCase
 
         $uniqueNumber = $this->faker->unique()->name;
         $course = $this->courseService->firstOrCreateByNumber($uniqueNumber, 1, 1, 'blub', 3);
-        $courseYear = $this->courseYearService->createCourseYear($course, Semester::first());
+        $courseYear = CourseYear::first();
         $this->completionService->createOrUpdateAsCredited($student, $courseYear->id, $course->credits);
         $credits = $this->studentEctsService->getCredits($student->completions()->get());
         $this->assertEquals($course->credits, $credits);
@@ -52,7 +50,7 @@ class StudentCreditServiceTest extends TestCase
 
         $uniqueNumber = $this->faker->unique()->name;
         $course = $this->courseService->firstOrCreateByNumber($uniqueNumber, 1, 1, 'blub', 3);
-        $courseYear = $this->courseYearService->createCourseYear($course, Semester::first());
+        $courseYear = CourseYear::first();
 
         $credits = $this->studentEctsService->getCreditsAsString($student);
         $this->assertEquals('-', $credits);

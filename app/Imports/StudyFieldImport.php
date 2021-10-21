@@ -17,7 +17,7 @@ $excel->import(new StudyFieldImport, 'Tab1_Studiengang.xlsx');
 
 class StudyFieldImport extends BaseExcelImport implements ToModel, WithHeadingRow
 {
-    protected $requiredFields = ['id_anlass', 'anlassnummer', 'anlassbezeichnung'];
+    protected array $requiredFields = ['id_anlass', 'anlassnummer', 'anlassbezeichnung'];
 
     public function __construct()
     {

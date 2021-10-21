@@ -9,6 +9,8 @@ use App\Imports\CourseGroupImport;
 use App\Imports\CourseGroupYearCsvImport;
 use App\Imports\CourseYearImport;
 use App\Imports\CrossQualificationImport;
+use App\Imports\LessonCleanup;
+use App\Imports\LessonImport;
 use App\Imports\SpecializationImport;
 use App\Imports\StudentImport;
 use App\Imports\StudyFieldImport;
@@ -401,6 +403,14 @@ class InitialCreate extends Migration
 
             if (Storage::exists('Tab7_Anrechnungen.xlsx')) {
                 $excel->import(new CompletionCreditImport, 'Tab7_Anrechnungen.xlsx');
+            }
+
+            if (Storage::exists('Tab8_Lektionen.xlsx')) {
+                $excel->import(new LessonCleanup, 'Tab8_Lektionen.xlsx');
+            }
+
+            if (Storage::exists('Tab8_Lektionen.xlsx')) {
+                $excel->import(new LessonImport, 'Tab8_Lektionen.xlsx');
             }
         } else {
             if (Storage::exists('Testingdata\Tab3_Modul.xlsx')) {

@@ -71,6 +71,7 @@ export default class VueSemesterPicker extends BaseComponent {
 
     @Prop({type: Boolean, default: false})
     public isSaving: boolean;
+
     public intSelectedSemester: ISemester = null;
 
     @Emit()
@@ -87,10 +88,12 @@ export default class VueSemesterPicker extends BaseComponent {
         this.intSelectedSemester = semester;
     }
 
-    @Emit()
     public select(semester: ISemester) {
+        if (this.isSaving) {
+            return;
+        }
         this.intSelectedSemester = semester;
-        return semester;
+        this.$emit('select', semester);
     }
 
     public semesterIsSelected(semester: ISemester) {

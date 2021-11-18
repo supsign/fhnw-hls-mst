@@ -19,8 +19,9 @@ class CoursePlanningController extends Controller
 {
     public function __construct(
         protected PermissionAndRoleService $permissionAndRoleService,
-        protected CoursePlanningService $coursePlanningService,
-    ) {
+        protected CoursePlanningService    $coursePlanningService,
+    )
+    {
     }
 
     public function delete(CoursePlanning $coursePlanning)
@@ -62,5 +63,12 @@ class CoursePlanningController extends Controller
         }
 
         return $this->coursePlanningService->reschedule($coursePlanning, $semester);
+    }
+
+    public function getById(CoursePlanning $coursePlanning)
+    {
+        $this->permissionAndRoleService->canPlanScheduleOrAbort();
+
+        return $coursePlanning;
     }
 }

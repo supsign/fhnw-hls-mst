@@ -443,8 +443,7 @@ class InitialCreate extends Migration
     /**
      * Reverse the migrations.
      */
-    public
-    function down()
+    public function down()
     {
         Schema::dropIfExists('skill_student');
         Schema::dropIfExists('course_planning');

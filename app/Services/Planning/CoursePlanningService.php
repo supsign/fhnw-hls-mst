@@ -31,6 +31,7 @@ class CoursePlanningService extends BaseModelService
     {
         $coursePlanning->semester_id = $semester->id;
         $coursePlanning->save();
+
         return $coursePlanning;
     }
 }

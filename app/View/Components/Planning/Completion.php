@@ -27,8 +27,6 @@ class Completion extends Component
 
     public function evaluateSymbol(Course $course, Student $student)
     {
-
-
         if ($this->courseCompletionService->courseIsSuccessfullyCompleted($course, $student)) {
             $this->icon = 1;
 
@@ -43,7 +41,6 @@ class Completion extends Component
 
         $this->icon = 3;
     }
-
 
     /**
      * Get the view / contents that represent the component.

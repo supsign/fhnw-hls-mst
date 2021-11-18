@@ -10,7 +10,6 @@ class CourseCompletionService
 {
     public function __construct(protected CompletionService $completionService)
     {
-
     }
 
     public function courseIsSuccessfullyCompleted(Course $course, Student $student): bool
@@ -23,6 +22,7 @@ class CourseCompletionService
     public function getCompletionsByStudent(Course $course, Student $student): Collection
     {
         $completions = $student->completions;
+
         return $completions->filter(function ($completion) use ($course) {
             return $course->courseYears->contains($completion->courseYear);
         });
@@ -31,8 +31,7 @@ class CourseCompletionService
     public function courseHasFailedCompletions(Course $course, Student $student): bool
     {
         $completions = $this->getCompletionsByStudent($course, $student);
+
         return $this->completionService->hasFailedCompletions($completions);
     }
-
-
 }

@@ -2,7 +2,7 @@
 
 namespace App\Imports;
 
-class CourseSpecializationImport extends BaseCsvImport
+class CourseSpecializationYearImport extends BaseCsvImport
 {
     protected $fileNames = ['modul_zu_spezialisierung.csv'];
     protected $fieldAddresses = ['id_spezialisierung', 'laufnummer', 'pflicht'];

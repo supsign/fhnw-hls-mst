@@ -68,9 +68,12 @@
                             </div>
                             <div class="flex-none my-auto">
                                 @inject('semesterService', 'App\Services\Semester\SemesterService')
-                                <vue-plan-course :planning-id="{{$planning->id}}"
-                                                 :course-id="{{$courseCourseGroupYear->course->id}}"
-                                                 :semesters="{{$semesterService->getCurrentAndFutureSemesters()->sortBy('start_date')->slice(0,10)->values()}}"></vue-plan-course>
+                                @inject('courseCompletionService', 'App\Services\Completion\CourseCompletionService')
+                                @if(!$courseCompletionService->courseIsSuccessfullyCompleted($courseCourseGroupYear->course, $user->student))
+                                    <vue-plan-course :planning-id="{{$planning->id}}"
+                                                     :course-id="{{$courseCourseGroupYear->course->id}}"
+                                                     :semesters="{{$semesterService->getCurrentAndFutureSemesters()->sortBy('start_date')->slice(0,10)->values()}}"></vue-plan-course>
+                                @endif
                             </div>
                         </div>
                     @endforeach

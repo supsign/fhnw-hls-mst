@@ -412,7 +412,7 @@ class InitialCreate extends Migration
             if (Storage::exists('Tab8_Lektionen.xlsx')) {
                 $excel->import(new LessonImport, 'Tab8_Lektionen.xlsx');
             }
-        } else if (App::environment('local')) {
+        } elseif (App::environment('local')) {
             if (Storage::exists('Testingdata\Tab3_Modul.xlsx')) {
                 $excel->import(new CourseExcelImport, 'Testingdata\Tab3_Modul.xlsx');
             }
@@ -444,8 +444,6 @@ class InitialCreate extends Migration
                 $excel->import(new CourseYearImport, 'Testingdata\Tab4_Modulanlass.xlsx');
             }
         }
-
-
     }
 
     /**

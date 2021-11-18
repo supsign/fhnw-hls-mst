@@ -111,13 +111,13 @@ class InitialCreate extends Migration
 
         $excel = App::make(Excel::class);
 
-        if (App::environment('production')) {
-            if (Storage::exists('Tab1_Studiengang.xlsx')) {
-                $excel->import(new StudyFieldImport, 'Tab1_Studiengang.xlsx');
-            }
-        } else {
+        if (App::environment('testing')) {
             if (Storage::exists('Testingdata\Tab1_Studiengang.xlsx')) {
                 $excel->import(new StudyFieldImport, 'Testingdata\Tab1_Studiengang.xlsx');
+            }
+        } else {
+            if (Storage::exists('Tab1_Studiengang.xlsx')) {
+                $excel->import(new StudyFieldImport, 'Tab1_Studiengang.xlsx');
             }
         }
 
@@ -164,13 +164,13 @@ class InitialCreate extends Migration
             $table->timestampsTz();
         });
 
-        if (App::environment('production')) {
-            if (Storage::exists('Tab2_Studienjahrgang.xlsx')) {
-                $excel->import(new StudyFieldYearImport, 'Tab2_Studienjahrgang.xlsx');
-            }
-        } else {
+        if (App::environment('testing')) {
             if (Storage::exists('Testingdata\Tab2_Studienjahrgang.xlsx')) {
                 $excel->import(new StudyFieldYearImport, 'Testingdata\Tab2_Studienjahrgang.xlsx');
+            }
+        } else {
+            if (Storage::exists('Tab2_Studienjahrgang.xlsx')) {
+                $excel->import(new StudyFieldYearImport, 'Tab2_Studienjahrgang.xlsx');
             }
         }
 
@@ -384,7 +384,30 @@ class InitialCreate extends Migration
 
         (new CourseCourseGroupYearImporter)->import();
 
-        if (App::environment('production')) {
+        if (App::environment('testing')) {
+            if (Storage::exists('Testingdata\Tab3_Modul.xlsx')) {
+                $excel->import(new CourseExcelImport, 'Testingdata\Tab3_Modul.xlsx');
+            }
+
+            if (Storage::exists('Testingdata\Tab4_Modulanlass.xlsx')) {
+                $excel->import(new CourseYearImport, 'Testingdata\Tab4_Modulanlass.xlsx');
+            }
+            if (Storage::exists('Testingdata\Tab6_AnmMA.xlsx')) {
+                $excel->import(new CompletionAttemptImport, 'Testingdata\Tab6_AnmMA.xlsx');
+            }
+
+            if (Storage::exists('Testingdata\Tab7_Anrechnungen.xlsx')) {
+                $excel->import(new CompletionCreditImport, 'Testingdata\Tab7_Anrechnungen.xlsx');
+            }
+
+            if (Storage::exists('Testingdata\Tab8_Lektionen.xlsx')) {
+                $excel->import(new LessonCleanup, 'Testingdata\Tab8_Lektionen.xlsx');
+            }
+
+            if (Storage::exists('Testingdata\Tab8_Lektionen.xlsx')) {
+                $excel->import(new LessonImport, 'Testingdata\Tab8_Lektionen.xlsx');
+            }
+        } else {
             if (Storage::exists('Tab3_Modul.xlsx')) {
                 $excel->import(new CourseExcelImport, 'Tab3_Modul.xlsx');
             }
@@ -412,46 +435,16 @@ class InitialCreate extends Migration
             if (Storage::exists('Tab8_Lektionen.xlsx')) {
                 $excel->import(new LessonImport, 'Tab8_Lektionen.xlsx');
             }
-        } else if (App::environment('local')) {
-            if (Storage::exists('Testingdata\Tab3_Modul.xlsx')) {
-                $excel->import(new CourseExcelImport, 'Testingdata\Tab3_Modul.xlsx');
-            }
 
-            if (Storage::exists('Testingdata\Tab4_Modulanlass.xlsx')) {
-                $excel->import(new CourseYearImport, 'Testingdata\Tab4_Modulanlass.xlsx');
-            }
-            if (Storage::exists('Testingdata\Tab6_AnmMA.xlsx')) {
-                $excel->import(new CompletionAttemptImport, 'Testingdata\Tab6_AnmMA.xlsx');
-            }
 
-            if (Storage::exists('Testingdata\Tab7_Anrechnungen.xlsx')) {
-                $excel->import(new CompletionCreditImport, 'Testingdata\Tab7_Anrechnungen.xlsx');
-            }
-
-            if (Storage::exists('Testingdata\Tab8_Lektionen.xlsx')) {
-                $excel->import(new LessonCleanup, 'Testingdata\Tab8_Lektionen.xlsx');
-            }
-
-            if (Storage::exists('Testingdata\Tab8_Lektionen.xlsx')) {
-                $excel->import(new LessonImport, 'Testingdata\Tab8_Lektionen.xlsx');
-            }
-        } else {
-            if (Storage::exists('Testingdata\Tab3_Modul.xlsx')) {
-                $excel->import(new CourseExcelImport, 'Testingdata\Tab3_Modul.xlsx');
-            }
-
-            if (Storage::exists('Testingdata\Tab4_Modulanlass.xlsx')) {
-                $excel->import(new CourseYearImport, 'Testingdata\Tab4_Modulanlass.xlsx');
-            }
         }
-
-
     }
 
     /**
      * Reverse the migrations.
      */
-    public function down()
+    public
+    function down()
     {
         Schema::dropIfExists('skill_student');
         Schema::dropIfExists('course_planning');

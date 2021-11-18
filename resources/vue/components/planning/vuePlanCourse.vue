@@ -3,8 +3,9 @@
         <div v-if="!coursePlanning" class="" @click="()=>{pickerIsOpen = true}">
             <img :src="'/img/calendarIcon.svg'" alt="module_icon" class="cursor-pointer w-8 h-8 my-auto">
         </div>
-        <div v-else class="text-sm">
-            geplant
+        <div v-else-if="getSemester(coursePlanning.semester_id)" class="text-sm" @click="()=>{pickerIsOpen = true}">
+            {{ getSemester(coursePlanning.semester_id).year - 2000 }}
+            {{ getSemester(coursePlanning.semester_id).is_hs ? 'HS' : 'FS' }}
         </div>
         <vue-semester-picker v-if="pickerIsOpen" :semesters="semesters" @cancel="cancel"
                              @select="select"></vue-semester-picker>
@@ -15,6 +16,7 @@
 import {Component, Prop} from "vue-property-decorator";
 import BaseComponent from "../base/baseComponent";
 import {ICoursePlanning} from "../../store/coursePlanning/coursePlanning.interface";
+import {ISemester} from "../../interfaces/semester.interface";
 import VueSemesterPicker from "./vueSemesterPicker.vue";
 
 @Component({
@@ -32,7 +34,7 @@ export default class VuePlanCourse extends BaseComponent {
     @Prop({
         type: Array
     })
-    public semesters: any[]
+    public semesters: ISemester[]
 
     public pickerIsOpen = false;
 
@@ -50,12 +52,22 @@ export default class VuePlanCourse extends BaseComponent {
         this.pickerIsOpen = false;
     }
 
-    public select(semester: any) {
+    public select(semester: ISemester) {
+        if (this.coursePlanning) {
+            this.models.coursePlanning.patchById(this.coursePlanning.id, {semester_id: semester.id});
+            this.models.coursePlanning.save(this.coursePlanning.id);
+            return;
+        }
+
         this.models.coursePlanning.post({
             course_id: this.courseId,
             planning_id: this.planningId,
             semester_id: semester.id
         })
+    }
+
+    public getSemester(semesterId: number): ISemester {
+        return this.semesters.find((semester) => semester.id === semesterId);
     }
 
 }

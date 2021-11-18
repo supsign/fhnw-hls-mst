@@ -44,7 +44,7 @@ class CoursePlanningController extends Controller
         /* @var $semester Semester */
         $semester = $semesterService->getById($request->semester_id);
 
-        if (!$planning || !$course || $semester) {
+        if (!$planning || !$course || !$semester) {
             abort(404);
         }
 
@@ -54,7 +54,7 @@ class CoursePlanningController extends Controller
     public function patch(PatchCoursePlanningRequest $request, CoursePlanning $coursePlanning, SemesterService $semesterService)
     {
         $this->permissionAndRoleService->canPlanScheduleOrAbort();
-        
+
         /* @var $semester Semester */
         $semester = $semesterService->getById($request->semester_id);
 

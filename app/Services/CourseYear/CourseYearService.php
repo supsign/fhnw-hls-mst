@@ -21,28 +21,23 @@ class CourseYearService extends BaseModelService
         parent::__construct($model);
     }
 
-    public function createOrUpdateOnEventoId(int $eventoId, Course $course, string $number, string $name = null): ?CourseYear
+    public function createOrUpdateOnEventoId(int $eventoId, Course $course, string $number, string $name): ?CourseYear
     {
         $semester = $this->semesterService->getSemesterFromEventoNumber($number);
-        $isAudit = false;
 
         if (!$semester) {
             return null;
         }
 
-        if (!$name) {
-            $latestCourseYear = $course->courseYears->load('semester')->sortByDesc('semester.start_date')->first();
-            $name = $latestCourseYear ? $latestCourseYear->name : $course->name;
-        } else {
-            $isAudit = str_contains($name, '(Prüfung)');
-        }
+        // ToDO - attribute vom lastCourseYear kopieren
+        // $latestCourseYear = $course->courseYears->load('semester')->sortByDesc('semester.start_date')->first();
 
         return $this->createOrUpdateOnEventoIdTrait($eventoId, [
             'course_id' => $course->id,
             'semester_id' => $semester->id,
             'name' => $name,
             'number' => $number,
-            'is_audit' => $isAudit,
+            'is_audit' => str_contains($name, '(Prüfung)'),
         ]);
     }
 }

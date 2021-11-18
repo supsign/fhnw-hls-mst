@@ -19,6 +19,6 @@ class CrossQualification extends BaseModel
 
     public function studyField()
     {
-        return $this->belongsToMany(StudyField::class);
+        return $this->belongsTo(StudyField::class);
     }
 }

@@ -10,7 +10,7 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class StudyFieldYearImport extends BaseExcelImport implements ToModel, WithHeadingRow
 {
-    protected $requiredFields = ['id_anlass', 'anlassnummer', 'anlassbezeichnung', 'id_anlass_stdg', 'anlassnummer_stdg'];
+    protected array $requiredFields = ['id_anlass', 'anlassnummer', 'anlassbezeichnung', 'id_anlass_stdg', 'anlassnummer_stdg'];
     protected ?StudyFieldService $studyFieldService;
     protected ?StudyFieldYearService $studyFieldYearService;
 

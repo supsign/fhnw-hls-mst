@@ -4,47 +4,41 @@ namespace App\Services\CourseYear;
 
 use App\Models\Course;
 use App\Models\CourseYear;
-use App\Models\Semester;
 use App\Services\Base\BaseModelService;
+use App\Services\Evento\Traits\CreateOrUpdateOnEventoId;
+use App\Services\Evento\Traits\GetByEventoId;
+use App\Services\Semester\SemesterService;
 
 class CourseYearService extends BaseModelService
 {
-    public function __construct(protected CourseYear $model)
+    use GetByEventoId;
+    use CreateOrUpdateOnEventoId {
+        createOrUpdateOnEventoId AS protected createOrUpdateOnEventoIdTrait;
+    }
+
+    public function __construct(protected CourseYear $model, protected SemesterService $semesterService)
     {
         parent::__construct($model);
     }
 
-    public function createCourseYear(Course $course, Semester $semester, int $eventoAnlassId = null): CourseYear
+    public function createOrUpdateOnEventoId(int $eventoId, Course $course, string $number, string $name = null): ?CourseYear
     {
-        /* @var $latestCourseYear CourseYear */
-        $latestCourseYear = $course->courseYears->load('semester')->sortByDesc('semester.start_date')->first();
+        $semester = $this->semesterService->getSemesterFromEventoNumber($number);
 
-        $courseYear = $this->model::create([
-            'semester_id' => $semester->id,
-            'course_id' => $course->id,
-            'evento_anlass_id' => $eventoAnlassId,
-        ]);
-
-        if ($latestCourseYear) {
-            return $this->copyCourseDataFromCourseYear($courseYear, $latestCourseYear);
+        if (!$semester) {
+            return null;
         }
 
-        return $this->copyCourseDataFromCourse($courseYear, $course);
-    }
+        if (!$name) {
+            $latestCourseYear = $course->courseYears->load('semester')->sortByDesc('semester.start_date')->first();
+            $name = $latestCourseYear ? $latestCourseYear->name : $course->name;
+        }
 
-    protected function copyCourseDataFromCourseYear(CourseYear $targetCourseYear, CourseYear $sourceCourseYear): CourseYear
-    {
-        $targetCourseYear->name = $sourceCourseYear->name;
-        $targetCourseYear->save();
-
-        return $targetCourseYear;
-    }
-
-    protected function copyCourseDataFromCourse(CourseYear $targetCourseYear, Course $sourceCourse): CourseYear
-    {
-        $targetCourseYear->name = $sourceCourse->name;
-        $targetCourseYear->save();
-
-        return $targetCourseYear;
+        return $this->createOrUpdateOnEventoIdTrait($eventoId, [
+            'course_id' => $course->id,
+            'semester_id' => $semester->id,
+            'name' => $name,
+            'number' => $number,
+        ]);
     }
 }

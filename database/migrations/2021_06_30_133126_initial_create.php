@@ -1,11 +1,18 @@
 <?php
 
+use App\Imports\CompletionAttemptImport;
+use App\Imports\CompletionCreditImport;
 use App\Imports\CourseCourseGroupYearImporter;
+use App\Imports\CourseCsvImport;
+use App\Imports\CourseExcelImport;
 use App\Imports\CourseGroupImport;
-use App\Imports\CourseGroupYearImport;
-use App\Imports\CourseImport;
+use App\Imports\CourseGroupYearCsvImport;
+use App\Imports\CourseYearImport;
 use App\Imports\CrossQualificationImport;
+use App\Imports\LessonCleanup;
+use App\Imports\LessonImport;
 use App\Imports\SpecializationImport;
+use App\Imports\StudentImport;
 use App\Imports\StudyFieldImport;
 use App\Imports\StudyFieldYearImport;
 use App\Services\Semester\SemesterService;
@@ -190,13 +197,14 @@ class InitialCreate extends Migration
             $table->foreignId('course_type_id')->constrained();
             $table->foreignId('language_id')->default(1)->constrained();
             $table->foreignId('study_field_id')->nullable()->constrained();
+            $table->unsignedBigInteger('evento_id')->nullable()->unique();
             $table->string('number')->unique();
             $table->string('name')->nullable();
             $table->integer('credits')->default(0);
             $table->timestampsTz();
         });
 
-        (new CourseImport())->import();
+        (new CourseCsvImport)->import();
 
         Schema::create('course_groups', function (Blueprint $table) {
             $table->id();
@@ -217,7 +225,7 @@ class InitialCreate extends Migration
             $table->timestampsTz();
         });
 
-        (new CourseGroupYearImport)->import();
+        (new CourseGroupYearCsvImport)->import();
 
         Schema::create('course_skill', function (Blueprint $table) {
             $table->id();
@@ -236,7 +244,8 @@ class InitialCreate extends Migration
             $table->id();
             $table->foreignId('semester_id')->constrained();
             $table->foreignId('course_id')->constrained();
-            $table->unsignedBigInteger('evento_anlass_id')->nullable();
+            $table->unsignedBigInteger('evento_id')->nullable()->unique();
+            $table->string('number')->unique();
             $table->string('name')->nullable();
             $table->timestampsTz();
         });
@@ -333,6 +342,7 @@ class InitialCreate extends Migration
             $table->id();
             $table->foreignId('course_year_id')->constrained();
             $table->foreignId('student_id')->constrained();
+            $table->unsignedBigInteger('evento_id')->nullable()->unique();
             $table->integer('credits')->default(0);
             $table->foreignId('completion_type_id')->default(1)->constrained();
             $table->timestampsTz();
@@ -373,6 +383,44 @@ class InitialCreate extends Migration
         });
 
         (new CourseCourseGroupYearImporter)->import();
+
+        if (App::environment('production')) {
+            if (Storage::exists('Tab3_Modul.xlsx')) {
+                $excel->import(new CourseExcelImport, 'Tab3_Modul.xlsx');
+            }
+
+            if (Storage::exists('Tab4_Modulanlass.xlsx')) {
+                $excel->import(new CourseYearImport, 'Tab4_Modulanlass.xlsx');
+            }
+
+            if (Storage::exists('Tab5_AnmStdjg.xlsx')) {
+                $excel->import(new StudentImport, 'Tab5_AnmStdjg.xlsx');
+            }
+
+            if (Storage::exists('Tab6_AnmMA.xlsx')) {
+                $excel->import(new CompletionAttemptImport, 'Tab6_AnmMA.xlsx');
+            }
+
+            if (Storage::exists('Tab7_Anrechnungen.xlsx')) {
+                $excel->import(new CompletionCreditImport, 'Tab7_Anrechnungen.xlsx');
+            }
+
+            if (Storage::exists('Tab8_Lektionen.xlsx')) {
+                $excel->import(new LessonCleanup, 'Tab8_Lektionen.xlsx');
+            }
+
+            if (Storage::exists('Tab8_Lektionen.xlsx')) {
+                $excel->import(new LessonImport, 'Tab8_Lektionen.xlsx');
+            }
+        } else {
+            if (Storage::exists('Testingdata\Tab3_Modul.xlsx')) {
+                $excel->import(new CourseExcelImport, 'Testingdata\Tab3_Modul.xlsx');
+            }
+
+            if (Storage::exists('Testingdata\Tab4_Modulanlass.xlsx')) {
+                $excel->import(new CourseYearImport, 'Tab4_Modulanlass.xlsx');
+            }
+        }
     }
 
     /**

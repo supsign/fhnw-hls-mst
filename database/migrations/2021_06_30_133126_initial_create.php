@@ -435,8 +435,6 @@ class InitialCreate extends Migration
             if (Storage::exists('Tab8_Lektionen.xlsx')) {
                 $excel->import(new LessonImport, 'Tab8_Lektionen.xlsx');
             }
-
-
         }
     }
 

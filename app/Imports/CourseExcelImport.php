@@ -4,6 +4,7 @@ namespace App\Imports;
 
 use App;
 use App\Services\Course\CourseService;
+use Illuminate\Database\Eloquent\Model;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
@@ -18,8 +19,8 @@ class CourseExcelImport extends BaseExcelImport implements ToModel, WithHeadingR
     }
 
     /**
-     * @param  array  $row
-     * @return \Illuminate\Database\Eloquent\Model|null
+     * @param array $row
+     * @return Model|null
      */
     public function model(array $row): void
     {

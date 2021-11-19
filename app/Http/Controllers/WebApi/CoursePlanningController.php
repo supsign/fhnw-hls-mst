@@ -19,8 +19,9 @@ class CoursePlanningController extends Controller
 {
     public function __construct(
         protected PermissionAndRoleService $permissionAndRoleService,
-        protected CoursePlanningService $coursePlanningService,
-    ) {
+        protected CoursePlanningService    $coursePlanningService,
+    )
+    {
     }
 
     public function delete(CoursePlanning $coursePlanning)

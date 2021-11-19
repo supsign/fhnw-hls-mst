@@ -16,6 +16,7 @@ import {coursePlanningStore} from "./store/coursePlanning/coursePlanning.store";
 import VueStoreFill from "./components/store/vueStoreFill.vue"
 import VueCourseGroupState from "./components/planning/vueCourseGroupState.vue";
 import VuePlanWrapper from "./components/planning/vuePlanWrapper.vue";
+import VueAssessmentState from "./components/Assessment/VueAssessmentState.vue";
 
 library.add(faUserSecret);
 library.add(faCheck);
@@ -40,7 +41,8 @@ const app = new Vue({
         VuePlanCourse,
         VueStoreFill,
         VueCourseGroupState,
-        VuePlanWrapper
+        VuePlanWrapper,
+        VueAssessmentState
     },
     store
 });

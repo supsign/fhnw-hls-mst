@@ -42,9 +42,11 @@ class CourseSpecializationYearImport extends BaseCsvImport
             return;
         }
 
-        $this->courseSpecializationYearSerivce->updateOrCreate([
-            'course_id' => $course->id,
-            'specialization_year_id' => $specialization->id,
-        ]);
+        foreach ($specialization->specializationYears AS $specializationYears) {
+            $this->courseSpecializationYearSerivce->updateOrCreate([
+                'course_id' => $course->id,
+                'specialization_year_id' => $specializationYears->id,
+            ]);
+        }
     }
 }

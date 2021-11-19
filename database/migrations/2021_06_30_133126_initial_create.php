@@ -238,7 +238,8 @@ class InitialCreate extends Migration
             $table->id();
             $table->foreignId('skill_id')->constrained();
             $table->foreignId('course_id')->constrained();
-            $table->foreignId('semester_id')->constrained();
+            $table->foreignId('from_semester_id')->constrained('semesters');
+            $table->foreignId('to_semester_id')->nullable()->constrained('semesters');
             $table->integer('goal_number')->nullable();
             $table->boolean('is_acquisition')->default(0);
             $table->timestampsTz();

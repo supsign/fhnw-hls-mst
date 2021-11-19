@@ -11,4 +11,9 @@ class Specialization extends BaseModel
     {
         return $this->belongsTo(StudyField::class);
     }
+
+    public function specializationYears()
+    {
+        return $this->hasMany(SpecializationYear::class);
+    }
 }

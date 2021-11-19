@@ -28,6 +28,7 @@ class SpecializationImport extends BaseCsvImport
         }
 
         $specialization = $this->specializationService->firstOrCreate([
+            'janis_id' => $this->line['id_spezialisierung'],
             'name' => $this->line['bezeichnung'],
             'study_field_id' => $this->line['id_studienrichtung'],
         ]);

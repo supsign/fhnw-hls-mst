@@ -124,6 +124,7 @@ class InitialCreate extends Migration
         Schema::create('specializations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('study_field_id')->constrained();
+            $table->integer('janis_id')->nullable();
             $table->string('name')->nullable();
             $table->timestampsTz();
         });

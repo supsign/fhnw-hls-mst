@@ -19,7 +19,7 @@ class CourseExcelImport extends BaseExcelImport implements ToModel, WithHeadingR
     }
 
     /**
-     * @param array $row
+     * @param  array  $row
      * @return Model|null
      */
     public function model(array $row): void

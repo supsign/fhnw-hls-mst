@@ -61,6 +61,7 @@ class StudyFieldYearService extends BaseModelService
         $studyFieldYear->assessment_id = $assessment->id;
         $studyFieldYear->save();
         $studyFieldYear->refresh();
+
         return $studyFieldYear;
     }
 }

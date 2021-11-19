@@ -12,7 +12,6 @@ use Illuminate\View\Component;
 
 class AssessmentState extends Component
 {
-
     public ?Assessment $assessment;
     public Collection $assessmentCourses;
 

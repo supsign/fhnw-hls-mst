@@ -25,7 +25,7 @@ class CompletionCreditImport extends BaseExcelImport implements ToModel, WithHea
     }
 
     /**
-     * @param array $row
+     * @param  array  $row
      * @return Model|null
      */
     public function model(array $row)

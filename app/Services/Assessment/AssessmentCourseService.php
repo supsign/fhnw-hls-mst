@@ -18,7 +18,7 @@ class AssessmentCourseService extends BaseModelService
     {
         $courseAssessment = $this->model::firstOrCreate([
             'course_id' => $course->id,
-            'assessment_id' => $assessment->id
+            'assessment_id' => $assessment->id,
         ]);
 
         $course->refresh();

@@ -23,6 +23,5 @@ class ChemieAssessment extends Seeder
 
         $course = $courseService->getByEventoId(9301710);
         $assessmentCourseService->attache($assessment, $course);
-
     }
 }

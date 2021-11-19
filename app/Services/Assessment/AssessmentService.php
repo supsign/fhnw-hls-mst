@@ -22,11 +22,10 @@ class AssessmentService extends BaseModelService
         /* @var $assessment Assessment */
         $assessment = $this->model::create([
             'name' => $name,
-            'amount_to_pass' => $amountToPass
+            'amount_to_pass' => $amountToPass,
         ]);
 
         return $assessment;
-
     }
 
     public function getApplicableAssessment(Planning $planning): ?Assessment
@@ -45,5 +44,4 @@ class AssessmentService extends BaseModelService
 
         return $planning->studyFieldYear?->assessment;
     }
-
 }

@@ -15,14 +15,12 @@ class StudyFieldYearServiceTest extends TestCase
     protected StudyFieldYearService $studyFieldYearService;
     protected AssessmentService $assessmentService;
 
-
     public function setup(): void
     {
         parent::setUp();
         $this->setUpFaker();
         $this->studyFieldYearService = $this->app->make(StudyFieldYearService::class);
         $this->assessmentService = $this->app->make(AssessmentService::class);
-
     }
 
     public function testAttachAssessment(): void
@@ -36,8 +34,5 @@ class StudyFieldYearServiceTest extends TestCase
         $studyFieldYearById = StudyFieldYear::find($studyFieldYearAttached->id);
         $this->assertNotNull($studyFieldYearById);
         $this->assertEquals($assessment->id, $studyFieldYearById->assessment_id);
-
     }
-
-
 }

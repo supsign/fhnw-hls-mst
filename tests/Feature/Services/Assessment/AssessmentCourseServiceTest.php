@@ -16,14 +16,12 @@ class AssessmentCourseServiceTest extends TestCase
     private AssessmentService $assessmentService;
     private AssessmentCourseService $assessmentCourseService;
 
-
     public function setup(): void
     {
         parent::setUp();
         $this->setUpFaker();
         $this->assessmentService = $this->app->make(AssessmentService::class);
         $this->assessmentCourseService = $this->app->make(AssessmentCourseService::class);
-
     }
 
     public function testAttache(): void
@@ -36,8 +34,5 @@ class AssessmentCourseServiceTest extends TestCase
 
         $this->assessmentCourseService->attache($assessemnt, $course);
         $this->assertEquals(1, $assessemnt->courses->count());
-
     }
-
-
 }

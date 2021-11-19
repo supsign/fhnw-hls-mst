@@ -42,7 +42,7 @@ class CourseYearImport extends BaseExcelImport implements ToModel, WithHeadingRo
             $row['id_anlass'],
             $course,
             $row['anlassnummer'],
-            $row['anlassbezeichnung']
+            $row['anlassbezeichnung'],
         );
     }
 }

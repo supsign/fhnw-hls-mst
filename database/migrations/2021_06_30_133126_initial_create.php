@@ -259,6 +259,7 @@ class InitialCreate extends Migration
             $table->unsignedBigInteger('evento_id')->nullable()->unique();
             $table->string('number')->unique();
             $table->string('name')->nullable();
+            $table->boolean('is_audit')->default(0);
             $table->timestampsTz();
         });
 

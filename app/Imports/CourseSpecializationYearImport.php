@@ -41,7 +41,7 @@ class CourseSpecializationYearImport extends BaseCsvImport
         if (!$course) {
             return;
         }
-        
+
         $this->courseSpecializationYearSerivce->updateOrCreate([
             'course_id' => $course->id,
             'specialization_year_id' => $specialization->id,

@@ -7,6 +7,7 @@ use App\Imports\CourseCsvImport;
 use App\Imports\CourseExcelImport;
 use App\Imports\CourseGroupImport;
 use App\Imports\CourseGroupYearCsvImport;
+use App\Imports\CourseSpecializationYearImport;
 use App\Imports\CourseYearImport;
 use App\Imports\CrossQualificationImport;
 use App\Imports\LessonCleanup;
@@ -124,12 +125,10 @@ class InitialCreate extends Migration
         Schema::create('specializations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('study_field_id')->constrained();
-            $table->integer('janis_id')->nullable();
+            $table->integer('janis_id')->nullable()->unique();
             $table->string('name')->nullable();
             $table->timestampsTz();
         });
-
-        (new SpecializationImport())->import();
 
         Schema::create('cross_qualifications', function (Blueprint $table) {
             $table->id();
@@ -137,8 +136,6 @@ class InitialCreate extends Migration
             $table->string('name')->nullable();
             $table->timestampsTz();
         });
-
-        (new CrossQualificationImport())->import();
 
         Schema::create('semesters', function (Blueprint $table) {
             $table->id();
@@ -196,6 +193,9 @@ class InitialCreate extends Migration
 
             $table->unique(['cross_qualification_id', 'study_field_year_id']);
         });
+
+        (new SpecializationImport())->import();
+        (new CrossQualificationImport())->import();
 
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
@@ -388,6 +388,7 @@ class InitialCreate extends Migration
         });
 
         (new CourseCourseGroupYearImporter)->import();
+        (new CourseSpecializationYearImport)->import();
 
         if (App::environment('production')) {
             if (Storage::exists('Tab3_Modul.xlsx')) {

@@ -14,4 +14,9 @@ class SpecializationService extends BaseModelService
     {
         parent::__construct($model);
     }
+
+    public function getByJanisId(int $janisId): ?Specialization
+    {
+        return $this->model::where('janis_id', $janisId)->first();
+    }
 }

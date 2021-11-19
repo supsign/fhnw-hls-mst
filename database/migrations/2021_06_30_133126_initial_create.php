@@ -244,8 +244,8 @@ class InitialCreate extends Migration
             $table->timestampsTz();
         });
 
-       (new SkillImport)->import();
-       (new SkillPrerequisiteImport)->import();
+        (new SkillImport)->import();
+        (new SkillPrerequisiteImport)->import();
 
         Schema::create('course_years', function (Blueprint $table) {
             $table->id();

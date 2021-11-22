@@ -7,6 +7,11 @@ namespace App\Models;
  */
 class CrossQualification extends BaseModel
 {
+    public function crossQualificationYears()
+    {
+        return $this->hasMany(CrossQualificationYear::class);
+    }
+
     public function plannings()
     {
         return $this->hasMany(Planning::class);

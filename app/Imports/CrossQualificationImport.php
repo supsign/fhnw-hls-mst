@@ -13,6 +13,7 @@ class CrossQualificationImport extends BaseCsvImport
     public function importLine()
     {
         $crossQualification = CrossQualification::create([
+            'janis_id' => $this->line['id_querschnittsqualifikation'],
             'name' => $this->line['bezeichnung'],
             'study_field_id' => $this->line['id_studienrichtung'],
         ]);

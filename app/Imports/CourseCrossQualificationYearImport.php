@@ -1,0 +1,62 @@
+<?php
+
+namespace App\Imports;
+
+use App;
+use App\Models\CourseCrossQualificationYear;
+use App\Services\Course\CourseService;
+use App\Services\CrossQualification\CrossQualificationService;
+
+class CourseCrossQualificationYearImport extends BaseCsvImport
+{
+    protected CourseService $courseService;
+    protected CrossQualificationService $crossQualificationService;
+    protected $fileNames = ['modul_zu_querschnittsqualifikation.csv'];
+    protected $fieldAddresses = ['id_querschnittsqualifikation', 'laufnummer', 'bemerkung', 'pflicht'];
+
+    public function __construct()
+    {
+        $this->courseService = App::make(CourseService::class);
+        $this->crossQualificationService = App::make(CrossQualificationService::class);
+
+        parent::__construct();
+    }
+
+    public function importLine()
+    {
+        if ($this->line['pflicht'] !== 't') {
+            return $this;
+        }
+        
+        $crossQualification = $this
+            ->crossQualificationService
+            ->getByJanisId($this->line['id_querschnittsqualifikation']);
+
+        if (!$crossQualification) {
+            return $this;
+        }
+
+        $course = $this->courseService->getByNumber($this->line['laufnummer']);
+
+        if (!$course) {
+            return $this;
+        }
+
+        foreach ($crossQualification->crossQualificationYears AS $crossQualificationYear) {
+
+            CourseCrossQualificationYear::updateOrCreate([
+                'course_id' => $course->id,
+                'cross_qualification_year_id' => $crossQualificationYear->id
+            ]);
+
+
+
+        }
+
+        // var_dump(
+        //     $this->line
+        // );
+
+        return $this;
+    }
+}

@@ -27,19 +27,19 @@ class CourseSpecializationYearImport extends BaseCsvImport
     public function importLine()
     {
         if ($this->line['pflicht'] !== 't') {
-            return;
+            return $this;
         }
 
         $specialization = $this->specializationService->getByJanisId($this->line['id_spezialisierung']);
 
         if (!$specialization) {
-            return;
+            return $this;
         }
 
         $course = $this->courseService->getByNumber($this->line['laufnummer']);
 
         if (!$course) {
-            return;
+            return $this;
         }
 
         foreach ($specialization->specializationYears AS $specializationYears) {
@@ -48,5 +48,7 @@ class CourseSpecializationYearImport extends BaseCsvImport
                 'specialization_year_id' => $specializationYears->id,
             ]);
         }
+
+        return $this;
     }
 }

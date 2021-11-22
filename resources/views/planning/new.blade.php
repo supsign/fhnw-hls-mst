@@ -21,7 +21,7 @@
                         :options="$studyPrograms"
                         optionKey="name"
                         label="Studiengang"
-                        :value="$studyPrograms"
+                        :value="$studyProgram"
                         disabled>
                     </x-base.select>
                     <x-base.select

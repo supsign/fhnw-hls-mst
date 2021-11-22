@@ -34,13 +34,15 @@ class PlanningController extends Controller
 
         $studyField = $user->student->studyFieldYear->studyField ?? null;
         $semester = $user->student->studyFieldYear->beginSemester->year ?? null;
+        $studyProgram = StudyProgram::where('id', 6)->get() ?? null;
 
         return view('planning.new', [
             'studyFields' => StudyField::where('study_program_id', 6)->get(),
-            'studyPrograms' => StudyProgram::where('id', 6)->get(),
+            'studyPrograms' => StudyProgram::all(),
             'semesters' => Semester::where('is_hs', true)->get(),
             'studyField' => $studyField,
             'semester' => $semester,
+            'studyProgram' => $studyProgram,
         ]);
     }
 

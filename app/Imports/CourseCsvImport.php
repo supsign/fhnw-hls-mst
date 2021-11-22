@@ -13,6 +13,7 @@ class CourseCsvImport extends BaseCsvImport
     {
         $data = [
             'number' => $this->line['laufnummer'],
+            'number_unformated' => $this->line['laufnummer'],
             'name' => $this->line['modulbezeichnung'],
             'course_type_id' => $this->line['id_modultyp'],
         ];

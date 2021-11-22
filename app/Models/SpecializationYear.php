@@ -22,9 +22,9 @@ class SpecializationYear extends BaseModel
         return $this->belongsTo(StudyFieldYear::class);
     }
 
-    public function crossQualification()
+    public function specialization()
     {
-        return $this->belongsTo(CrossQualification::class);
+        return $this->belongsTo(Specialization::class);
     }
 
     public function assessment()

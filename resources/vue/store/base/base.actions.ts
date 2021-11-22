@@ -58,7 +58,6 @@ export const post = (
     context: ActionContext<IBaseState<IModel>, any>,
     payload: Partial<IModel>
 ) => {
-    console.log('action post payload: ', payload)
     if (payload.id) {
         return null;
     }

@@ -8,39 +8,39 @@
         </div>
 
         <v-select
-            class="w-full"
-            :options="options"
             :clearable="clearable"
-            :searchable="searchable"
-            @input="input"
-            :value="internalValue"
-            :label="optionKey"
-            @search="search"
             :disabled="disabled"
+            :label="optionKey"
+            :options="options"
+            :searchable="searchable"
             :selectable="selectable"
+            :value="internalValue"
+            class="w-full"
+            @input="input"
+            @search="search"
             @search:blur="blur"
         >
-            <template #option="option" v-if="showOption">
+            <template v-if="showOption" #option="option">
                 {{ showOption(option) }}
             </template>
-            <template #selected-option="option" v-if="showOption">
+            <template v-if="showOption" #selected-option="option">
                 {{ showOption(option) }}
             </template>
         </v-select>
         <select :name="name" hidden>
             <option
+                v-if="internalValue"
                 :value="internalValue.id"
                 selected
-                v-if="internalValue"
             ></option>
             <option
+                v-else
                 :value="null"
                 selected
-                v-else
             ></option>
         </select>
 
-        <div hidden v-if="value">
+        <div v-if="value" hidden>
             {{ value.id || value }}
         </div>
     </div>
@@ -72,50 +72,35 @@ export default class VueSelect extends BaseComponent {
         type: Boolean
     })
     isBlade: boolean;
-
-    public input(ev: any) {
-        console.log(ev);
-        this.internalValue = ev;
-        this.initialError = null;
-        this.$emit("input", ev);
-        this.blur(ev);
-    }
-
     @Prop({
         type: String,
         default: "id"
     })
     optionKey: string;
-
     @Prop({
         type: String,
         default: ""
     })
     name: string;
-
     @Prop({
         type: String,
         default: ""
     })
     label: string;
-
     @Prop({
         type: Array
     })
     searchKeys: string[];
-
     @Prop({
         type: Boolean,
         default: false
     })
     clearable: boolean;
-
     @Prop({
         type: Boolean,
         default: false
     })
     disabled: boolean;
-
     @Prop({
         type: Array,
         default: (): [] => {
@@ -123,38 +108,43 @@ export default class VueSelect extends BaseComponent {
         }
     })
     options: Array<IModel>;
-
     @Prop({
         type: Boolean,
         default: false
     })
     searchable: boolean;
-
     @Prop({
         type: Boolean,
         default: false
     })
     required: boolean;
-
     @Prop({
         type: Function
     })
     selectable: (option: any) => boolean;
-
     @Prop({
         type: Function
     })
     showOption: (option: any) => string;
-
     @Prop({
         type: String
     })
     initError: string;
-
     public internalValue: IModel | string = null;
     public isDirty = false;
     private initialError: string = null;
     private isTouched = false;
+
+    get calcValue() {
+        return this.value;
+    }
+
+    public input(ev: any) {
+        this.internalValue = ev;
+        this.initialError = null;
+        this.$emit("input", ev);
+        this.blur(ev);
+    }
 
     // ToDo Matthias
     public created() {
@@ -174,13 +164,9 @@ export default class VueSelect extends BaseComponent {
         this.internalValue = this.calcValue;
     }
 
-    get calcValue() {
-        return this.value;
-    }
-
     @Emit()
     search(search: any, loading: any) {
-        return { search, loading };
+        return {search, loading};
     }
 
     @Emit()

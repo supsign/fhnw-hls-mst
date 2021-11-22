@@ -15,6 +15,7 @@ module.exports = {
             colors: {
                 hls: {
                     DEFAULT: '#FDE70E',
+                    200: '#fef387',
                 },
             },
             height: {

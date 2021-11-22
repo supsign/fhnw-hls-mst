@@ -7,6 +7,11 @@ export const getCoursePlanning = (state: IBaseState<ICoursePlanning>) =>
         return state.entities.local.find(entity => entity.course_id === courseId && entity.planning_id === planningId);
     };
 
+export const byPlanningId = (state: IBaseState<ICoursePlanning>) =>
+    (planningId: number): ICoursePlanning[] => {
+        return state.entities.local.filter(entity => entity.planning_id === planningId);
+    };
+
 export const requestModel = (): typeof coursePlanningRequestModel => {
     return coursePlanningRequestModel;
 };

@@ -22,6 +22,6 @@ class ChemieAssessment extends Seeder
         $studyFieldYearService->attacheAssessment($studyFieldYear, $assessment);
 
         $course = $courseService->getByEventoId(9301710);
-        $assessmentCourseService->attache($assessment, $course);
+        $assessmentCourseService->attach($assessment, $course);
     }
 }

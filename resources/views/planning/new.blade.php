@@ -29,6 +29,7 @@
                         name="studyField"
                         :options="$studyFields"
                         optionKey="name"
+                        :value="$studyField"
                         label="Studienrichtung"
                         required>
                     </x-base.select>
@@ -37,6 +38,7 @@
                         name="semester"
                         :options="$semesters"
                         optionKey="year"
+                        :value="$semester"
                         label="Start"
                         required>
                     </x-base.select>

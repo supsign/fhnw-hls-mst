@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Planning\StoreRequest;
 use App\Models\Planning;
 use App\Models\Semester;
+use App\Models\Student;
 use App\Models\StudyField;
 use App\Models\StudyProgram;
+use App\Models\User;
 use App\Services\Planning\PlanningService;
 use App\Services\Semester\SemesterService;
 use App\Services\StudyField\StudyFieldService;
@@ -28,11 +30,17 @@ class PlanningController extends Controller
     public function create()
     {
         $this->permissionAndRoleService->canPlanScheduleOrAbort();
+        $user = Auth::user();
+
+        $studyField = $user->student->studyFieldYear->studyField ?? null;
+        $semester = $user->student->studyFieldYear->beginSemester->year ?? null;
 
         return view('planning.new', [
             'studyFields' => StudyField::where('study_program_id', 6)->get(),
             'studyPrograms' => StudyProgram::where('id', 6)->get(),
             'semesters' => Semester::where('is_hs', true)->get(),
+            'studyField' => $studyField,
+            'semester' => $semester,
         ]);
     }
 

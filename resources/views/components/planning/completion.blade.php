@@ -1,9 +1,9 @@
-@if($icon === 2)
+@if($icon === 1)
     <div class="my-auto text-lg flex-none">
         <i class="far fa-check-circle" aria-hidden="true"></i>
     </div>
 
-@elseif($icon === 3)
+@elseif($icon === 2)
     <div class="my-auto text-lg flex-none">
         <i class="far fa-times-circle" aria-hidden="true"></i>
     </div>

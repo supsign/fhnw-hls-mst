@@ -37,11 +37,29 @@ class CoursePlanningServiceTest extends TestCase
     public function testPlanCourse()
     {
         $student = $this->studentService->createOrUpdateOnEventoPersonId(5);
-        $studyFieldYear = $this->studyFieldYearService->getByEventoId('1252215');
+        $studyFieldYear = $this->studyFieldYearService->getByEventoId('9369194');
         $planning = $this->planningService->createEmptyPlanning($student->id, $studyFieldYear->id);
         $course = $studyFieldYear->courseGroupYears[0]->courses[0];
         $semester = Semester::first();
         $this->coursePlanningService->planCourse($planning, $course, $semester);
         $this->assertDatabaseHas(CoursePlanning::class, ['planning_id' => $planning->id, 'course_id' => $course->id, 'semester_id' => $semester->id]);
+    }
+
+    public function testReschedulePlanning()
+    {
+        $student = $this->studentService->createOrUpdateOnEventoPersonId(5);
+        $studyFieldYear = $this->studyFieldYearService->getByEventoId('9369194');
+        $planning = $this->planningService->createEmptyPlanning($student->id, $studyFieldYear->id);
+        $course = $studyFieldYear->courseGroupYears[0]->courses[0];
+        $semester = Semester::first();
+        $coursePlanning = $this->coursePlanningService->planCourse($planning, $course, $semester);
+        $this->assertDatabaseHas(CoursePlanning::class, ['planning_id' => $planning->id, 'course_id' => $course->id, 'semester_id' => $semester->id]);
+
+        /* @var $secondSemester Semester */
+        $secondSemester = Semester::orderByDesc('id')->first();
+        $coursePlanning = $this->coursePlanningService->reschedule($coursePlanning, $secondSemester);
+        $coursePlanning->refresh();
+
+        $this->assertEquals($secondSemester->id, $coursePlanning->semester_id);
     }
 }

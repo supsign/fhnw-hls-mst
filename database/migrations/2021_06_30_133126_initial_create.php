@@ -209,6 +209,8 @@ class InitialCreate extends Migration
             $table->string('number')->unique();
             $table->string('name')->nullable();
             $table->integer('credits')->default(0);
+            $table->boolean('is_fs')->default(0);
+            $table->boolean('is_hs')->default(0);
             $table->timestampsTz();
         });
 
@@ -256,6 +258,7 @@ class InitialCreate extends Migration
             $table->unsignedBigInteger('evento_id')->nullable()->unique();
             $table->string('number')->unique();
             $table->string('name')->nullable();
+            $table->boolean('is_audit')->default(0);
             $table->timestampsTz();
         });
 

@@ -5,10 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Planning\StoreRequest;
 use App\Models\Planning;
 use App\Models\Semester;
-use App\Models\Student;
 use App\Models\StudyField;
 use App\Models\StudyProgram;
-use App\Models\User;
 use App\Services\Planning\PlanningService;
 use App\Services\Semester\SemesterService;
 use App\Services\StudyField\StudyFieldService;
@@ -20,11 +18,12 @@ class PlanningController extends Controller
 {
     public function __construct(
         private PermissionAndRoleService $permissionAndRoleService,
-        protected StudyFieldService $studyFieldService,
-        protected SemesterService $semesterService,
-        protected PlanningService $planningService,
-        protected StudyFieldYearService $studyFieldYearService,
-    ) {
+        protected StudyFieldService      $studyFieldService,
+        protected SemesterService        $semesterService,
+        protected PlanningService        $planningService,
+        protected StudyFieldYearService  $studyFieldYearService,
+    )
+    {
     }
 
     public function create()
@@ -32,9 +31,23 @@ class PlanningController extends Controller
         $this->permissionAndRoleService->canPlanScheduleOrAbort();
         $user = Auth::user();
 
+        $hlsBachelorStudyProgram = StudyProgram::find(6);
+
         $studyField = $user->student->studyFieldYear->studyField ?? null;
         $semester = $user->student->studyFieldYear->beginSemester ?? null;
         $studyProgram = $user->student->studyFieldYear->studyField->studyProgram ?? null;
+
+        if (!$studyProgram) {
+            $studyProgram = $hlsBachelorStudyProgram;
+        }
+
+        // Im Moment Tool nur Bachelor HLS
+        if ($studyProgram->id !== $hlsBachelorStudyProgram->id) {
+            $studyField = null;
+            $semester = null;
+            $studyProgram = $hlsBachelorStudyProgram;
+        }
+
 
         return view('planning.new', [
             'studyFields' => StudyField::where('study_program_id', 6)->get(),

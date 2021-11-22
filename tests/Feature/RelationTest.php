@@ -55,7 +55,7 @@ class RelationTest extends TestCase
         $course->crossQualificationYears()->attach(
             $cqyID = CrossQualificationYear::create([
                 'cross_qualification_id' => CrossQualification::inRandomOrder()->first()->id,
-                'study_field_id' => StudyField::inRandomOrder()->first()->id,
+                'study_field_year_id' => StudyFieldYear::inRandomOrder()->first()->id,
             ])->id
         );
         $this->assertTrue($course->crossQualificationYears()->where('course_id', $course->id)->first()->courses()->where('cross_qualification_year_id', $cqyID)->first()->id === $course->id);

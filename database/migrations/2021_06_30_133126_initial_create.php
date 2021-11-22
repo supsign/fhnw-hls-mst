@@ -3,6 +3,7 @@
 use App\Imports\CompletionAttemptImport;
 use App\Imports\CompletionCreditImport;
 use App\Imports\CourseCourseGroupYearImporter;
+use App\Imports\CourseCrossQualificationYearImport;
 use App\Imports\CourseCsvImport;
 use App\Imports\CourseExcelImport;
 use App\Imports\CourseGroupImport;
@@ -292,6 +293,8 @@ class InitialCreate extends Migration
             $table->foreignId('cross_qualification_year_id')->constrained();
             $table->timestampsTz();
         });
+
+        (new CourseCrossQualificationYearImport)->import();
 
         Schema::create('lessons', function (Blueprint $table) {
             $table->id();

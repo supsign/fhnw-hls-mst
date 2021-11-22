@@ -2,12 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * @mixin IdeHelperCourseCrossQualificationYear
  */
-class CourseCrossQualificationYear extends Model
+class CourseCrossQualificationYear extends BaseModel
 {
     protected $table = 'course_cross_qualification_year';
 

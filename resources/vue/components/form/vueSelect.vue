@@ -10,6 +10,7 @@
         <v-select
             :clearable="clearable"
             :disabled="disabled"
+            :filter="getFilter()"
             :label="optionKey"
             :options="options"
             :searchable="searchable"
@@ -25,6 +26,9 @@
             </template>
             <template v-if="showOption" #selected-option="option">
                 {{ showOption(option) }}
+            </template>
+            <template #no-options>
+                Keine Einträge gefunden
             </template>
         </v-select>
         <select :name="name" hidden>
@@ -51,6 +55,7 @@ import {Component, Emit, Prop} from "vue-property-decorator";
 import BaseComponent from "../base/baseComponent";
 import vSelect from "vue-select";
 import {IModel} from "../../store/model.interface";
+import Fuse from "fuse.js";
 
 @Component({
     components: {
@@ -173,6 +178,21 @@ export default class VueSelect extends BaseComponent {
     blur(ev: any) {
         this.isTouched = true;
         return ev;
+    }
+
+    public getFilter() {
+        if (!this.searchKeys || this.searchKeys.length === 0) {
+            return;
+        }
+        return (options: any[], search: string) => {
+            const fuse = new Fuse(options, {
+                keys: this.searchKeys,
+                shouldSort: true,
+                findAllMatches: true
+            });
+
+            return fuse.search(search).map(({item}): { item: any } => item);
+        };
     }
 }
 </script>

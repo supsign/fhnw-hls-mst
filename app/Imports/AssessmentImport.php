@@ -44,9 +44,9 @@ class AssessmentImport extends BaseCsvImport
         foreach ($studyField->studyFieldYears AS $studyFieldYear) {
             $assessment = $this->assessmentService->firstOrCreateByName($studyFieldYear->studyField->name);
             $this->assessmentCourseService->attach($assessment, $course);
-        }
 
-        // var_dump($this->line);
+            $studyFieldYear->update(['assessment_id' => $assessment->id]);
+        }
 
         return $this;
     }

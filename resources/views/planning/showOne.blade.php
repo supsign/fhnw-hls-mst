@@ -77,8 +77,10 @@
                             </div>
                         </div>
                     @endforeach
+
                 </div>
             </vue-plan-wrapper>
         @endforeach
+        <x-assessment.assessment-state :planning="$planning"></x-assessment.assessment-state>
     </div>
 </x-layout.app>

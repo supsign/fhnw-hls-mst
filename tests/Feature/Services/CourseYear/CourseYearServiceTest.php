@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Services\CourseYear;
 
-use App\Models\Semester;
 use App\Services\Course\CourseService;
 use App\Services\CourseYear\CourseYearService;
 use Illuminate\Foundation\Testing\WithFaker;

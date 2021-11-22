@@ -41,24 +41,13 @@ class RelationTest extends TestCase
 
         $this->assertTrue($course->studyField->courses()->where('id', $course->id)->first()->id === $course->id);
 
-        // belongsToMany
-        $course->courseGroupYears()->attach(
-            $cgyID = CourseGroupYear::create([
-                'course_group_id' => CourseGroup::inRandomOrder()->first()->id,
-                'study_field_year_id' => StudyFieldYear::create([
-                    'begin_semester_id' => Semester::inRandomOrder()->first()->id,
-                    'study_field_id' => StudyField::inRandomOrder()->first()->id,
-                ])->id,
-            ])->id
-        );
-        $this->assertTrue($course->courseGroupYears()->where('course_id', $course->id)->orderByDesc('id')->first()->courses()->where('course_group_year_id', $cgyID)->first()->id === $course->id);
-
         $course->crossQualificationYears()->attach(
             $cqyID = CrossQualificationYear::create([
                 'cross_qualification_id' => CrossQualification::inRandomOrder()->first()->id,
                 'study_field_year_id' => StudyFieldYear::inRandomOrder()->first()->id,
             ])->id
         );
+
         $this->assertTrue($course->crossQualificationYears()->where('course_id', $course->id)->first()->courses()->where('cross_qualification_year_id', $cqyID)->first()->id === $course->id);
 
         $course->specializationYears()->attach(

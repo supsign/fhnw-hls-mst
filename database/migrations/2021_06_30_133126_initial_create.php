@@ -181,7 +181,6 @@ class InitialCreate extends Migration
             $table->foreignId('specialization_id')->constrained();
             $table->foreignId('study_field_year_id')->constrained();
             $table->integer('amount_to_pass')->nullable();
-            $table->integer('credits_to_pass')->nullable();
             $table->timestampsTz();
 
             $table->unique(['specialization_id', 'study_field_year_id']);
@@ -192,7 +191,6 @@ class InitialCreate extends Migration
             $table->foreignId('cross_qualification_id')->constrained();
             $table->foreignId('study_field_year_id')->constrained();
             $table->integer('amount_to_pass')->nullable();
-            $table->integer('credits_to_pass')->nullable();
             $table->timestampsTz();
 
             $table->unique(['cross_qualification_id', 'study_field_year_id']);

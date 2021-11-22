@@ -46,8 +46,6 @@ class AssessmentImport extends BaseCsvImport
             $this->assessmentCourseService->attach($assessment, $course);
         }
 
-        // var_dump($this->line);
-
         return $this;
     }
 }

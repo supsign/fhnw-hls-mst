@@ -207,6 +207,7 @@ class InitialCreate extends Migration
             $table->foreignId('study_field_id')->nullable()->constrained();
             $table->unsignedBigInteger('evento_id')->nullable()->unique();
             $table->string('number')->unique();
+            $table->string('number_unformated')->nullable()->unique();
             $table->string('name')->nullable();
             $table->integer('credits')->default(0);
             $table->boolean('is_fs')->default(0);

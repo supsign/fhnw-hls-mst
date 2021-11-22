@@ -18,12 +18,11 @@ class PlanningController extends Controller
 {
     public function __construct(
         private PermissionAndRoleService $permissionAndRoleService,
-        protected StudyFieldService      $studyFieldService,
-        protected SemesterService        $semesterService,
-        protected PlanningService        $planningService,
-        protected StudyFieldYearService  $studyFieldYearService,
-    )
-    {
+        protected StudyFieldService $studyFieldService,
+        protected SemesterService $semesterService,
+        protected PlanningService $planningService,
+        protected StudyFieldYearService $studyFieldYearService,
+    ) {
     }
 
     public function create()
@@ -47,7 +46,6 @@ class PlanningController extends Controller
             $semester = null;
             $studyProgram = $hlsBachelorStudyProgram;
         }
-
 
         return view('planning.new', [
             'studyFields' => StudyField::where('study_program_id', 6)->get(),

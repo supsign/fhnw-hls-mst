@@ -17,9 +17,9 @@ class CrossQualificationYear extends BaseModel
         return $this->belongsTo(CrossQualification::class);
     }
 
-    public function studyField()
+    public function studyFieldYear()
     {
-        return $this->belongsTo(StudyField::class);
+        return $this->belongsTo(StudyFieldYear::class);
     }
 
     public function assessment()

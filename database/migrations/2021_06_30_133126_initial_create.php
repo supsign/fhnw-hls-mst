@@ -3,14 +3,18 @@
 use App\Imports\CompletionAttemptImport;
 use App\Imports\CompletionCreditImport;
 use App\Imports\CourseCourseGroupYearImporter;
+use App\Imports\CourseCrossQualificationYearImport;
 use App\Imports\CourseCsvImport;
 use App\Imports\CourseExcelImport;
 use App\Imports\CourseGroupImport;
 use App\Imports\CourseGroupYearCsvImport;
+use App\Imports\CourseSpecializationYearImport;
 use App\Imports\CourseYearImport;
 use App\Imports\CrossQualificationImport;
 use App\Imports\LessonCleanup;
 use App\Imports\LessonImport;
+use App\Imports\SkillImport;
+use App\Imports\SkillPrerequisiteImport;
 use App\Imports\SpecializationImport;
 use App\Imports\StudentImport;
 use App\Imports\StudyFieldImport;
@@ -130,21 +134,19 @@ class InitialCreate extends Migration
 
         Schema::create('specializations', function (Blueprint $table) {
             $table->id();
+            $table->integer('janis_id')->nullable()->unique();
             $table->foreignId('study_field_id')->constrained();
             $table->string('name')->nullable();
             $table->timestampsTz();
         });
-
-        (new SpecializationImport())->import();
 
         Schema::create('cross_qualifications', function (Blueprint $table) {
             $table->id();
+            $table->integer('janis_id')->nullable()->unique();
             $table->foreignId('study_field_id')->constrained();
             $table->string('name')->nullable();
             $table->timestampsTz();
         });
-
-        (new CrossQualificationImport())->import();
 
         Schema::create('semesters', function (Blueprint $table) {
             $table->id();
@@ -184,23 +186,28 @@ class InitialCreate extends Migration
 
         Schema::create('specialization_years', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cross_qualification_id')->constrained();
+            $table->foreignId('specialization_id')->constrained();
             $table->foreignId('study_field_year_id')->constrained();
             $table->foreignId('assessment_id')->nullable()->constrained();
             $table->integer('amount_to_pass')->nullable();
-            $table->integer('credits_to_pass')->nullable();
             $table->timestampsTz();
+
+            $table->unique(['specialization_id', 'study_field_year_id']);
         });
 
         Schema::create('cross_qualification_years', function (Blueprint $table) {
             $table->id();
             $table->foreignId('cross_qualification_id')->constrained();
-            $table->foreignId('study_field_id')->constrained();
             $table->foreignId('assessment_id')->nullable()->constrained();
+            $table->foreignId('study_field_year_id')->constrained();
             $table->integer('amount_to_pass')->nullable();
-            $table->integer('credits_to_pass')->nullable();
             $table->timestampsTz();
+
+            $table->unique(['cross_qualification_id', 'study_field_year_id']);
         });
+
+        (new SpecializationImport())->import();
+        (new CrossQualificationImport())->import();
 
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
@@ -209,6 +216,7 @@ class InitialCreate extends Migration
             $table->foreignId('study_field_id')->nullable()->constrained();
             $table->unsignedBigInteger('evento_id')->nullable()->unique();
             $table->string('number')->unique();
+            $table->string('number_unformated')->nullable()->unique();
             $table->string('name')->nullable();
             $table->integer('credits')->default(0);
             $table->boolean('is_fs')->default(0);
@@ -243,14 +251,15 @@ class InitialCreate extends Migration
             $table->id();
             $table->foreignId('skill_id')->constrained();
             $table->foreignId('course_id')->constrained();
-            $table->foreignId('semester_id')->constrained();
+            $table->foreignId('from_semester_id')->constrained('semesters');
+            $table->foreignId('to_semester_id')->nullable()->constrained('semesters');
             $table->integer('goal_number')->nullable();
             $table->boolean('is_acquisition')->default(0);
             $table->timestampsTz();
         });
 
-//        (new SkillImport())->import();
-//        (new SkillPrerequisiteImport())->import();
+        (new SkillImport)->import();
+        (new SkillPrerequisiteImport)->import();
 
         Schema::create('course_years', function (Blueprint $table) {
             $table->id();
@@ -292,6 +301,8 @@ class InitialCreate extends Migration
             $table->foreignId('cross_qualification_year_id')->constrained();
             $table->timestampsTz();
         });
+
+        (new CourseCrossQualificationYearImport)->import();
 
         Schema::create('lessons', function (Blueprint $table) {
             $table->id();
@@ -387,6 +398,7 @@ class InitialCreate extends Migration
         });
 
         (new CourseCourseGroupYearImporter)->import();
+        (new CourseSpecializationYearImport)->import();
 
         if (App::environment('testing')) {
             if (Storage::exists('Testingdata\Tab3_Modul.xlsx')) {

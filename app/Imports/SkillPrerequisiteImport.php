@@ -4,6 +4,7 @@ namespace App\Imports;
 
 use App\Models\Course;
 use App\Models\CourseSkill;
+use App\Models\Semester;
 
 class SkillPrerequisiteImport extends BaseCsvImport
 {
@@ -22,7 +23,7 @@ class SkillPrerequisiteImport extends BaseCsvImport
             CourseSkill::create([
                 'skill_id' => $courseSkill->skill_id,
                 'course_id' => Course::where('number', $this->line['laufnummer'])->first()->id,
-                'semester_id' => 1,
+                'from_semester_id' => Semester::whereNull('previous_semester_id')->first()->id,
                 'is_acquisition' => false,
             ]);
         }

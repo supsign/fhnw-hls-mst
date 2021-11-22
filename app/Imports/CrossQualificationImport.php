@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Models\CrossQualification;
+use App\Models\CrossQualificationYear;
 
 class CrossQualificationImport extends BaseCsvImport
 {
@@ -11,10 +12,18 @@ class CrossQualificationImport extends BaseCsvImport
 
     public function importLine()
     {
-        CrossQualification::create([
+        $crossQualification = CrossQualification::create([
+            'janis_id' => $this->line['id_querschnittsqualifikation'],
             'name' => $this->line['bezeichnung'],
             'study_field_id' => $this->line['id_studienrichtung'],
         ]);
+
+        foreach ($crossQualification->studyField->studyFieldYears AS $studyFieldYear) {
+            CrossQualificationYear::firstOrCreate([
+                'cross_qualification_id' => $crossQualification->id,
+                'study_field_year_id' => $studyFieldYear->id,
+            ]);
+        }
 
         return $this;
     }

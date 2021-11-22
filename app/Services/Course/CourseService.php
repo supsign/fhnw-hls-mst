@@ -24,6 +24,11 @@ class CourseService extends BaseModelService
         return $this->model->where('number', $number)->first();
     }
 
+    public function getByNumberUnformated(string $number): ?Course
+    {
+        return $this->model->where('number_unformated', $number)->first();
+    }
+
     public function firstOrCreateByNumber(string $number, int $courseTypeId, int $languageId = 1, string $name = null, int $credits = 0): Course
     {
         return $this->model::firstOrCreate(

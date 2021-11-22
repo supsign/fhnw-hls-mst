@@ -12,6 +12,7 @@ use App\Models\CrossQualificationYear;
 use App\Models\Planning;
 use App\Models\Recommendation;
 use App\Models\Semester;
+use App\Models\Specialization;
 use App\Models\SpecializationYear;
 use App\Models\Student;
 use App\Models\StudyField;
@@ -62,7 +63,7 @@ class RelationTest extends TestCase
 
         $course->specializationYears()->attach(
             $spID = SpecializationYear::create([
-                'cross_qualification_id' => CrossQualification::inRandomOrder()->first()->id,
+                'specialization_id' => Specialization::inRandomOrder()->first()->id,
                 'study_field_year_id' => $sfyID = StudyFieldYear::create([
                     'begin_semester_id' => Semester::inRandomOrder()->first()->id,
                     'study_field_id' => StudyField::inRandomOrder()->first()->id,

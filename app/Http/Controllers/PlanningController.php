@@ -33,8 +33,8 @@ class PlanningController extends Controller
         $user = Auth::user();
 
         $studyField = $user->student->studyFieldYear->studyField ?? null;
-        $semester = $user->student->studyFieldYear->beginSemester->year ?? null;
-        $studyProgram = StudyProgram::where('id', 6)->get() ?? null;
+        $semester = $user->student->studyFieldYear->beginSemester ?? null;
+        $studyProgram = $user->student->studyFieldYear->studyField->studyProgram ?? null;
 
         return view('planning.new', [
             'studyFields' => StudyField::where('study_program_id', 6)->get(),

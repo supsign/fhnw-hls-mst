@@ -14,7 +14,7 @@ class AssessmentCourseService extends BaseModelService
         parent::__construct($model);
     }
 
-    public function attache(Assessment $assessment, Course $course): AssessmentCourse
+    public function attach(Assessment $assessment, Course $course): AssessmentCourse
     {
         $courseAssessment = $this->model::firstOrCreate([
             'course_id' => $course->id,

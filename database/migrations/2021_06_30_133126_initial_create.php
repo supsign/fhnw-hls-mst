@@ -1,5 +1,6 @@
 <?php
 
+use App\Imports\AssessmentImport;
 use App\Imports\CompletionAttemptImport;
 use App\Imports\CompletionCreditImport;
 use App\Imports\CourseCourseGroupYearImporter;
@@ -164,10 +165,10 @@ class InitialCreate extends Migration
 
         Schema::create('study_field_years', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('assessment_id')->nullable()->constrained();
             $table->foreignId('begin_semester_id')->constrained('semesters');
             $table->foreignId('origin_study_field_year_id')->nullable()->constrained('study_field_years');
             $table->foreignId('study_field_id')->constrained();
-            $table->foreignId('assessment_id')->nullable()->constrained();
             $table->unsignedBigInteger('evento_id')->nullable()->unique();
             $table->string('evento_number')->nullable()->unique();
             $table->boolean('is_specialization_mandatory')->default(0);
@@ -397,6 +398,7 @@ class InitialCreate extends Migration
             $table->timestampsTz();
         });
 
+        (new AssessmentImport)->import();
         (new CourseCourseGroupYearImporter)->import();
         (new CourseSpecializationYearImport)->import();
 

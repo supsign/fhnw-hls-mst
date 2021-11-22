@@ -29,10 +29,10 @@ class AssessmentCourseServiceTest extends TestCase
         $assessemnt = $this->assessmentService->create('blub');
         $course = Course::first();
 
-        $this->assessmentCourseService->attache($assessemnt, $course);
+        $this->assessmentCourseService->attach($assessemnt, $course);
         $this->assertDatabaseHas(AssessmentCourse::class, ['assessment_id' => $assessemnt->id, 'course_id' => $course->id]);
 
-        $this->assessmentCourseService->attache($assessemnt, $course);
+        $this->assessmentCourseService->attach($assessemnt, $course);
         $this->assertEquals(1, $assessemnt->courses->count());
     }
 }

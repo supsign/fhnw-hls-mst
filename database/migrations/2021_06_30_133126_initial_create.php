@@ -163,11 +163,18 @@ class InitialCreate extends Migration
         $semesterService = App::make(SemesterService::class);
         $semesterService->firstOrcreateByYear(Carbon::now()->year + 5);
 
+        Schema::create('recommendations', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->nullable();
+            $table->timestampsTz();
+        });
+
         Schema::create('study_field_years', function (Blueprint $table) {
             $table->id();
             $table->foreignId('assessment_id')->nullable()->constrained();
             $table->foreignId('begin_semester_id')->constrained('semesters');
             $table->foreignId('origin_study_field_year_id')->nullable()->constrained('study_field_years');
+            $table->foreignId('recommendation_id')->nullable()->constrained();
             $table->foreignId('study_field_id')->constrained();
             $table->unsignedBigInteger('evento_id')->nullable()->unique();
             $table->string('evento_number')->nullable()->unique();
@@ -187,9 +194,10 @@ class InitialCreate extends Migration
 
         Schema::create('specialization_years', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('assessment_id')->nullable()->constrained();
+            $table->foreignId('recommendation_id')->nullable()->constrained();
             $table->foreignId('specialization_id')->constrained();
             $table->foreignId('study_field_year_id')->constrained();
-            $table->foreignId('assessment_id')->nullable()->constrained();
             $table->integer('amount_to_pass')->nullable();
             $table->timestampsTz();
 
@@ -198,8 +206,9 @@ class InitialCreate extends Migration
 
         Schema::create('cross_qualification_years', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cross_qualification_id')->constrained();
             $table->foreignId('assessment_id')->nullable()->constrained();
+            $table->foreignId('cross_qualification_id')->constrained();
+            $table->foreignId('recommendation_id')->nullable()->constrained();
             $table->foreignId('study_field_year_id')->constrained();
             $table->integer('amount_to_pass')->nullable();
             $table->timestampsTz();
@@ -280,19 +289,11 @@ class InitialCreate extends Migration
             $table->timestampsTz();
         });
 
-        Schema::create('recommendations', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('cross_qualification_year_id')->constrained();
-            $table->foreignId('specialization_year_id')->constrained();
-            $table->foreignId('study_field_year_id')->constrained();
-            $table->foreignId('origin_recommendation_id')->nullable()->constrained('recommendations');
-            $table->timestampsTz();
-        });
-
         Schema::create('course_recommendation', function (Blueprint $table) {
             $table->id();
             $table->foreignId('course_id')->constrained();
             $table->foreignId('recommendation_id')->constrained();
+            $table->unsignedInteger('planned_semester');
             $table->timestampsTz();
         });
 

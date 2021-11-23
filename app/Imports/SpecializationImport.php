@@ -42,7 +42,7 @@ class SpecializationImport extends BaseCsvImport
         }
     }
 
-    public function countAmountToPAss()
+    public function countAmountToPass()
     {
         foreach (SpecializationYear::all() AS $specalisationYear) {
             $specalisationYear->update([

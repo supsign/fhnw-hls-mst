@@ -299,14 +299,13 @@ class InitialCreate extends Migration
             $table->timestampsTz();
         });
 
-
         Schema::create('recommendations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('cross_qualification_year_id')->constrained();
             $table->foreignId('specialization_year_id')->constrained();
             $table->foreignId('study_field_year_id')->constrained();
             $table->foreignId('origin_recommendation_id')->nullable()->constrained('recommendations');
-             $table->timestampsTz();
+            $table->timestampsTz();
         });
 
         Schema::create('course_specialization_year', function (Blueprint $table) {

@@ -41,13 +41,17 @@ class CourseCourseGroupYearImporter extends BaseCsvImport
                 continue;
             }
 
+            $recommendation = Recommendation::firstOrCreate([
+                'name' => $courseGroupYear->studyFieldYear->studyField->name,
+            ]);
+
             CourseRecommendation::firstOrCreate([
                 'course_id' => $course->id,
                 'planned_semester' => $this->line['semester'],
-                'recommendation_id' => Recommendation::firstOrCreate([
-                    'name' => $courseGroupYear->studyFieldYear->studyField->name,
-                ])->id,
+                'recommendation_id' => $recommendation->id,
             ]);
+
+            $courseGroupYear->studyFieldYear->update('recommendation_id', $recommendation->id);
         }
 
         return $this;

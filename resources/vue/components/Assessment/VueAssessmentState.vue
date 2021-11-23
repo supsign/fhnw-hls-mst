@@ -16,10 +16,10 @@
                 </div>
             </div>
         </div>
-        <div class="md:w-full mx-auto grid grid-cols-3" @click="toggleShowAssessment">
+        <div class="md:w-full mx-auto grid grid-cols-3">
             <div></div>
             <div></div>
-            <div class="text-center border-l text-sm hover:bg-hls">
+            <div class="text-center border-l text-sm hover:bg-hls" @click="toggleShowAssessment">
                 <div>{{ courseAmounts }}&nbsp;|&nbsp;{{ assessment.amount_to_pass }}</div>
                 <div>Assessment</div>
             </div>

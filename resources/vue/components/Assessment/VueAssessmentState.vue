@@ -55,10 +55,6 @@ export default class VueAssessmentState extends BaseComponent {
 
     public showAssessment = false;
 
-    public created() {
-        console.log(this.assessment);
-    }
-
     public get coursePlannings(): ICoursePlanning[] {
         return this.models.coursePlanning.byPlanningId(this.planningId)
     }
@@ -94,12 +90,12 @@ export default class VueAssessmentState extends BaseComponent {
     }
 
     public coursePlanningSemester(course: ICourse) {
-        let semesterId = this.coursePlannings.find(semesterId => semesterId.course_id === course.id).semester_id;
+        const semesterId = this.coursePlannings.find(semesterId => semesterId.course_id === course.id).semester_id;
         return this.semesters.find(semester => semester.id === semesterId).year -2000;
     }
 
     public coursePlanningSemesterHsFs(course: ICourse) {
-        let semesterId = this.coursePlannings.find(semesterId => semesterId.course_id === course.id).semester_id;
+        const semesterId = this.coursePlannings.find(semesterId => semesterId.course_id === course.id).semester_id;
         return this.semesters.find(semester => semester.id === semesterId).is_hs  ? 'HS' : 'FS';
     }
 }

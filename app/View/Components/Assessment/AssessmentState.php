@@ -26,7 +26,6 @@ class AssessmentState extends Component
     {
         $this->assessment = $assessmentService->getApplicableAssessment($planning);
         $this->assessmentCourses = $this->assessment?->courses ?: collect();
-//        @dump('test2', $this->assessment);
     }
 
     /**

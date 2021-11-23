@@ -4,7 +4,9 @@ namespace App\View\Components\Assessment;
 
 use App\Models\Assessment;
 use App\Models\Planning;
+use App\Models\Semester;
 use App\Services\Assessment\AssessmentService;
+use App\Services\Semester\SemesterService;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
@@ -33,6 +35,8 @@ class AssessmentState extends Component
      */
     public function render()
     {
-        return view('components.assessment.assessment-state');
+        return view('components.assessment.assessment-state', [
+            'semesters' => Semester::all(),
+        ]);
     }
 }

@@ -7,6 +7,11 @@ namespace App\Models;
  */
 class StudyFieldYear extends BaseModel
 {
+    public function assessment()
+    {
+        return $this->belongsTo(Assessment::class);
+    }
+    
     public function courseGroupYears()
     {
         return $this->hasMany(CourseGroupYear::class);
@@ -27,8 +32,8 @@ class StudyFieldYear extends BaseModel
         return $this->belongsTo(StudyField::class);
     }
 
-    public function assessment()
+    public function recommendation()
     {
-        return $this->belongsTo(Assessment::class);
+        return $this->belongsTo(Recommendation::class);
     }
 }

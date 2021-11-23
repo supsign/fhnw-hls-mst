@@ -3,7 +3,7 @@
         Studienplanung
     </x-slot>
 
-    <div class="container p-3 mx-auto">
+    <div class="container p-3 mx-auto ">
         <x-app.card>
             <x-slot name="title">
                 <div class="flex flex-row justify-between">
@@ -77,8 +77,10 @@
                             </div>
                         </div>
                     @endforeach
+
                 </div>
             </vue-plan-wrapper>
         @endforeach
+        <x-assessment.assessment-state :planning="$planning"></x-assessment.assessment-state>
     </div>
 </x-layout.app>

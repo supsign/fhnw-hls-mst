@@ -12,7 +12,11 @@ export class CoursePlanningModel extends EntityModel<IBaseState<ICoursePlanning>
         super("coursePlanning", store, coursePlanningRequestModel);
     }
 
-    public getCoursePlanning(planningId:number, courseId:number) {
+    public getCoursePlanning(planningId: number, courseId: number) {
         return this._store.getters[`${this._modelName}/getCoursePlanning`](planningId, courseId);
+    }
+
+    public byPlanningId(planningId: number) {
+        return this._store.getters[`${this._modelName}/byPlanningId`](planningId);
     }
 }

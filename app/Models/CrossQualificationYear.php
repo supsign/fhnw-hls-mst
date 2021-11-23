@@ -7,6 +7,11 @@ namespace App\Models;
  */
 class CrossQualificationYear extends BaseModel
 {
+    public function assessment()
+    {
+        return $this->belongsTo(Assessment::class);
+    }
+
     public function courses()
     {
         return $this->belongsToMany(Course::class);
@@ -20,5 +25,10 @@ class CrossQualificationYear extends BaseModel
     public function studyFieldYear()
     {
         return $this->belongsTo(StudyFieldYear::class);
+    }
+
+    public function recommendation()
+    {
+        return $this->belongsTo(Recommendation::class);
     }
 }

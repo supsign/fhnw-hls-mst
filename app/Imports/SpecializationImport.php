@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App;
+use App\Models\SpecializationYear;
 use App\Services\Specialization\SpecializationService;
 use App\Services\SpecializationYear\SpecializationYearService;
 
@@ -39,5 +40,16 @@ class SpecializationImport extends BaseCsvImport
                 'study_field_year_id' => $studyFieldYear->id,
             ]);
         }
+    }
+
+    public function countAmountToPass()
+    {
+        foreach (SpecializationYear::all() AS $specalisationYear) {
+            $specalisationYear->update([
+                'amount_to_pass' => $specalisationYear->courses()->count(),
+            ]);
+        }
+
+        return $this;
     }
 }

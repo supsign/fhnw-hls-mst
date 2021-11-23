@@ -28,11 +28,32 @@ class PlanningController extends Controller
     public function create()
     {
         $this->permissionAndRoleService->canPlanScheduleOrAbort();
+        $user = Auth::user();
+
+        $hlsBachelorStudyProgram = StudyProgram::find(6);
+
+        $studyField = $user->student->studyFieldYear->studyField ?? null;
+        $semester = $user->student->studyFieldYear->beginSemester ?? null;
+        $studyProgram = $user->student->studyFieldYear->studyField->studyProgram ?? null;
+
+        if (!$studyProgram) {
+            $studyProgram = $hlsBachelorStudyProgram;
+        }
+
+        // Im Moment Tool nur Bachelor HLS
+        if ($studyProgram->id !== $hlsBachelorStudyProgram->id) {
+            $studyField = null;
+            $semester = null;
+            $studyProgram = $hlsBachelorStudyProgram;
+        }
 
         return view('planning.new', [
             'studyFields' => StudyField::where('study_program_id', 6)->get(),
-            'studyPrograms' => StudyProgram::where('id', 6)->get(),
+            'studyPrograms' => StudyProgram::all(),
             'semesters' => Semester::where('is_hs', true)->get(),
+            'studyField' => $studyField,
+            'semester' => $semester,
+            'studyProgram' => $studyProgram,
         ]);
     }
 

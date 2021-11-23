@@ -12,8 +12,7 @@ class WebApiMentorController extends Controller
 {
     public function __construct(
         protected PermissionAndRoleService $permissionAndRoleService,
-    )
-    {
+    ) {
     }
 
     public function attachToStudent(Mentor $mentor, AttachStudentToMentorService $attacheStudentToMentorService): Mentor

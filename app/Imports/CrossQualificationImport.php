@@ -27,4 +27,15 @@ class CrossQualificationImport extends BaseCsvImport
 
         return $this;
     }
+
+    public function countAmountToPAss()
+    {
+        foreach (CrossQualificationYear::all() AS $crossQualifcationYear) {
+            $crossQualifcationYear->update([
+                'amount_to_pass' => $crossQualifcationYear->courses()->count(),
+            ]);
+        }
+
+        return $this;
+    }
 }

@@ -21,7 +21,6 @@ class StandingController extends Controller
     ) {
     }
 
-
     public function index()
     {
         $this->permissionAndRoleService->canShowAppOrAbort();
@@ -40,7 +39,6 @@ class StandingController extends Controller
         $student = $user->student;
 
         $now = Carbon::now()->format('d.m.Y H:i');
-
 
         return view('pages.standing', ['student' => $student, 'now' => $now]);
     }

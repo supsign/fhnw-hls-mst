@@ -37,7 +37,7 @@ class CourseYearService extends BaseModelService
             'semester_id' => $semester->id,
             'name' => $name,
             'number' => $number,
-            'contents' => $course->contents,
+            'contents' => str_replace(['<font face=Arial size=2>', '</font>'], '', $course->contents),
             'is_audit' => str_contains($name, '(Prüfung)'),
         ]);
     }

@@ -3,6 +3,6 @@
                         :completions="{{$planning->student->completions}}"
                         :planning-id="{{$planning->id}}"
                         :semesters="{{ $semesters }}"
-                        :specialisation-year="{{$specialisationYear}}"
-                   :assessment-courses="{{$assessmentCourses ?? json_encode(null)}}"
+{{--                        :specialisation-year="{{$specialisationYear}}"--}}
+{{--                   :assessment-courses="{{$assessmentCourses ?? json_encode(null)}}"--}}
 ></vue-state-wrapper>

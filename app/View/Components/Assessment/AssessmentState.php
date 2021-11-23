@@ -20,8 +20,8 @@ class AssessmentState extends Component
     public ?Assessment $assessment;
 //    public ?Specialization $specialization;
     public Collection $assessmentCourses;
-    public Collection $specialisationCourses;
-    public ?SpecializationYear $specialisationYear;
+//    public Collection $specialisationCourses;
+//    public ?SpecializationYear $specialisationYear;
 
     /**
      * Create a new component instance.

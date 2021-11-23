@@ -1,17 +1,14 @@
 <template>
-    <div v-if="specialisation && specialisationYear">
-        <div class="border p-2 md:w-full p-2 mx-auto" @click="toggleShowSpecialization">Spezialisierung: {{ courseAmounts }}&nbsp;/&nbsp;{{
-                specialisationYear.amount_to_pass
-            }}
-        </div>
-        <div v-if="showSpecialization">
-            <div v-for="course in specializationtCourses">
-                <div class="w-8">
-                    <div v-if="coursesIsCompletedSusscessfully(course)">erfüllt</div>
-                    <div v-else-if="courseIsPlanned(course)">geplant</div>
-                    {{ course.name }}
-                </div>
+    <div>
+        <div v-for="course in specializationCourses" class="mb-1 flex flex-row justify-between">
+            <div>{{ course.name }}</div>
+            <div v-if="coursesIsCompletedSusscessfully(course)" class="my-auto"><i class="far fa-check-circle" aria-hidden="true"></i></div>
+            <div class="flex flex-row space-x-1"
+                 v-else-if="courseIsPlanned(course)">
+                <div>{{ coursePlanningSemester(course) }}</div>
+                <div>{{ coursePlanningSemesterHsFs(course) }}</div>
             </div>
+            <div v-else class="my-auto"><i class="far fa-circle " aria-hidden="true"></i></div>
         </div>
     </div>
 </template>
@@ -73,11 +70,6 @@ export default class VueSpecializationState extends BaseComponent {
     public courseIsPlanned(course: ICourse): boolean {
         return !!this.coursePlannings.find(coursePlanning => coursePlanning.course_id === course.id)
     }
-
-    public toggleShowSpecialization() {
-        this.showSpecialization = !this.showSpecialization;
-    }
-
 
 }
 </script>

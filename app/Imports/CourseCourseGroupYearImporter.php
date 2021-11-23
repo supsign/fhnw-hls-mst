@@ -51,7 +51,7 @@ class CourseCourseGroupYearImporter extends BaseCsvImport
                 'recommendation_id' => $recommendation->id,
             ]);
 
-            $courseGroupYear->studyFieldYear->update('recommendation_id', $recommendation->id);
+            $courseGroupYear->studyFieldYear->update(['recommendation_id' => $recommendation->id]);
         }
 
         return $this;

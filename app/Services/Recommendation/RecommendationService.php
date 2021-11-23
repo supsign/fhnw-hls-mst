@@ -16,7 +16,7 @@ class RecommendationService extends BaseModelService
     public function create(string $name): Recommendation
     {
         return $this->model::create([
-            'name' => $name
+            'name' => $name,
         ]);
     }
 

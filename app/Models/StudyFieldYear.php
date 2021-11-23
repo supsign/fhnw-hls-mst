@@ -11,7 +11,7 @@ class StudyFieldYear extends BaseModel
     {
         return $this->belongsTo(Assessment::class);
     }
-    
+
     public function courseGroupYears()
     {
         return $this->hasMany(CourseGroupYear::class);

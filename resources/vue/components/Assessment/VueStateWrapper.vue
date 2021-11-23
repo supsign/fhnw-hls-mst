@@ -15,7 +15,7 @@
         <div class="md:w-full mx-auto grid grid-cols-3">
             <div></div>
             <div class="text-center border-l border-hls text-sm hover:bg-hls hover:border-gray-200">
-                <div>{{ assessmentAmount }}&nbsp;|&nbsp;{{  }}</div>
+                <div>{{ assessmentAmount }}&nbsp;|&nbsp;{{ specialisationYear }}</div>
                 <div>Specialisation</div>
             </div>
             <div class="text-center border-l border-hls text-sm hover:bg-hls hover:border-gray-200" @click="toggleShowAssessment">
@@ -44,7 +44,7 @@ import {ISpecializationYear} from "../../interfaces/specialzationYear.interface"
 
     }
 })
-export default class VueAssessmentWrapper extends BaseComponent {
+export default class VueStateWrapper extends BaseComponent {
     @Prop({type: Number})
     public planningId: number
 

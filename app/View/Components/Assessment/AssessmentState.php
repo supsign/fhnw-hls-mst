@@ -18,7 +18,7 @@ use Illuminate\View\Component;
 class AssessmentState extends Component
 {
     public ?Assessment $assessment;
-    public ?Assessment $specialization;
+//    public ?Specialization $specialization;
     public Collection $assessmentCourses;
     public Collection $specialisationCourses;
     public ?SpecializationYear $specialisationYear;
@@ -28,13 +28,12 @@ class AssessmentState extends Component
      *
      * @return void
      */
-    public function __construct(public Planning $planning, AssessmentService $assessmentService)
+    public function __construct(public Planning $planning, AssessmentService $assessmentService, public Specialization $specialization)
     {
         $this->assessment = $assessmentService->getApplicableAssessment($planning);
-        $this->specialization = $assessmentService->getApplicableAssessment($planning);
         $this->assessmentCourses = $this->assessment?->courses ?: collect();
-        $this->specialisationCourses = $this->specialization->courses ?: collect();
-        $this->specialisationYear = $this->specialization->specializationYear;
+//        $this->specialisationCourses = $this->specialization->courses ?: collect();
+//        $this->specialisationYear = $this->specialization->specializationYear;
     }
 
     /**

@@ -1,5 +1,6 @@
 <?php
 
+use App\Imports\AssessmentImport;
 use App\Imports\CompletionAttemptImport;
 use App\Imports\CompletionCreditImport;
 use App\Imports\CourseCourseGroupYearImporter;
@@ -40,6 +41,13 @@ class InitialCreate extends Migration
      */
     public function up()
     {
+        Schema::create('assessments', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->nullable();
+            $table->integer('amount_to_pass')->nullable();
+            $table->timestampsTz();
+        });
+
         Schema::create('course_types', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
@@ -157,6 +165,7 @@ class InitialCreate extends Migration
 
         Schema::create('study_field_years', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('assessment_id')->nullable()->constrained();
             $table->foreignId('begin_semester_id')->constrained('semesters');
             $table->foreignId('origin_study_field_year_id')->nullable()->constrained('study_field_years');
             $table->foreignId('study_field_id')->constrained();
@@ -180,6 +189,7 @@ class InitialCreate extends Migration
             $table->id();
             $table->foreignId('specialization_id')->constrained();
             $table->foreignId('study_field_year_id')->constrained();
+            $table->foreignId('assessment_id')->nullable()->constrained();
             $table->integer('amount_to_pass')->nullable();
             $table->timestampsTz();
 
@@ -189,6 +199,7 @@ class InitialCreate extends Migration
         Schema::create('cross_qualification_years', function (Blueprint $table) {
             $table->id();
             $table->foreignId('cross_qualification_id')->constrained();
+            $table->foreignId('assessment_id')->nullable()->constrained();
             $table->foreignId('study_field_year_id')->constrained();
             $table->integer('amount_to_pass')->nullable();
             $table->timestampsTz();
@@ -302,21 +313,12 @@ class InitialCreate extends Migration
             $table->timestampsTz();
         });
 
-        Schema::create('assessments', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('cross_qualification_year_id')->constrained();
-            $table->foreignId('specialization_year_id')->constrained();
-            $table->foreignId('study_field_year_id')->constrained();
-            $table->integer('amount_to_pass')->nullable();
-            $table->integer('credits_to_pass')->nullable();
-            $table->timestampsTz();
-        });
-
         Schema::create('assessment_course', function (Blueprint $table) {
             $table->id();
             $table->foreignId('course_id')->constrained();
             $table->foreignId('assessment_id')->constrained();
             $table->timestampsTz();
+            $table->unique(['course_id', 'assessment_id']);
         });
 
         Schema::create('students', function (Blueprint $table) {
@@ -396,6 +398,7 @@ class InitialCreate extends Migration
             $table->timestampsTz();
         });
 
+        (new AssessmentImport)->import();
         (new CourseCourseGroupYearImporter)->import();
         (new CourseSpecializationYearImport)->import();
 

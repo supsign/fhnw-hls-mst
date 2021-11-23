@@ -28,7 +28,7 @@ class CourseCourseGroupYearImporter extends BaseCsvImport
     {
         $courseGroup = $this->courseGroupService->getByImportId($this->line['id_modulgruppe']);
 
-        foreach ($courseGroup->courseGroupYears AS $courseGroupYear) {
+        foreach ($courseGroup->courseGroupYears as $courseGroupYear) {
             $this->courseCourseGroupYearService->firstOrCreate([
                 'course_id' => $this->courseService->getByNumber($this->line['laufnummer'])->id,
                 'course_group_year_id' => $courseGroupYear->id,

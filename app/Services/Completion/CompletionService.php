@@ -5,6 +5,7 @@ namespace App\Services\Completion;
 use App\Models\Completion;
 use App\Models\Course;
 use App\Models\CourseYear;
+use App\Models\SkillStundent;
 use App\Models\Student;
 use App\Services\Base\BaseModelService;
 use App\Services\Evento\Traits\CreateOrUpdateOnEventoId;
@@ -26,6 +27,19 @@ class CompletionService extends BaseModelService
         parent::__construct($model);
     }
 
+    protected function attachSkillsToStudent(Student $student, CourseYear $courseYear): self
+    {
+        foreach ($courseYear->course->skills AS $skill) {
+            SkillStundent::create([
+                'course_year_id' => $courseYear->id,
+                'skill_id' => $skill->id,
+                'student_id' => $student->id,
+            ]);
+        }
+
+        return $this;
+    }
+
     public function createUpdateOrDeleteOnEventoIdAsAttempt(int $eventoId, Student $student, CourseYear $courseYear, int $credits, string $status, string $grade = ''): ?Completion
     {
         switch (true) {
@@ -34,6 +48,7 @@ class CompletionService extends BaseModelService
                 break;
             case $grade === 'erfüllt' || $grade >= 4:
                 $completionTypeId = 2;
+                $this->attachSkillsToStudent($student, $courseYear);
                 break;
             case $grade === 'nicht erfüllt' || $grade < 4:
                 $completionTypeId = 3;
@@ -65,10 +80,14 @@ class CompletionService extends BaseModelService
 
     public function createOrUpdateOnEventoIdAsCredit(int $eventoId, Student $student, Course $course, int $credits): Completion
     {
+        $courseYear = $course->courseYears()->first();
+
+        $this->attachSkillsToStudent($student, $courseYear);
+
         /* @var $completion Completion */
         $completion = $this->createOrUpdateOnEventoIdTrait($eventoId, [
             'student_id' => $student->id,
-            'course_year_id' => $course->courseYears()->first()->id,
+            'course_year_id' => $courseYear->id,
             'credits' => $credits,
             'completion_type_id' => 4,
         ]);

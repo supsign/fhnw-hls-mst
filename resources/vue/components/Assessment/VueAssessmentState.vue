@@ -1,16 +1,27 @@
 <template>
-    <div v-if="assessment">
-        <div class="border p-2 md:w-full p-2 mx-auto" @click="toggleShowAssessment">Assessment: {{ courseAmounts }}&nbsp;/&nbsp;{{
-                assessment.amount_to_pass
-            }}
-        </div>
-        <div v-if="showAssessment">
-            <div v-for="course in assessmentCourses">
-                <div class="w-8">
-                    <div v-if="coursesIsCompletedSusscessfully(course)">erfüllt</div>
-                    <div v-else-if="courseIsPlanned(course)">geplant</div>
-                    {{ course.name }}
+    <div class="rounded border shadow-md fixed bottom-0 left-0 mt-2 w-full bg-hls-200"
+         v-if="assessment">
+        <div class="border-b text-sm lg:text-base p-3 bg-hls transition duration-200 ease-in-out"
+             v-if="showAssessment">
+            <div v-for="course in assessmentCourses" class="mb-1">
+                <div class="flex flex-row justify-between">
+                    <div>{{ course.name }}</div>
+                    <div v-if="coursesIsCompletedSusscessfully(course)" class="my-auto"><i class="far fa-check-circle" aria-hidden="true"></i></div>
+                    <div class="flex flex-row space-x-1"
+                         v-else-if="courseIsPlanned(course)">
+                        <div>{{ coursePlanningSemester(course) }}</div>
+                        <div>{{ coursePlanningSemesterHsFs(course) }}</div>
+                    </div>
+                    <div v-else class="my-auto"><i class="far fa-circle " aria-hidden="true"></i></div>
                 </div>
+            </div>
+        </div>
+        <div class="md:w-full mx-auto grid grid-cols-3">
+            <div></div>
+            <div></div>
+            <div class="text-center border-l border-hls text-sm hover:bg-hls hover:border-gray-200" @click="toggleShowAssessment">
+                <div>{{ courseAmounts }}&nbsp;|&nbsp;{{ assessment.amount_to_pass }}</div>
+                <div>Assessment</div>
             </div>
         </div>
     </div>
@@ -23,6 +34,7 @@ import {ICompletion} from "../../interfaces/completion.interface";
 import {IAssessment} from "../../interfaces/assessment.interface";
 import {ICourse} from "../../interfaces/course.interface"
 import {ICoursePlanning} from "../../store/coursePlanning/coursePlanning.interface";
+import {ISemester} from "../../interfaces/semester.interface";
 
 @Component
 export default class VueAssessmentState extends BaseComponent {
@@ -37,6 +49,9 @@ export default class VueAssessmentState extends BaseComponent {
 
     @Prop({type: Array})
     public completions: ICompletion[]
+
+    @Prop({type: Array})
+    public semesters: ISemester[]
 
     public showAssessment = false;
 
@@ -74,7 +89,15 @@ export default class VueAssessmentState extends BaseComponent {
         this.showAssessment = !this.showAssessment;
     }
 
+    public coursePlanningSemester(course: ICourse) {
+        const semesterId = this.coursePlannings.find(semesterId => semesterId.course_id === course.id).semester_id;
+        return this.semesters.find(semester => semester.id === semesterId).year -2000;
+    }
 
+    public coursePlanningSemesterHsFs(course: ICourse) {
+        const semesterId = this.coursePlannings.find(semesterId => semesterId.course_id === course.id).semester_id;
+        return this.semesters.find(semester => semester.id === semesterId).is_hs  ? 'HS' : 'FS';
+    }
 }
 </script>
 

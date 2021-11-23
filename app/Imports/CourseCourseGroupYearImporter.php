@@ -3,6 +3,8 @@
 namespace App\Imports;
 
 use App;
+use App\Models\CourseRecommendation;
+use App\Models\Recommendation;
 use App\Services\Course\CourseService;
 use App\Services\CourseCourseGroupYear\CourseCourseGroupYearService;
 use App\Services\CourseGroup\CourseGroupService;
@@ -26,13 +28,28 @@ class CourseCourseGroupYearImporter extends BaseCsvImport
 
     public function importLine()
     {
+        $course = $this->courseService->getByNumber($this->line['laufnummer']);
         $courseGroup = $this->courseGroupService->getByImportId($this->line['id_modulgruppe']);
 
         foreach ($courseGroup->courseGroupYears as $courseGroupYear) {
             $this->courseCourseGroupYearService->firstOrCreate([
-                'course_id' => $this->courseService->getByNumber($this->line['laufnummer'])->id,
+                'course_id' => $course->id,
                 'course_group_year_id' => $courseGroupYear->id,
             ]);
+
+            if (empty($this->line['semester'])) {
+                continue;
+            }
+
+            CourseRecommendation::firstOrCreate([
+                'course_id' => $course->id,
+                'planned_semester' => $this->line['semester'],
+                'recommendation_id' => Recommendation::firstOrCreate([
+                    'name' => $courseGroupYear->studyFieldYear->studyField->name,
+                ])->id,
+            ]);
         }
+
+        return $this;
     }
 }

@@ -41,6 +41,4 @@ class AttacheStudentToMentorServiceTest extends TestCase
 
         $this->assertDatabaseHas(MentorStudent::class, ['mentor_id' => $mentor->id, 'student_id' => $student->id]);
     }
-
-
 }

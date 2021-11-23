@@ -17,7 +17,7 @@ class AttacheStudentToMentorService
         return $this->mentorStudentModel::firstOrCreate(
             [
                 'mentor_id' => $mentor->id,
-                'student_id' => $student->id
+                'student_id' => $student->id,
             ]
         );
     }
@@ -27,7 +27,7 @@ class AttacheStudentToMentorService
         $mentorStudent = $this->mentorStudentModel::where(
             [
                 'mentor_id' => $mentor->id,
-                'student_id' => $student->id
+                'student_id' => $student->id,
             ]
         )->first();
 

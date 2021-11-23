@@ -24,7 +24,6 @@ class Mentors extends Component
         $this->allMentors = Mentor::all();
 
         $this->myMentors = $student->mentors;
-
     }
 
     /**
@@ -37,6 +36,7 @@ class Mentors extends Component
         if (!$this->student->id) {
             return null;
         }
+
         return view('components.student.mentors');
     }
 }

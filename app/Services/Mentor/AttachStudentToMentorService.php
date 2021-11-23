@@ -6,13 +6,13 @@ use App\Models\Mentor;
 use App\Models\MentorStudent;
 use App\Models\Student;
 
-class AttacheStudentToMentorService
+class AttachStudentToMentorService
 {
     public function __construct(private MentorStudent $mentorStudentModel)
     {
     }
 
-    public function attache(Mentor $mentor, Student $student): MentorStudent
+    public function attach(Mentor $mentor, Student $student): MentorStudent
     {
         return $this->mentorStudentModel::firstOrCreate(
             [

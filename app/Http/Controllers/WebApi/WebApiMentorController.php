@@ -4,7 +4,7 @@ namespace App\Http\Controllers\WebApi;
 
 use App\Http\Controllers\Controller;
 use App\Models\Mentor;
-use App\Services\Mentor\AttacheStudentToMentorService;
+use App\Services\Mentor\AttachStudentToMentorService;
 use App\Services\User\PermissionAndRoleService;
 use Auth;
 
@@ -12,10 +12,11 @@ class WebApiMentorController extends Controller
 {
     public function __construct(
         protected PermissionAndRoleService $permissionAndRoleService,
-    ) {
+    )
+    {
     }
 
-    public function attachToStudent(Mentor $mentor, AttacheStudentToMentorService $attacheStudentToMentorService): Mentor
+    public function attachToStudent(Mentor $mentor, AttachStudentToMentorService $attacheStudentToMentorService): Mentor
     {
         $this->permissionAndRoleService->canPlanScheduleOrAbort();
 
@@ -25,10 +26,10 @@ class WebApiMentorController extends Controller
             abort(409, 'User is not a student.');
         }
 
-        return $attacheStudentToMentorService->attache($mentor, $user->student)->mentor;
+        return $attacheStudentToMentorService->attach($mentor, $user->student)->mentor;
     }
 
-    public function detachStudent(Mentor $mentor, AttacheStudentToMentorService $attacheStudentToMentorService): void
+    public function detachStudent(Mentor $mentor, AttachStudentToMentorService $attacheStudentToMentorService): void
     {
         $this->permissionAndRoleService->canPlanScheduleOrAbort();
 

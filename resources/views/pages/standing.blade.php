@@ -1,6 +1,6 @@
 <x-layout.app>
     <x-slot name="title">
-        @lang('l.standing')
+        Aktueller Stand
     </x-slot>
 
     <div class="container p-3 mx-auto">
@@ -11,7 +11,7 @@
             <!-- ToDo mehr Angaben zum Standartuser hinzufügen -->
             <div class="divide-y">
                 <div class="pb-2 flex justify-between">
-                    <div>@lang('l.standing'): {{$user->firstname}} {{$user->lastname}}</div>
+                    <div>Aktueller Stand: {{$user->firstname}} {{$user->lastname}}</div>
                     <div>{{$now}}</div>
                 </div>
                 <div class="py-2 border-t">
@@ -23,15 +23,20 @@
             </div>
         </x-app.card>
 
-        @foreach($student->studyFieldYear->courseGroupYears as $courseGroupsYear)
-            @dump($courseGroupsYear->c)
+        <div class="flex">
+            <div class="w-3/4">
+                <div>@lang('l.courseGroups')</div>
+                <div class="grid grid-cols-3 gap-4">
+                    @foreach($student->studyFieldYear->courseGroupYears as $courseGroupYear)
+                        <x-student.standing-course-group :student="$student" :courseGroupYear="$courseGroupYear"/>
+                    @endforeach
+                </div>
+            </div>
+            <div>
 
-        @endforeach
-        <x-app.card>
 
+            </div>
 
-        </x-app.card>
-
-
+        </div>
     </div>
 </x-layout.app>

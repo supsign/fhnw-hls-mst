@@ -27,6 +27,5 @@ class CrossQualificationYearServiceTest extends TestCase
         $studyFieldYear = StudyFieldYear::where(['evento_number' => '2-L-B-LSCH/19.a-SJ'])->first();
         $crossQualificationYear = $this->crossQualificationYearService->findByCrossQualificationAndStudyFieldYear($crossQualification, $studyFieldYear);
         $this->assertNotNull($crossQualificationYear);
-
     }
 }

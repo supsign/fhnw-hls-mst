@@ -22,6 +22,7 @@ class CrossQualificationYearService extends BaseModelService
         if (!$crossQualification || !$studyFieldYear) {
             return null;
         }
+
         return $this->model::where(['cross_qualification_id' => $crossQualification->id, 'study_field_year_id' => $studyFieldYear->id])->first();
     }
 }

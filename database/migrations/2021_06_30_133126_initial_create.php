@@ -299,23 +299,6 @@ class InitialCreate extends Migration
             $table->timestampsTz();
         });
 
-        Schema::create('recommendations', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('cross_qualification_year_id')->constrained();
-            $table->foreignId('specialization_year_id')->constrained();
-            $table->foreignId('study_field_year_id')->constrained();
-            $table->foreignId('origin_recommendation_id')->nullable()->constrained('recommendations');
-            $table->timestampsTz();
-        });
-
-        Schema::create('course_specialization_year', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('course_id')->constrained();
-            $table->foreignId('specialization_year_id')->constrained();
-
-            $table->timestampsTz();
-        });
-
         Schema::create('course_recommendation', function (Blueprint $table) {
             $table->id();
             $table->foreignId('course_id')->constrained();
@@ -419,8 +402,8 @@ class InitialCreate extends Migration
 
         (new AssessmentImport)->import();
         (new CourseCourseGroupYearImporter)->import();
-        (new CrossQualificationImport)->countAmountToPAss();
-        (new SpecializationImport)->countAmountToPAss();
+        (new CrossQualificationImport)->countAmountToPass();
+        (new SpecializationImport)->countAmountToPass();
 
         if (App::environment('testing')) {
             if (Storage::exists('Testingdata\Tab3_Modul.xlsx')) {

@@ -2,7 +2,11 @@
 
 namespace App\Services\Planning;
 
+use App\Models\CrossQualificationYear;
 use App\Models\Planning;
+use App\Models\SpecializationYear;
+use App\Models\Student;
+use App\Models\StudyFieldYear;
 use App\Services\Base\BaseModelService;
 
 class PlanningService extends BaseModelService
@@ -19,11 +23,29 @@ class PlanningService extends BaseModelService
         return $this;
     }
 
-    public function createEmptyPlanning(int $studentId, int $studyFieldYearId): Planning
+    public function createEmptyPlanning(
+        Student                $student,
+        StudyFieldYear         $studyFieldYear,
+        CrossQualificationYear $crossQualificationYear = null,
+        SpecializationYear     $specializationYear = null
+    ): Planning
     {
+        if ($crossQualificationYear && $specializationYear) {
+            abort(409, 'CreateEmptyPlanning: CrossQualificationYear and SpecializationYear are exclusive');
+        }
+        if ($crossQualificationYear && ($crossQualificationYear->study_field_year_id !== $studyFieldYear->id)) {
+            abort(409, 'CreateEmptyPlanning: CrossQualificationYear ist not compatible with StudyFieldYear');
+        }
+
+        if ($specializationYear && ($specializationYear->study_field_year_id !== $studyFieldYear->id)) {
+            abort(409, 'CreateEmptyPlanning: SpecializationYear ist not compatible with StudyFieldYear');
+        }
+
         $attributes = [
-            'student_id' => $studentId,
-            'study_field_year_id' => $studyFieldYearId,
+            'student_id' => $student->id,
+            'study_field_year_id' => $studyFieldYear->id,
+            'cross_qualification_year_id' => $crossQualificationYear?->id,
+            'specialization_year_id' => $specializationYear?->id
         ];
 
         return $this->model::create($attributes);

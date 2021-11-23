@@ -24,12 +24,11 @@ class PlanningService extends BaseModelService
     }
 
     public function createEmptyPlanning(
-        Student                $student,
-        StudyFieldYear         $studyFieldYear,
+        Student $student,
+        StudyFieldYear $studyFieldYear,
         CrossQualificationYear $crossQualificationYear = null,
-        SpecializationYear     $specializationYear = null
-    ): Planning
-    {
+        SpecializationYear $specializationYear = null
+    ): Planning {
         if ($crossQualificationYear && $specializationYear) {
             abort(409, 'CreateEmptyPlanning: CrossQualificationYear and SpecializationYear are exclusive');
         }
@@ -45,7 +44,7 @@ class PlanningService extends BaseModelService
             'student_id' => $student->id,
             'study_field_year_id' => $studyFieldYear->id,
             'cross_qualification_year_id' => $crossQualificationYear?->id,
-            'specialization_year_id' => $specializationYear?->id
+            'specialization_year_id' => $specializationYear?->id,
         ];
 
         return $this->model::create($attributes);

@@ -22,6 +22,7 @@ class SpecializationYearService extends BaseModelService
         if (!$specialization || !$studyFieldYear) {
             return null;
         }
+
         return $this->model::where(['specialization_id' => $specialization->id, 'study_field_year_id' => $studyFieldYear->id])->first();
     }
 }

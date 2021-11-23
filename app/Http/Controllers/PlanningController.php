@@ -25,12 +25,11 @@ class PlanningController extends Controller
 {
     public function __construct(
         private PermissionAndRoleService $permissionAndRoleService,
-        protected StudyFieldService      $studyFieldService,
-        protected SemesterService        $semesterService,
-        protected PlanningService        $planningService,
-        protected StudyFieldYearService  $studyFieldYearService,
-    )
-    {
+        protected StudyFieldService $studyFieldService,
+        protected SemesterService $semesterService,
+        protected PlanningService $planningService,
+        protected StudyFieldYearService $studyFieldYearService,
+    ) {
     }
 
     public function create()
@@ -45,18 +44,17 @@ class PlanningController extends Controller
             'semesters' => Semester::where('is_hs', true)->get(),
             'student' => $user->student,
             'specializations' => Specialization::all(),
-            'crossQualifications' => CrossQualification::all()
+            'crossQualifications' => CrossQualification::all(),
         ]);
     }
 
     public function store(
-        StoreRequest                  $request,
-        SpecializationYearService     $specializationYearService,
-        SpecializationService         $specializationService,
-        CrossQualificationService     $crossQualificationService,
+        StoreRequest $request,
+        SpecializationYearService $specializationYearService,
+        SpecializationService $specializationService,
+        CrossQualificationService $crossQualificationService,
         CrossQualificationYearService $crossQualificationYearService
-    )
-    {
+    ) {
         $this->permissionAndRoleService->canPlanScheduleOrAbort();
 
         $studyFieldYear = $this->studyFieldYearService->getByStudyFieldIdAndSemesterId(

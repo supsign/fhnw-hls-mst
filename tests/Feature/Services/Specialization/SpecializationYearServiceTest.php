@@ -27,6 +27,5 @@ class SpecializationYearServiceTest extends TestCase
         $studyFieldYear = StudyFieldYear::where(['evento_number' => '2-L-B-LSCH/19.a-SJ'])->first();
         $specializationYear = $this->specializationYearService->findBySpecializationAndStudyFieldYear($specialization, $studyFieldYear);
         $this->assertNotNull($specializationYear);
-
     }
 }

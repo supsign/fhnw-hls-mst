@@ -50,7 +50,7 @@ export default class VueSpecializationState extends BaseComponent {
 
     public get courseAmounts(): number {
         let courseAmounts = 0;
-        for (const course of this.assessmentCourses) {
+        for (const course of this.specializationtCourses) {
             if (this.coursesIsCompletedSusscessfully(course)) {
                 courseAmounts++;
                 continue;
@@ -75,7 +75,7 @@ export default class VueSpecializationState extends BaseComponent {
     }
 
     public toggleShowAssessment() {
-        this.showAssessment = !this.showAssessment;
+        this.showSpecialization = !this.showSpecialization;
     }
 
 

@@ -48,7 +48,6 @@ class CourseCourseGroupYearImporter extends BaseCsvImport
                     'name' => $courseGroupYear->studyFieldYear->studyField->name,
                 ])->id,
             ]);
-
         }
 
         return $this;

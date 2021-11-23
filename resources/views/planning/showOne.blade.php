@@ -19,6 +19,8 @@
             <div class="mt-2">
                 <div>{{ $planning->studyFieldYear->studyField->studyProgram->name }}</div>
                 <div>{{ $planning->studyFieldYear->studyField->name }}</div>
+                <div>{{ $planning->crossQualificationYear?->crossQualification->name }}</div>
+                <div>{{ $planning->specializationYear?->specialization->name }}</div>
                 <div>@lang('l.startDate'): {{ $planning->studyFieldYear->beginSemester->year }}</div>
             </div>
         </x-app.card>

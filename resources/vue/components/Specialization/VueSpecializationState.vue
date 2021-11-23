@@ -1,7 +1,7 @@
 <template>
-    <div v-if="specialisazion && specialisazionYear">
-        <div class="border p-2 md:w-full p-2 mx-auto" @click="toggleShowAssessment">Spezialisierung: {{ courseAmounts }}&nbsp;/&nbsp;{{
-                specialisazionYear.amount_to_pass
+    <div v-if="specialisation && specialisationYear">
+        <div class="border p-2 md:w-full p-2 mx-auto" @click="toggleShowSpecialization">Spezialisierung: {{ courseAmounts }}&nbsp;/&nbsp;{{
+                specialisationYear.amount_to_pass
             }}
         </div>
         <div v-if="showSpecialization">
@@ -31,13 +31,13 @@ export default class VueSpecializationState extends BaseComponent {
     public planningId: number
 
     @Prop({type: Object})
-    public specialisazion: ISpecialization
+    public specialisation: ISpecialization
 
     @Prop({type: Object})
-    public specialisazionYear: ISpecializationYear
+    public specialisationYear: ISpecializationYear
 
     @Prop({type: Array})
-    public specializationtCourses: ICourse[]
+    public specializationCourses: ICourse[]
 
     @Prop({type: Array})
     public completions: ICompletion[]
@@ -50,7 +50,7 @@ export default class VueSpecializationState extends BaseComponent {
 
     public get courseAmounts(): number {
         let courseAmounts = 0;
-        for (const course of this.specializationtCourses) {
+        for (const course of this.specializationCourses) {
             if (this.coursesIsCompletedSusscessfully(course)) {
                 courseAmounts++;
                 continue;
@@ -74,7 +74,7 @@ export default class VueSpecializationState extends BaseComponent {
         return !!this.coursePlannings.find(coursePlanning => coursePlanning.course_id === course.id)
     }
 
-    public toggleShowAssessment() {
+    public toggleShowSpecialization() {
         this.showSpecialization = !this.showSpecialization;
     }
 

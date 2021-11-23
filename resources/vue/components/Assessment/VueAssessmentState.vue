@@ -35,6 +35,8 @@ export default class VueAssessmentState extends BaseComponent {
     @Prop({type: Array})
     public semesters: ISemester[]
 
+    public test = 5;
+
     public get coursePlannings(): ICoursePlanning[] {
         return this.models.coursePlanning.byPlanningId(this.planningId)
     }

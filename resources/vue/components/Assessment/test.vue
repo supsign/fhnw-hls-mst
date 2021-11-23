@@ -2,8 +2,7 @@
     <div class="rounded border shadow-md fixed bottom-0 left-0 mt-2 w-full bg-hls-200"
          v-if="assessment">
         <div class="border-b text-sm lg:text-base p-3 bg-hls transition duration-200 ease-in-out"
-             :class=" { hidden: !showAssessment}"
-             >
+             v-if="showAssessment">
             <vue-assessment-state :assessment="assessment"
                                   :assessment-courses="assessmentCourses"
                                   :completions="completions"
@@ -15,11 +14,11 @@
         <div class="md:w-full mx-auto grid grid-cols-3">
             <div></div>
             <div class="text-center border-l border-hls text-sm hover:bg-hls hover:border-gray-200">
-                <div>{{  }}&nbsp;|&nbsp;{{  }}</div>
+                <div>{{  }}&nbsp;|&nbsp;{{ specialisationYear.amount_to_pass }}</div>
                 <div>Specialisation</div>
             </div>
             <div class="text-center border-l border-hls text-sm hover:bg-hls hover:border-gray-200" @click="toggleShowAssessment">
-                <div>{{ assessmentAmount }}&nbsp;|&nbsp;{{ assessment.amount_to_pass }}</div>
+                <div>{{ this.$refs.assessmentState }}&nbsp;|&nbsp;{{ assessment.amount_to_pass }}</div>
                 <div>Assessment</div>
             </div>
         </div>
@@ -73,8 +72,6 @@ export default class VueAssessmentWrapper extends BaseComponent {
 
     public showSpecialization = false;
 
-    public assessmentComponent: VueAssessmentState = null;
-
     public toggleShowAssessment() {
         this.showAssessment = !this.showAssessment;
     }
@@ -83,19 +80,6 @@ export default class VueAssessmentWrapper extends BaseComponent {
     }
     public created() {
         console.log(this.specialisationYear);
-    }
-
-    public mounted() {
-        this.assessmentComponent = this.$refs.assessmentState as VueAssessmentState;
-    }
-
-    public get assessmentAmount() {
-        if(!this.assessmentComponent) {
-            return 0;
-        }
-        console.log(this.$refs);
-        // @ts-ignore
-        return this.assessmentComponent.courseAmounts;
     }
 }
 </script>

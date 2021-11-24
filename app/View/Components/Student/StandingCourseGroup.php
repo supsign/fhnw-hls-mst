@@ -17,8 +17,6 @@ class StandingCourseGroup extends Component
         protected CourseGroupYearService $courseGroupYearService
     ) {
         $this->reachedCredits = $this->courseGroupYearService->getCredits($this->courseGroupYear, $this->student);
-
-
     }
 
     public function render()

@@ -40,6 +40,7 @@ class CourseGroupYearService extends BaseModelService
                 return true;
             }
         }
+
         return false;
     }
 }

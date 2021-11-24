@@ -40,6 +40,7 @@ class CourseService extends BaseModelService
         $lastSemester = null;
 
         $courseYears = $course->courseYears;
+
         return $courseYears->load('semester')->sortByDesc('semester.start_date')->first();
     }
 

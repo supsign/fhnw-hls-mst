@@ -76,4 +76,9 @@ class Course extends BaseModel
     {
         return $this->hasMany(CourseYear::class);
     }
+
+    public function getCourseYearBySemesterOrLatest(Semester $semester = null): ?CourseYear
+    {
+        return $this->getService()->getCourseYearBySemesterOrLatest($this, $semester);
+    }
 }

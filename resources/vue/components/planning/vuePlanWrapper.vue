@@ -1,8 +1,8 @@
 <template>
     <div class="p-2 bg-white rounded shadow mb-4">
-        <div class="content-center p-2 rounded-t text-base md:text-lg" @click="toggleCollapse">
+        <div class="content-center text-base md:text-" @click="toggleCollapse">
 
-            <div class="flex flex-row justify-between space-x-2">
+            <div class="flex flex-row justify-between space-x-3">
                 <div class="my-auto">
                     <i v-if="isCollapsed" aria-hidden="true" class="fas fa-arrow-right"></i>
                     <i v-if="!isCollapsed" aria-hidden="true" class="fas fa-arrow-down"></i>
@@ -11,7 +11,7 @@
             </div>
 
         </div>
-        <div v-if="!isCollapsed" class="p-3 border-t">
+        <div v-if="!isCollapsed" class="pt-2 pb-0 text-sm lg:text-base">
             <slot></slot>
         </div>
     </div>

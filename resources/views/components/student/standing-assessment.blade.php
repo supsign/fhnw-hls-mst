@@ -23,11 +23,6 @@
         </div>
 
 
-        <div class="">
-
-
-        </div>
-
     </x-app.card>
 
 

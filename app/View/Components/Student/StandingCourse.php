@@ -9,8 +9,11 @@ use Illuminate\View\Component;
 
 class StandingCourse extends Component
 {
+    public $skills;
+
     public function __construct(public Course $course, public Student $student, protected CourseCompletionService $courseCompletionService)
     {
+        $this->skills = $this->course->skillsAcquisition;
     }
 
     public function render()

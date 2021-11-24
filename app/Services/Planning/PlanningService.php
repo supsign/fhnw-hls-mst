@@ -81,6 +81,10 @@ class PlanningService extends BaseModelService
         $credits = 0;
 
         foreach ($planning->courses AS $course) {
+            if ($this->courseCompletionService->courseIsSuccessfullyCompleted($course, $planning->student)) {
+                continue;
+            }
+
             $credits += $course->credits;
         }
 

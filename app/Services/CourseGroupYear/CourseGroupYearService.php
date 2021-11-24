@@ -19,14 +19,17 @@ class CourseGroupYearService extends BaseModelService
 
     public function isSuccessfullyCompleted(CourseGroupYear $courseGroupYear, Student $student): bool
     {
-        foreach ($courseGroupYear->courses AS $course) {
-            if ($this->courseCompletionService->courseIsSuccessfullyCompleted($course, $student)) {
-                continue;
-            }
+        return $this->getCredits($courseGroupYear, $student) >= $courseGroupYear->credits_to_pass;
+    }
 
-            return false;
+    public function getCredits(CourseGroupYear $courseGroupYear, Student $student): int
+    {
+        $points = 0;
+
+        foreach ($courseGroupYear->courses AS $course) {
+            $points += $this->courseCompletionService->getCredits($course, $student);
         }
 
-        return true;
+        return $points;
     }
 }

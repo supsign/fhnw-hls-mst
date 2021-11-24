@@ -14,6 +14,11 @@ class CrossQualificationYearService extends BaseModelService
         parent::__construct($model);
     }
 
+    public function isSuccessfullyCompleted(CrossQualificationYear $crossQualifcationYear, Student $student): bool
+    {
+        return $this->getPassedAmount($crossQualifcationYear, $student) >= $crossQualifcationYear->amount_to_pass;
+    }
+
     public function getPassedAmount(CrossQualificationYear $crossQualifcationYear, Student $student): int
     {
         $amount = 0;

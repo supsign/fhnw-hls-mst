@@ -12,15 +12,15 @@ class CourseCompletionService
     {
     }
 
-    public function getPoints(Course $course, Student $student): int
+    public function getCredits(Course $course, Student $student): int
     {
-        $points = 0;
+        $credits = 0;
 
         foreach ($this->getSuccessfulCompletionsByStudent($course, $student) AS $completion) {
-            $points += $completion->credits;
+            $credits += $completion->credits;
         }
 
-        return $points;
+        return $credits;
     }
 
     public function courseIsSuccessfullyCompleted(Course $course, Student $student): bool

@@ -17,6 +17,11 @@ class SpecializationYearService extends BaseModelService
         parent::__construct($model);
     }
 
+    public function isSuccessfullyCompleted(SpecializationYear $specializationYear, Student $student): bool
+    {
+        return $this->getPassedAmount($specializationYear, $student) >= $specializationYear->amount_to_pass;
+    }
+
     public function getPassedAmount(SpecializationYear $specializationYear, Student $student): int
     {
         $amount = 0;

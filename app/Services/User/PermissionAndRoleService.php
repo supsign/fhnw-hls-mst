@@ -2,9 +2,9 @@
 
 namespace App\Services\User;
 
+use App\Models\Student;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class PermissionAndRoleService
@@ -77,6 +77,34 @@ class PermissionAndRoleService
     public function canPlanScheduleOrAbort(): self
     {
         if (!Auth::user()->hasPermissionTo('plan schedule')) {
+            abort(403, __('l.noAccess'));
+        }
+
+        return $this;
+    }
+
+    public function canPlanMySchedulesOrAbort(): self
+    {
+        if (!Auth::user()->hasPermissionTo('plan my schedules')) {
+            abort(403, __('l.noAccess'));
+        }
+
+        return $this;
+    }
+
+    public function canPlanStudentSchedulesOrAbort(Student $student): self
+    {
+        $user = Auth::user();
+
+        $hasPermisson = $user->hasPermissionTo('plan students schedules');
+
+        $mentor = $user->mentor;
+
+        $stuentsOfMentor = $mentor?->students ?? collect();
+
+        $isMentorOfStudent = $stuentsOfMentor->contains($student);
+
+        if (!$hasPermisson || !$mentor || !$isMentorOfStudent) {
             abort(403, __('l.noAccess'));
         }
 

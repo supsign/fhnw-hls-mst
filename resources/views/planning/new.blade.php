@@ -8,7 +8,8 @@
             <x-slot name="title">
                 neue Studienplanung
             </x-slot>
-            <vue-form id="new_planning" method="POST" action="{{ route('planning.store') }}">
+            <vue-form id="new_planning" method="POST"
+                      action="{{ $asStudent ? route('mentor.planning.store', $asStudent) : route('planning.store')}}">
                 @csrf
                 <div class="flex flex-col space-y-4">
                     {{--                    <x-base.input type="text" name="course" label="Course" value="{{ old('course') }}" :init-errors="$errors->get('course')"/>--}}

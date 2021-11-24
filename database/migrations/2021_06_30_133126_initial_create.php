@@ -342,6 +342,8 @@ class InitialCreate extends Migration
             $table->id();
             $table->foreignId('mentor_id')->constrained();
             $table->foreignId('student_id')->constrained();
+            $table->string('firstname')->nullable();
+            $table->string('lastname')->nullable();
             $table->timestampsTz();
         });
 

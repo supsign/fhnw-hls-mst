@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MentorPlanningController;
 use App\Http\Controllers\PlanningController;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +39,13 @@ Route::middleware(['web', 'auth'])->group(
         Route::post('plannings', [PlanningController::class, 'store'])->name('planning.store');
         Route::get('plannings/{planning}', [PlanningController::class, 'showOne'])->name('planning.showOne');
         Route::delete('plannings/{planning}', [PlanningController::class, 'delete'])->name('planning.delete');
+
+        // Planning as Student
+        Route::get('students/{student}/plannings', [MentorPlanningController::class, 'list'])->name('mentor.planning.list');
+        Route::get('students/{student}/plannings/create', [MentorPlanningController::class, 'create'])->name('mentor.planning.create');
+        Route::post('students/{student}/plannings', [MentorPlanningController::class, 'store'])->name('mentor.planning.store');
+        Route::get('students/{student}/plannings/{planning}', [MentorPlanningController::class, 'showOne'])->name('mentor.planning.showOne');
+        Route::delete('students/{student}/plannings/{planning}', [MentorPlanningController::class, 'delete'])->name('mentor.planning.delete');
 
         // Route::get('user', [UserController::class, 'index'])->name('user.index');
     }

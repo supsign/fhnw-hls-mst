@@ -5,16 +5,18 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Planning\StoreRequest;
 use App\Models\Planning;
 use App\Models\Semester;
+use App\Models\Student;
 use App\Models\StudyField;
 use App\Models\StudyProgram;
+use App\Services\Mentor\MentorStudentService;
 use App\Services\Planning\PlanningService;
 use App\Services\Semester\SemesterService;
 use App\Services\StudyField\StudyFieldService;
 use App\Services\StudyFieldYear\StudyFieldYearService;
 use App\Services\User\PermissionAndRoleService;
-use Illuminate\Support\Facades\Auth;
+use Auth;
 
-class PlanningController extends Controller
+class MentorPlanningController extends Controller
 {
     public function __construct(
         private PermissionAndRoleService $permissionAndRoleService,
@@ -26,16 +28,15 @@ class PlanningController extends Controller
     {
     }
 
-    public function create()
+    public function create(Student $student)
     {
-        $this->permissionAndRoleService->canPlanScheduleOrAbort();
-        $user = Auth::user();
+        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student);
 
         $hlsBachelorStudyProgram = StudyProgram::find(6);
 
-        $studyField = $user->student->studyFieldYear->studyField ?? null;
-        $semester = $user->student->studyFieldYear->beginSemester ?? null;
-        $studyProgram = $user->student->studyFieldYear->studyField->studyProgram ?? null;
+        $studyField = $student->studyFieldYear->studyField ?? null;
+        $semester = $student->studyFieldYear->beginSemester ?? null;
+        $studyProgram = $student->studyFieldYear->studyField->studyProgram ?? null;
 
         if (!$studyProgram) {
             $studyProgram = $hlsBachelorStudyProgram;
@@ -55,13 +56,13 @@ class PlanningController extends Controller
             'studyField' => $studyField,
             'semester' => $semester,
             'studyProgram' => $studyProgram,
-            'asStudent' => null
+            'asStudent' => $student
         ]);
     }
 
-    public function store(StoreRequest $request)
+    public function store(StoreRequest $request, Student $student)
     {
-        $this->permissionAndRoleService->canPlanScheduleOrAbort();
+        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student);
 
         $studyFieldYear = $this->studyFieldYearService->getByStudyFieldIdAndSemesterId(
             $request->studyField,
@@ -74,31 +75,52 @@ class PlanningController extends Controller
         }
 
         $planning = $this->planningService->createEmptyPlanning(
-            Auth::user()->student->id,
+            $student->id,
             $studyFieldYear->id,
         );
 
-        return redirect()->route('planning.showOne', $planning);
+        return redirect()->route('mentor.planning.showOne', [$student, $planning]);
     }
 
-    public function showOne(Planning $planning)
+    public function showOne(Student $student, Planning $planning, MentorStudentService $mentorStudentService)
     {
-        $this->permissionAndRoleService->canPlanScheduleOrAbort();
+        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student);
+
+        $mentorStudent = $mentorStudentService->getByMentorAndStudent(Auth::user()?->mentor, $student);
+
+        if (!$mentorStudent) {
+            return redirect()->route('mentor.planning.list', $student);
+        }
 
         $viewParameter = [
             'planning' => $planning,
             'courseGroupYears' => $planning->studyFieldYear->courseGroupYears,
-            'mentorStudent' => null
+            'mentorStudent' => $mentorStudent
         ];
 
         return view('planning.showOne', $viewParameter);
     }
 
-    public function delete(PlanningService $planningService, Planning $planning)
+    public function delete(Student $student, Planning $planning, PlanningService $planningService)
     {
-        $this->permissionAndRoleService->canPlanScheduleOrAbort();
+        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student);
         $planningService->cascadingDelete($planning);
 
-        return redirect()->route('home');
+        return redirect()->route('mentor.planning.list', $student);
+    }
+
+    public function list(Student $student, MentorStudentService $mentorStudentService)
+    {
+        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student);
+
+        $plannings = $student->plannings;
+
+        $mentorStudent = $mentorStudentService->getByMentorAndStudent(Auth::user()?->mentor, $student);
+
+        if (!$mentorStudent) {
+            return redirect()->route('home');
+        }
+
+        return view('pages.student-plannings', ['plannings' => $plannings, 'mentorStudent' => $mentorStudent]);
     }
 }

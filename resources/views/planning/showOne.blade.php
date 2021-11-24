@@ -8,13 +8,17 @@
             <x-slot name="title">
                 <div class="flex flex-row justify-between">
                     <div class="my-auto">@lang('l.planning')</div>
-                    <vue-form method="POST" action="{{ route('planning.delete', $planning) }}">
+                    <vue-form method="POST"
+                              action="{{ $mentorStudent ? route('mentor.planning.delete', [$mentorStudent->student, $planning]) : route('planning.delete', $planning) }}">
                         @csrf
                         @method('DELETE')
                         <button class="" type="submit" name="delete_planning"><i
                                 class="fas fa-trash text-red-600 text-xl" aria-hidden="true"></i></button>
                     </vue-form>
                 </div>
+                @if($mentorStudent)
+                    <div>{{ $mentorStudent->firstname }} {{ $mentorStudent->lastname }}</div>
+                @endif
             </x-slot>
             <div class="mt-2">
                 <div>{{ $planning->studyFieldYear->studyField->studyProgram->name }}</div>
@@ -61,7 +65,7 @@
                 <div class="text-sm lg:text-base">
                     @foreach($courseGroupYear->courseCourseGroupYears as $courseCourseGroupYear)
                         <div class="flex flex-row space-x-5 border-b p-1 text-left">
-                            <x-planning.completion :student="$user->student"
+                            <x-planning.completion :student="$planning->student"
                                                    :course="$courseCourseGroupYear->course"></x-planning.completion>
                             <div class="my-auto break-words flex-grow">
                                 {{$courseCourseGroupYear->course->name}}
@@ -69,7 +73,7 @@
                             <div class="flex-none my-auto">
                                 @inject('semesterService', 'App\Services\Semester\SemesterService')
                                 @inject('courseCompletionService', 'App\Services\Completion\CourseCompletionService')
-                                @if(!$courseCompletionService->courseIsSuccessfullyCompleted($courseCourseGroupYear->course, $user->student))
+                                @if(!$courseCompletionService->courseIsSuccessfullyCompleted($courseCourseGroupYear->course, $planning->student))
                                     <vue-plan-course :planning-id="{{$planning->id}}"
                                                      :course-id="{{$courseCourseGroupYear->course->id}}"
                                                      :semesters="{{$semesterService->getCurrentAndFutureSemesters()->sortBy('start_date')->slice(0,10)->values()}}"></vue-plan-course>

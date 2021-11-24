@@ -9,7 +9,6 @@ use Illuminate\Database\Seeder;
 
 class ChemieRecommendations extends Seeder
 {
-
     private $data = [
         ['number' => 'B-LS-KT 039', 'semester' => 1],
         ['number' => 'B-LS-CH 017', 'semester' => 3],
@@ -90,6 +89,5 @@ class ChemieRecommendations extends Seeder
 
             CourseRecommendation::create(['course_id' => $course->id, 'recommendation_id' => $recommendation->id, 'planned_semester' => $rec['semester']]);
         }
-
     }
 }

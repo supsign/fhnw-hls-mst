@@ -40,7 +40,7 @@ Route::middleware(['web', 'auth'])->group(
         Route::delete('plannings/{planning}', [PlanningController::class, 'delete'])->name('planning.delete');
 
         Route::post('plannings/{planning}/setrecommendations', [PlanningController::class, 'setRecommendations'])->name('planning.setRecommendations');
-        
+
         // Route::get('user', [UserController::class, 'index'])->name('user.index');
     }
 );

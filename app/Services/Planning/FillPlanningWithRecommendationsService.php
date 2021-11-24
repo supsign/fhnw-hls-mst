@@ -10,12 +10,11 @@ use App\Services\Semester\SemesterService;
 class FillPlanningWithRecommendationsService
 {
     public function __construct(
-        private RecommendationService   $recommendationService,
+        private RecommendationService $recommendationService,
         private CourseCompletionService $courseCompletionService,
-        private CoursePlanningService   $coursePlanningService,
-        private SemesterService         $semesterService,
-    )
-    {
+        private CoursePlanningService $coursePlanningService,
+        private SemesterService $semesterService,
+    ) {
     }
 
     public function fill(Planning $planning): Planning
@@ -26,7 +25,6 @@ class FillPlanningWithRecommendationsService
             return $planning;
         }
         $courseRecommendations = $recommendation->courseRecommendations;
-
 
         foreach ($courseRecommendations as $courseRecommendation) {
             if ($this->courseCompletionService->courseIsSuccessfullyCompleted($courseRecommendation->course, $planning->student)) {
@@ -39,6 +37,7 @@ class FillPlanningWithRecommendationsService
             $this->coursePlanningService->planCourse($planning, $courseRecommendation->course, $plannedSemester);
         }
         $planning->load('courses');
+
         return $planning;
     }
 }

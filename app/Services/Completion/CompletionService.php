@@ -27,19 +27,6 @@ class CompletionService extends BaseModelService
         parent::__construct($model);
     }
 
-    protected function attachSkillsToStudent(Student $student, CourseYear $courseYear): self
-    {
-        foreach ($courseYear->course->skills AS $skill) {
-            SkillStundent::create([
-                'course_year_id' => $courseYear->id,
-                'skill_id' => $skill->id,
-                'student_id' => $student->id,
-            ]);
-        }
-
-        return $this;
-    }
-
     public function createUpdateOrDeleteOnEventoIdAsAttempt(int $eventoId, Student $student, CourseYear $courseYear, int $credits, string $status, string $grade = ''): ?Completion
     {
         switch (true) {
@@ -78,6 +65,19 @@ class CompletionService extends BaseModelService
         return $completion;
     }
 
+    protected function attachSkillsToStudent(Student $student, CourseYear $courseYear): self
+    {
+        foreach ($courseYear->course->skillsAcquisition as $skill) {
+            SkillStundent::create([
+                'course_year_id' => $courseYear->id,
+                'skill_id' => $skill->id,
+                'student_id' => $student->id,
+            ]);
+        }
+
+        return $this;
+    }
+
     public function createOrUpdateOnEventoIdAsCredit(int $eventoId, Student $student, Course $course, int $credits): Completion
     {
         $courseYear = $course->courseYears()->first();
@@ -105,11 +105,7 @@ class CompletionService extends BaseModelService
             return $completion->completion_type_id === 2 || $completion->completion_type_id === 4;
         });
 
-        if ($successfulCompletions->count() !== 0) {
-            return true;
-        }
-
-        return false;
+        return $successfulCompletions->count() !== 0;
     }
 
     public function hasFailedCompletions(Collection $completions): bool

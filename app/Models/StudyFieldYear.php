@@ -50,12 +50,12 @@ class StudyFieldYear extends BaseModel
     public function getCoursesAttribute()
     {
         $courses = collect();
-        foreach($this->courseGroupYears as $courseGroupYear)
-        {
+        foreach ($this->courseGroupYears as $courseGroupYear) {
             foreach ($courseGroupYear->courses as $course) {
                 $courses->add($course);
             }
         }
+
         return $courses->unique();
     }
 }

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-for="course in specializationCourses" class="mb-1 flex flex-row justify-between">
+        <div v-for="course in specialisationCourses" class="mb-1 flex flex-row justify-between">
             <div>{{ course.name }}</div>
             <div v-if="coursesIsCompletedSusscessfully(course)" class="my-auto"><i class="far fa-check-circle" aria-hidden="true"></i></div>
             <div class="flex flex-row space-x-1"
@@ -28,13 +28,16 @@ export default class VueSpecializationState extends BaseComponent {
     public planningId: number
 
     @Prop({type: Object})
+    public planning: ICoursePlanning
+
+    @Prop({type: Object})
     public specialisation: ISpecialization
 
     @Prop({type: Object})
-    public specialisationYear: ISpecializationYear
+    public specialisationYear?: ISpecializationYear
 
     @Prop({type: Array})
-    public specializationCourses: ICourse[]
+    public specialisationCourses: ICourse[]
 
     @Prop({type: Array})
     public completions: ICompletion[]
@@ -47,7 +50,7 @@ export default class VueSpecializationState extends BaseComponent {
 
     public get courseAmounts(): number {
         let courseAmounts = 0;
-        for (const course of this.specializationCourses) {
+        for (const course of this.specialisationCourses) {
             if (this.coursesIsCompletedSusscessfully(course)) {
                 courseAmounts++;
                 continue;

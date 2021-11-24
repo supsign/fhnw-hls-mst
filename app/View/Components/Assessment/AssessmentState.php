@@ -3,10 +3,15 @@
 namespace App\View\Components\Assessment;
 
 use App\Models\Assessment;
+use App\Models\CrossQualification;
+use App\Models\CrossQualificationYear;
 use App\Models\Planning;
 use App\Models\Semester;
+use App\Models\Specialization;
+use App\Models\SpecializationYear;
 use App\Services\Assessment\AssessmentService;
 use App\Services\Semester\SemesterService;
+use App\Services\Specialization\SpecializationService;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
@@ -16,6 +21,12 @@ class AssessmentState extends Component
 {
     public ?Assessment $assessment;
     public Collection $assessmentCourses;
+    public ?Specialization $specialization;
+    public ?SpecializationYear $specializationYear;
+    public ?Collection $specialisationCourses;
+    public ?CrossQualification $crossQualification;
+    public ?CrossQualificationYear $crossQualificationYear;
+    public ?Collection $crossQualificationCourses;
 
     /**
      * Create a new component instance.
@@ -26,6 +37,12 @@ class AssessmentState extends Component
     {
         $this->assessment = $assessmentService->getApplicableAssessment($planning);
         $this->assessmentCourses = $this->assessment?->courses ?: collect();
+        $this->specialization = $this->planning->specializationYear?->specialization;
+        $this->specializationYear = $this->planning->specializationYear;
+        $this->specialisationCourses = $this->planning->specializationYear?->courses;
+        $this->crossQualification = $this->planning->crossQualificationYear?->crossQualification;
+        $this->crossQualificationYear = $this->planning->crossQualificationYear;
+        $this->crossQualificationCourses = $this->planning->crossQualificationYear?->courses;
     }
 
     /**

@@ -1,8 +1,13 @@
 <vue-state-wrapper :assessment="{{$assessment ?? json_encode(null)}}"
-                        :assessment-courses="{{$assessmentCourses ?? json_encode(null)}}"
-                        :completions="{{$planning->student->completions}}"
-                        :planning-id="{{$planning->id}}"
-                        :semesters="{{ $semesters }}"
-{{--                        :specialisation-year="{{$specialisationYear}}"--}}
-{{--                   :assessment-courses="{{$assessmentCourses ?? json_encode(null)}}"--}}
+                   :assessment-courses="{{$assessmentCourses ?? json_encode(null)}}"
+                   :completions="{{$planning->student->completions}}"
+                   :planning-id="{{$planning->id}}"
+                   :planning="{{$planning}}"
+                   :semesters="{{ $semesters }}"
+                   :specialisation-year="{{ $specializationYear ?? json_encode(null)}}"
+                   :specialisation="{{ $specialization ?? json_encode(null)}}"
+                   :specialisation-courses="{{$specialisationCourses ?? json_encode(null)}}"
+                   :cross-qualification-year="{{ $crossQualificationYear ?? json_encode(null)}}"
+                   :cross-qualification="{{ $crossQualification ?? json_encode(null)}}"
+                   :cross-qualification-courses="{{$crossQualificationCourses ?? json_encode(null)}}"
 ></vue-state-wrapper>

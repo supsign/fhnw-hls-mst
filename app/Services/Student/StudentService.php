@@ -3,6 +3,7 @@
 namespace App\Services\Student;
 
 use App\Models\Student;
+use App\Models\StudyFieldYear;
 use App\Services\Base\BaseModelService;
 use App\Services\Evento\Traits\CreateOrUpdateOnEventoPersonId;
 use App\Services\Evento\Traits\GetByEventoPersonId;
@@ -22,5 +23,34 @@ class StudentService extends BaseModelService
     public function createOrUpdateOnEventoPersonId(int $eventoPersonId, array $attributes = []): Student
     {
         return $this->createOrUpdateOnEventoPersonIdTrait($eventoPersonId, $attributes);
+    }
+
+    public function getObtainedCredits(Student $student, StudyFieldYear $studyFieldYear = null): int
+    {
+        $credits = 0;
+
+        if (!$studyFieldYear) {
+            $studyFieldYear = $student->studyFieldYear;
+        }
+
+        $courseYearIds = [];
+
+        foreach ($studyFieldYear->courseGroupYears()->with('courses')->get() AS $courseGroupYear) {
+            foreach ($courseGroupYear->courses()->with('courseGroupYears')->get() AS $course) {
+                $courseYearIds = array_merge($courseYearIds, $course->courseGroupYears->pluck('id')->toArray());
+            }
+        }
+
+        $completions = $student
+            ->completions()
+            ->whereIn('completion_type_id', [2, 4])
+            ->whereIn('course_year_id', array_unique($courseYearIds))
+                ->get();
+
+        foreach ($completions AS $completion) {
+            $credits += $completion->credits;
+        }
+
+        return $credits;
     }
 }

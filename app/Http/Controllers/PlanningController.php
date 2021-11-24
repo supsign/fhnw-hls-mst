@@ -54,7 +54,6 @@ class PlanningController extends Controller
     {
         $this->permissionAndRoleService->canPlanScheduleOrAbort();
 
-
         $firstname = Auth::user()->firstname;
         $lastname = Auth::user()->lastname;
         $pdf = app('dompdf.wrapper');

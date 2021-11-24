@@ -17,7 +17,6 @@ class CourseCompletionService
         $credits = 0;
 
         foreach ($this->getSuccessfulCompletionsByStudent($course, $student) as $completion) {
-
             $credits += $completion->credits;
         }
 

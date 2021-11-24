@@ -14,8 +14,8 @@ use App\Services\Completion\CourseCompletionService;
 class PlanningService extends BaseModelService
 {
     public function __construct(
-        protected Planning $model, 
-        protected CoursePlanningService $coursePlanningService, 
+        protected Planning $model,
+        protected CoursePlanningService $coursePlanningService,
         protected CourseCompletionService $courseCompletionService
     ) {
         parent::__construct($model);

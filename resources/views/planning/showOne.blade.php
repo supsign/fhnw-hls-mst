@@ -78,6 +78,7 @@
                                     @if(!$courseCompletionService->courseIsSuccessfullyCompleted($courseCourseGroupYear->course, $user->student))
                                         <vue-plan-course :planning-id="{{$planning->id}}"
                                                          :course-id="{{$courseCourseGroupYear->course->id}}"
+                                                         :course="{{$courseCourseGroupYear->course}}"
                                                          :semesters="{{$semesterService->getCurrentAndFutureSemesters()->sortBy('start_date')->slice(0,10)->values()}}"></vue-plan-course>
                                     @endif
                                 </div>

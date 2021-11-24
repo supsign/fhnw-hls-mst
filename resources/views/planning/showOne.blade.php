@@ -41,22 +41,19 @@
                     <div class="my-auto">@lang('l.completionNone')</div>
                 </div>
             </div>
-
         </x-app.card>
-        <vue-store-fill model="coursePlanning" :entities="{{$planning->coursePlannings}}"></vue-store-fill>
+        <vue-store-fill model="coursePlanning" :entities="{{ $planning->coursePlannings }}"></vue-store-fill>
         @foreach($courseGroupYears as $courseGroupYear)
             <vue-plan-wrapper>
                 <template v-slot:header>
-
-
                     <div class="my-auto flex-grow">
-                        {{$courseGroupYear->courseGroup->name}}
-
+                        {{ $courseGroupYear->courseGroup->name }}
                     </div>
-                    <vue-course-group-state :course-group-year="{{$courseGroupYear}}"
-                                            :courses="{{$courseGroupYear->getCourses()}}"
-                                            :completions="{{$planning->student->completions}}"></vue-course-group-state>
-
+                    <vue-course-group-state 
+                        :course-group-year="{{ $courseGroupYear }}"
+                        :courses="{{ $courseGroupYear->getCourses() }}"
+                        :completions="{{ $planning->student->completions }}"
+                    ></vue-course-group-state>
                 </template>
                 <div class="text-sm lg:text-base">
                     @foreach($courseGroupYear->courseCourseGroupYears as $courseCourseGroupYear)
@@ -64,20 +61,21 @@
                             <x-planning.completion :student="$user->student"
                                                    :course="$courseCourseGroupYear->course"></x-planning.completion>
                             <div class="my-auto break-words flex-grow">
-                                {{$courseCourseGroupYear->course->name}}
+                                {{ $courseCourseGroupYear->course->name}}
                             </div>
                             <div class="flex-none my-auto">
                                 @inject('semesterService', 'App\Services\Semester\SemesterService')
                                 @inject('courseCompletionService', 'App\Services\Completion\CourseCompletionService')
                                 @if(!$courseCompletionService->courseIsSuccessfullyCompleted($courseCourseGroupYear->course, $user->student))
-                                    <vue-plan-course :planning-id="{{$planning->id}}"
-                                                     :course-id="{{$courseCourseGroupYear->course->id}}"
-                                                     :semesters="{{$semesterService->getCurrentAndFutureSemesters()->sortBy('start_date')->slice(0,10)->values()}}"></vue-plan-course>
+                                    <vue-plan-course 
+                                        :planning-id="{{ $planning->id }}"
+                                        :course-id="{{ $courseCourseGroupYear->course->id }}"
+                                        :semesters="{{ $semesterService->getCurrentAndFutureSemesters()->sortBy('start_date')->slice(0,10)->values() }}"
+                                    ></vue-plan-course>
                                 @endif
                             </div>
                         </div>
                     @endforeach
-
                 </div>
             </vue-plan-wrapper>
         @endforeach

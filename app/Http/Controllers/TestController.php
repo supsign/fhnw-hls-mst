@@ -11,11 +11,8 @@ class TestController extends Controller
     {
         $student = Student::find(1);
 
-
         var_dump(
 
         );
-
-
     }
 }

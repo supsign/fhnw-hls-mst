@@ -18,7 +18,7 @@ class CrossQualificationYearService extends BaseModelService
         $amount = 0;
 
         foreach ($crossQualifcationYear->courses AS $course) {
-            if ($this->courseCompletionService->courseIsSuccessfullyCompleted($course, $student) ) {
+            if ($this->courseCompletionService->courseIsSuccessfullyCompleted($course, $student)) {
                 $amount++;
             }
         }

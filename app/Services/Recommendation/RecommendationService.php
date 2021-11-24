@@ -27,4 +27,9 @@ class RecommendationService extends BaseModelService
             ?? $planning->studyFieldYear?->recommendation
             ?? null;
     }
+
+    public function getFirstByName(string $name): ?Recommendation
+    {
+        return $this->model::where(['name' => $name])->first();
+    }
 }

@@ -62,6 +62,11 @@ class Course extends BaseModel
         return $this->belongsToMany(Skill::class);
     }
 
+    public function skillsAcquisition()
+    {
+        return $this->skills()->wherePivot('is_acquisition', true);
+    }
+
     public function specializationYears()
     {
         return $this->belongsToMany(SpecializationYear::class);
@@ -75,5 +80,10 @@ class Course extends BaseModel
     public function courseYears()
     {
         return $this->hasMany(CourseYear::class);
+    }
+
+    public function getCourseYearBySemesterOrLatest(Semester $semester = null): ?CourseYear
+    {
+        return $this->getService()->getCourseYearBySemesterOrLatest($this, $semester);
     }
 }

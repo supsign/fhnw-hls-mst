@@ -21,6 +21,7 @@ import {ICrossQualificationYear} from "../../interfaces/crossQualificationYear.i
 import {ICourse} from "../../interfaces/course.interface";
 import {ICoursePlanning} from "../../store/coursePlanning/coursePlanning.interface";
 import {ICompletion} from "../../interfaces/completion.interface";
+import {ISemester} from "../../interfaces/semester.interface";
 
 @Component
 export default class VueCrossQualificationState extends BaseComponent {
@@ -32,6 +33,9 @@ export default class VueCrossQualificationState extends BaseComponent {
 
     @Prop({type: Array})
     public completions: ICompletion[]
+
+    @Prop({type: Array})
+    public semesters: ISemester[]
 
     @Prop({type: Object})
     public crossQualification: ICrossQualification
@@ -70,6 +74,16 @@ export default class VueCrossQualificationState extends BaseComponent {
 
     public courseIsPlanned(course: ICourse): boolean {
         return !!this.coursePlannings.find(coursePlanning => coursePlanning.course_id === course.id)
+    }
+
+    public coursePlanningSemester(course: ICourse) {
+        const semesterId = this.coursePlannings.find(semesterId => semesterId.course_id === course.id).semester_id;
+        return this.semesters.find(semester => semester.id === semesterId).year -2000;
+    }
+
+    public coursePlanningSemesterHsFs(course: ICourse) {
+        const semesterId = this.coursePlannings.find(semesterId => semesterId.course_id === course.id).semester_id;
+        return this.semesters.find(semester => semester.id === semesterId).is_hs  ? 'HS' : 'FS';
     }
 }
 </script>

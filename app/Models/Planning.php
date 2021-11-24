@@ -53,4 +53,9 @@ class Planning extends BaseModel
     {
         return $this->hasMany(CoursePlanning::class);
     }
+
+    public function coursePlanningSemester()
+    {
+        return $this->belongsToMany(Semester::class, CoursePlanning::class)->orderBy('year')->orderBy('is_hs');
+    }
 }

@@ -13,12 +13,23 @@
 
         Studium: {{ $planning->studyFieldYear->studyField->studyProgram->name }}<br/>
         Studienrichtung: {{ $planning->studyFieldYear->studyField->name }}<br/>
-
-        @if ($planning->specializationYear)
-            Spez: {{ $planning->specializationYear->specialization->name }}<br/>
-        @endif
+        Spezialisierung: {{ $planning->specializationYear?->specialization->name }}<br/>
+        Querschnittsqualifikation: {{ $planning->crossQualificationYear?->crossQualification->name }}<br/>
 
         
+
+        @foreach ($planning->coursePlanningSemester AS $semester) 
+            {{ $semester->is_hs ? 'HS' : 'FS' }} {{ $semester->year }}<br/>
+
+            @foreach ($planning->coursePlannings AS $coursePlanning)       
+                @if($coursePlanning->semester_id !== $semester->id)
+                    @continue;
+                @endif
+
+                {{ $coursePlanning->course->name }}<br/>
+
+            @endforeach
+        @endforeach
 
         <footer>
             Copyright © 2021 by Supsign GmbH 

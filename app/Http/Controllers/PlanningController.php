@@ -12,6 +12,7 @@ use App\Models\StudyFieldYear;
 use App\Models\StudyProgram;
 use App\Services\CrossQualification\CrossQualificationService;
 use App\Services\CrossQualificationYear\CrossQualificationYearService;
+use App\Services\Planning\FillPlanningWithRecommendationsService;
 use App\Services\Planning\PlanningService;
 use App\Services\Semester\SemesterService;
 use App\Services\Specialization\SpecializationService as SpecializationSpecializationService;
@@ -20,7 +21,6 @@ use App\Services\StudyField\StudyFieldService;
 use App\Services\StudyFieldYear\StudyFieldYearService;
 use App\Services\User\PermissionAndRoleService;
 use Illuminate\Support\Facades\Auth;
-use App\Services\Planning\FillPlanningWithRecommendationsService;
 
 class PlanningController extends Controller
 {

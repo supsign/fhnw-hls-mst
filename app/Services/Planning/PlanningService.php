@@ -2,7 +2,6 @@
 
 namespace App\Services\Planning;
 
-use App\Models\Course;
 use App\Models\CrossQualificationYear;
 use App\Models\Planning;
 use App\Models\SpecializationYear;

@@ -23,10 +23,13 @@
                 <div>{{ $planning->specializationYear?->specialization->name }}</div>
                 <div>@lang('l.startDate'): {{ $planning->studyFieldYear->beginSemester->year }}</div>
             </div>
+
+            <x-base.link href="{{ route('planning.print', $planning) }}"> Drucken </x-base.link>
+
         </x-app.card>
         <vue-form method="POST" action="{{ route('planning.setRecommendations', $planning) }}">
             @csrf
-            <button class="button-primary mb-4" type="submit" name="delete_planning">gem. Studienplan planen</button>
+            <button class="button-primary mb-4" type="submit">gem. Studienplan planen</button>
         </vue-form>
         <x-app.card>
             <x-slot name="title">

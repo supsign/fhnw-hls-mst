@@ -3,16 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Planning\StoreRequest;
+use App\Models\CrossQualification;
 use App\Models\Planning;
 use App\Models\Semester;
+use App\Models\Specialization;
 use App\Models\StudyField;
+use App\Models\StudyFieldYear;
 use App\Models\StudyProgram;
+use App\Services\CrossQualification\CrossQualificationService;
+use App\Services\CrossQualificationYear\CrossQualificationYearService;
 use App\Services\Planning\PlanningService;
 use App\Services\Semester\SemesterService;
+use App\Services\Specialization\SpecializationService as SpecializationSpecializationService;
+use App\Services\SpecializationYear\SpecializationYearService;
 use App\Services\StudyField\StudyFieldService;
 use App\Services\StudyFieldYear\StudyFieldYearService;
 use App\Services\User\PermissionAndRoleService;
 use Illuminate\Support\Facades\Auth;
+use App\Services\Planning\FillPlanningWithRecommendationsService;
 
 class PlanningController extends Controller
 {
@@ -53,7 +61,7 @@ class PlanningController extends Controller
     public function store(
         StoreRequest $request,
         SpecializationYearService $specializationYearService,
-        SpecializationService $specializationService,
+        SpecializationSpecializationService $specializationService,
         CrossQualificationService $crossQualificationService,
         CrossQualificationYearService $crossQualificationYearService
     ) {

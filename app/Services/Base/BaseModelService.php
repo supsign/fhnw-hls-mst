@@ -12,7 +12,7 @@ class BaseModelService
     {
     }
 
-    public function getById(int $id): ?BaseModel
+    public function getById(int $id = null): ?BaseModel
     {
         return $this->model::find($id);
     }

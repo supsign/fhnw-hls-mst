@@ -19,9 +19,15 @@
             <div class="mt-2">
                 <div>{{ $planning->studyFieldYear->studyField->studyProgram->name }}</div>
                 <div>{{ $planning->studyFieldYear->studyField->name }}</div>
+                <div>{{ $planning->crossQualificationYear?->crossQualification->name }}</div>
+                <div>{{ $planning->specializationYear?->specialization->name }}</div>
                 <div>@lang('l.startDate'): {{ $planning->studyFieldYear->beginSemester->year }}</div>
             </div>
         </x-app.card>
+        <vue-form method="POST" action="{{ route('planning.setRecommendations', $planning) }}">
+            @csrf
+            <button class="button-primary mb-4" type="submit" name="delete_planning">gem. Studienplan planen</button>
+        </vue-form>
         <x-app.card>
             <x-slot name="title">
                 <div class="my-auto">@lang('l.legend')</div>
@@ -71,8 +77,8 @@
                                 @inject('courseCompletionService', 'App\Services\Completion\CourseCompletionService')
                                 @if(!$courseCompletionService->courseIsSuccessfullyCompleted($courseCourseGroupYear->course, $user->student))
                                     <vue-plan-course :planning-id="{{$planning->id}}"
-                                                     :course-id="{{$courseCourseGroupYear->course->id}}"
-                                                     :semesters="{{$semesterService->getCurrentAndFutureSemesters()->sortBy('start_date')->slice(0,10)->values()}}"></vue-plan-course>
+                                                     :course="{{$courseCourseGroupYear->course}}"
+                                                     :semesters="{{\App\Models\Semester::all()}}"></vue-plan-course>
                                 @endif
                             </div>
                         </div>

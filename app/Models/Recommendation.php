@@ -27,6 +27,11 @@ class Recommendation extends BaseModel
         return $this->belongsTo(SpecializationYear::class);
     }
 
+    public function courseRecommendations()
+    {
+        return $this->hasMany(CourseRecommendation::class);
+    }
+
     public function semesters()
     {
         return $this->hasManyThrough(

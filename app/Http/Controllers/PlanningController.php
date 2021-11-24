@@ -3,12 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Planning\StoreRequest;
+use App\Models\CrossQualification;
 use App\Models\Planning;
 use App\Models\Semester;
+use App\Models\Specialization;
 use App\Models\StudyField;
+use App\Models\StudyFieldYear;
 use App\Models\StudyProgram;
+use App\Services\CrossQualification\CrossQualificationService;
+use App\Services\CrossQualificationYear\CrossQualificationYearService;
 use App\Services\Planning\PlanningService;
 use App\Services\Semester\SemesterService;
+use App\Services\Specialization\SpecializationService;
+use App\Services\SpecializationYear\SpecializationYearService;
 use App\Services\StudyField\StudyFieldService;
 use App\Services\StudyFieldYear\StudyFieldYearService;
 use App\Services\User\PermissionAndRoleService;
@@ -30,35 +37,24 @@ class PlanningController extends Controller
         $this->permissionAndRoleService->canPlanScheduleOrAbort();
         $user = Auth::user();
 
-        $hlsBachelorStudyProgram = StudyProgram::find(6);
-
-        $studyField = $user->student->studyFieldYear->studyField ?? null;
-        $semester = $user->student->studyFieldYear->beginSemester ?? null;
-        $studyProgram = $user->student->studyFieldYear->studyField->studyProgram ?? null;
-
-        if (!$studyProgram) {
-            $studyProgram = $hlsBachelorStudyProgram;
-        }
-
-        // Im Moment Tool nur Bachelor HLS
-        if ($studyProgram->id !== $hlsBachelorStudyProgram->id) {
-            $studyField = null;
-            $semester = null;
-            $studyProgram = $hlsBachelorStudyProgram;
-        }
-
         return view('planning.new', [
             'studyFields' => StudyField::where('study_program_id', 6)->get(),
             'studyPrograms' => StudyProgram::all(),
+            'studyFieldYears' => StudyFieldYear::all(),
             'semesters' => Semester::where('is_hs', true)->get(),
-            'studyField' => $studyField,
-            'semester' => $semester,
-            'studyProgram' => $studyProgram,
+            'student' => $user->student,
+            'specializations' => Specialization::all(),
+            'crossQualifications' => CrossQualification::all(),
         ]);
     }
 
-    public function store(StoreRequest $request)
-    {
+    public function store(
+        StoreRequest $request,
+        SpecializationYearService $specializationYearService,
+        SpecializationService $specializationService,
+        CrossQualificationService $crossQualificationService,
+        CrossQualificationYearService $crossQualificationYearService
+    ) {
         $this->permissionAndRoleService->canPlanScheduleOrAbort();
 
         $studyFieldYear = $this->studyFieldYearService->getByStudyFieldIdAndSemesterId(
@@ -71,9 +67,25 @@ class PlanningController extends Controller
             return redirect()->route('planning.create');
         }
 
+        /* @var $specialization Specialization */
+        $specialization = $specializationService->getById($request->specialization);
+        $specializationYear = $specializationYearService->findBySpecializationAndStudyFieldYear(
+            $specialization,
+            $studyFieldYear
+        );
+
+        /* @var $crossQualification CrossQualification */
+        $crossQualification = $crossQualificationService->getById($request->crossQualification);
+        $crossQualificationYear = $crossQualificationYearService->findByCrossQualificationAndStudyFieldYear(
+            $crossQualification,
+            $studyFieldYear
+        );
+
         $planning = $this->planningService->createEmptyPlanning(
-            Auth::user()->student->id,
-            $studyFieldYear->id,
+            Auth::user()->student,
+            $studyFieldYear,
+            $crossQualificationYear,
+            $specializationYear
         );
 
         return redirect()->route('planning.showOne', $planning);

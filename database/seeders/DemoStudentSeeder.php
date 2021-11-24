@@ -20,7 +20,7 @@ class DemoStudentSeeder extends Seeder
     {
         $student = $studentService->createOrUpdateOnEventoPersonId(5);
         $studyFieldYear = $studyFieldYearService->getByEventoId('1252215');
-        $planning = $planningService->createEmptyPlanning($student->id, $studyFieldYear->id);
+        $planning = $planningService->createEmptyPlanning($student, $studyFieldYear);
         $course = $studyFieldYear->courseGroupYears[0]->courses[0];
         $coursePlanningService->planCourse($planning, $course, Semester::first());
     }

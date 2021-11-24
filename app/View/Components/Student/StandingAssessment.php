@@ -8,7 +8,6 @@ use Illuminate\View\Component;
 
 class StandingAssessment extends Component
 {
-
     public int $coursesPassed;
     public bool $completed;
 

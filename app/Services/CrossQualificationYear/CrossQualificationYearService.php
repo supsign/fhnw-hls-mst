@@ -4,8 +4,8 @@ namespace App\Services\CrossQualificationYear;
 
 use App\Models\CrossQualification;
 use App\Models\CrossQualificationYear;
-use App\Models\StudyFieldYear;
 use App\Models\Student;
+use App\Models\StudyFieldYear;
 use App\Services\Base\BaseModelService;
 use App\Services\Base\Traits\FirstOrCreateTrait;
 use App\Services\Completion\CourseCompletionService;
@@ -26,9 +26,7 @@ class CrossQualificationYearService extends BaseModelService
         }
 
         return $this->model::where(['cross_qualification_id' => $crossQualification->id, 'study_field_year_id' => $studyFieldYear->id])->first();
-
     }
-
 
     public function isSuccessfullyCompleted(CrossQualificationYear $crossQualifcationYear, Student $student): bool
     {

@@ -46,7 +46,7 @@ class PlanningController extends Controller
             'student' => $user->student,
             'specializations' => Specialization::all(),
             'crossQualifications' => CrossQualification::all(),
-            'asStudent' => null
+            'asStudent' => null,
         ]);
     }
 

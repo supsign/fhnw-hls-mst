@@ -539,6 +539,7 @@ namespace App\Models{
  * @property int|null $assessment_id
  * @property int $cross_qualification_id
  * @property int|null $recommendation_id
+ * @property int|null $assessment_id
  * @property int $study_field_year_id
  * @property int|null $amount_to_pass
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -935,6 +936,7 @@ namespace App\Models{
  * @property int|null $recommendation_id
  * @property int $specialization_id
  * @property int $study_field_year_id
+ * @property int|null $assessment_id
  * @property int|null $amount_to_pass
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at

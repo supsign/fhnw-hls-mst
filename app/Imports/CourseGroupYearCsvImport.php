@@ -30,8 +30,7 @@ class CourseGroupYearCsvImport extends BaseCsvImport
         $studyField = $this->studyFieldService->getById($this->line['id_studienrichtung']);
 
         if (!$couseGroup || !$studyField) {
-            //  Todo? Logging or Error
-            return;
+            return $this;
         }
 
         foreach ($studyField->studyFieldYears AS $studyFieldYear) {
@@ -42,5 +41,7 @@ class CourseGroupYearCsvImport extends BaseCsvImport
                 'credits_to_pass' => $this->line['mindestpunktzahl'],
             ]);
         }
+
+        return $this;
     }
 }

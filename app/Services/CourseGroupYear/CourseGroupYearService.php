@@ -24,12 +24,12 @@ class CourseGroupYearService extends BaseModelService
 
     public function getCredits(CourseGroupYear $courseGroupYear, Student $student): int
     {
-        $points = 0; 
+        $credits = 0;
 
         foreach ($courseGroupYear->courses AS $course) {
-            $points += $this->courseCompletionService->getCredits($course, $student);
+            $credits += $this->courseCompletionService->getCredits($course, $student);
         }
 
-        return $points;
+        return $credits;
     }
 }

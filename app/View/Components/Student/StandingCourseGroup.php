@@ -16,11 +16,17 @@ class StandingCourseGroup extends Component
         public Student $student,
         protected CourseGroupYearService $courseGroupYearService
     ) {
-        $this->reachedCredits = $this->courseGroupYearService->isSuccessfullyCompleted($this->courseGroupYear, $this->student);
+        $this->reachedCredits = $this->courseGroupYearService->getCredits($this->courseGroupYear, $this->student);
+
+
     }
 
     public function render()
     {
+        if (!$this->courseGroupYearService->hasVisitedAtLeastOneCourse($this->courseGroupYear, $this->student)) {
+            return;
+        }
+
         return view('components.student.standing-course-group');
     }
 }

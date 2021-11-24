@@ -26,10 +26,20 @@ class CourseGroupYearService extends BaseModelService
     {
         $points = 0;
 
-        foreach ($courseGroupYear->courses AS $course) {
+        foreach ($courseGroupYear->courses as $course) {
             $points += $this->courseCompletionService->getCredits($course, $student);
         }
 
         return $points;
+    }
+
+    public function hasVisitedAtLeastOneCourse(CourseGroupYear $courseGroupYear, Student $student): bool
+    {
+        foreach ($courseGroupYear->courses as $course) {
+            if ($this->courseCompletionService->courseIsSuccessfullyCompleted($course, $student)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

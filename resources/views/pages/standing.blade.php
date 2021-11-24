@@ -15,7 +15,7 @@
                             <i class="far fa-lightbulb fa-2x" aria-hidden="true"></i>
                         </div>
                         <div>
-                            Bitte beachten Sie, dass die hier angezeigten Informationen nicht verbindlich sind und Ersatz des offiziellen Transcript of Records (TOR) darstellen.
+                            Bitte beachten Sie, dass die hier angezeigten Informationen nicht verbindlich sind und keinen Ersatz des offiziellen Transcript of Records (TOR) darstellen.
                         </div>
                     </div>
                 </x-app.card>
@@ -26,7 +26,7 @@
             <div class="w-3/4 border-r border-gray-300 pr-4">
                 <div class="text-2xl text-gray-500 mb-4">Modulgruppen</div>
                 <div class="grid grid-cols-3 gap-4">
-                    @foreach($student->studyFieldYear->courseGroupYears as $courseGroupYear)
+                    @foreach($student->studyFieldYear->courseGroupYears()->with('courses')->get() as $courseGroupYear)
                         <x-student.standing-course-group :student="$student" :courseGroupYear="$courseGroupYear"/>
                     @endforeach
                 </div>
@@ -39,8 +39,8 @@
                 </div>
                 <div class="space-y-4 mb-8">
                     <div class="text-2xl text-gray-500 mb-4">Spezialisierungen</div>
-                    @if($student->studyFieldYear->specializationYears)
-                        @foreach($student->studyFieldYear->specializationYears as $specializationYear)
+                    @if($student->studyFieldYear->specializationYears()->count())
+                        @foreach($student->studyFieldYear->specializationYears()->with('courses')->get() as $specializationYear)
                             <x-student.standing-specialization :student="$student" :specializationYear="$specializationYear"/>
                         @endforeach
                     @endif
@@ -48,8 +48,8 @@
 
                 <div>
                     <div class="text-2xl text-gray-500 mb-4">Querschnittsqualifikation</div>
-                    @if($student->studyFieldYear->crossQualificationYears)
-                        @foreach ($student->studyFieldYear->crossQualificationYears as $crossQualificationYear)
+                    @if($student->studyFieldYear->crossQualificationYears()->count())
+                        @foreach ($student->studyFieldYear->crossQualificationYears()->with('courses')->get() as $crossQualificationYear)
                             <x-student.standing-crossqualification :student="$student" :crossQualificationYear="$crossQualificationYear"/>
                         @endforeach
                     @endif

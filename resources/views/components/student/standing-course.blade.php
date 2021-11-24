@@ -9,11 +9,11 @@
         </div>
         <div></div>
     </div>
-    <div class="ml-12 text-xs text-gray-500">
-        <ul class="list-disc">
-            @foreach($skills as $skill)
-                <li>{{$skill->definition}}</li>
-            @endforeach
-        </ul>
-    </div>
+    {{--    <div class="ml-12 text-xs text-gray-500">--}}
+    {{--        <ul class="list-disc">--}}
+    {{--            @foreach($skills as $skill)--}}
+    {{--                <li>{{$skill->definition}}</li>--}}
+    {{--            @endforeach--}}
+    {{--        </ul>--}}
+    {{--    </div>--}}
 </div>

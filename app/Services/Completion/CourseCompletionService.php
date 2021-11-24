@@ -16,11 +16,20 @@ class CourseCompletionService
     {
         $credits = 0;
 
-        foreach ($this->getSuccessfulCompletionsByStudent($course, $student) AS $completion) {
+        foreach ($this->getSuccessfulCompletionsByStudent($course, $student) as $completion) {
             $credits += $completion->credits;
         }
 
         return $credits;
+    }
+
+    public function getSuccessfulCompletionsByStudent(Course $course, Student $student): Collection
+    {
+        $completions = $student->completions()->whereIn('completion_type_id', [2, 4])->with('courseYear')->get();
+
+        return $completions->filter(function ($completion) use ($course) {
+            return $course->courseYears->contains($completion->courseYear);
+        });
     }
 
     public function courseIsSuccessfullyCompleted(Course $course, Student $student): bool
@@ -32,16 +41,7 @@ class CourseCompletionService
 
     public function getCompletionsByStudent(Course $course, Student $student): Collection
     {
-        $completions = $student->completions;
-
-        return $completions->filter(function ($completion) use ($course) {
-            return $course->courseYears->contains($completion->courseYear);
-        });
-    }
-
-    public function getSuccessfulCompletionsByStudent(Course $course, Student $student): Collection
-    {
-        $completions = $student->completions()->whereIn('completion_type_id', [2, 4])->get();
+        $completions = $student->completions()->with('courseYear')->get();
 
         return $completions->filter(function ($completion) use ($course) {
             return $course->courseYears->contains($completion->courseYear);

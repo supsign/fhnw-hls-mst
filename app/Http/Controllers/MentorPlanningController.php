@@ -7,11 +7,13 @@ use App\Models\CrossQualification;
 use App\Models\Planning;
 use App\Models\Semester;
 use App\Models\Specialization;
+use App\Models\Student;
 use App\Models\StudyField;
 use App\Models\StudyFieldYear;
 use App\Models\StudyProgram;
 use App\Services\CrossQualification\CrossQualificationService;
 use App\Services\CrossQualificationYear\CrossQualificationYearService;
+use App\Services\Mentor\MentorStudentService;
 use App\Services\Planning\FillPlanningWithRecommendationsService;
 use App\Services\Planning\PlanningService;
 use App\Services\Semester\SemesterService;
@@ -20,9 +22,9 @@ use App\Services\SpecializationYear\SpecializationYearService;
 use App\Services\StudyField\StudyFieldService;
 use App\Services\StudyFieldYear\StudyFieldYearService;
 use App\Services\User\PermissionAndRoleService;
-use Illuminate\Support\Facades\Auth;
+use Auth;
 
-class PlanningController extends Controller
+class MentorPlanningController extends Controller
 {
     public function __construct(
         private PermissionAndRoleService $permissionAndRoleService,
@@ -33,40 +35,37 @@ class PlanningController extends Controller
     ) {
     }
 
-    public function create()
+    public function create(Student $student, MentorStudentService $mentorStudentService)
     {
-        $this->permissionAndRoleService->canPlanScheduleOrAbort();
-        $user = Auth::user();
+        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student);
+
+        $mentorStudent = $mentorStudentService->getByMentorAndStudent(Auth::user()?->mentor, $student);
+
+        if (!$mentorStudent) {
+            return redirect()->route('mentor.planning.list', $student);
+        }
 
         return view('planning.new', [
             'studyFields' => StudyField::where('study_program_id', 6)->get(),
             'studyPrograms' => StudyProgram::all(),
             'studyFieldYears' => StudyFieldYear::all(),
             'semesters' => Semester::where('is_hs', true)->get(),
-            'student' => $user->student,
+            'student' => $student,
             'specializations' => Specialization::all(),
             'crossQualifications' => CrossQualification::all(),
-            'mentorStudent' => null,
+            'mentorStudent' => $mentorStudent,
         ]);
-    }
-
-    public function print(Planning $planning)
-    {
-        $pdf = app('dompdf.wrapper');
-        $pdf->getDomPDF()->set_option('enable_php', true);
-        $pdf->loadView('planning.print', ['planning' => $planning]);
-
-        return $pdf->stream();
     }
 
     public function store(
         StoreRequest $request,
+        Student $student,
         SpecializationYearService $specializationYearService,
         SpecializationService $specializationService,
         CrossQualificationService $crossQualificationService,
-        CrossQualificationYearService $crossQualificationYearService
-    ) {
-        $this->permissionAndRoleService->canPlanScheduleOrAbort();
+        CrossQualificationYearService $crossQualificationYearService)
+    {
+        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student);
 
         $studyFieldYear = $this->studyFieldYearService->getByStudyFieldIdAndSemesterId(
             $request->studyField,
@@ -93,42 +92,69 @@ class PlanningController extends Controller
         );
 
         $planning = $this->planningService->createEmptyPlanning(
-            Auth::user()->student,
+            $student,
             $studyFieldYear,
             $crossQualificationYear,
             $specializationYear
         );
 
-        return redirect()->route('planning.showOne', $planning);
+        return redirect()->route('mentor.planning.showOne', [$student, $planning]);
     }
 
-    public function showOne(Planning $planning)
+    public function showOne(Student $student, Planning $planning, MentorStudentService $mentorStudentService)
     {
-        $this->permissionAndRoleService->canPlanScheduleOrAbort();
+        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student);
+
+        $mentorStudent = $mentorStudentService->getByMentorAndStudent(Auth::user()?->mentor, $student);
+
+        if (!$mentorStudent) {
+            return redirect()->route('mentor.planning.list', $student);
+        }
 
         $viewParameter = [
             'planning' => $planning,
             'courseGroupYears' => $planning->studyFieldYear->courseGroupYears,
-            'mentorStudent' => null,
+            'mentorStudent' => $mentorStudent,
         ];
 
         return view('planning.showOne', $viewParameter);
     }
 
-    public function delete(PlanningService $planningService, Planning $planning)
+    public function delete(Student $student, Planning $planning, PlanningService $planningService)
     {
-        $this->permissionAndRoleService->canPlanScheduleOrAbort();
+        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student);
         $planningService->cascadingDelete($planning);
 
-        return redirect()->route('home');
+        return redirect()->route('mentor.planning.list', $student);
     }
 
-    public function setRecommendations(Planning $planning, FillPlanningWithRecommendationsService $fillPlanningWithRecommendationsService)
+    public function list(Student $student, MentorStudentService $mentorStudentService)
     {
-        $this->permissionAndRoleService->canPlanScheduleOrAbort();
+        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student);
+
+        $plannings = $student->plannings;
+
+        $mentorStudent = $mentorStudentService->getByMentorAndStudent(Auth::user()?->mentor, $student);
+
+        if (!$mentorStudent) {
+            return redirect()->route('home');
+        }
+
+        return view('pages.student-plannings', ['plannings' => $plannings, 'mentorStudent' => $mentorStudent]);
+    }
+
+    public function setRecommendations(Student $student, Planning $planning, FillPlanningWithRecommendationsService $fillPlanningWithRecommendationsService, MentorStudentService $mentorStudentService)
+    {
+        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student);
 
         $fillPlanningWithRecommendationsService->fill($planning);
 
-        return redirect()->route('planning.showOne', $planning);
+        $mentorStudent = $mentorStudentService->getByMentorAndStudent(Auth::user()?->mentor, $student);
+
+        if (!$mentorStudent) {
+            return redirect()->route('home');
+        }
+
+        return redirect()->route('mentor.planning.showOne', [$mentorStudent->student, $planning]);
     }
 }

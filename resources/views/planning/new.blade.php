@@ -8,7 +8,8 @@
             <x-slot name="title">
                 Studienplanung erstellen
             </x-slot>
-            <vue-form id="new_planning" method="POST" action="{{ route('planning.store') }}">
+            <vue-form id="new_planning" method="POST"
+                      action="{{ $mentorStudent ? route('mentor.planning.store', $mentorStudent->student) : route('planning.store')}}">
                 @csrf
                 <div class="flex flex-col space-y-8">
                     <vue-create-planning-form

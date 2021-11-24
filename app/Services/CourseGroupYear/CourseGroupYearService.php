@@ -17,7 +17,7 @@ class CourseGroupYearService extends BaseModelService
         parent::__construct($model);
     }
 
-    public function courseGroupYearIsSuccessfullyCompleted(CourseGroupYear $courseGroupYear, Student $student): bool
+    public function isSuccessfullyCompleted(CourseGroupYear $courseGroupYear, Student $student): bool
     {
         foreach ($courseGroupYear->courses AS $course) {
             if ($this->courseCompletionService->courseIsSuccessfullyCompleted($course, $student)) {

@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PlanningController;
+use App\Http\Controllers\StandingController;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 
@@ -40,6 +41,8 @@ Route::middleware(['web', 'auth'])->group(
         Route::get('plannings/{planning}/print', [PlanningController::class, 'print'])->name('planning.print');
         Route::delete('plannings/{planning}', [PlanningController::class, 'delete'])->name('planning.delete');
 
+        // Standings
+        Route::get('standing', [StandingController::class, 'index'])->name('standing.index');
         Route::post('plannings/{planning}/setrecommendations', [PlanningController::class, 'setRecommendations'])->name('planning.setRecommendations');
 
         // Route::get('user', [UserController::class, 'index'])->name('user.index');

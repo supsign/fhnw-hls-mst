@@ -10,4 +10,5 @@
                    :cross-qualification-year="{{ $crossQualificationYear ?? json_encode(null)}}"
                    :cross-qualification="{{ $crossQualification ?? json_encode(null)}}"
                    :cross-qualification-courses="{{$crossQualificationCourses ?? json_encode(null)}}"
+                   :courses="{{ $planning->studyFieldYear->courses }}"
 ></vue-state-wrapper>

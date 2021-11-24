@@ -41,7 +41,10 @@
             ></vue-cross-qualification-state>
         </div>
         <div class="md:w-full mx-auto grid grid-cols-3">
-            <div></div>
+            <div class="text-center border-l border-hls text-sm hover:bg-hls hover:border-gray-200" @click="toggleShowCrossQualification">
+                <div>{{ countCredits }}&nbsp;|&nbsp;180</div>
+                <div>ECTS</div>
+            </div>
             <div v-if="!specialization && !crossQualification"></div>
             <div v-if="!!crossQualification"
                  class="text-center border-l border-hls text-sm hover:bg-hls hover:border-gray-200" @click="toggleShowCrossQualification">
@@ -122,6 +125,9 @@ export default class VueStateWrapper extends BaseComponent {
     @Prop({type: Array})
     public crossQualificationCourses: ICourse[]
 
+    @Prop({type: Array})
+    public courses: ICourse[];
+
     public showAssessment = false;
 
     public showSpecialization = false;
@@ -186,6 +192,39 @@ export default class VueStateWrapper extends BaseComponent {
         }
         // @ts-ignore
         return this.crossQualificationComponent.courseAmounts;
+    }
+
+    public get countCredits(): number {
+        let credits = 0;
+
+        for (const course of this.courses) {
+            if (this.coursesIsCompletedSusscessfully(course)) {
+                credits += course.credits;
+                continue;
+            }
+
+            if (this.courseIsPlanned(course)) {
+                credits += course.credits;
+            }
+        }
+
+        return credits;
+    }
+
+    public coursesIsCompletedSusscessfully(course: ICourse): boolean {
+        return !!this.completions.find((completion) => {
+            return completion.course_id === course.id && (completion.completion_type_id === 2 || completion.completion_type_id === 4)
+        })
+    }
+
+    public courseIsPlanned(course: ICourse): boolean {
+        return !!this.coursePlannings.find(coursePlanning => coursePlanning.course_id === course.id)
+    }
+
+    public get coursePlannings(): ICoursePlanning[] {
+        return this.models.coursePlanning.all.filter((coursePlanning) => {
+            return !!this.courses.find(course => course.id === coursePlanning.course_id)
+        });
     }
 }
 </script>

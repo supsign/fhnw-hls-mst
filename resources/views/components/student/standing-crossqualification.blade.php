@@ -17,7 +17,7 @@
 
             <x-slot name="footer">
                 <div class="flex justify-end">
-                    <div>Total: $/{{$crossQualificationYear->amount_to_pass}}</div>
+                    <div>Total: {{$coursedPassed}}/{{$crossQualificationYear->amount_to_pass}}</div>
                 </div>
             </x-slot>
 

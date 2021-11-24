@@ -10,6 +10,7 @@ use Illuminate\View\Component;
 class StandingSpecialization extends Component
 {
     public int $coursedPassed;
+    public bool $completed;
 
     public function __construct(
         public SpecializationYear $specializationYear,
@@ -17,6 +18,7 @@ class StandingSpecialization extends Component
         protected SpecializationYearService $specializationYearService
     ) {
         $this->coursedPassed = $this->specializationYearService->getPassedAmount($this->specializationYear, $this->student);
+        $this->completed = $this->specializationYearService->isSuccessfullyCompleted($this->specializationYear, $this->student);
     }
 
     public function render()

@@ -3,6 +3,9 @@
         <x-slot name="title">
             <div class="flex justify-between">
                 <div>
+                    @if($completed)
+                        <i class="far fa-check-circle text-green-500 font-bold" aria-hidden="true"></i>
+                    @endif
                     Spezialisierung {{$specializationYear->specialization->name}}
                 </div>
             </div>

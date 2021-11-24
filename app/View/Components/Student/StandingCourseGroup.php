@@ -10,6 +10,7 @@ use Illuminate\View\Component;
 class StandingCourseGroup extends Component
 {
     public int $reachedCredits;
+    public bool $completed;
 
     public function __construct(
         public CourseGroupYear $courseGroupYear,
@@ -17,6 +18,7 @@ class StandingCourseGroup extends Component
         protected CourseGroupYearService $courseGroupYearService
     ) {
         $this->reachedCredits = $this->courseGroupYearService->getCredits($this->courseGroupYear, $this->student);
+        $this->completed = $this->courseGroupYearService->isSuccessfullyCompleted($this->courseGroupYear, $this->student);
     }
 
     public function render()

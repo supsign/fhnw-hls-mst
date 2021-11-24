@@ -1,4 +1,4 @@
-<div {{$attributes->merge(['class'=> 'p-2 bg-white rounded shadow']) }}>
+<div {{$attributes->class(['p-2 rounded  bg-white flex flex-col', 'shadow-xl' => !$attributes['completed'], 'opacity-60' => $attributes['completed']]) }}>
 
     @isset($title)
         <div class="content-center p-2 border-b rounded-t text-base md:text-lg">
@@ -6,7 +6,7 @@
         </div>
     @endisset
 
-    <div class="p-3 text-sm md:text-base">
+    <div class="p-3 text-sm md:text-base flex-grow">
         {{ $slot }}
     </div>
 

@@ -9,7 +9,7 @@
             <div>{{ $student->studyFieldYear->studyField->studyProgram->name ?? __("l.studyField") . ': -' }}</div>
             <div>{{ $student->studyFieldYear->studyField->name ?? __("l.studyProgram") .  ': -' }}</div>
             <div>{{ $student->studyFieldYear->beginSemester->year ?? __("l.term") .  ': -' }}</div>
-            <div>@lang('l.credits'): {{ $studentCredits ?? '-'}}</div>
+            <div>@lang('l.credits'): {{$studentsCredits ?? '-'}}</div>
         </div>
     </div>
 </x-app.card>

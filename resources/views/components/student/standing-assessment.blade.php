@@ -1,5 +1,5 @@
 <div>
-    <x-app.card>
+    <x-app.card css="@if($completed)bg-green@endif">
         <x-slot name="title">
             <div class="flex justify-between">
                 <div>
@@ -16,7 +16,7 @@
 
             <x-slot name="footer">
                 <div class="flex justify-end">
-                    <div>Total: $/{{$student->studyFieldYear->assessment->amount_to_pass}}</div>
+                    <div>Total: {{$coursesPassed}}/{{$student->studyFieldYear->assessment->amount_to_pass}}</div>
                 </div>
             </x-slot>
 

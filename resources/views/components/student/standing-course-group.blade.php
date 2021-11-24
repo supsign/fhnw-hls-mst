@@ -1,5 +1,8 @@
-<x-app.card class="">
+<x-app.card completed="{{$completed}}">
     <x-slot name="title">
+        @if($completed)
+            <i class="far fa-check-circle text-green-500 font-bold" aria-hidden="true"></i>
+        @endif
         {{$courseGroupYear->courseGroup->name}}
     </x-slot>
     @foreach($courseGroupYear->courses as $course)

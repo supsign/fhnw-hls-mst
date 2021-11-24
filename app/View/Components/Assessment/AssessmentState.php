@@ -23,7 +23,7 @@ class AssessmentState extends Component
     public Collection $assessmentCourses;
     public ?Specialization $specialization;
     public ?SpecializationYear $specializationYear;
-    public ?Collection $specialisationCourses;
+    public ?Collection $specializationCourses;
     public ?CrossQualification $crossQualification;
     public ?CrossQualificationYear $crossQualificationYear;
     public ?Collection $crossQualificationCourses;
@@ -39,7 +39,7 @@ class AssessmentState extends Component
         $this->assessmentCourses = $this->assessment?->courses ?: collect();
         $this->specialization = $this->planning->specializationYear?->specialization;
         $this->specializationYear = $this->planning->specializationYear;
-        $this->specialisationCourses = $this->planning->specializationYear?->courses;
+        $this->specializationCourses = $this->planning->specializationYear?->courses;
         $this->crossQualification = $this->planning->crossQualificationYear?->crossQualification;
         $this->crossQualificationYear = $this->planning->crossQualificationYear;
         $this->crossQualificationCourses = $this->planning->crossQualificationYear?->courses;

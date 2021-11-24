@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-for="course in specialisationCourses" class="mb-1 flex flex-row justify-between">
+        <div v-for="course in crossQualificationCourses" class="mb-1 flex flex-row justify-between">
             <div>{{ course.name }}</div>
             <div v-if="coursesIsCompletedSusscessfully(course)" class="my-auto"><i class="far fa-check-circle" aria-hidden="true"></i></div>
             <div class="flex flex-row space-x-1"
@@ -14,11 +14,62 @@
 </template>
 
 <script lang="ts">
-import {Component} from "vue-property-decorator";
+import {Component, Prop} from "vue-property-decorator";
 import BaseComponent from "../base/baseComponent";
+import {ICrossQualification} from "../../interfaces/crossQualification.interface";
+import {ICrossQualificationYear} from "../../interfaces/crossQualificationYear.interface";
+import {ICourse} from "../../interfaces/course.interface";
+import {ICoursePlanning} from "../../store/coursePlanning/coursePlanning.interface";
+import {ICompletion} from "../../interfaces/completion.interface";
 
 @Component
 export default class VueCrossQualificationState extends BaseComponent {
+    @Prop({type: Number})
+    public planningId: number
 
+    @Prop({type: Object})
+    public planning: ICoursePlanning
+
+    @Prop({type: Array})
+    public completions: ICompletion[]
+
+    @Prop({type: Object})
+    public crossQualification: ICrossQualification
+
+    @Prop({type: Object})
+    public crossQualificationYear?: ICrossQualificationYear
+
+    @Prop({type: Array})
+    public crossQualificationCourses: ICourse[]
+
+    public get coursePlannings(): ICoursePlanning[] {
+        return this.models.coursePlanning.byPlanningId(this.planningId)
+    }
+
+    public get courseAmounts(): number {
+        let courseAmounts = 0;
+        for (const course of this.crossQualificationCourses) {
+            if (this.coursesIsCompletedSusscessfully(course)) {
+                courseAmounts++;
+                continue;
+            }
+
+            if (this.courseIsPlanned(course)) {
+                courseAmounts++;
+            }
+        }
+
+        return courseAmounts;
+    }
+
+    public coursesIsCompletedSusscessfully(course: ICourse): boolean {
+        return !!this.completions.find((completion) => {
+            return completion.course_id === course.id && (completion.completion_type_id === 2 || completion.completion_type_id === 4)
+        })
+    }
+
+    public courseIsPlanned(course: ICourse): boolean {
+        return !!this.coursePlannings.find(coursePlanning => coursePlanning.course_id === course.id)
+    }
 }
 </script>

@@ -1,8 +1,8 @@
 <template>
     <div class="rounded border shadow-md fixed bottom-0 left-0 mt-2 w-full bg-hls-200"
-         v-if="assessment">
-        <div class="border-b text-sm lg:text-base p-3 bg-hls transition duration-200 ease-in-out"
-             :class=" { hidden: !showAssessment || showSpecialization}"
+         v-if="!!assessment">
+        <div class="border-b text-sm lg:text-base p-3 bg-hls transition duration-200 ease-in-out overflow-y-scroll h-52"
+             :class=" { hidden: !showAssessment || showSpecialization || showCrossQualification }"
              >
             <vue-assessment-state :assessment="assessment"
                                   :assessment-courses="assessmentCourses"
@@ -12,27 +12,27 @@
                                   ref="assessmentState"
             ></vue-assessment-state>
         </div>
-        <div v-if="specialisationActive"
-             class="border-b text-sm lg:text-base p-3 bg-hls transition duration-200 ease-in-out"
-             :class=" { hidden: !showSpecialization || showAssessment}"
+        <div v-if="!!specialization"
+             class="border-b text-sm lg:text-base p-3 bg-hls transition duration-200 ease-in-out overflow-y-scroll h-52"
+             :class=" { hidden: !showSpecialization || showAssessment || showCrossQualification }"
         >
-            <vue-specialization-state :specialisation="specialisation"
-                                      :specialisation-year="specialisationYear"
-                                      :specialisation-courses="specialisationCourses"
+            <vue-specialization-state :specialization="specialization"
+                                      :specialization-year="specializationYear"
+                                      :specialization-courses="specializationCourses"
                                       :completions="completions"
                                       :planning-id="planningId"
                                       :semesters="semesters"
                                       :planning="planning"
-                                      ref="specialisationState"
+                                      ref="specializationState"
             ></vue-specialization-state>
         </div>
-        <div v-if="crossQualificationActive"
-             class="border-b text-sm lg:text-base p-3 bg-hls transition duration-200 ease-in-out"
-             :class=" { hidden: !showSpecialization }"
+        <div v-if="!!crossQualification"
+             class="border-b text-sm lg:text-base p-3 bg-hls transition duration-200 ease-in-out overflow-y-scroll h-52"
+             :class=" { hidden: !showCrossQualification || showAssessment || showSpecialization }"
         >
-            <vue-cross-qualification-state :cross-qualification="specialisation"
-                                           :cross-qualification-year="specialisationYear"
-                                           :cross-qualification-courses="specialisationCourses"
+            <vue-cross-qualification-state :cross-qualification="crossQualification"
+                                           :cross-qualification-year="crossQualificationYear"
+                                           :cross-qualification-courses="crossQualificationCourses"
                                            :completions="completions"
                                            :planning-id="planningId"
                                            :semesters="semesters"
@@ -40,22 +40,19 @@
                                            ref="crossQualificationState"
             ></vue-cross-qualification-state>
         </div>
-        <div v-else
-        ></div>
         <div class="md:w-full mx-auto grid grid-cols-3">
             <div></div>
-            <div v-if="crossQualificationActive"
+            <div v-if="!!crossQualification"
                  class="text-center border-l border-hls text-sm hover:bg-hls hover:border-gray-200" @click="toggleShowCrossQualification">
-
+                <div>{{ crossQualificationAmount }}&nbsp;|&nbsp;{{ crossQualificationYear.amount_to_pass }}</div>
                 <div>CrossQual.</div>
             </div>
-            <div v-if="specialisationActive"
+            <div v-if="!!specialization"
                  class="text-center border-l border-hls text-sm hover:bg-hls hover:border-gray-200" @click="toggleShowSpecialization">
-                <div>{{ specialisationAmount }}&nbsp;|&nbsp;{{ specialisationYear.amount_to_pass }}</div>
-                <div>Specialisation</div>
+                <div>{{ specializationAmount }}&nbsp;|&nbsp;{{ specializationYear.amount_to_pass }}</div>
+                <div>Specialization</div>
             </div>
-            <div v-else>
-
+            <div v-if="!!specialization && !!crossQualification">
             </div>
             <div class="text-center border-l border-hls text-sm hover:bg-hls hover:border-gray-200" @click="toggleShowAssessment">
                 <div>{{ assessmentAmount }}&nbsp;|&nbsp;{{ assessment.amount_to_pass }}</div>
@@ -109,13 +106,13 @@ export default class VueStateWrapper extends BaseComponent {
     public semesters: ISemester[]
 
     @Prop({type: Object})
-    public specialisation: ISpecialization
+    public specialization: ISpecialization
 
     @Prop({type: Object})
-    public specialisationYear?: ISpecializationYear
+    public specializationYear?: ISpecializationYear
 
     @Prop({type: Array})
-    public specialisationCourses: ICourse[]
+    public specializationCourses: ICourse[]
 
     @Prop({type: Object})
     public crossQualification: ICrossQualification
@@ -126,13 +123,7 @@ export default class VueStateWrapper extends BaseComponent {
     @Prop({type: Array})
     public crossQualificationCourses: ICourse[]
 
-    public specialisationActive = false;
-
-    public crossQualificationActive = false;
-
     public showAssessment = false;
-
-    public test: Array<ICoursePlanning> = [];
 
     public showSpecialization = false;
 
@@ -140,31 +131,37 @@ export default class VueStateWrapper extends BaseComponent {
 
     public assessmentComponent: VueAssessmentState = null;
 
-    public specialisationComponent: VueSpecializationState = null;
+    public specializationComponent: VueSpecializationState = null;
 
     public crossQualificationComponent: VueCrossQualificationState = null;
 
     public toggleShowAssessment() {
+        if(this.showSpecialization) {
+            this.showSpecialization = !this.showSpecialization;
+        }
+        if(this.showCrossQualification) {
+            this.showCrossQualification = !this.showCrossQualification;
+        }
         this.showAssessment = !this.showAssessment;
     }
 
     public toggleShowSpecialization() {
+        if(this.showAssessment) {
+            this.showAssessment = !this.showAssessment;
+        }
         this.showSpecialization = !this.showSpecialization;
     }
 
     public toggleShowCrossQualification() {
+        if(this.showAssessment) {
+            this.showAssessment = !this.showAssessment;
+        }
         this.showCrossQualification = !this.showCrossQualification;
-    }
-
-    public created() {
-        this.ccOrSpecialisationIsActive();
-        console.log(this.specialisationActive);
-        console.log(this.crossQualificationActive);
     }
 
     public mounted() {
         this.assessmentComponent = this.$refs.assessmentState as VueAssessmentState;
-        this.specialisationComponent = this.$refs.specialisationState as VueSpecializationState;
+        this.specializationComponent = this.$refs.specializationState as VueSpecializationState;
         this.crossQualificationComponent = this.$refs.crossQualificationState as VueCrossQualificationState;
     }
 
@@ -176,43 +173,20 @@ export default class VueStateWrapper extends BaseComponent {
         return this.assessmentComponent.courseAmounts;
     }
 
-    public get specialisationAmount() {
-        if(!this.specialisationComponent) {
+    public get specializationAmount() {
+        if(!this.specializationComponent) {
             return 0;
         }
         // @ts-ignore
-        return this.specialisationComponent.courseAmounts;
+        return this.specializationComponent.courseAmounts;
     }
 
-    // public get crossQualificationAmount() {
-    //     if(!this.crossQualificationComponent) {
-    //         return 0;
-    //     }
-    //     // @ts-ignore
-    //     return this.crossQualificationComponent.courseAmounts;
-    // }
-
-    public ccOrSpecialisationIsActive() {
-        if(this.planning.specialization_year_id) {
-            console.log('active specialisation');
-            this.specialisationActive = true;
-            this.crossQualificationActive = false;
-            return;
+    public get crossQualificationAmount() {
+        if(!this.crossQualificationComponent) {
+            return 0;
         }
-
-        if(this.planning.cross_qualification_year_id) {
-            this.specialisationActive = false;
-            this.crossQualificationActive = true;
-            console.log('active cross');
-            return;
-        }
-
-        else {
-            this.specialisationActive = false;
-            this.crossQualificationActive = false;
-            console.log('active nix');
-            return;
-        }
+        // @ts-ignore
+        return this.crossQualificationComponent.courseAmounts;
     }
 }
 </script>

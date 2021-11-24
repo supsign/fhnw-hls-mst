@@ -53,16 +53,16 @@ class MentorPlanningController extends Controller
             'student' => $student,
             'specializations' => Specialization::all(),
             'crossQualifications' => CrossQualification::all(),
-            'mentorStudent' => $mentorStudent
+            'mentorStudent' => $mentorStudent,
         ]);
     }
 
     public function store(
-        StoreRequest                  $request,
-        Student                       $student,
-        SpecializationYearService     $specializationYearService,
-        SpecializationService         $specializationService,
-        CrossQualificationService     $crossQualificationService,
+        StoreRequest $request,
+        Student $student,
+        SpecializationYearService $specializationYearService,
+        SpecializationService $specializationService,
+        CrossQualificationService $crossQualificationService,
         CrossQualificationYearService $crossQualificationYearService)
     {
         $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student);

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-for="course in assessmentCourses" class="mb-1 flex flex-row justify-between">
+        <div v-for="course in crossQualificationCourses" class="mb-1 flex flex-row justify-between">
             <div>{{ course.name }}</div>
             <div v-if="coursesIsCompletedSusscessfully(course)" class="my-auto"><i class="far fa-check-circle" aria-hidden="true"></i></div>
             <div class="flex flex-row space-x-1"
@@ -16,22 +16,20 @@
 <script lang="ts">
 import {Component, Prop} from "vue-property-decorator";
 import BaseComponent from "../base/baseComponent";
-import {ICompletion} from "../../interfaces/completion.interface";
-import {IAssessment} from "../../interfaces/assessment.interface";
-import {ICourse} from "../../interfaces/course.interface"
+import {ICrossQualification} from "../../interfaces/crossQualification.interface";
+import {ICrossQualificationYear} from "../../interfaces/crossQualificationYear.interface";
+import {ICourse} from "../../interfaces/course.interface";
 import {ICoursePlanning} from "../../store/coursePlanning/coursePlanning.interface";
+import {ICompletion} from "../../interfaces/completion.interface";
 import {ISemester} from "../../interfaces/semester.interface";
 
 @Component
-export default class VueAssessmentState extends BaseComponent {
+export default class VueCrossQualificationState extends BaseComponent {
     @Prop({type: Number})
     public planningId: number
 
     @Prop({type: Object})
-    public assessment: IAssessment
-
-    @Prop({type: Array})
-    public assessmentCourses: ICourse[]
+    public planning: ICoursePlanning
 
     @Prop({type: Array})
     public completions: ICompletion[]
@@ -39,7 +37,14 @@ export default class VueAssessmentState extends BaseComponent {
     @Prop({type: Array})
     public semesters: ISemester[]
 
-    public showAssessment = false;
+    @Prop({type: Object})
+    public crossQualification: ICrossQualification
+
+    @Prop({type: Object})
+    public crossQualificationYear?: ICrossQualificationYear
+
+    @Prop({type: Array})
+    public crossQualificationCourses: ICourse[]
 
     public get coursePlannings(): ICoursePlanning[] {
         return this.models.coursePlanning.byPlanningId(this.planningId)
@@ -47,7 +52,7 @@ export default class VueAssessmentState extends BaseComponent {
 
     public get courseAmounts(): number {
         let courseAmounts = 0;
-        for (const course of this.assessmentCourses) {
+        for (const course of this.crossQualificationCourses) {
             if (this.coursesIsCompletedSusscessfully(course)) {
                 courseAmounts++;
                 continue;
@@ -82,4 +87,3 @@ export default class VueAssessmentState extends BaseComponent {
     }
 }
 </script>
-

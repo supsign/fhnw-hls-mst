@@ -57,6 +57,15 @@ class PlanningController extends Controller
         ]);
     }
 
+    public function print(Planning $planning)
+    {
+        $pdf = app('dompdf.wrapper');
+        $pdf->getDomPDF()->set_option('enable_php', true);
+        $pdf->loadView('planning.print', ['planning' => $planning]);
+
+        return $pdf->stream();
+    }
+
     public function store(StoreRequest $request)
     {
         $this->permissionAndRoleService->canPlanScheduleOrAbort();

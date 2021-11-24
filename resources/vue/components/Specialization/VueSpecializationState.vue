@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-for="course in assessmentCourses" class="mb-1 flex flex-row justify-between">
+        <div v-for="course in specializationCourses" class="mb-1 flex flex-row justify-between">
             <div>{{ course.name }}</div>
             <div v-if="coursesIsCompletedSusscessfully(course)" class="my-auto"><i class="far fa-check-circle" aria-hidden="true"></i></div>
             <div class="flex flex-row space-x-1"
@@ -17,21 +17,19 @@
 import {Component, Prop} from "vue-property-decorator";
 import BaseComponent from "../base/baseComponent";
 import {ICompletion} from "../../interfaces/completion.interface";
-import {IAssessment} from "../../interfaces/assessment.interface";
 import {ICourse} from "../../interfaces/course.interface"
 import {ICoursePlanning} from "../../store/coursePlanning/coursePlanning.interface";
+import {ISpecialization} from "../../interfaces/specialization.interface";
+import {ISpecializationYear} from "../../interfaces/specialzationYear.interface";
 import {ISemester} from "../../interfaces/semester.interface";
 
 @Component
-export default class VueAssessmentState extends BaseComponent {
+export default class VueSpecializationState extends BaseComponent {
     @Prop({type: Number})
     public planningId: number
 
     @Prop({type: Object})
-    public assessment: IAssessment
-
-    @Prop({type: Array})
-    public assessmentCourses: ICourse[]
+    public planning: ICoursePlanning
 
     @Prop({type: Array})
     public completions: ICompletion[]
@@ -39,7 +37,16 @@ export default class VueAssessmentState extends BaseComponent {
     @Prop({type: Array})
     public semesters: ISemester[]
 
-    public showAssessment = false;
+    @Prop({type: Object})
+    public specialization: ISpecialization
+
+    @Prop({type: Object})
+    public specializationYear?: ISpecializationYear
+
+    @Prop({type: Array})
+    public specializationCourses: ICourse[]
+
+    public showSpecialization = false;
 
     public get coursePlannings(): ICoursePlanning[] {
         return this.models.coursePlanning.byPlanningId(this.planningId)
@@ -47,7 +54,7 @@ export default class VueAssessmentState extends BaseComponent {
 
     public get courseAmounts(): number {
         let courseAmounts = 0;
-        for (const course of this.assessmentCourses) {
+        for (const course of this.specializationCourses) {
             if (this.coursesIsCompletedSusscessfully(course)) {
                 courseAmounts++;
                 continue;
@@ -80,6 +87,6 @@ export default class VueAssessmentState extends BaseComponent {
         const semesterId = this.coursePlannings.find(semesterId => semesterId.course_id === course.id).semester_id;
         return this.semesters.find(semester => semester.id === semesterId).is_hs  ? 'HS' : 'FS';
     }
+
 }
 </script>
-

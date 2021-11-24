@@ -38,7 +38,7 @@ class CoursePlanningServiceTest extends TestCase
     {
         $student = $this->studentService->createOrUpdateOnEventoPersonId(5);
         $studyFieldYear = $this->studyFieldYearService->getByEventoId('9369194');
-        $planning = $this->planningService->createEmptyPlanning($student->id, $studyFieldYear->id);
+        $planning = $this->planningService->createEmptyPlanning($student, $studyFieldYear);
         $course = $studyFieldYear->courseGroupYears[0]->courses[0];
         $semester = Semester::first();
         $this->coursePlanningService->planCourse($planning, $course, $semester);
@@ -49,7 +49,7 @@ class CoursePlanningServiceTest extends TestCase
     {
         $student = $this->studentService->createOrUpdateOnEventoPersonId(5);
         $studyFieldYear = $this->studyFieldYearService->getByEventoId('9369194');
-        $planning = $this->planningService->createEmptyPlanning($student->id, $studyFieldYear->id);
+        $planning = $this->planningService->createEmptyPlanning($student, $studyFieldYear);
         $course = $studyFieldYear->courseGroupYears[0]->courses[0];
         $semester = Semester::first();
         $coursePlanning = $this->coursePlanningService->planCourse($planning, $course, $semester);

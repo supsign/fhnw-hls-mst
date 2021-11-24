@@ -26,6 +26,10 @@ class CourseCsvImport extends BaseCsvImport
             $data['credits'] = $this->line['kreditpunkte'];
         }
 
+        if ($this->line['lerninhalte']) {
+            $data['contents'] = $this->line['lerninhalte'];
+        }
+
         Course::create($data);
 
         return $this;

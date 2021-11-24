@@ -15,8 +15,10 @@
         Studienrichtung: {{ $planning->studyFieldYear->studyField->name }}<br/>
         Spezialisierung: {{ $planning->specializationYear?->specialization->name }}<br/>
         Querschnittsqualifikation: {{ $planning->crossQualificationYear?->crossQualification->name }}<br/>
-
+        Erreichte Punkte: {{ $planning->getObtainedCredits() }}<br/>
+        Geplante Punkte: {{ $planning->getPlannedCredits() }}<br/>
         
+
 
         @foreach ($planning->coursePlanningSemester AS $semester) 
             {{ $semester->is_hs ? 'HS' : 'FS' }} {{ $semester->year }}<br/>

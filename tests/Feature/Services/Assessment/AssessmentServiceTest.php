@@ -43,7 +43,7 @@ class AssessmentServiceTest extends TestCase
         $studyFieldYear->assessment_id = $assessment->id;
         $studyFieldYear->save();
 
-        $planning = $this->planningService->createEmptyPlanning($student->id, $studyFieldYear->id);
+        $planning = $this->planningService->createEmptyPlanning($student, $studyFieldYear);
 
         $assessmentFromPlanning = $this->assessmentService->getApplicableAssessment($planning);
 

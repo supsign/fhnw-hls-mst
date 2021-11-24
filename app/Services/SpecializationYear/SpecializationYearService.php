@@ -2,8 +2,10 @@
 
 namespace App\Services\SpecializationYear;
 
+use App\Models\Specialization;
 use App\Models\SpecializationYear;
 use App\Models\Student;
+use App\Models\StudyFieldYear;
 use App\Services\Base\BaseModelService;
 use App\Services\Base\Traits\FirstOrCreateTrait;
 use App\Services\Completion\CourseCompletionService;
@@ -33,5 +35,14 @@ class SpecializationYearService extends BaseModelService
         }
 
         return $amount;
+    }
+
+    public function findBySpecializationAndStudyFieldYear(Specialization $specialization = null, StudyFieldYear $studyFieldYear = null): ?SpecializationYear
+    {
+        if (!$specialization || !$studyFieldYear) {
+            return null;
+        }
+
+        return $this->model::where(['specialization_id' => $specialization->id, 'study_field_year_id' => $studyFieldYear->id])->first();
     }
 }

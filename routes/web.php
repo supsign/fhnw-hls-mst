@@ -42,6 +42,9 @@ Route::middleware(['web', 'auth'])->group(
 
         // Standings
         Route::get('standing', [StandingController::class, 'index'])->name('standing.index');
+        Route::post('plannings/{planning}/setrecommendations', [PlanningController::class, 'setRecommendations'])->name('planning.setRecommendations');
+
+        // Route::get('user', [UserController::class, 'index'])->name('user.index');
     }
 );
 

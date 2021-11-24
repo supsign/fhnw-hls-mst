@@ -26,6 +26,8 @@ class StoreRequest extends FormRequest
         return [
             'studyField' => 'required|int',
             'semester' => 'required|int',
+            'crossQualification' => 'int|nullable',
+            'specialization' => 'int|nullable',
         ];
     }
 }

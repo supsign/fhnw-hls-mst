@@ -42,7 +42,6 @@ Route::middleware(['web', 'auth'])->group(
 
         Route::post('plannings/{planning}/setrecommendations', [PlanningController::class, 'setRecommendations'])->name('planning.setRecommendations');
 
-
         // Route::get('user', [UserController::class, 'index'])->name('user.index');
     }
 );

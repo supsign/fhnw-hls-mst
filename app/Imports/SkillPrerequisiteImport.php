@@ -20,7 +20,7 @@ class SkillPrerequisiteImport extends BaseCsvImport
         }
 
         foreach ($prerequisiteCourse->courseSkills()->where(['is_acquisition' => true])->get()->sortBy('goal_number') as $courseSkill) {
-            if ($this->line['ziel' . $courseSkill->goal_number] === 't') {
+            if ($this->line['ziel'.$courseSkill->goal_number] === 't') {
                 CourseSkill::create([
                     'skill_id' => $courseSkill->skill_id,
                     'course_id' => Course::where('number', $this->line['laufnummer'])->first()->id,

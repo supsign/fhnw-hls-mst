@@ -7,11 +7,8 @@ use Illuminate\View\Component;
 
 class StandingAssessment extends Component
 {
-
     public function __construct(public Student $student)
     {
-
-
     }
 
     public function render()

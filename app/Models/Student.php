@@ -63,6 +63,4 @@ class Student extends BaseModel
     {
         return $this->hasOne(User::class);
     }
-
-
 }

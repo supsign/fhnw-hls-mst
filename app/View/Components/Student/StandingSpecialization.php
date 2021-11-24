@@ -8,11 +8,9 @@ use Illuminate\View\Component;
 
 class StandingSpecialization extends Component
 {
-
     public function __construct(public SpecializationYear $specializationYear, public Student $student)
     {
     }
-
 
     public function render()
     {

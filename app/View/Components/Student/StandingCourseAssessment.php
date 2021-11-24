@@ -11,10 +11,7 @@ class StandingCourseAssessment extends Component
 {
     public function __construct(public Course $course, public Student $student, protected CourseCompletionService $courseCompletionService)
     {
-
-
     }
-
 
     public function render()
     {

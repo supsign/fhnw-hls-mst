@@ -8,11 +8,9 @@ use Illuminate\View\Component;
 
 class StandingCrossqualification extends Component
 {
-
     public function __construct(public CrossQualificationYear $crossQualificationYear, public Student $student)
     {
     }
-
 
     public function render()
     {

@@ -37,7 +37,6 @@ class StandingController extends Controller
 
         $student = $user->student;
 
-
         return view('pages.standing', ['student' => $student]);
     }
 }

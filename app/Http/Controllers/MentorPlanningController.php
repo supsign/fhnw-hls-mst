@@ -20,12 +20,11 @@ class MentorPlanningController extends Controller
 {
     public function __construct(
         private PermissionAndRoleService $permissionAndRoleService,
-        protected StudyFieldService      $studyFieldService,
-        protected SemesterService        $semesterService,
-        protected PlanningService        $planningService,
-        protected StudyFieldYearService  $studyFieldYearService,
-    )
-    {
+        protected StudyFieldService $studyFieldService,
+        protected SemesterService $semesterService,
+        protected PlanningService $planningService,
+        protected StudyFieldYearService $studyFieldYearService,
+    ) {
     }
 
     public function create(Student $student)
@@ -56,7 +55,7 @@ class MentorPlanningController extends Controller
             'studyField' => $studyField,
             'semester' => $semester,
             'studyProgram' => $studyProgram,
-            'asStudent' => $student
+            'asStudent' => $student,
         ]);
     }
 
@@ -95,7 +94,7 @@ class MentorPlanningController extends Controller
         $viewParameter = [
             'planning' => $planning,
             'courseGroupYears' => $planning->studyFieldYear->courseGroupYears,
-            'mentorStudent' => $mentorStudent
+            'mentorStudent' => $mentorStudent,
         ];
 
         return view('planning.showOne', $viewParameter);

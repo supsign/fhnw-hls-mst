@@ -19,7 +19,7 @@ class MentorStudentService extends BaseModelService
         if (!$mentor || !$student) {
             return null;
         }
+
         return $this->model::where(['mentor_id' => $mentor->id, 'student_id' => $student->id])->first();
     }
-
 }

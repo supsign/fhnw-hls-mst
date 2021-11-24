@@ -16,12 +16,13 @@ class AttachStudentToMentorService
     public function attach(Mentor $mentor, Student $student): MentorStudent
     {
         $user = Auth::user();
+
         return $this->mentorStudentModel::firstOrCreate(
             [
                 'mentor_id' => $mentor->id,
                 'student_id' => $student->id,
                 'firstname' => $user?->firstname,
-                'lastname' => $user?->lastname
+                'lastname' => $user?->lastname,
             ]
         );
     }

@@ -1,6 +1,12 @@
 <template>
-    <div class="w-auto">
-        <div class="border p-2 md:w-full p-2 mx-auto">{{ countCredits }}&nbsp;/&nbsp;{{ courseGroupYear.credits_to_pass }}</div>
+        <div class="border-l p-2 text-center mx-auto w-16 h-full"
+        >
+            <div v-if="courseGroupIsCompletedSuccessfully">
+                <i class="far fa-check-circle text-green-500 font-bold" aria-hidden="true"></i>
+            </div>
+            <div v-else>
+                {{ countCredits }}&nbsp;/&nbsp;{{ courseGroupYear.credits_to_pass }}
+            </div>
     </div>
 </template>
 
@@ -53,6 +59,10 @@ export default class VueCourseGroupState extends BaseComponent {
 
     public courseIsPlanned(course: ICourse): boolean {
         return !!this.coursePlannings.find(coursePlanning => coursePlanning.course_id === course.id)
+    }
+
+    public get courseGroupIsCompletedSuccessfully() {
+        return this.countCredits >= this.courseGroupYear.credits_to_pass;
     }
 
 }

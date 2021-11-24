@@ -3,14 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Planning\StoreRequest;
+use App\Models\CrossQualification;
 use App\Models\Planning;
 use App\Models\Semester;
+use App\Models\Specialization;
 use App\Models\Student;
 use App\Models\StudyField;
+use App\Models\StudyFieldYear;
 use App\Models\StudyProgram;
+use App\Services\CrossQualification\CrossQualificationService;
+use App\Services\CrossQualificationYear\CrossQualificationYearService;
 use App\Services\Mentor\MentorStudentService;
+use App\Services\Planning\FillPlanningWithRecommendationsService;
 use App\Services\Planning\PlanningService;
 use App\Services\Semester\SemesterService;
+use App\Services\Specialization\SpecializationService;
+use App\Services\SpecializationYear\SpecializationYearService;
 use App\Services\StudyField\StudyFieldService;
 use App\Services\StudyFieldYear\StudyFieldYearService;
 use App\Services\User\PermissionAndRoleService;
@@ -27,39 +35,35 @@ class MentorPlanningController extends Controller
     ) {
     }
 
-    public function create(Student $student)
+    public function create(Student $student, MentorStudentService $mentorStudentService)
     {
         $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student);
 
-        $hlsBachelorStudyProgram = StudyProgram::find(6);
+        $mentorStudent = $mentorStudentService->getByMentorAndStudent(Auth::user()?->mentor, $student);
 
-        $studyField = $student->studyFieldYear->studyField ?? null;
-        $semester = $student->studyFieldYear->beginSemester ?? null;
-        $studyProgram = $student->studyFieldYear->studyField->studyProgram ?? null;
-
-        if (!$studyProgram) {
-            $studyProgram = $hlsBachelorStudyProgram;
-        }
-
-        // Im Moment Tool nur Bachelor HLS
-        if ($studyProgram->id !== $hlsBachelorStudyProgram->id) {
-            $studyField = null;
-            $semester = null;
-            $studyProgram = $hlsBachelorStudyProgram;
+        if (!$mentorStudent) {
+            return redirect()->route('mentor.planning.list', $student);
         }
 
         return view('planning.new', [
             'studyFields' => StudyField::where('study_program_id', 6)->get(),
             'studyPrograms' => StudyProgram::all(),
+            'studyFieldYears' => StudyFieldYear::all(),
             'semesters' => Semester::where('is_hs', true)->get(),
-            'studyField' => $studyField,
-            'semester' => $semester,
-            'studyProgram' => $studyProgram,
-            'asStudent' => $student,
+            'student' => $student,
+            'specializations' => Specialization::all(),
+            'crossQualifications' => CrossQualification::all(),
+            'mentorStudent' => $mentorStudent
         ]);
     }
 
-    public function store(StoreRequest $request, Student $student)
+    public function store(
+        StoreRequest                  $request,
+        Student                       $student,
+        SpecializationYearService     $specializationYearService,
+        SpecializationService         $specializationService,
+        CrossQualificationService     $crossQualificationService,
+        CrossQualificationYearService $crossQualificationYearService)
     {
         $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student);
 
@@ -73,9 +77,25 @@ class MentorPlanningController extends Controller
             return redirect()->route('planning.create');
         }
 
+        /* @var $specialization Specialization */
+        $specialization = $specializationService->getById($request->specialization);
+        $specializationYear = $specializationYearService->findBySpecializationAndStudyFieldYear(
+            $specialization,
+            $studyFieldYear
+        );
+
+        /* @var $crossQualification CrossQualification */
+        $crossQualification = $crossQualificationService->getById($request->crossQualification);
+        $crossQualificationYear = $crossQualificationYearService->findByCrossQualificationAndStudyFieldYear(
+            $crossQualification,
+            $studyFieldYear
+        );
+
         $planning = $this->planningService->createEmptyPlanning(
-            $student->id,
-            $studyFieldYear->id,
+            $student,
+            $studyFieldYear,
+            $crossQualificationYear,
+            $specializationYear
         );
 
         return redirect()->route('mentor.planning.showOne', [$student, $planning]);
@@ -121,5 +141,20 @@ class MentorPlanningController extends Controller
         }
 
         return view('pages.student-plannings', ['plannings' => $plannings, 'mentorStudent' => $mentorStudent]);
+    }
+
+    public function setRecommendations(Student $student, Planning $planning, FillPlanningWithRecommendationsService $fillPlanningWithRecommendationsService, MentorStudentService $mentorStudentService)
+    {
+        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student);
+
+        $fillPlanningWithRecommendationsService->fill($planning);
+
+        $mentorStudent = $mentorStudentService->getByMentorAndStudent(Auth::user()?->mentor, $student);
+
+        if (!$mentorStudent) {
+            return redirect()->route('home');
+        }
+
+        return redirect()->route('mentor.planning.showOne', [$mentorStudent->student, $planning]);
     }
 }

@@ -8,7 +8,6 @@ use App\Services\StudyField\StudyFieldService;
 use App\Services\StudyFieldYear\StudyFieldYearService;
 use App\Services\User\PermissionAndRoleService;
 use Auth;
-use Carbon\Carbon;
 
 class StandingController extends Controller
 {
@@ -38,8 +37,7 @@ class StandingController extends Controller
 
         $student = $user->student;
 
-        $now = Carbon::now()->format('d.m.Y H:i');
 
-        return view('pages.standing', ['student' => $student, 'now' => $now]);
+        return view('pages.standing', ['student' => $student]);
     }
 }

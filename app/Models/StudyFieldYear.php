@@ -44,6 +44,6 @@ class StudyFieldYear extends BaseModel
 
     public function crossQualificationYears()
     {
-        return $this->hasMany($this->crossQualificationYears::class);
+        return $this->hasMany(CrossQualificationYear::class);
     }
 }

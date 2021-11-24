@@ -105,11 +105,7 @@ class CompletionService extends BaseModelService
             return $completion->completion_type_id === 2 || $completion->completion_type_id === 4;
         });
 
-        if ($successfulCompletions->count() !== 0) {
-            return true;
-        }
-
-        return false;
+        return $successfulCompletions->count() !== 0;
     }
 
     public function hasFailedCompletions(Collection $completions): bool

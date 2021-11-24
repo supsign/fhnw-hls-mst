@@ -4,8 +4,10 @@ namespace App\Services\Assessment;
 
 use App\Models\Assessment;
 use App\Models\Planning;
+use App\Models\Student;
 use App\Services\Base\BaseModelService;
 use App\Services\Base\Traits\UpdateOrCreateTrait;
+use App\Services\Completion\CourseCompletionService;
 
 class AssessmentService extends BaseModelService
 {
@@ -13,7 +15,7 @@ class AssessmentService extends BaseModelService
         updateOrCreate AS updateOrCreateTrait;
     }
 
-    public function __construct(protected Assessment $model)
+    public function __construct(protected Assessment $model, protected CourseCompletionService $courseCompletionService)
     {
         parent::__construct($model);
     }
@@ -37,5 +39,23 @@ class AssessmentService extends BaseModelService
             ?? $planning?->specializationYear?->assessment
             ?? $planning->studyFieldYear?->assessment
             ?? null;
+    }
+
+    public function isSuccessfullyCompleted(Assessment $assessment, Student $student): bool
+    {
+        return $this->getPassedAmount($assessment, $student) >= $assessment->amount_to_pass;
+    }
+
+    public function getPassedAmount(Assessment $assessment, Student $student): int
+    {
+        $amount = 0;
+
+        foreach ($assessment->courses AS $course) {
+            if ($this->courseCompletionService->courseIsSuccessfullyCompleted($course, $student)) {
+                $amount++;
+            }
+        }
+
+        return $amount;
     }
 }

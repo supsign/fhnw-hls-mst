@@ -1,17 +1,17 @@
 <template>
     <div>
-        <div v-if="!coursePlanning" class="" @click="()=>{pickerIsOpen = true}">
+        <div v-if="!coursePlanning" class="" @click.stop="()=>{pickerIsOpen = true}">
             <img :src="'/img/calendarIcon.svg'" alt="module_icon" class="cursor-pointer w-8 h-8 my-auto">
         </div>
-        <div v-else-if="coursePlanningSemester" class="text-sm" @click="()=>{pickerIsOpen = true}">
+        <div v-else-if="coursePlanningSemester" class="text-sm" @click.stop="()=>{pickerIsOpen = true}">
             {{ coursePlanningSemester.year - 2000 }}
             {{ coursePlanningSemester.is_hs ? 'HS' : 'FS' }}
         </div>
         <vue-semester-picker v-if="pickerIsOpen" :is-saving="isSaving" :isSaving="isSaving"
                              :selected-semester="coursePlanningSemester"
                              :semesters="pickableSemsters"
-                             @cancel="cancel"
-                             @select="select"></vue-semester-picker>
+                             @select="select"
+                             @cancel.stop="cancel"></vue-semester-picker>
     </div>
 </template>
 

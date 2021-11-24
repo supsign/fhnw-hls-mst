@@ -17,7 +17,7 @@
             :course="course"
             :courseYear="courseYear"
             :missingCourses="missingCourses"
-            @cancel="closeModal"
+            @cancel.stop="closeModal"
         ></vue-course-detail-modal>
     </div>
 </template>
@@ -62,18 +62,22 @@ export default class VueCourseDetail extends BaseComponent {
 
     public detailModalIsOpen = false;
 
-    public get missingCourses(): ICourse[] {
-        return []
-    }
-
-    public get skillsToBePlanned() {
+    public get notAcquiredSkills() {
         return this.requiredSkills.filter((reqSkill) => !this.skills.find(skill => skill.id === reqSkill.id))
     }
 
-    public get notPlannedSkills() {
-        return this.skillsToBePlanned.filter((skillToBePlanned) => !this.models.coursePlanning.all.map(coursePlanning => coursePlanning.planned_skills).reduce((acc, curVal) => {
+    public get skillsToBePlaned() {
+        return this.notAcquiredSkills.filter((skillToBePlanned) => !this.models.coursePlanning.all.map(coursePlanning => coursePlanning.planned_skills).reduce((acc, curVal) => {
             return acc.concat(curVal)
         }, []).find(plannedSkill => plannedSkill.id === skillToBePlanned.id))
+    }
+
+    public get missingCoursesNN(): ICourse[] {
+        return this.skillsToBePlaned.map((skill) => skill.gain_course).filter((course) => !!course);
+    }
+
+    public get missingCourses(): ICourse[] {
+        return [...new Set(this.missingCoursesNN.map(course => course.id))].map(courseId => this.missingCoursesNN.find(course => course.id === courseId));
     }
 
     public closeModal() {

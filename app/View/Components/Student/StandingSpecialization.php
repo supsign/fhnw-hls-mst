@@ -8,8 +8,6 @@ use App\Services\SpecializationYear\SpecializationYearService;
 use Illuminate\View\Component;
 
 class StandingSpecialization extends Component
-
-
 {
     public int $coursedPassed;
 
@@ -21,8 +19,7 @@ class StandingSpecialization extends Component
         $this->coursedPassed = $this->specializationYearService->getPassedAmount($this->specializationYear, $this->student);
     }
 
-    public
-    function render()
+    public function render()
     {
         return view('components.student.standing-specialization');
     }

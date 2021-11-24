@@ -9,9 +9,7 @@ use Illuminate\View\Component;
 
 class StandingCrossqualification extends Component
 {
-
     public int $coursedPassed;
-
 
     public function __construct(
         public CrossQualificationYear $crossQualificationYear,
@@ -19,7 +17,6 @@ class StandingCrossqualification extends Component
         protected CrossQualificationYearService $crossQualificationYearService
     ) {
         $this->coursedPassed = $this->crossQualificationYearService->getPassedAmount($this->crossQualificationYear, $this->student);
-
     }
 
     public function render()

@@ -4,11 +4,11 @@
     </x-slot>
 
     <div class="container p-3 mx-auto mt-4">
-        <div class="flex space-x-4">
-            <div class="w-[30rem]">
+        <div class="sm:flex sm:space-x-4 mb-8 space-y-4 sm:space-y-0">
+            <div class="w-full sm:w-[30rem]">
                 <x-student.standing-info :student="$student"/>
             </div>
-            <div class="flex-grow">
+            <div class="w-full sm:flex-grow">
                 <x-app.card class="bg-yellow-400">
                     <div class="flex">
                         <div class="pr-4">
@@ -22,17 +22,17 @@
 
             </div>
         </div>
-        <div class="flex">
-            <div class="w-3/4 border-r border-gray-300 pr-4">
+        <div class="space-y-8 lg:flex lg:space-y-0 ">
+            <div class="lg:w-3/4 lg:border-r lg:border-gray-300 lg:pr-4">
                 <div class="text-2xl text-gray-500 mb-4">Modulgruppen</div>
-                <div class="grid grid-cols-3 gap-4">
+                <div class="space-y-4 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-4">
                     @foreach($student->studyFieldYear->courseGroupYears()->with('courses')->get() as $courseGroupYear)
                         <x-student.standing-course-group :student="$student" :courseGroupYear="$courseGroupYear"/>
                     @endforeach
                 </div>
             </div>
 
-            <div class="pl-4">
+            <div class="lg:pl-4">
                 <div class="mb-8">
                     <div class="text-2xl text-gray-500 mb-4">Assessment</div>
                     <x-student.standing-assessment :student="$student"/>

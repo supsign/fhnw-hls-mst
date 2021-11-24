@@ -52,9 +52,15 @@ class PlanningController extends Controller
 
     public function print(Planning $planning)
     {
+        $this->permissionAndRoleService->canPlanScheduleOrAbort();
+
+
+        $firstname = Auth::user()->firstname;
+        $lastname = Auth::user()->lastname;
         $pdf = app('dompdf.wrapper');
+        $pdf->setPaper('A4', 'portrait');
         $pdf->getDomPDF()->set_option('enable_php', true);
-        $pdf->loadView('planning.print', ['planning' => $planning]);
+        $pdf->loadView('planning.print', ['planning' => $planning, 'firstname' => $firstname, 'lastname' => $lastname]);
 
         return $pdf->stream();
     }

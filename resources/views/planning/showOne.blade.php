@@ -16,18 +16,17 @@
                     </vue-form>
                 </div>
             </x-slot>
-            <div class="mt-2">
+            <div class="mt-2 mb-4">
                 <div>{{ $planning->studyFieldYear->studyField->studyProgram->name }}</div>
                 <div>{{ $planning->studyFieldYear->studyField->name }}</div>
                 <div>{{ $planning->crossQualificationYear?->crossQualification->name }}</div>
                 <div>{{ $planning->specializationYear?->specialization->name }}</div>
                 <div>@lang('l.startDate'): {{ $planning->studyFieldYear->beginSemester->year }}</div>
             </div>
-
-            <x-base.link href="{{ route('planning.print', $planning) }}"> Drucken </x-base.link>
-
+            <x-base.link href="{{ route('planning.print', $planning) }}" class="button-primary"> Drucken </x-base.link>
         </x-app.card>
-        <vue-form method="POST" action="{{ route('planning.setRecommendations', $planning) }}">
+
+        <vue-form method="POST" action="{{ route('planning.setRecommendations', $planning) }}" class="mt-4">
             @csrf
             <button class="button-primary mb-4" type="submit">gem. Studienplan planen</button>
         </vue-form>

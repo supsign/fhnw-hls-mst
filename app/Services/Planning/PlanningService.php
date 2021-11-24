@@ -86,4 +86,9 @@ class PlanningService extends BaseModelService
 
         return $credits;
     }
+
+    public function getTotalCredits(Planning $planning) :int
+    {
+        return $this->getObtainedCredits($planning) + $this->getPlannedCredits($planning);
+    }
 }

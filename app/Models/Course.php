@@ -57,14 +57,19 @@ class Course extends BaseModel
         return $this->belongsToMany(Recommendation::class);
     }
 
+    public function skillsAcquisition()
+    {
+        return $this->skills()->wherePivot('is_acquisition', true);
+    }
+
     public function skills()
     {
         return $this->belongsToMany(Skill::class);
     }
 
-    public function skillsAcquisition()
+    public function requiredSkills()
     {
-        return $this->skills()->wherePivot('is_acquisition', true);
+        return $this->skills()->wherePivot('is_acquisition', false);
     }
 
     public function specializationYears()

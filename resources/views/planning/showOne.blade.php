@@ -71,23 +71,21 @@
 
                 </template>
                 @foreach($courseGroupYear->courseCourseGroupYears as $courseCourseGroupYear)
-                    <div class="flex flex-row space-x-5 border-t p-1 text-left">
-                        <x-planning.completion :student="$planning->student"
-                                               :course="$courseCourseGroupYear->course"></x-planning.completion>
-                        <div class="my-auto break-words w-2/3">
-                            {{$courseCourseGroupYear->course->name}}
-                        </div>
-                        <div class="flex-none my-auto">
-                            @inject('semesterService', 'App\Services\Semester\SemesterService')
-                            @inject('courseCompletionService', 'App\Services\Completion\CourseCompletionService')
-                            @if(!$courseCompletionService->courseIsSuccessfullyCompleted($courseCourseGroupYear->course, $planning->student))
-                                <vue-plan-course :planning-id="{{$planning->id}}"
-                                                 :course="{{$courseCourseGroupYear->course}}"
-                                                 :semesters="{{\App\Models\Semester::all()}}">
-                                </vue-plan-course>
-                            @endif
-                        </div>
-                    </div>
+                    @inject('courseCompletionService', 'App\Services\Completion\CourseCompletionService')
+                    <vue-course-detail
+                        :course="{{$courseCourseGroupYear->course}}"
+                        :course-year="{{$courseCourseGroupYear->course->getCourseYearBySemesterOrLatest() ?? json_encode(null)}}"
+                        :planning-id="{{$planning->id}}"
+                        :semesters="{{\App\Models\Semester::all()}}"
+                        :required-skills="{{$courseCourseGroupYear->course->requiredSkills}}"
+                        :skills="{{$planning->student->skills}}"
+                        {{$courseCompletionService->courseIsSuccessfullyCompleted($courseCourseGroupYear->course, $planning->student) ?'course-isSuccessfully-completed' : ''}}
+                    >
+                        <template v-slot:icon>
+                            <x-planning.completion :student="$planning->student"
+                                                   :course="$courseCourseGroupYear->course"></x-planning.completion>
+                        </template>
+                    </vue-course-detail>
                 @endforeach
             </vue-plan-wrapper>
         @endforeach

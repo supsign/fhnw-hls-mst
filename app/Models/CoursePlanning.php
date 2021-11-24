@@ -8,6 +8,7 @@ namespace App\Models;
 class CoursePlanning extends BaseModel
 {
     protected $table = 'course_planning';
+    protected $appends = ['planned_skills'];
 
     public function course()
     {
@@ -22,5 +23,10 @@ class CoursePlanning extends BaseModel
     public function planning()
     {
         return $this->belongsTo(Planning::class);
+    }
+
+    public function getPlannedSkillsAttribute()
+    {
+        return $this->course->skillsAcquisition;
     }
 }

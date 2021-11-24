@@ -8,11 +8,15 @@ use App\Models\SpecializationYear;
 use App\Models\Student;
 use App\Models\StudyFieldYear;
 use App\Services\Base\BaseModelService;
+use App\Services\Completion\CourseCompletionService;
 
 class PlanningService extends BaseModelService
 {
-    public function __construct(protected Planning $model, protected CoursePlanningService $coursePlanningService)
-    {
+    public function __construct(
+        protected Planning $model,
+        protected CoursePlanningService $coursePlanningService,
+        protected CourseCompletionService $courseCompletionService
+    ) {
         parent::__construct($model);
     }
 
@@ -59,5 +63,27 @@ class PlanningService extends BaseModelService
         $planning->delete();
 
         return $this;
+    }
+
+    public function getObtainedCredits(Planning $planning): int
+    {
+        $credits = 0;
+
+        foreach ($planning->courses AS $course) {
+            $credits += $this->courseCompletionService->getCredits($course, $planning->student);
+        }
+
+        return $credits;
+    }
+
+    public function getPlannedCredits(Planning $planning): int
+    {
+        $credits = 0;
+
+        foreach ($planning->courses AS $course) {
+            $credits += $course->credits;
+        }
+
+        return $credits;
     }
 }

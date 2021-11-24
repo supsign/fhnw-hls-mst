@@ -15,7 +15,7 @@ use App\Services\CrossQualificationYear\CrossQualificationYearService;
 use App\Services\Planning\FillPlanningWithRecommendationsService;
 use App\Services\Planning\PlanningService;
 use App\Services\Semester\SemesterService;
-use App\Services\Specialization\SpecializationService as SpecializationSpecializationService;
+use App\Services\Specialization\SpecializationService;
 use App\Services\SpecializationYear\SpecializationYearService;
 use App\Services\StudyField\StudyFieldService;
 use App\Services\StudyFieldYear\StudyFieldYearService;
@@ -61,7 +61,7 @@ class PlanningController extends Controller
     public function store(
         StoreRequest $request,
         SpecializationYearService $specializationYearService,
-        SpecializationSpecializationService $specializationService,
+        SpecializationService $specializationService,
         CrossQualificationService $crossQualificationService,
         CrossQualificationYearService $crossQualificationYearService
     ) {

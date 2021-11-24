@@ -10,6 +10,7 @@ use App\Models\Specialization;
 use App\Models\StudyField;
 use App\Models\StudyFieldYear;
 use App\Models\StudyProgram;
+use App\Services\Planning\FillPlanningWithRecommendationsService;
 use App\Services\CrossQualification\CrossQualificationService;
 use App\Services\CrossQualificationYear\CrossQualificationYearService;
 use App\Services\Planning\PlanningService;
@@ -109,5 +110,14 @@ class PlanningController extends Controller
         $planningService->cascadingDelete($planning);
 
         return redirect()->route('home');
+    }
+
+    public function setRecommendations(Planning $planning, FillPlanningWithRecommendationsService $fillPlanningWithRecommendationsService)
+    {
+        $this->permissionAndRoleService->canPlanScheduleOrAbort();
+
+        $fillPlanningWithRecommendationsService->fill($planning);
+
+        return redirect()->route('planning.showOne', $planning);
     }
 }

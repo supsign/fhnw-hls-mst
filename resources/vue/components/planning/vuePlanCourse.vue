@@ -9,7 +9,7 @@
         </div>
         <vue-semester-picker v-if="pickerIsOpen" :is-saving="isSaving" :isSaving="isSaving"
                              :selected-semester="coursePlanningSemester"
-                             :semesters="semesters"
+                             :semesters="pickableSemsters"
                              @cancel="cancel"
                              @select="select"></vue-semester-picker>
     </div>
@@ -21,6 +21,7 @@ import BaseComponent from "../base/baseComponent";
 import {ICoursePlanning} from "../../store/coursePlanning/coursePlanning.interface";
 import {ISemester} from "../../interfaces/semester.interface";
 import VueSemesterPicker from "./vueSemesterPicker.vue";
+import {ICourse} from "../../interfaces/course.interface";
 
 @Component({
     components: {
@@ -31,8 +32,8 @@ export default class VuePlanCourse extends BaseComponent {
     @Prop({type: Number})
     public planningId: number
 
-    @Prop({type: Number})
-    public courseId: number
+    @Prop({type: Object})
+    public course: ICourse
 
     @Prop({
         type: Array
@@ -47,14 +48,27 @@ export default class VuePlanCourse extends BaseComponent {
         if (!this.planningId) {
             return;
         }
-        if (!this.courseId) {
+        if (!this.course.id) {
             return;
         }
-        return this.models.coursePlanning.getCoursePlanning(this.planningId, this.courseId);
+        return this.models.coursePlanning.getCoursePlanning(this.planningId, this.course.id);
     }
 
     public get coursePlanningSemester(): ISemester {
         return this.semesters.find((semester) => semester.id === this.coursePlanning?.semester_id);
+    }
+
+    public get pickableSemsters(): ISemester[] {
+        return this.semesters.filter((semester) => {
+            const now = new Date();
+            if (typeof semester.start_date === 'string') {
+                semester.start_date = new Date(semester.start_date);
+            }
+
+            return semester.start_date.getTime() > now.getTime();
+        }).filter((semester) => {
+            return (semester.is_hs && this.course.is_hs) || (!semester.is_hs && this.course.is_fs)
+        })
     }
 
     public cancel() {
@@ -83,7 +97,7 @@ export default class VuePlanCourse extends BaseComponent {
 
     public planCourse(semester: ISemester) {
         return this.models.coursePlanning.post({
-            course_id: this.courseId,
+            course_id: this.course.id,
             planning_id: this.planningId,
             semester_id: semester.id
         })

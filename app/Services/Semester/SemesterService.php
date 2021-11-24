@@ -15,7 +15,7 @@ class SemesterService extends BaseModelService
     protected int $cutOffYearMax = 2100;
 
     use FirstOrCreateTrait {
-        firstOrCreate AS protected firstOrCreateTrait;
+        firstOrCreate as protected firstOrCreateTrait;
     }
 
     protected $semesterStartDateHs = '01.09.';
@@ -86,5 +86,18 @@ class SemesterService extends BaseModelService
         $isHs = substr($number, 4, 2) === 'HS';
 
         return $this->firstOrCreateByYear($year, $isHs);
+    }
+
+    public function getSemesterByStartAndNumber(Semester $startSemester, int $number = 1): ?Semester
+    {
+        $targetSemester = $startSemester;
+        for ($i = 1; $i < $number; $i++) {
+            $targetSemester = $targetSemester->nextSemester;
+            if (!$targetSemester) {
+                break;
+            }
+        }
+
+        return $targetSemester;
     }
 }

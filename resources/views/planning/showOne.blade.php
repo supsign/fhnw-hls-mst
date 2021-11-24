@@ -19,9 +19,15 @@
             <div class="mt-2">
                 <div>{{ $planning->studyFieldYear->studyField->studyProgram->name }}</div>
                 <div>{{ $planning->studyFieldYear->studyField->name }}</div>
+                <div>{{ $planning->crossQualificationYear?->crossQualification->name }}</div>
+                <div>{{ $planning->specializationYear?->specialization->name }}</div>
                 <div>@lang('l.startDate'): {{ $planning->studyFieldYear->beginSemester->year }}</div>
             </div>
         </x-app.card>
+        <vue-form method="POST" action="{{ route('planning.setRecommendations', $planning) }}">
+            @csrf
+            <button class="button-primary mb-4" type="submit" name="delete_planning">gem. Studienplan planen</button>
+        </vue-form>
         <x-app.card>
             <x-slot name="title">
                 <div class="my-auto">@lang('l.legend')</div>
@@ -49,8 +55,7 @@
                 <vue-plan-wrapper>
                     <template v-slot:header>
                         <div class="my-auto w-2/3 text-sm">
-                            {{$courseGroupYear->courseGroup->name}}
-
+                           {{$courseGroupYear->courseGroup->name}}
                         </div>
                         <vue-course-group-state :course-group-year="{{$courseGroupYear}}"
                                                 :courses="{{$courseGroupYear->getCourses()}}"

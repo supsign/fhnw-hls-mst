@@ -6,39 +6,20 @@
     <div class="container p-3 mx-auto">
         <x-app.card>
             <x-slot name="title">
-                neue Studienplanung
+                Studienplanung erstellen
             </x-slot>
             <vue-form id="new_planning" method="POST" action="{{ route('planning.store') }}">
                 @csrf
-                <div class="flex flex-col space-y-4">
-                    {{--                    <x-base.input type="text" name="course" label="Course" value="{{ old('course') }}" :init-errors="$errors->get('course')"/>--}}
-                    {{--                    <x-base.checkbox name="check" :init-errors="$errors->get('check')">--}}
-                    {{--                        Check--}}
-                    {{--                    </x-base.checkbox>--}}
-                    <x-base.select
-                        name="studyProgram"
-                        :options="$studyPrograms"
-                        optionKey="name"
-                        label="Studiengang"
-                        :value="$studyProgram"
-                        disabled>
-                    </x-base.select>
-                    <x-base.select
-                        name="studyField"
-                        :options="$studyFields"
-                        optionKey="name"
-                        :value="$studyField"
-                        label="Studienrichtung"
-                        required>
-                    </x-base.select>
-                    <x-base.select
-                        name="semester"
-                        :options="$semesters"
-                        optionKey="year"
-                        :value="$semester"
-                        label="Start"
-                        required>
-                    </x-base.select>
+                <div class="flex flex-col space-y-8">
+                    <vue-create-planning-form
+                        :study-programs="{{$studyPrograms}}"
+                        :study-fields="{{$studyFields}}"
+                        :study-field-years="{{$studyFieldYears}}"
+                        :semesters="{{$semesters}}"
+                        :student="{{$student ?? json_encode(null)}}"
+                        :specializations="{{$specializations}}"
+                        :cross-qualifications="{{$crossQualifications}}"
+                    ></vue-create-planning-form>
                     <x-base.button class="mt-4 button-primary w-36 justify-center" type="submit">Erstellen
                     </x-base.button>
                 </div>

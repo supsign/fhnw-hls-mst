@@ -42,7 +42,7 @@ class RecommendationServiceTest extends TestCase
         $studyFieldYear->recommendation_id = $recommendation->id;
         $studyFieldYear->save();
 
-        $planning = $this->planningService->createEmptyPlanning($student->id, $studyFieldYear->id);
+        $planning = $this->planningService->createEmptyPlanning($student, $studyFieldYear);
 
         $recommendationFromPlanning = $this->recommendationService->getApplicableRecommendation($planning);
 

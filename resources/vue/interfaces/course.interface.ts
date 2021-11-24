@@ -7,4 +7,6 @@ export interface ICourse extends IModel {
     name?: string
     number: string
     study_field_id?: number
+    is_hs: boolean
+    is_fs: boolean
 }

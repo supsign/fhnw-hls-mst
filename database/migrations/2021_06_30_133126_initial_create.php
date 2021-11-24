@@ -202,8 +202,8 @@ class InitialCreate extends Migration
             $table->string('number_unformated')->nullable()->unique();
             $table->string('name')->nullable();
             $table->integer('credits')->default(0);
-            $table->boolean('is_fs')->default(0);
-            $table->boolean('is_hs')->default(0);
+            $table->boolean('is_fs')->default(1);
+            $table->boolean('is_hs')->default(1);
             $table->timestampsTz();
         });
 

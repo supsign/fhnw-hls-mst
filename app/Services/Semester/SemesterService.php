@@ -15,7 +15,7 @@ class SemesterService extends BaseModelService
     protected int $cutOffYearMax = 2100;
 
     use FirstOrCreateTrait {
-        firstOrCreate AS protected firstOrCreateTrait;
+        firstOrCreate as protected firstOrCreateTrait;
     }
 
     protected $semesterStartDateHs = '01.09.';
@@ -32,7 +32,7 @@ class SemesterService extends BaseModelService
 
         $currentSemester = $this->firstOrcreateByYear(
             $today->year,
-            Carbon::parse($this->semesterStartDateHs.$today->year)->isPast()
+            Carbon::parse($this->semesterStartDateHs . $today->year)->isPast()
         );
 
         $i = 1;
@@ -59,7 +59,7 @@ class SemesterService extends BaseModelService
     public function firstOrCreateByYear(int $year, bool $isHs = true): Semester
     {
         if ($year >= $this->cutOffYearMax) {
-            throw new Exception('year value "'.$year.'" is out of range');
+            throw new Exception('year value "' . $year . '" is out of range');
         }
 
         $previousSemester = $year <= $this->cutOffYearMin ? null : $this->firstOrCreateByYear($isHs ? $year : $year - 1, !$isHs);
@@ -68,7 +68,7 @@ class SemesterService extends BaseModelService
             'year' => $year,
             'is_hs' => $isHs,
         ], [
-            'start_date' => ($isHs ? $this->semesterStartDateHs : $this->semesterStartDateFs).$year,
+            'start_date' => ($isHs ? $this->semesterStartDateHs : $this->semesterStartDateFs) . $year,
             'previous_semester_id' => $previousSemester?->id,
         ]);
     }
@@ -86,5 +86,17 @@ class SemesterService extends BaseModelService
         $isHs = substr($number, 4, 2) === 'HS';
 
         return $this->firstOrCreateByYear($year, $isHs);
+    }
+
+    public function getSemesterByStartAndNumber(Semester $startSemester, int $number = 1): ?Semester
+    {
+        $targetSemester = $startSemester;
+        for ($i = 1; $i < $number; $i++) {
+            $targetSemester = $targetSemester->nextSemester;
+            if (!$targetSemester) {
+                break;
+            }
+        }
+        return $targetSemester;
     }
 }

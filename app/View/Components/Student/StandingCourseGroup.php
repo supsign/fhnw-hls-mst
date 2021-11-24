@@ -10,8 +10,6 @@ class StandingCourseGroup extends Component
 {
     public function __construct(public CourseGroupYear $courseGroupYear, public Student $student)
     {
-
-
     }
 
     public function render()

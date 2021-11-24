@@ -9,11 +9,8 @@ use Illuminate\View\Component;
 
 class StandingCourse extends Component
 {
-
     public function __construct(public Course $course, public Student $student, protected CourseCompletionService $courseCompletionService)
     {
-
-
     }
 
     public function render()
@@ -24,7 +21,5 @@ class StandingCourse extends Component
         ) {
             return view('components.student.standing-course');
         }
-
     }
 }
-

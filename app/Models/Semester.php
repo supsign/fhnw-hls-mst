@@ -65,6 +65,11 @@ class Semester extends BaseModel
         );
     }
 
+    public function nextSemester()
+    {
+        return $this->hasOne(Semester::class, 'previous_semester_id');
+    }
+
     public function previousSemester()
     {
         return $this->belongsTo(Semester::class, 'previous_semester_id');

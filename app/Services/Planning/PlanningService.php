@@ -74,7 +74,7 @@ class PlanningService extends BaseModelService
     {
         $credits = 0;
 
-        foreach ($planning->courses as $course) {
+        foreach ($planning->student->studyFieldYear->courses as $course) {
             $credits += $this->courseCompletionService->getCredits($course, $planning->student);
         }
 

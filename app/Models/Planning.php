@@ -68,4 +68,9 @@ class Planning extends BaseModel
     {
         return $this->getService()->getPlannedCredits($this);
     }
+
+    public function getTotalCredits(): int
+    {
+        return $this->getService()->getTotalCredits($this);
+    }
 }

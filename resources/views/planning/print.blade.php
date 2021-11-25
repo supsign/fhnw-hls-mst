@@ -1,40 +1,45 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>FHNW HLS MST</title>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    </head>
+<head>
+    <title>FHNW HLS MST</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <body>
-        <header>
-            FHNW HLS MST
-        </header>
+    <title>PDF | HLS MST</title>
 
-        Studium: {{ $planning->studyFieldYear->studyField->studyProgram->name }}<br/>
-        Studienrichtung: {{ $planning->studyFieldYear->studyField->name }}<br/>
-        Spezialisierung: {{ $planning->specializationYear?->specialization->name }}<br/>
-        Querschnittsqualifikation: {{ $planning->crossQualificationYear?->crossQualification->name }}<br/>
-        Erreichte Punkte: {{ $planning->getObtainedCredits() }}<br/>
-        Geplante Punkte: {{ $planning->getPlannedCredits() }}<br/>
-        
+    <link rel="alternate" hreflang="x-default" href="@php echo url()->full() @endphp"/>
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+</head>
 
+<body>
+<div class="text-lg font-bold">
+    FHNW HLS MST Planung
+</div>
 
-        @foreach ($planning->coursePlanningSemester AS $semester) 
-            {{ $semester->is_hs ? 'HS' : 'FS' }} {{ $semester->year }}<br/>
+<div class="my-2 pb-2 text-sm" style="border-bottom:1px solid black">
+    <div>Vorname Nachname: {{ $firstname ?? '' }} {{ $lastname ?? '' }}</div>
+    <div>Studium: {{ $planning->studyFieldYear->studyField->studyProgram->name }}</div>
+    <div>Studienrichtung: {{ $planning->studyFieldYear->studyField->name }}</div>
+    <div>Spezialisierung: {{ $planning->specializationYear?->specialization->name ?? 'keine'}}</div>
+    <div>Querschnittsqualifikation: {{ $planning->crossQualificationYear?->crossQualification->name ?? 'keine'}}</div>
+    <div>Erreichte Punkte: {{ $planning->getObtainedCredits() }}</div>
+    <div>Geplante Punkte: {{ $planning->getPlannedCredits() }}</div>
+    <div>Total: {{ $planning->getTotalCredits() }}</div>
+</div>
+<div class="">
+    @foreach ($planning->coursePlanningSemester->unique() AS $semester)
+        <div class="mb-4">
+            <div class="font-bold">{{ $semester->is_hs ? 'HS' : 'FS' }} {{ $semester->year }}</div>
 
-            @foreach ($planning->coursePlannings AS $coursePlanning)       
+            @foreach ($planning->coursePlannings AS $coursePlanning)
                 @if($coursePlanning->semester_id !== $semester->id)
                     @continue;
                 @endif
-
-                {{ $coursePlanning->course->name }}<br/>
-
+                <div class="ml-5 text-sm">{{ $coursePlanning->course->number_unformated }} {{ $coursePlanning->course->name}}: ECTS {{ $coursePlanning->course->credits }}</div>
             @endforeach
-        @endforeach
+        </div>
+    @endforeach
+</div>
 
-        <footer>
-            Copyright © 2021 by Supsign GmbH 
-        </footer>
-    </body>
+</body>
 </html>

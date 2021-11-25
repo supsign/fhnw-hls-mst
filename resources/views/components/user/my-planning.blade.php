@@ -11,7 +11,7 @@
             </div>
         </x-slot>
 
-        <div class="flex flex-col mb-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 mb-4">
             {{--            ToDo Beispiel-Stundenpläne erstellen --}}
             @foreach($plannings as $planning)
                 <a href="{{ route('planning.showOne', $planning) }}">

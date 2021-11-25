@@ -1,25 +1,27 @@
 <template>
-    <div class="flex flex-row space-x-5 border-t p-1 text-left" @click="openModal">
-        <slot name="icon"></slot>
-        <div class="my-auto break-words w-2/3">
-            {{ course.name }}
-        </div>
-        <vue-plan-course
-            v-if="!courseIsSuccessfullyCompleted"
-            :course="course"
-            :planningId="planningId"
-            :semesters="semesters"
-            class="flex-none my-auto"
-        >
-        </vue-plan-course>
-        <vue-course-detail-modal
-            v-if="courseYear && detailModalIsOpen"
-            :course="course"
-            :courseYear="courseYear"
-            :missingCourses="missingCourses"
-            @cancel.stop="closeModal"
-        ></vue-course-detail-modal>
+  <div class="flex border-t p-1 text-left text-xs lg:text-sm" @click="openModal">
+    <div class="w-8">
+      <slot name="icon"></slot>
     </div>
+    <div class="my-auto break-words flex-grow">
+      {{ course.name }}
+    </div>
+    <vue-plan-course
+        v-if="!courseIsSuccessfullyCompleted"
+        :course="course"
+        :planningId="planningId"
+        :semesters="semesters"
+        class="flex-none my-auto"
+    >
+    </vue-plan-course>
+    <vue-course-detail-modal
+        v-if="courseYear && detailModalIsOpen"
+        :course="course"
+        :courseYear="courseYear"
+        :missingCourses="missingCourses"
+        @cancel.stop="closeModal"
+    ></vue-course-detail-modal>
+  </div>
 </template>
 
 <script lang="ts">
@@ -32,61 +34,61 @@ import VueCourseDetailModal from "./vueCourseDetailModal.vue";
 import {ISkill} from "../../interfaces/skill.interface";
 
 @Component({
-    components: {
-        VueCourseDetailModal,
-        VuePlanCourse
-    }
+  components: {
+    VueCourseDetailModal,
+    VuePlanCourse
+  }
 })
 export default class VueCourseDetail extends BaseComponent {
 
-    @Prop({type: Object})
-    course: ICourse
+  @Prop({type: Object})
+  course: ICourse
 
-    @Prop({type: Object})
-    courseYear: ICourse
+  @Prop({type: Object})
+  courseYear: ICourse
 
-    @Prop({type: Number})
-    planningId: number
+  @Prop({type: Number})
+  planningId: number
 
-    @Prop({type: Array})
-    semesters: ISemester[]
+  @Prop({type: Array})
+  semesters: ISemester[]
 
-    @Prop({type: Array})
-    requiredSkills: ISkill[]
+  @Prop({type: Array})
+  requiredSkills: ISkill[]
 
-    @Prop({type: Array})
-    skills: ISkill[]
+  @Prop({type: Array})
+  skills: ISkill[]
 
-    @Prop({type: Boolean})
-    courseIsSuccessfullyCompleted: boolean
+  @Prop({type: Boolean})
+  courseIsSuccessfullyCompleted: boolean
 
-    public detailModalIsOpen = false;
+  public detailModalIsOpen = false;
 
-    public get notAcquiredSkills() {
-        return this.requiredSkills.filter((reqSkill) => !this.skills.find(skill => skill.id === reqSkill.id))
-    }
+  public get notAcquiredSkills() {
+    return this.requiredSkills.filter((reqSkill) => !this.skills.find(skill => skill.id === reqSkill.id))
+  }
 
-    public get skillsToBePlaned() {
-        return this.notAcquiredSkills.filter((skillToBePlanned) => !this.models.coursePlanning.all.map(coursePlanning => coursePlanning.planned_skills).reduce((acc, curVal) => {
-            return acc.concat(curVal)
-        }, []).find(plannedSkill => plannedSkill.id === skillToBePlanned.id))
-    }
+  public get skillsToBePlaned() {
+    return this.notAcquiredSkills.filter((skillToBePlanned) => !this.models.coursePlanning.all.map(coursePlanning => coursePlanning.planned_skills).reduce((acc, curVal) => {
+      return acc.concat(curVal)
+    }, []).find(plannedSkill => plannedSkill.id === skillToBePlanned.id))
+  }
 
-    public get missingCoursesNN(): ICourse[] {
-        return this.skillsToBePlaned.map((skill) => skill.gain_course).filter((course) => !!course);
-    }
+  public get missingCoursesNN(): ICourse[] {
+    return this.skillsToBePlaned.map((skill) => skill.gain_course).filter((course) => !!course);
+  }
 
-    public get missingCourses(): ICourse[] {
-        return [...new Set(this.missingCoursesNN.map(course => course.id))].map(courseId => this.missingCoursesNN.find(course => course.id === courseId));
-    }
+  public get missingCourses(): ICourse[] {
+    return [...new Set(this.missingCoursesNN.map(course => course.id))].map(courseId => this.missingCoursesNN.find(course => course.id === courseId));
+  }
 
-    public closeModal() {
-        this.detailModalIsOpen = false;
-    }
+  public closeModal() {
+    this.detailModalIsOpen = false;
+  }
 
-    public openModal() {
-        this.detailModalIsOpen = true;
-    }
+  public openModal() {
+    this.detailModalIsOpen = true;
+  }
 
 
 }

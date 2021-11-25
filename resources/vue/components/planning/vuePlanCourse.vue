@@ -1,18 +1,18 @@
 <template>
-  <div class="w-16 text-center">
-        <div v-if="!coursePlanning" class="" @click.stop="()=>{pickerIsOpen = true}">
-            <img :src="'/img/calendarIcon.svg'" alt="module_icon" class="cursor-pointer w-8 h-8 my-auto">
-        </div>
-        <div v-else-if="coursePlanningSemester" class="text-sm" @click.stop="()=>{pickerIsOpen = true}">
-            {{ coursePlanningSemester.year - 2000 }}
-            {{ coursePlanningSemester.is_hs ? 'HS' : 'FS' }}
-        </div>
-        <vue-semester-picker v-if="pickerIsOpen" :is-saving="isSaving" :isSaving="isSaving"
-                             :selected-semester="coursePlanningSemester"
-                             :semesters="pickableSemsters"
-                             @select="select"
-                             @cancel.stop="cancel"></vue-semester-picker>
+  <div class="flex justify-center w-16 text-center">
+    <div v-if="!coursePlanning" class="" @click.stop="()=>{pickerIsOpen = true}">
+      <img :src="'/img/calendarIcon.svg'" alt="module_icon" class="cursor-pointer w-8 h-8 my-auto">
     </div>
+    <div v-else-if="coursePlanningSemester" class="text-sm" @click.stop="()=>{pickerIsOpen = true}">
+      {{ coursePlanningSemester.year - 2000 }}
+      {{ coursePlanningSemester.is_hs ? 'HS' : 'FS' }}
+    </div>
+    <vue-semester-picker v-if="pickerIsOpen" :is-saving="isSaving" :isSaving="isSaving"
+                         :selected-semester="coursePlanningSemester"
+                         :semesters="pickableSemsters"
+                         @select="select"
+                         @cancel.stop="cancel"></vue-semester-picker>
+  </div>
 </template>
 
 <script lang="ts">

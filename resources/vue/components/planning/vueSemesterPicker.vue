@@ -1,57 +1,57 @@
 <template>
-    <div aria-labelledby="modal-title" aria-modal="true" class="fixed z-10 inset-0 overflow-y-auto" role="dialog"
-         @click.stop="cancel">
-        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <!--
-              Background overlay, show/hide based on modal state.
+  <div aria-labelledby="modal-title" aria-modal="true" class="fixed z-10 inset-0 overflow-y-auto" role="dialog"
+       @click.stop="cancel">
+    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+      <!--
+        Background overlay, show/hide based on modal state.
 
-              Entering: "ease-out duration-300"
-                From: "opacity-0"
-                To: "opacity-100"
-              Leaving: "ease-in duration-200"
-                From: "opacity-100"
-                To: "opacity-0"
-            -->
-            <div aria-hidden="true" class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+        Entering: "ease-out duration-300"
+          From: "opacity-0"
+          To: "opacity-100"
+        Leaving: "ease-in duration-200"
+          From: "opacity-100"
+          To: "opacity-0"
+      -->
+      <div aria-hidden="true" class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
 
-            <!-- This element is to trick the browser into centering the modal contents. -->
-            <span aria-hidden="true" class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+      <!-- This element is to trick the browser into centering the modal contents. -->
+      <span aria-hidden="true" class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
 
-            <!--
-              Modal panel, show/hide based on modal state.
+      <!--
+        Modal panel, show/hide based on modal state.
 
-              Entering: "ease-out duration-300"
-                From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                To: "opacity-100 translate-y-0 sm:scale-100"
-              Leaving: "ease-in duration-200"
-                From: "opacity-100 translate-y-0 sm:scale-100"
-                To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-            -->
-            <div
-                class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all w-full sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <div class="grid grid-cols-2 gap-4 sm:flex sm:items-start">
-                        <div v-for="semester in semesters"
-                             :class="{'bg-gray-200': semesterIsSelected(semester)}"
-                             class="bg-gray-100 w-full h-8 text-center leading-loose	"
-                             @click.stop="()=>select(semester)">
+        Entering: "ease-out duration-300"
+          From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+          To: "opacity-100 translate-y-0 sm:scale-100"
+        Leaving: "ease-in duration-200"
+          From: "opacity-100 translate-y-0 sm:scale-100"
+          To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+      -->
+      <div
+          class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all w-full sm:my-8 sm:align-middle sm:w-80">
+        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+          <div class="grid grid-cols-2 gap-4 sm:flex sm:gap-0">
+            <div v-for="semester in semesters"
+                 :class="{'bg-gray-200': semesterIsSelected(semester)}"
+                 class="bg-gray-100 w-full h-8 text-center leading-loose	"
+                 @click.stop="()=>select(semester)">
 
-                            <div v-if="semesterIsSelected(semester) && isSaving"
-                                 class="w-36 mx-auto text-center text-xl">
-                                <i aria-hidden="true"
-                                   class="fad fa-circle-notch fa-spin"
-                                ></i>
-                            </div>
-                            <span v-else>
-                                {{ semester.year }} {{ getShortHS(semester) }}
-                            </span>
+              <div v-if="semesterIsSelected(semester) && isSaving"
+                   class="w-36 mx-auto text-center text-xl">
+                <i aria-hidden="true"
+                   class="fad fa-circle-notch fa-spin"
+                ></i>
+              </div>
+              <div v-else>
+                {{ semester.year }} {{ getShortHS(semester) }}
+              </div>
 
-                        </div>
-                    </div>
-                </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -61,58 +61,58 @@ import {ISemester} from "../../interfaces/semester.interface";
 
 @Component
 export default class VueSemesterPicker extends BaseComponent {
-    @Prop({
-        type: Array
-    })
-    public semesters: ISemester[];
+  @Prop({
+    type: Array
+  })
+  public semesters: ISemester[];
 
-    @Prop({type: Object})
-    public selectedSemester: ISemester
+  @Prop({type: Object})
+  public selectedSemester: ISemester
 
-    @Prop({type: Boolean, default: false})
-    public isSaving: boolean;
+  @Prop({type: Boolean, default: false})
+  public isSaving: boolean;
 
-    public intSelectedSemester: ISemester = null;
+  public intSelectedSemester: ISemester = null;
 
-    @Emit()
-    public cancel() {
-        return;
+  @Emit()
+  public cancel() {
+    return;
+  }
+
+  public getShortHS(semester: any) {
+    return semester.is_hs ? 'HS' : 'FS'
+  }
+
+  @Watch('selectedSemester')
+  public initIntSelectedSemester(semester: ISemester) {
+    this.intSelectedSemester = semester;
+  }
+
+  public select(semester: ISemester) {
+    if (this.isSaving) {
+      return;
+    }
+    this.intSelectedSemester = semester;
+    this.$emit('select', semester);
+  }
+
+  public semesterIsSelected(semester: ISemester) {
+    if (!semester) {
+      return false
     }
 
-    public getShortHS(semester: any) {
-        return semester.is_hs ? 'HS' : 'FS'
+    if (this.intSelectedSemester) {
+      return this.intSelectedSemester.id === semester.id
     }
 
-    @Watch('selectedSemester')
-    public initIntSelectedSemester(semester: ISemester) {
-        this.intSelectedSemester = semester;
+    if (this.selectedSemester) {
+      return this.selectedSemester.id === semester.id;
     }
 
-    public select(semester: ISemester) {
-        if (this.isSaving) {
-            return;
-        }
-        this.intSelectedSemester = semester;
-        this.$emit('select', semester);
-    }
-
-    public semesterIsSelected(semester: ISemester) {
-        if (!semester) {
-            return false
-        }
-
-        if (this.intSelectedSemester) {
-            return this.intSelectedSemester.id === semester.id
-        }
-
-        if (this.selectedSemester) {
-            return this.selectedSemester.id === semester.id;
-        }
-
-        return false
+    return false
 
 
-    }
+  }
 }
 </script>
 

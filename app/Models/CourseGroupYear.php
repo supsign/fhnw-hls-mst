@@ -26,11 +26,4 @@ class CourseGroupYear extends BaseModel
     {
         return $this->belongsTo(StudyFieldYear::class);
     }
-
-    public function getCourses()    //  why does this exist? The relation is already there
-    {
-        return $this->courseCourseGroupYears->map(function ($courseCourseGroupYear) {
-            return $courseCourseGroupYear->course;
-        });
-    }
 }

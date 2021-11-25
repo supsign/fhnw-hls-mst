@@ -79,7 +79,7 @@
                                 {{$courseGroupYear->courseGroup->name}}
                             </div>
                             <vue-course-group-state :course-group-year="{{$courseGroupYear}}"
-                                                    :courses="{{$courseGroupYear->getCourses()}}"
+                                                    :courses="{{$courseGroupYear->courses}}"
                                                     :completions="{{$planning->student->completions}}"></vue-course-group-state>
 
                         </template>

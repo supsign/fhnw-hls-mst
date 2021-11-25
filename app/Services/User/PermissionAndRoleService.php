@@ -2,6 +2,7 @@
 
 namespace App\Services\User;
 
+use App\Models\Planning;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -83,16 +84,22 @@ class PermissionAndRoleService
         return $this;
     }
 
-    public function canPlanMySchedulesOrAbort(): self
+    public function canPlanMySchedulesOrAbort(Planning $planning): self
     {
-        if (!Auth::user()->hasPermissionTo('plan my schedules')) {
+        $user = Auth::user();
+
+        if (!$user->hasPermissionTo('plan my schedules')) {
+            abort(403, __('l.noAccess'));
+        }
+
+        if ($planning->student_id !== $user->student_id) {
             abort(403, __('l.noAccess'));
         }
 
         return $this;
     }
 
-    public function canPlanStudentSchedulesOrAbort(Student $student): self
+    public function canPlanStudentSchedulesOrAbort(Student $student, Planning $planning = null): self
     {
         $user = Auth::user();
 
@@ -105,6 +112,10 @@ class PermissionAndRoleService
         $isMentorOfStudent = $stuentsOfMentor->contains($student);
 
         if (!$hasPermisson || !$mentor || !$isMentorOfStudent) {
+            abort(403, __('l.noAccess'));
+        }
+
+        if ($planning && $planning->student_id !== $student->id) {
             abort(403, __('l.noAccess'));
         }
 

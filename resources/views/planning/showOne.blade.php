@@ -83,7 +83,7 @@
                                                     :completions="{{$planning->student->completions}}"></vue-course-group-state>
 
                         </template>
-                        @foreach($courseGroupYear->courseCourseGroupYears as $courseCourseGroupYear)
+                        @foreach($courseGroupYear->courseCourseGroupYears()->with('course')->get() as $courseCourseGroupYear)
                             @inject('courseCompletionService', 'App\Services\Completion\CourseCompletionService')
                             <vue-course-detail
                                     :course="{{$courseCourseGroupYear->course}}"

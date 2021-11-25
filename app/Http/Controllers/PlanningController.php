@@ -113,7 +113,7 @@ class PlanningController extends Controller
 
         $viewParameter = [
             'planning' => $planning,
-            'courseGroupYears' => $planning->studyFieldYear->courseGroupYears,
+            'courseGroupYears' => $planning->studyFieldYear->courseGroupYears()->with(['courseGroup', 'courseCourseGroupYears'])->get(),
             'mentorStudent' => null,
         ];
 

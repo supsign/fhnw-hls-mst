@@ -111,6 +111,8 @@ class PlanningController extends Controller
     {
         $this->permissionAndRoleService->canPlanScheduleOrAbort();
 
+        $planning->student->completions()->with('courseYear')->get();
+
         $viewParameter = [
             'planning' => $planning,
             'courseGroupYears' => $planning->studyFieldYear->courseGroupYears()->with(['courses', 'courseGroup', 'courseCourseGroupYears'])->get(),

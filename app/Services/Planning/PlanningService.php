@@ -65,11 +65,16 @@ class PlanningService extends BaseModelService
         return $this;
     }
 
+    public function getTotalCredits(Planning $planning): int
+    {
+        return $this->getObtainedCredits($planning) + $this->getPlannedCredits($planning);
+    }
+
     public function getObtainedCredits(Planning $planning): int
     {
         $credits = 0;
 
-        foreach ($planning->courses AS $course) {
+        foreach ($planning->courses as $course) {
             $credits += $this->courseCompletionService->getCredits($course, $planning->student);
         }
 
@@ -80,7 +85,11 @@ class PlanningService extends BaseModelService
     {
         $credits = 0;
 
-        foreach ($planning->courses AS $course) {
+        foreach ($planning->courses as $course) {
+            if ($this->courseCompletionService->courseIsSuccessfullyCompleted($course, $planning->student)) {
+                continue;
+            }
+
             $credits += $course->credits;
         }
 

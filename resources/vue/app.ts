@@ -21,6 +21,9 @@ import VueShowAndSelectMentors from "./components/mentor/VueShowAndSelectMentors
 import VueAssessmentState from "./components/Assessment/VueAssessmentState.vue";
 import VueCreatePlanningForm from "./components/planning/vueCreatePlanningForm.vue";
 import VueCourseDetail from "./components/planning/vueCourseDetail.vue";
+import {courseStore} from "./store/course/course.store";
+import {semesterStore} from "./store/semester/semester.store";
+import {skillStore} from "./store/skill/skill.store";
 
 library.add(faUserSecret);
 library.add(faCheck);
@@ -31,7 +34,10 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
     strict: true,
     modules: {
-        coursePlanning: coursePlanningStore
+        coursePlanning: coursePlanningStore,
+        course: courseStore,
+        semester: semesterStore,
+        skill: skillStore
     },
 });
 

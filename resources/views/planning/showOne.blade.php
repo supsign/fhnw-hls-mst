@@ -11,14 +11,14 @@
                     <div class="space-x-4 flex">
                         <x-base.link href="{{ route('planning.print', $planning) }}">
                             <i
-                                    class="fas fa-print text-blue-600 text-xl" aria-hidden="true"></i></x-base.link>
+                                class="fas fa-print text-blue-600 text-xl" aria-hidden="true"></i></x-base.link>
 
                         <vue-form method="POST"
                                   action="{{ $mentorStudent ? route('mentor.planning.delete', [$mentorStudent->student, $planning]) : route('planning.delete', $planning) }}">
                             @csrf
                             @method('DELETE')
                             <button type="submit" name="delete_planning"><i
-                                        class="fas fa-trash text-red-600 text-xl" aria-hidden="true"></i></button>
+                                    class="fas fa-trash text-red-600 text-xl" aria-hidden="true"></i></button>
                         </vue-form>
                     </div>
 
@@ -68,9 +68,14 @@
 
         </x-app.card>
         <vue-store-fill model="coursePlanning" :entities="{{$planning->coursePlannings}}"></vue-store-fill>
+        <vue-store-fill model="semester" :entities="{{\App\Models\Semester::all()}}"></vue-store-fill>
+        <vue-store-fill model="course" :entities="{{$planning->coursePlannings}}"></vue-store-fill>
+        <vue-store-fill model="skill" :entities="{{$planning->student->skills}}"></vue-store-fill>
+        {{--        <vue-store-fill model="skill" :entities="{{$planning->}}"></vue-store-fill>--}}
 
         <div class="lg:grid lg:grid-cols-3 lg:gap-4">
             @foreach($courseGroupYears as $courseGroupYear)
+                <vue-store-fill model="course" :entities="{{$courseGroupYear->courses}}"></vue-store-fill>
 
                 <div>
                     <vue-plan-wrapper>
@@ -84,15 +89,15 @@
 
                         </template>
                         @foreach($courseGroupYear->courseCourseGroupYears()->with('course')->get() as $courseCourseGroupYear)
+
                             @inject('courseCompletionService', 'App\Services\Completion\CourseCompletionService')
                             <vue-course-detail
-                                    :course="{{$courseCourseGroupYear->course}}"
-                                    :course-year="{{$courseCourseGroupYear->course->getCourseYearBySemesterOrLatest() ?? json_encode(null)}}"
-                                    :planning-id="{{$planning->id}}"
-                                    :semesters="{{\App\Models\Semester::all()}}"
-                                    :required-skills="{{$courseCourseGroupYear->course->requiredSkills}}"
-                                    :skills="{{$planning->student->skills}}"
-                                    {{$courseCompletionService->courseIsSuccessfullyCompleted($courseCourseGroupYear->course, $planning->student) ?'course-isSuccessfully-completed' : ''}}
+                                :course-id="{{$courseCourseGroupYear->course_id}}"
+                                :course-year="{{$courseCourseGroupYear->course->getCourseYearBySemesterOrLatest() ?? json_encode(null)}}"
+                                :planning-id="{{$planning->id}}"
+                                :required-skills="{{$courseCourseGroupYear->course->requiredSkills}}"
+                                :skills="{{$planning->student->skills}}"
+                                {{$courseCompletionService->courseIsSuccessfullyCompleted($courseCourseGroupYear->course, $planning->student) ?'course-isSuccessfully-completed' : ''}}
                             >
                                 <template v-slot:icon>
                                     <x-planning.completion :student="$planning->student"

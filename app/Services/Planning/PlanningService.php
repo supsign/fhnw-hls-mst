@@ -98,7 +98,7 @@ class PlanningService extends BaseModelService
             $planningCopy->coursePlannings()->create([
                 'course_id' => $coursePlanning->course_id,
                 'planning_id' => $planningCopy->id,
-                'semester_id' => $semester->id ?? $coursePlanning->semester_id,
+                'semester_id' => $coursePlanning->semester_id,
             ]);
         }
 

@@ -94,6 +94,14 @@ class PlanningService extends BaseModelService
 
         $planningCopy->save();
 
+        foreach ($planning->coursePlannings AS $coursePlanning) {
+            $planningCopy->coursePlannings()->create([
+                'course_id' => $coursePlanning->course_id,
+                'planning_id' => $planningCopy->id,
+                'semester_id' => $semester->id ?? $coursePlanning->semester_id,
+            ]);
+        }
+
         return $planningCopy;
     }
 

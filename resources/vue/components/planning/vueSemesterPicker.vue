@@ -50,7 +50,7 @@
                                           class="my-auto"
                                     >
                                         <i
-                                            class="fa fa-trash text-red-600 my-auto" aria-hidden="true"></i>
+                                            class="fas fa-trash text-red-600 my-auto" aria-hidden="true"></i>
                                     </span>
                                 </div>
                         </div>

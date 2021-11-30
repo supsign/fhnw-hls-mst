@@ -67,11 +67,11 @@ class PlanningService extends BaseModelService
         StudyFieldYear $studyFieldYear,
         CrossQualification $crossQualification = null,
         Specialization $specialization = null,
-    ): Planning {        
+    ): Planning {
         $specializationYear = $this->specializationYearService->findBySpecializationAndStudyFieldYear(
             $specialization,
             $studyFieldYear
-        ); 
+        );
 
         $crossQualificationYear = $this->crossQualificationYearService->findByCrossQualificationAndStudyFieldYear(
             $crossQualification,

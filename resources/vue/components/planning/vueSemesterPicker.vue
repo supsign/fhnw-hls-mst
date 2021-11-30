@@ -30,10 +30,10 @@
             <div
                 class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all w-full sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                 <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <div class="grid grid-cols-2 gap-4 sm:flex sm:items-start">
+                    <div class="grid grid-cols-2 gap-4 flex lg:flex-none sm:items-start">
                         <div v-for="semester in semesters"
                              :class="{'bg-gray-300': semesterIsSelected(semester)}"
-                             class="bg-gray-100 w-full h-8 text-center leading-loose"
+                             class="bg-gray-100 w-full h-8 text-center leading-loose cursor-pointer"
                              @click.stop="()=>select(semester)">
                                 <div v-if="semesterIsSelected(semester) && isSaving"
                                      class="w-36 mx-auto text-center text-xl">
@@ -41,15 +41,16 @@
                                        class="fad fa-circle-notch fa-spin"
                                     ></i>
                                 </div>
-                                <div v-else class="flex justify-between mx-4">
+                                <div v-else class="flex justify-between mx-4 h-full">
                                     <div class="text-center my-auto w-full">
                                         {{ semester.year }} {{ getShortHS(semester) }}
                                     </div>
                                     <span v-if="semesterIsSelected(semester)"
                                           @click="remove(semester)"
+                                          class="my-auto"
                                     >
                                         <i
-                                            class="fas fa-trash text-red-600 text-xl" aria-hidden="true"></i>
+                                            class="fa fa-trash text-red-600 my-auto" aria-hidden="true"></i>
                                     </span>
                                 </div>
                         </div>

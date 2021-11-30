@@ -4,8 +4,10 @@ namespace App\Services\Planning;
 
 use App\Models\CrossQualificationYear;
 use App\Models\Planning;
+use App\Models\Semester;
 use App\Models\SpecializationYear;
 use App\Models\Student;
+use App\Models\StudyField;
 use App\Models\StudyFieldYear;
 use App\Services\Base\BaseModelService;
 use App\Services\Completion\CourseCompletionService;
@@ -25,6 +27,74 @@ class PlanningService extends BaseModelService
         $planning->update($this->sanitiseAttributes($attributes));
 
         return $this;
+    }
+
+    public function copy(
+        Planning $planning, 
+        StudyField $studyField = null, 
+        CrossQualificationYear $crossQualificationYear = null, 
+        SpecializationYear $specializationYear = null,
+        Semester $semester = null,
+    ): Planning {
+        $planningCopy = $planning->replicate();
+
+        if ($studyField) {
+            $studyFieldYear = StudyFieldYear::where([
+                'begin_semester_id' => $planning->studyFieldYear->begin_semester_id,
+                'study_field_id' => $studyField->id,
+            ])->first();
+
+            if ($studyFieldYear) {
+                $planningCopy->studyFieldYear()->associate($studyFieldYear);
+            }
+        }
+
+        if ($crossQualificationYear) {
+            $planningCopy->crossQualificationYear()->associate($crossQualificationYear);
+        }
+
+        if ($specializationYear) {
+            $planningCopy->specializationYear()->associate($specializationYear);
+        }
+
+        if ($semester) {
+            $studyFieldYear = StudyFieldYear::where([
+                'begin_semester_id' => $semester->id,
+                'study_field_id' => $planningCopy->studyFieldYear->studyField->id,
+            ])->first();
+
+            if (!$studyField) {
+                if ($studyFieldYear) {
+                    $planningCopy->studyFieldYear()->associate($studyFieldYear);
+                }
+            }
+
+            if (!$crossQualificationYear && $planningCopy->crossQualificationYear) {
+                $crossQualificationYear = CrossQualificationYear::where([
+                    'study_field_year_id' => $studyFieldYear->id,
+                    'cross_qualification_id' => $planningCopy->crossQualificationYear->crossQualification->id,
+                ])->first();
+
+                if ($crossQualificationYear) {
+                    $planningCopy->crossQualificationYear()->associate($crossQualificationYear);
+                }
+            }
+
+            if (!$specializationYear && $planningCopy?->specializationYear) {
+                $specializationYear = SpecializationYear::where([
+                    'study_field_year_id' => $studyFieldYear->id,
+                    'specialization_id' => $planningCopy->specializationYear->specialization->id,
+                ])->first();
+
+                if ($specializationYear) {
+                    $planningCopy->specializationYear()->associate($specializationYear);
+                }
+            }
+        }
+
+        $planningCopy->save();
+
+        return $planningCopy;
     }
 
     public function createEmptyPlanning(

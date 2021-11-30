@@ -47,16 +47,33 @@ class StudyFieldYear extends BaseModel
         return $this->hasMany(CrossQualificationYear::class);
     }
 
-    public function getCoursesAttribute()
+    public function getCoursesAttribute($withSkills = false): BaseCollection
     {
-        $courses = collect();
+        $courseIds = [];
 
-        foreach ($this->courseGroupYears as $courseGroupYear) {
-            foreach ($courseGroupYear->courses as $course) {
-                $courses->add($course);
+        foreach ($this->courseGroupYears()->with('courseCourseGroupYears')->get() AS $courseGroupYear) {
+            foreach ($courseGroupYear->courseCourseGroupYears AS $courseCourseGroupYear) {
+                $courseIds[] = $courseCourseGroupYear->course_id;
             }
         }
 
-        return $courses->unique();
+        $courseQuery = Course::distinct();
+
+        if ($withSkills) {
+            $courseQuery->with('skills');
+        }
+
+        return $courseQuery->find($courseIds);
+    }
+
+    public function getSkillsAttribute(): BaseCollection
+    {
+        $skills = new BaseCollection;
+
+        foreach ($this->getCoursesAttribute(true) AS $course) {
+            $skills = $skills->merge($course->skills);
+        }
+
+        return $skills->unique();
     }
 }

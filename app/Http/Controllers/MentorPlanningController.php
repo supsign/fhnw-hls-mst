@@ -60,11 +60,9 @@ class MentorPlanningController extends Controller
     public function store(
         StoreRequest $request,
         Student $student,
-        SpecializationYearService $specializationYearService,
         SpecializationService $specializationService,
         CrossQualificationService $crossQualificationService,
-        CrossQualificationYearService $crossQualificationYearService)
-    {
+    ) {
         $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student);
 
         $studyFieldYear = $this->studyFieldYearService->getByStudyFieldIdAndSemesterId(
@@ -77,28 +75,42 @@ class MentorPlanningController extends Controller
             return redirect()->route('planning.create');
         }
 
-        /* @var $specialization Specialization */
-        $specialization = $specializationService->getById($request->specialization);
-        $specializationYear = $specializationYearService->findBySpecializationAndStudyFieldYear(
-            $specialization,
-            $studyFieldYear
-        );
-
-        /* @var $crossQualification CrossQualification */
-        $crossQualification = $crossQualificationService->getById($request->crossQualification);
-        $crossQualificationYear = $crossQualificationYearService->findByCrossQualificationAndStudyFieldYear(
-            $crossQualification,
-            $studyFieldYear
-        );
-
         $planning = $this->planningService->createEmptyPlanning(
             $student,
             $studyFieldYear,
-            $crossQualificationYear,
-            $specializationYear
+            $crossQualificationService->getById($request->crossQualification),
+            $specializationService->getById($request->specialization),
         );
 
         return redirect()->route('mentor.planning.showOne', [$student, $planning]);
+    }
+
+    public function storeCopy(
+        StoreRequest $request,
+        Planning $planning,
+        SpecializationService $specializationService,
+        CrossQualificationService $crossQualificationService,
+    ) {
+        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($planning->student);
+
+        $studyFieldYear = $this->studyFieldYearService->getByStudyFieldIdAndSemesterId(
+            $request->studyField,
+            $request->semester,
+        );
+
+        if (!$studyFieldYear) {
+            //  Todo: Swal Einbauen
+            return redirect()->route('planning.create');
+        }
+
+        $newPlanning = $this->planningService->copy(
+            $planning, 
+            $studyFieldYear,
+            $crossQualificationService->getById($request->crossQualification),
+            $specializationService->getById($request->specialization),
+        );
+
+        return redirect()->route('mentor.planning.showOne', [$newPlanning->student, $newPlanning]);
     }
 
     public function showOne(Student $student, Planning $planning, MentorStudentService $mentorStudentService)

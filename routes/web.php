@@ -37,7 +37,9 @@ Route::middleware(['web', 'auth'])->group(
 
         // Plannings
         Route::get('plannings/create', [PlanningController::class, 'create'])->name('planning.create');
+        Route::get('plannings/create/{planning}', [PlanningController::class, 'copy'])->name('planning.create.copy');
         Route::post('plannings', [PlanningController::class, 'store'])->name('planning.store');
+        Route::post('plannings/{planning}', [PlanningController::class, 'storeCopy'])->name('planning.store.copy');
         Route::get('plannings/{planning}', [PlanningController::class, 'showOne'])->name('planning.showOne');
         Route::get('plannings/{planning}/print', [PlanningController::class, 'print'])->name('planning.print');
         Route::delete('plannings/{planning}', [PlanningController::class, 'delete'])->name('planning.delete');

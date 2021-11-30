@@ -68,45 +68,49 @@
 
         </x-app.card>
         <vue-store-fill model="coursePlanning" :entities="{{$planning->coursePlannings}}"></vue-store-fill>
+        <div class="flex flex-row">
+            <div class="lg:grid lg:grid-cols-2 lg:gap-4">
+                @foreach($courseGroupYears as $courseGroupYear)
 
-        <div class="lg:grid lg:grid-cols-3 lg:gap-4">
-            @foreach($courseGroupYears as $courseGroupYear)
+                    <div>
+                        <vue-plan-wrapper>
+                            <template v-slot:header>
+                                <div class="my-auto w-2/3 text-sm">
+                                    {{$courseGroupYear->courseGroup->name}}
+                                </div>
+                                <vue-course-group-state :course-group-year="{{$courseGroupYear}}"
+                                                        :courses="{{$courseGroupYear->getCourses()}}"
+                                                        :completions="{{$planning->student->completions}}"></vue-course-group-state>
 
-                <div>
-                    <vue-plan-wrapper>
-                        <template v-slot:header>
-                            <div class="my-auto w-2/3 text-sm">
-                                {{$courseGroupYear->courseGroup->name}}
-                            </div>
-                            <vue-course-group-state :course-group-year="{{$courseGroupYear}}"
-                                                    :courses="{{$courseGroupYear->getCourses()}}"
-                                                    :completions="{{$planning->student->completions}}"></vue-course-group-state>
-
-                        </template>
-                        @foreach($courseGroupYear->courseCourseGroupYears as $courseCourseGroupYear)
-                            <div class="flex border-t p-1 text-left text-xs lg:text-sm">
-                                <div class="w-8">
-                                    <x-planning.completion :student="$planning->student"
-                                                           :course="$courseCourseGroupYear->course"></x-planning.completion>
+                            </template>
+                            @foreach($courseGroupYear->courseCourseGroupYears as $courseCourseGroupYear)
+                                <div class="flex border-t p-1 text-left text-xs lg:text-sm">
+                                    <div class="w-8">
+                                        <x-planning.completion :student="$planning->student"
+                                                               :course="$courseCourseGroupYear->course"></x-planning.completion>
+                                    </div>
+                                    <div class="my-auto break-words flex-grow">
+                                        {{$courseCourseGroupYear->course->name}}
+                                    </div>
+                                    <div class="flex-none my-auto">
+                                        @inject('semesterService', 'App\Services\Semester\SemesterService')
+                                        @inject('courseCompletionService', 'App\Services\Completion\CourseCompletionService')
+                                        @if(!$courseCompletionService->courseIsSuccessfullyCompleted($courseCourseGroupYear->course, $planning->student))
+                                            <vue-plan-course :planning-id="{{$planning->id}}"
+                                                             :course="{{$courseCourseGroupYear->course}}"
+                                                             :semesters="{{\App\Models\Semester::all()}}">
+                                            </vue-plan-course>
+                                        @endif
+                                    </div>
                                 </div>
-                                <div class="my-auto break-words flex-grow">
-                                    {{$courseCourseGroupYear->course->name}}
-                                </div>
-                                <div class="flex-none my-auto">
-                                    @inject('semesterService', 'App\Services\Semester\SemesterService')
-                                    @inject('courseCompletionService', 'App\Services\Completion\CourseCompletionService')
-                                    @if(!$courseCompletionService->courseIsSuccessfullyCompleted($courseCourseGroupYear->course, $planning->student))
-                                        <vue-plan-course :planning-id="{{$planning->id}}"
-                                                         :course="{{$courseCourseGroupYear->course}}"
-                                                         :semesters="{{\App\Models\Semester::all()}}">
-                                        </vue-plan-course>
-                                    @endif
-                                </div>
-                            </div>
-                        @endforeach
-                    </vue-plan-wrapper>
-                </div>
-            @endforeach
+                            @endforeach
+                        </vue-plan-wrapper>
+                    </div>
+                @endforeach
+            </div>
+            <div>
+                <x-planning.planning-semester />
+            </div>
         </div>
         <x-assessment.assessment-state :planning="$planning"></x-assessment.assessment-state>
     </div>

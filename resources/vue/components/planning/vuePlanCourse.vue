@@ -10,7 +10,9 @@
     <vue-semester-picker v-if="pickerIsOpen" :is-saving="isSaving" :isSaving="isSaving"
                          :selected-semester="coursePlanningSemester"
                          :semesters="pickableSemsters"
+                         :course="course"
                          @cancel="cancel"
+                         @remove="remove"
                          @select="select"></vue-semester-picker>
   </div>
 </template>
@@ -89,6 +91,14 @@ export default class VuePlanCourse extends BaseComponent {
     this.isSaving = false;
 
   }
+
+    public remove(semester: ISemester, course: ICourse) {
+        this.pickerIsOpen = false;
+        this.isSaving = false;
+
+        console.log('test', semester.id, course.id);
+        return this.models.coursePlanning.delete(this.coursePlanning.id);
+    }
 
   public patchCourse(semester: ISemester) {
     this.models.coursePlanning.patchById(this.coursePlanning.id, {semester_id: semester.id});

@@ -30,9 +30,9 @@ class PlanningService extends BaseModelService
     }
 
     public function copy(
-        Planning $planning, 
-        StudyField $studyField = null, 
-        CrossQualificationYear $crossQualificationYear = null, 
+        Planning $planning,
+        StudyField $studyField = null,
+        CrossQualificationYear $crossQualificationYear = null,
         SpecializationYear $specializationYear = null,
         Semester $semester = null,
     ): Planning {

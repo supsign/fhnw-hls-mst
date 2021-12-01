@@ -3,13 +3,15 @@
         @lang('l.termPlanned')
     </x-slot>
 
-    <div>eingeplante Punkte: <strong>{{ $planning->getTotalCredits() }}</strong></div>
-    @foreach ($semesters AS $semester)
-        <div class="mb-4">
-            <vue-planning-semester
-                :semester="{{ $semester }}"
-                :planning="{{ $planning }}"
-            ></vue-planning-semester>
-        </div>
-    @endforeach
+    <div class="sm:text-sm lg:text-base">eingeplante Punkte: <strong>{{ $planning->getTotalCredits() }}</strong></div>
 </x-app.card>
+@foreach ($semesters AS $semester)
+    <div class="mb-4">
+        <vue-planning-semester
+            :semester="{{ $semester }}"
+            :planning="{{ $planning }}"
+            :completions="{{ $planning->student->completions }}"
+            :courses="{{ $planning->courses }}"
+        ></vue-planning-semester>
+    </div>
+@endforeach

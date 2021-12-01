@@ -33,6 +33,29 @@ class MentorPlanningController extends Controller
     ) {
     }
 
+    public function copy(Student $student, Planning $planning, MentorStudentService $mentorStudentService)
+    {
+        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student);
+
+        $mentorStudent = $mentorStudentService->getByMentorAndStudent(Auth::user()?->mentor, $student);
+
+        if (!$mentorStudent) {
+            return redirect()->route('mentor.planning.list', $student);
+        }
+
+        return view('planning.new', [
+            'studyFields' => StudyField::where('study_program_id', 6)->get(),
+            'studyPrograms' => StudyProgram::all(),
+            'studyFieldYears' => StudyFieldYear::all(),
+            'semesters' => Semester::where('is_hs', true)->get(),
+            'student' => $student,
+            'specializations' => Specialization::all(),
+            'crossQualifications' => CrossQualification::all(),
+            'mentorStudent' => $mentorStudent,
+            'planning' => $planning
+        ]);
+    }
+
     public function create(Student $student, MentorStudentService $mentorStudentService)
     {
         $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student);
@@ -98,7 +121,7 @@ class MentorPlanningController extends Controller
 
         if (!$studyFieldYear) {
             //  Todo: Swal Einbauen
-            return redirect()->route('planning.create');
+            return redirect()->route('planning.create.copy', $planning);
         }
 
         $newPlanning = $this->planningService->copy(

@@ -11,12 +11,10 @@ use App\Models\StudyField;
 use App\Models\StudyFieldYear;
 use App\Models\StudyProgram;
 use App\Services\CrossQualification\CrossQualificationService;
-use App\Services\CrossQualificationYear\CrossQualificationYearService;
 use App\Services\Planning\FillPlanningWithRecommendationsService;
 use App\Services\Planning\PlanningService;
 use App\Services\Semester\SemesterService;
 use App\Services\Specialization\SpecializationService;
-use App\Services\SpecializationYear\SpecializationYearService;
 use App\Services\StudyField\StudyFieldService;
 use App\Services\StudyFieldYear\StudyFieldYearService;
 use App\Services\User\PermissionAndRoleService;
@@ -123,7 +121,7 @@ class PlanningController extends Controller
 
         if (!$studyFieldYear) {
             //  Todo: Swal Einbauen
-            return redirect()->route('planning.create');
+            return redirect()->route('planning.create.copy', $planning);
         }
 
         $newPlanning = $this->planningService->copy(

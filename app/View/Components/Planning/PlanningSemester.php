@@ -10,6 +10,7 @@ use Illuminate\View\Component;
 class PlanningSemester extends Component
 {
     public Collection $semesters;
+
     /**
      * Create a new component instance.
      *

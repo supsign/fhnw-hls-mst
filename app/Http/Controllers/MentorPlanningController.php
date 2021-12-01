@@ -52,7 +52,7 @@ class MentorPlanningController extends Controller
             'specializations' => Specialization::all(),
             'crossQualifications' => CrossQualification::all(),
             'mentorStudent' => $mentorStudent,
-            'planning' => $planning
+            'planning' => $planning,
         ]);
     }
 

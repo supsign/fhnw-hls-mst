@@ -68,8 +68,8 @@
 
         </x-app.card>
         <vue-store-fill model="coursePlanning" :entities="{{$planning->coursePlannings}}"></vue-store-fill>
-        <div class="flex flex-row">
-            <div class="lg:grid lg:grid-cols-2 lg:gap-4">
+        <div class="flex flex-row gap-4">
+            <div class="lg:grid lg:grid-cols-2 lg:gap-4 w-3/4">
                 @foreach($courseGroupYears as $courseGroupYear)
 
                     <div>
@@ -108,8 +108,8 @@
                     </div>
                 @endforeach
             </div>
-            <div>
-                <x-planning.planning-semester />
+            <div class="w-1/4">
+                <x-planning.planning-semester :planning="$planning"/>
             </div>
         </div>
         <x-assessment.assessment-state :planning="$planning"></x-assessment.assessment-state>

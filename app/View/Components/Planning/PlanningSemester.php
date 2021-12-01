@@ -3,10 +3,13 @@
 namespace App\View\Components\Planning;
 
 use App\Models\Planning;
+use App\Models\Semester;
+use Illuminate\Support\Collection;
 use Illuminate\View\Component;
 
 class PlanningSemester extends Component
 {
+    public Collection $semesters;
     /**
      * Create a new component instance.
      *
@@ -14,7 +17,7 @@ class PlanningSemester extends Component
      */
     public function __construct(public Planning $planning)
     {
-        //
+        $this->semesters = Semester::orderBy('year')->orderBy('is_hs')->get();
     }
 
     /**

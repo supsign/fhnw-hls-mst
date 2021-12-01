@@ -20,6 +20,7 @@ import VueStateWrapper from "./components/Assessment/VueStateWrapper.vue";
 import VueShowAndSelectMentors from "./components/mentor/VueShowAndSelectMentors.vue";
 import VueAssessmentState from "./components/Assessment/VueAssessmentState.vue";
 import VueCreatePlanningForm from "./components/planning/vueCreatePlanningForm.vue";
+import VuePlanningSemester from "./components/planning/vuePlanningSemester.vue";
 
 library.add(faUserSecret);
 library.add(faCheck);
@@ -49,6 +50,7 @@ const app = new Vue({
         VueAssessmentState,
         VueCreatePlanningForm,
         VueShowAndSelectMentors,
+        VuePlanningSemester,
     },
     store
 });

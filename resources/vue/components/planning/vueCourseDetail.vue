@@ -52,9 +52,6 @@ export default class VueCourseDetail extends BaseComponent {
     planningId: number
 
     @Prop({type: Array})
-    requiredSkills: ISkill[]
-
-    @Prop({type: Array})
     skills: ISkill[]
 
     @Prop({type: Boolean})
@@ -83,14 +80,14 @@ export default class VueCourseDetail extends BaseComponent {
         }).map(courseSkill => courseSkill.skill_id)
     }
 
-    public get notPlannedNotCompletedCourseSkillIds() {
-        this.notCompletedSkillIds.filter((skillId) => {
+    public get notPlannedNotCompletedCourseSkillIds(): number[] {
+        return this.notCompletedSkillIds.filter((skillId) => {
             return !this.models.coursePlanning.all.find(coursePlanning => coursePlanning.planned_skills.find(skill => skill.id === skillId))
         })
     }
 
     public get missingCourses() {
-        this.notPlannedNotCompletedCourseSkillIds.map(skillId => this.models.course.getByAcquisitionSkillId(skillId)).filter(course => course)
+        return this.notPlannedNotCompletedCourseSkillIds.map(skillId => this.models.course.getByAcquisitionSkillId(skillId)).filter(course => course)
     }
 
     public get course(): ICourse {

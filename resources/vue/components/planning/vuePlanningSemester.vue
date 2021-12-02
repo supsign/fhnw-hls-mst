@@ -1,27 +1,33 @@
 <template>
-    <div v-if="semesterIsInPlanning"
-         class="p-2 bg-white rounded shadow mb-4">
-        <div class="flex flex-row space-x-3 p-1" @click="toggleCollapse">
-            <div class="my-auto">
-                <i v-if="isCollapsed" aria-hidden="true" class="fas fa-arrow-right"></i>
-                <i v-if="!isCollapsed" aria-hidden="true" class="fas fa-arrow-down"></i>
+    <div v-if="semesterIsInPlanning">
+<!--        before now {{ beforeNow }} <br />-->
+<!--        completed {{ completed }}-->
+        <div v-if="!completed || !beforeNow"
+            class="p-2 bg-white rounded shadow mb-4">
+            <div
+                class="flex flex-row space-x-3 p-1" @click="toggleCollapse">
+                <div class="my-auto">
+                    <i v-if="isCollapsed" aria-hidden="true" class="fas fa-arrow-right"></i>
+                    <i v-if="!isCollapsed" aria-hidden="true" class="fas fa-arrow-down"></i>
+                </div>
+                <div class="sm:text-sm lg:text-base">{{ semester.is_hs ? 'HS' : 'FS' }} {{ semester.year}}</div>
             </div>
-            <div class="sm:text-sm lg:text-base">{{ semester.is_hs ? 'HS' : 'FS' }} {{ semester.year}}</div>
-        </div>
 
-        <div v-if="!isCollapsed"
-             v-for="coursePlanning in allCoursePlanningsInSemester"
-             class="ml-5 sm:text-sm lg:text-base flex flex-col pt-2 mt-2 pb-0 text-sm lg:text-base border-t">
-            successfull: {{ coursesIsCompletedSuccessfully(getCourse(coursePlanning)) }} <br/>
-            grösser gleich jetzt: {{ semester.year >= currentYear }}<br/>
-            kleiner gleich jetzt: {{ semester.year <= currentYear }}
+            <div v-for="coursePlanning in allCoursePlanningsInSemester"
+                 v-if="semester.year >= currentYear || !coursesIsCompletedSuccessfully(getCourse(coursePlanning)) && semester.year <= currentYear">
+                <div v-if="!isCollapsed"
+                     class="ml-5 sm:text-sm lg:text-base flex flex-col pt-2 mt-2 pb-0 text-sm lg:text-base border-t">
 
-            <div v-if="semester.year >= currentYear || coursesIsCompletedSuccessfully(getCourse(coursePlanning)) && semester.year <= currentYear">
+    <!--            <div>successfull: {{ coursesIsCompletedSuccessfully(getCourse(coursePlanning)) }}</div>-->
+    <!--            <div>grösser gleich jetzt: {{ semester.year >= currentYear }}</div>-->
+    <!--            <div>kleiner gleich jetzt: {{ semester.year <= currentYear }}</div>-->
 
-                <div>Kursname: </div>
-                <div class="ml-5">Kurs-Nummer: </div>
-                <div class="ml-5">ECTS: </div>
-                <div class="ml-5">Kurs-ID: {{ coursePlanning.course_id }}</div>
+                    <div class="flex flex-row justify-between">
+                        <div>Kursname </div>
+                        <div class="ml-5">ECTS </div>
+                    </div>
+                    <div>Kurs-ID: {{ coursePlanning.course_id }}</div>
+                </div>
             </div>
         </div>
     </div>
@@ -51,6 +57,10 @@ export default class VuePlanningSemester extends BaseComponent {
 
     public isCollapsed = true;
     public break = 1024;
+
+    public beforeNow = false;
+
+    public completed = false;
 
     public toggleCollapse() {
         this.isCollapsed = !this.isCollapsed;
@@ -88,6 +98,13 @@ export default class VuePlanningSemester extends BaseComponent {
     }
 
     public coursesIsCompletedSuccessfully(course: ICourse): boolean {
+        this.beforeNow = this.semester.year <= this.currentYear;
+        if(!!this.completions.find((completion) => {
+            return completion.course_id === course.id && (completion.completion_type_id === 2 || completion.completion_type_id === 4)
+        })) {
+            this.completed = true;
+        }
+
         return !!this.completions.find((completion) => {
             return completion.course_id === course.id && (completion.completion_type_id === 2 || completion.completion_type_id === 4)
         })

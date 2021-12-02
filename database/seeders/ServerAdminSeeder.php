@@ -10,9 +10,7 @@ class ServerAdminSeeder extends Seeder
 {
     public function __construct(protected PermissionAndRoleService $permissionAndRoleService)
     {
-        
     }
-
 
     /**
      * Run the database seeds.

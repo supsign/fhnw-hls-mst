@@ -8,6 +8,5 @@ class UserController extends Controller
 {
     public function __construct(private PermissionAndRoleService $permissionAndRoleService)
     {
-
     }
 }

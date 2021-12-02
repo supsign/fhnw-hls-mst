@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class StudentController extends Controller
 {
     public function __construct(protected StudentService $studentService)
-    {   
+    {
     }
 
     public function getByEventoId(Request $request)

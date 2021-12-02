@@ -31,7 +31,7 @@
                 class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all w-full sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                 <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     <div class="grid grid-cols-2 gap-4 flex lg:flex-none sm:items-start">
-                        <div v-for="semester in semesters"
+                        <div v-for="semester in pickableSemsters"
                              :class="{'bg-gray-300': semesterIsSelected(semester)}"
                              class="bg-gray-100 w-full h-8 text-center leading-loose cursor-pointer"
                              @click.stop="()=>select(semester)">
@@ -130,6 +130,19 @@ export default class VueSemesterPicker extends BaseComponent {
         }
 
         return false
+    }
+
+    public get pickableSemsters(): ISemester[] {
+        return this.semesters.filter((semester) => {
+            const now = new Date();
+            if (typeof semester.start_date === 'string') {
+                semester.start_date = new Date(semester.start_date);
+            }
+
+            return semester.start_date.getTime() > now.getTime();
+        }).filter((semester) => {
+            return (semester.is_hs && this.course.is_hs) || (!semester.is_hs && this.course.is_fs)
+        })
     }
 }
 </script>

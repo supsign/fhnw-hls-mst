@@ -52,16 +52,11 @@ class RecommendationImport extends BaseExcelImport implements ToModel, WithHeadi
 
         if ($row['spezialisierung'] !== 'keine') {
             $recommendationName .= ' '.$row['spezialisierung'];
+        } elseif ($row['querschnittsqualifikation'] !== 'keine') {
+            $recommendationName .= ' '.$row['querschnittsqualifikation'];
         }
 
-        // elseif ($row['querschnittsqualifikation'] !== 'keine') {
-        //     $recommendationName .= ' '.$row['querschnittsqualifikation'];
-        // }
-
         $recommendation = $this->recommendationService->getFirstOrCreateByName($recommendationName);
-
-        // var_dump($row);
-        // return;
 
         CourseRecommendation::create([
             'course_id' => $course->id,

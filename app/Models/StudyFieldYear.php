@@ -54,9 +54,7 @@ class StudyFieldYear extends BaseModel
 
         $courseQuery = Course::distinct();
 
-
         $courseQuery->with('courseSkills');
-
 
         return $courseQuery->find($courseIds);
     }

@@ -1,9 +1,6 @@
 <template>
-    <div v-if="semesterIsInPlanning">
-<!--        before now {{ beforeNow }} <br />-->
-<!--        completed {{ completed }}-->
-        <div v-if="!completed || !beforeNow"
-            class="p-2 bg-white rounded shadow mb-4">
+    <div v-if="allCoursePlanningsInSemesterNotSuccessfullyCompleted.length">
+        <div class="p-2 bg-white rounded shadow mb-4">
             <div
                 class="flex flex-row space-x-3 p-1" @click="toggleCollapse">
                 <div class="my-auto">
@@ -13,20 +10,15 @@
                 <div class="sm:text-sm lg:text-base">{{ semester.is_hs ? 'HS' : 'FS' }} {{ semester.year}}</div>
             </div>
 
-            <div v-for="coursePlanning in allCoursePlanningsInSemester"
-                 v-if="semester.year >= currentYear || !coursesIsCompletedSuccessfully(getCourse(coursePlanning)) && semester.year <= currentYear">
+            <div v-for="coursePlanning in allCoursePlanningsInSemesterNotSuccessfullyCompleted">
                 <div v-if="!isCollapsed"
-                     class="ml-5 sm:text-sm lg:text-base flex flex-col pt-2 mt-2 pb-0 text-sm lg:text-base border-t">
-
-    <!--            <div>successfull: {{ coursesIsCompletedSuccessfully(getCourse(coursePlanning)) }}</div>-->
-    <!--            <div>grösser gleich jetzt: {{ semester.year >= currentYear }}</div>-->
-    <!--            <div>kleiner gleich jetzt: {{ semester.year <= currentYear }}</div>-->
+                     class="px-5 sm:text-sm lg:text-base flex flex-col pt-2 mt-2 pb-0 text-sm lg:text-base border-t">
 
                     <div class="flex flex-row justify-between">
                         <div>Kursname </div>
                         <div>ECTS </div>
                     </div>
-<!--                    <div>Kurs-ID: {{ coursePlanning.course_id }}</div>-->
+                    <div>Kurs-ID: {{ coursePlanning.course_id }}</div>
                 </div>
             </div>
         </div>
@@ -59,10 +51,6 @@ export default class VuePlanningSemester extends BaseComponent {
 
     public break = 1024;
 
-    public beforeNow = false;
-
-    public completed = false;
-
     public toggleCollapse() {
         this.isCollapsed = !this.isCollapsed;
     }
@@ -94,18 +82,13 @@ export default class VuePlanningSemester extends BaseComponent {
         return this.coursePlannings.filter((coursePlanning) => coursePlanning.semester_id === this.semester.id);
     }
 
-    public get semesterIsInPlanning(): ICoursePlanning {
-        return this.allCoursePlanningsInSemester.find(coursePlanning => coursePlanning.semester_id === this.semester.id);
+    public get allCoursePlanningsInSemesterNotSuccessfullyCompleted() {
+        return this.allCoursePlanningsInSemester.filter((coursePlanning) => {
+            return !this.coursesIsCompletedSuccessfully(this.getCourse(coursePlanning))
+        })
     }
 
     public coursesIsCompletedSuccessfully(course: ICourse): boolean {
-        this.beforeNow = this.semester.year <= this.currentYear;
-        if(!!this.completions.find((completion) => {
-            return completion.course_id === course.id && (completion.completion_type_id === 2 || completion.completion_type_id === 4)
-        })) {
-            this.completed = true;
-        }
-
         return !!this.completions.find((completion) => {
             return completion.course_id === course.id && (completion.completion_type_id === 2 || completion.completion_type_id === 4)
         })

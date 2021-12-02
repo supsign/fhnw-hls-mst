@@ -69,9 +69,10 @@
         </x-app.card>
         <vue-store-fill model="coursePlanning" :entities="{{$planning->coursePlannings}}"></vue-store-fill>
         <vue-store-fill model="semester" :entities="{{\App\Models\Semester::all()}}"></vue-store-fill>
-        <vue-store-fill model="course" :entities="{{$planning->coursePlannings}}"></vue-store-fill>
-        <vue-store-fill model="skill" :entities="{{$planning->student->skills}}"></vue-store-fill>
-        {{--        <vue-store-fill model="skill" :entities="{{$planning->}}"></vue-store-fill>--}}
+        <vue-store-fill model="course"
+                        :entities="{{$planning->studyFieldYear->courses}}"></vue-store-fill>
+        <vue-store-fill model="skillStudent"
+                        :entities="{{$planning->student->skillStudent}}"></vue-store-fill>
 
         <div class="lg:grid lg:grid-cols-3 lg:gap-4">
             @foreach($courseGroupYears as $courseGroupYear)
@@ -95,8 +96,6 @@
                                 :course-id="{{$courseCourseGroupYear->course_id}}"
                                 :course-year="{{$courseCourseGroupYear->course->getCourseYearBySemesterOrLatest() ?? json_encode(null)}}"
                                 :planning-id="{{$planning->id}}"
-                                :required-skills="{{$courseCourseGroupYear->course->requiredSkills}}"
-                                :skills="{{$planning->student->skills}}"
                                 {{$courseCompletionService->courseIsSuccessfullyCompleted($courseCourseGroupYear->course, $planning->student) ?'course-isSuccessfully-completed' : ''}}
                             >
                                 <template v-slot:icon>
@@ -110,4 +109,5 @@
             @endforeach
             <x-assessment.assessment-state :planning="$planning"></x-assessment.assessment-state>
         </div>
+    </div>
 </x-layout.app>

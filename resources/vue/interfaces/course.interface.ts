@@ -1,4 +1,5 @@
 import {IModel} from "../store/model.interface";
+import {ICourseSkill} from "./courseSkill.interface";
 
 export interface ICourse extends IModel {
     course_type_id: number
@@ -9,4 +10,5 @@ export interface ICourse extends IModel {
     study_field_id?: number
     is_hs: boolean
     is_fs: boolean
+    course_skills: ICourseSkill[]
 }

@@ -1,5 +1,5 @@
-import { Store } from "vuex";
-import { IModel } from "../model.interface";
+import {Store} from "vuex";
+import {IModel} from "../model.interface";
 
 export class EntityModel<S, T, U extends IModel> {
     protected _modelName: string;
@@ -17,7 +17,7 @@ export class EntityModel<S, T, U extends IModel> {
         return this._Request;
     }
 
-    public get all(): Array<U> {
+    public get all(): U[] {
         return this._store.getters[`${this._modelName}/all`];
     }
 

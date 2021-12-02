@@ -32,6 +32,7 @@ import {ISemester} from "../../interfaces/semester.interface";
 import VuePlanCourse from "./vuePlanCourse.vue";
 import VueCourseDetailModal from "./vueCourseDetailModal.vue";
 import {ISkill} from "../../interfaces/skill.interface";
+import {ICourseSkill} from "../../interfaces/courseSkill.interface";
 
 @Component({
     components: {
@@ -60,6 +61,38 @@ export default class VueCourseDetail extends BaseComponent {
     courseIsSuccessfullyCompleted: boolean;
     public detailModalIsOpen = false;
 
+    public get requiredSkills(): ICourseSkill[] {
+        if (!this.course) {
+            return [];
+        }
+
+        return this.course.course_skills.filter(courseSkill => !courseSkill.is_acquisition);
+    }
+
+    public get acquiredSkills(): ICourseSkill[] {
+        if (!this.course) {
+            return [];
+        }
+
+        return this.course.course_skills.filter(courseSkill => courseSkill.is_acquisition);
+    }
+
+    public get notCompletedSkillIds(): number[] {
+        return this.requiredSkills.filter((courseSkill) => {
+            return !this.models.skillStudent.all.find(skillStudent => skillStudent.skill_id === courseSkill.skill_id)
+        }).map(courseSkill => courseSkill.skill_id)
+    }
+
+    public get notPlannedNotCompletedCourseSkillIds() {
+        this.notCompletedSkillIds.filter((skillId) => {
+            return !this.models.coursePlanning.all.find(coursePlanning => coursePlanning.planned_skills.find(skill => skill.id === skillId))
+        })
+    }
+
+    public get missingCourses() {
+        this.notPlannedNotCompletedCourseSkillIds.map(skillId => this.models.course.getByAcquisitionSkillId(skillId)).filter(course => course)
+    }
+
     public get course(): ICourse {
         return this.models.course.getById(this.courseId);
     }
@@ -68,23 +101,19 @@ export default class VueCourseDetail extends BaseComponent {
         return this.models.semester.all
     }
 
-    public get notAcquiredSkills() {
-        return this.requiredSkills.filter((reqSkill) => !this.skills.find(skill => skill.id === reqSkill.id))
-    }
-
-    public get skillsToBePlaned() {
-        return this.notAcquiredSkills.filter((skillToBePlanned) => !this.models.coursePlanning.all.map(coursePlanning => coursePlanning.planned_skills).reduce((acc, curVal) => {
-            return acc.concat(curVal)
-        }, []).find(plannedSkill => plannedSkill.id === skillToBePlanned.id))
-    }
-
-    public get missingCoursesNN(): ICourse[] {
-        return this.skillsToBePlaned.map((skill) => skill.gain_course).filter((course) => !!course);
-    }
-
-    public get missingCourses(): ICourse[] {
-        return [...new Set(this.missingCoursesNN.map(course => course.id))].map(courseId => this.missingCoursesNN.find(course => course.id === courseId));
-    }
+    // public get skillsToBePlaned() {
+    //     return this.notAcquiredSkills.filter((skillToBePlanned) => !this.models.coursePlanning.all.map(coursePlanning => coursePlanning.planned_skills).reduce((acc, curVal) => {
+    //         return acc.concat(curVal)
+    //     }, []).find(plannedSkill => plannedSkill.id === skillToBePlanned.id))
+    // }
+    //
+    // public get missingCoursesNN(): ICourse[] {
+    //     return this.skillsToBePlaned.map((skill) => skill.gain_course).filter((course) => !!course);
+    // }
+    //
+    // public get missingCourses(): ICourse[] {
+    //     return [...new Set(this.missingCoursesNN.map(course => course.id))].map(courseId => this.missingCoursesNN.find(course => course.id === courseId));
+    // }
 
     public closeModal() {
         this.detailModalIsOpen = false;

@@ -11,4 +11,8 @@ export class CourseModel extends EntityModel<IBaseState<ICourse>,
     constructor(store: Store<IBaseState<ICourse>>) {
         super("coursePlanning", store, courseRequestModel);
     }
+
+    public getByAcquisitionSkillId(skillId: number): ICourse {
+        return this._store.getters[`${this._modelName}/getByAcquisitionSkillId`](skillId);
+    }
 }

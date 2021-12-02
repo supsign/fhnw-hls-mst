@@ -12,11 +12,6 @@ class StudyFieldYear extends BaseModel
         return $this->belongsTo(Assessment::class);
     }
 
-    public function courseGroupYears()
-    {
-        return $this->hasMany(CourseGroupYear::class);
-    }
-
     public function beginSemester()
     {
         return $this->belongsTo(Semester::class, 'begin_semester_id');
@@ -47,33 +42,38 @@ class StudyFieldYear extends BaseModel
         return $this->hasMany(CrossQualificationYear::class);
     }
 
-    public function getCoursesAttribute($withSkills = false): BaseCollection
+    public function getCoursesAttribute(): BaseCollection
     {
         $courseIds = [];
 
-        foreach ($this->courseGroupYears()->with('courseCourseGroupYears')->get() AS $courseGroupYear) {
-            foreach ($courseGroupYear->courseCourseGroupYears AS $courseCourseGroupYear) {
+        foreach ($this->courseGroupYears()->with('courseCourseGroupYears')->get() as $courseGroupYear) {
+            foreach ($courseGroupYear->courseCourseGroupYears as $courseCourseGroupYear) {
                 $courseIds[] = $courseCourseGroupYear->course_id;
             }
         }
 
         $courseQuery = Course::distinct();
 
-        if ($withSkills) {
-            $courseQuery->with('skills');
-        }
+
+        $courseQuery->with('courseSkills');
+
 
         return $courseQuery->find($courseIds);
     }
 
-    public function getSkillsAttribute(): BaseCollection
+    public function courseGroupYears()
     {
-        $skills = new BaseCollection;
-
-        foreach ($this->getCoursesAttribute(true) AS $course) {
-            $skills = $skills->merge($course->skills);
-        }
-
-        return $skills->unique();
+        return $this->hasMany(CourseGroupYear::class);
     }
+
+//    public function getSkillsAttribute(): BaseCollection
+//    {
+//        $skills = new BaseCollection;
+//
+//        foreach ($this->getCoursesAttribute(true) AS $course) {
+//            $skills = $skills->merge($course->skills);
+//        }
+//
+//        return $skills->unique();
+//    }
 }

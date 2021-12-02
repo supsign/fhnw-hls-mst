@@ -19,12 +19,17 @@ class UserService
     ) {
     }
 
+    public function getByEmail(string $email): ?User
+    {
+        return User::where('email_hash', $this->getHash($email))->first();
+    }
+
     public function getById(int $id): ?User
     {
         return User::find($id);
     }
 
-    public function updateOrCreateUserAsStudent(string $email = null, int $eventoPersonId = null)
+    public function updateOrCreateUserAsStudent(string $email, int $eventoPersonId): User
     {
         $emailHash = $this->getHash($email);
         $user = $this->updateOrCrateUserOnMailHash($emailHash);

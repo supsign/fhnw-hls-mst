@@ -35,24 +35,24 @@
                              :class="{'bg-gray-300': semesterIsSelected(semester)}"
                              class="bg-gray-100 w-full h-8 text-center leading-loose cursor-pointer"
                              @click.stop="()=>select(semester)">
-                                <div v-if="semesterIsSelected(semester) && isSaving"
-                                     class="w-36 mx-auto text-center text-xl">
-                                    <i aria-hidden="true"
-                                       class="fad fa-circle-notch fa-spin"
-                                    ></i>
+                            <div v-if="semesterIsSelected(semester) && isSaving"
+                                 class="w-36 mx-auto text-center text-xl">
+                                <i aria-hidden="true"
+                                   class="fad fa-circle-notch fa-spin"
+                                ></i>
+                            </div>
+                            <div v-else class="flex justify-between mx-4 h-full">
+                                <div class="text-center my-auto w-full">
+                                    {{ semester.year }} {{ getShortHS(semester) }}
                                 </div>
-                                <div v-else class="flex justify-between mx-4 h-full">
-                                    <div class="text-center my-auto w-full">
-                                        {{ semester.year }} {{ getShortHS(semester) }}
-                                    </div>
-                                    <span v-if="semesterIsSelected(semester)"
-                                          @click="remove(semester)"
-                                          class="my-auto"
-                                    >
+                                <span v-if="semesterIsSelected(semester)"
+                                      class="my-auto"
+                                      @click.stop="remove(semester)"
+                                >
                                         <i
-                                            class="fas fa-trash text-red-600 my-auto" aria-hidden="true"></i>
+                                            aria-hidden="true" class="fas fa-trash text-red-600 my-auto"></i>
                                     </span>
-                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -85,8 +85,6 @@ export default class VueSemesterPicker extends BaseComponent {
 
     public intSelectedSemester: ISemester = null;
 
-    public initCourse: ICourse = null;
-
     @Emit()
     public cancel() {
         return;
@@ -99,10 +97,6 @@ export default class VueSemesterPicker extends BaseComponent {
     @Watch('selectedSemester')
     public initIntSelectedSemester(semester: ISemester) {
         this.intSelectedSemester = semester;
-    }
-
-    public created() {
-        this.initCourse = this.course;
     }
 
     public select(semester: ISemester) {
@@ -119,7 +113,7 @@ export default class VueSemesterPicker extends BaseComponent {
         }
 
         this.intSelectedSemester = semester;
-        this.$emit('remove', semester, this.initCourse);
+        this.$emit('remove');
     }
 
     public semesterIsSelected(semester: ISemester) {

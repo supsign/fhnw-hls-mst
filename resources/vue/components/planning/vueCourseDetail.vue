@@ -1,5 +1,5 @@
 <template>
-    <div class="flex border-t p-1 text-left text-xs lg:text-sm" @click="openModal">
+    <div v-if="course" class="flex border-t p-1 text-left text-xs lg:text-sm" @click="openModal">
         <div class="w-8">
             <slot name="icon"></slot>
         </div>

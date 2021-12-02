@@ -14,13 +14,13 @@ class RecommendationImport extends BaseExcelImport implements ToModel, WithHeadi
     protected CourseService $courseService;
     protected RecommendationService $recommendationService;
     protected array $requiredFields = [
-        'studienrichtung', 
-        'spezialisierung', 
+        'studienrichtung',
+        'spezialisierung',
         'querschnittsqualifikation',
         'modulnummer',
-        'modulbezeichnung', 
-        'sem_in_dem_modul_v_sr_bestellt', 
-        'modulgruppe', 
+        'modulbezeichnung',
+        'sem_in_dem_modul_v_sr_bestellt',
+        'modulgruppe',
         'sem_in_dem_modul_v_sr_bestellt',
         'in Musterstudienplan',
         'assessmentmodul',
@@ -52,7 +52,7 @@ class RecommendationImport extends BaseExcelImport implements ToModel, WithHeadi
 
         if ($row['spezialisierung'] !== 'keine') {
             $recommendationName .= ' '.$row['spezialisierung'];
-        } 
+        }
 
         // elseif ($row['querschnittsqualifikation'] !== 'keine') {
         //     $recommendationName .= ' '.$row['querschnittsqualifikation'];
@@ -64,8 +64,8 @@ class RecommendationImport extends BaseExcelImport implements ToModel, WithHeadi
         // return;
 
         CourseRecommendation::create([
-            'course_id' => $course->id, 
-            'recommendation_id' => $recommendation->id, 
+            'course_id' => $course->id,
+            'recommendation_id' => $recommendation->id,
             'planned_semester' => $row['sem_in_dem_modul_v_sr_bestellt'],
         ]);
     }

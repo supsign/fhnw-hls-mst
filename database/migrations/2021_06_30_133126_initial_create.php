@@ -14,6 +14,7 @@ use App\Imports\CourseYearImport;
 use App\Imports\CrossQualificationImport;
 use App\Imports\LessonCleanup;
 use App\Imports\LessonImport;
+use App\Imports\RecommendationImport;
 use App\Imports\SkillImport;
 use App\Imports\SkillPrerequisiteImport;
 use App\Imports\SpecializationImport;
@@ -432,6 +433,10 @@ class InitialCreate extends Migration
             if (Storage::exists('Testingdata\Tab8_Lektionen.xlsx')) {
                 $excel->import(new LessonImport, 'Testingdata\Tab8_Lektionen.xlsx');
             }
+
+            if (Storage::exists('Testingdata\Update studienplan-und-studienkatalog 29Jun2021.xlsx')) {
+                $excel->import(new RecommendationImport, 'Testingdata\Update studienplan-und-studienkatalog 29Jun2021.xlsx');
+            }
         } else {
             if (Storage::exists('Tab3_Modul.xlsx')) {
                 $excel->import(new CourseExcelImport, 'Tab3_Modul.xlsx');
@@ -459,6 +464,10 @@ class InitialCreate extends Migration
 
             if (Storage::exists('Tab8_Lektionen.xlsx')) {
                 $excel->import(new LessonImport, 'Tab8_Lektionen.xlsx');
+            }
+
+            if (Storage::exists('Update studienplan-und-studienkatalog 29Jun2021.xlsx')) {
+                $excel->import(new RecommendationImport, 'Update studienplan-und-studienkatalog 29Jun2021.xlsx');
             }
         }
     }

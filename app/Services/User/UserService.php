@@ -60,9 +60,7 @@ class UserService
     public function udpateOrCreateAsMentor(string $email, int $eventoPersonId, string $firstname = null, string $lastname = null)
     {
         $emailHash = $this->getHash($email);
-
         $user = $this->updateOrCrateUserOnMailHash($emailHash);
-
         $mentor = $this->mentorService->createOrUpdateOnEventoPersonId($eventoPersonId, $firstname, $lastname);
 
         if (!$mentor) {

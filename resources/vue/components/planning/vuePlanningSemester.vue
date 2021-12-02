@@ -24,9 +24,9 @@
 
                     <div class="flex flex-row justify-between">
                         <div>Kursname </div>
-                        <div class="ml-5">ECTS </div>
+                        <div>ECTS </div>
                     </div>
-                    <div>Kurs-ID: {{ coursePlanning.course_id }}</div>
+<!--                    <div>Kurs-ID: {{ coursePlanning.course_id }}</div>-->
                 </div>
             </div>
         </div>
@@ -56,6 +56,7 @@ export default class VuePlanningSemester extends BaseComponent {
     public courses: ICourse[]
 
     public isCollapsed = true;
+
     public break = 1024;
 
     public beforeNow = false;

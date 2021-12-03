@@ -12,13 +12,11 @@ use App\Models\StudyField;
 use App\Models\StudyFieldYear;
 use App\Models\StudyProgram;
 use App\Services\CrossQualification\CrossQualificationService;
-use App\Services\CrossQualificationYear\CrossQualificationYearService;
 use App\Services\Mentor\MentorStudentService;
 use App\Services\Planning\FillPlanningWithRecommendationsService;
 use App\Services\Planning\PlanningService;
 use App\Services\Semester\SemesterService;
 use App\Services\Specialization\SpecializationService;
-use App\Services\SpecializationYear\SpecializationYearService;
 use App\Services\StudyField\StudyFieldService;
 use App\Services\StudyFieldYear\StudyFieldYearService;
 use App\Services\User\PermissionAndRoleService;
@@ -33,6 +31,29 @@ class MentorPlanningController extends Controller
         protected PlanningService $planningService,
         protected StudyFieldYearService $studyFieldYearService,
     ) {
+    }
+
+    public function copy(Student $student, Planning $planning, MentorStudentService $mentorStudentService)
+    {
+        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student);
+
+        $mentorStudent = $mentorStudentService->getByMentorAndStudent(Auth::user()?->mentor, $student);
+
+        if (!$mentorStudent) {
+            return redirect()->route('mentor.planning.list', $student);
+        }
+
+        return view('planning.new', [
+            'studyFields' => StudyField::where('study_program_id', 6)->get(),
+            'studyPrograms' => StudyProgram::all(),
+            'studyFieldYears' => StudyFieldYear::all(),
+            'semesters' => Semester::where('is_hs', true)->get(),
+            'student' => $student,
+            'specializations' => Specialization::all(),
+            'crossQualifications' => CrossQualification::all(),
+            'mentorStudent' => $mentorStudent,
+            'planning' => $planning,
+        ]);
     }
 
     public function create(Student $student, MentorStudentService $mentorStudentService)
@@ -60,11 +81,9 @@ class MentorPlanningController extends Controller
     public function store(
         StoreRequest $request,
         Student $student,
-        SpecializationYearService $specializationYearService,
         SpecializationService $specializationService,
         CrossQualificationService $crossQualificationService,
-        CrossQualificationYearService $crossQualificationYearService)
-    {
+    ) {
         $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student);
 
         $studyFieldYear = $this->studyFieldYearService->getByStudyFieldIdAndSemesterId(
@@ -77,28 +96,42 @@ class MentorPlanningController extends Controller
             return redirect()->route('planning.create');
         }
 
-        /* @var $specialization Specialization */
-        $specialization = $specializationService->getById($request->specialization);
-        $specializationYear = $specializationYearService->findBySpecializationAndStudyFieldYear(
-            $specialization,
-            $studyFieldYear
-        );
-
-        /* @var $crossQualification CrossQualification */
-        $crossQualification = $crossQualificationService->getById($request->crossQualification);
-        $crossQualificationYear = $crossQualificationYearService->findByCrossQualificationAndStudyFieldYear(
-            $crossQualification,
-            $studyFieldYear
-        );
-
         $planning = $this->planningService->createEmptyPlanning(
             $student,
             $studyFieldYear,
-            $crossQualificationYear,
-            $specializationYear
+            $crossQualificationService->getById($request->crossQualification),
+            $specializationService->getById($request->specialization),
         );
 
         return redirect()->route('mentor.planning.showOne', [$student, $planning]);
+    }
+
+    public function storeCopy(
+        StoreRequest $request,
+        Planning $planning,
+        SpecializationService $specializationService,
+        CrossQualificationService $crossQualificationService,
+    ) {
+        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($planning->student);
+
+        $studyFieldYear = $this->studyFieldYearService->getByStudyFieldIdAndSemesterId(
+            $request->studyField,
+            $request->semester,
+        );
+
+        if (!$studyFieldYear) {
+            //  Todo: Swal Einbauen
+            return redirect()->route('planning.create.copy', $planning);
+        }
+
+        $newPlanning = $this->planningService->copy(
+            $planning,
+            $studyFieldYear,
+            $crossQualificationService->getById($request->crossQualification),
+            $specializationService->getById($request->specialization),
+        );
+
+        return redirect()->route('mentor.planning.showOne', [$newPlanning->student, $newPlanning]);
     }
 
     public function showOne(Student $student, Planning $planning, MentorStudentService $mentorStudentService)

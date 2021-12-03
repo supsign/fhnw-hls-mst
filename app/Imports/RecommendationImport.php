@@ -4,6 +4,8 @@ namespace App\Imports;
 
 use App;
 use App\Models\CourseRecommendation;
+use App\Models\CrossQualification;
+use App\Models\Specialization;
 use App\Services\Course\CourseService;
 use App\Services\Recommendation\RecommendationService;
 use Maatwebsite\Excel\Concerns\ToModel;
@@ -51,14 +53,32 @@ class RecommendationImport extends BaseExcelImport implements ToModel, WithHeadi
         $recommendationName = $row['studienrichtung'];
 
         if ($row['spezialisierung'] !== 'keine') {
-            $recommendationName .= ' '.$row['spezialisierung'];
+            $recommendationName .= ' - '.$row['spezialisierung'];
+            $specialisation = Specialization::where('name', $recommendationName)->first();
         } elseif ($row['querschnittsqualifikation'] !== 'keine') {
-            $recommendationName .= ' '.$row['querschnittsqualifikation'];
+            $recommendationName .= ' - '.$row['querschnittsqualifikation'];
+            $crossqualification = CrossQualification::where('name', $recommendationName)->first();
         }
 
         $recommendation = $this->recommendationService->getFirstOrCreateByName($recommendationName);
 
-        CourseRecommendation::create([
+        if (!empty($specialisation)) {
+            foreach ($specialisation->specializationYears AS $specializationYear) {
+                $specializationYear->update(['recommendation_id' => $recommendation->id]);
+            }
+        }
+
+        if (!empty($crossqualification)) {
+            foreach ($crossqualification->crossQualificationYears AS $crossQualificationYear) {
+                $crossQualificationYear->update(['recommendation_id' => $recommendation->id]);
+            }
+        }
+
+        foreach ($course->courseGroupYears AS $courseGroupYear) {
+            $courseGroupYear->studyFieldYear->update(['recommendation_id' => $recommendation->id]);
+        }
+
+        CourseRecommendation::firstOrCreate([
             'course_id' => $course->id,
             'recommendation_id' => $recommendation->id,
             'planned_semester' => $row['sem_in_dem_modul_v_sr_bestellt'],

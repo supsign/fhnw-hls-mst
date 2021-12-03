@@ -31,8 +31,10 @@
                 class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all w-full sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                 <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     <div class="grid grid-cols-2 gap-4 flex lg:flex-none sm:items-start">
+                        <div class="col-start-1 col-end-1 text-center font-bold">Frühlinssemester</div>
+                        <div class="col-start-2 col-end-2 text-center font-bold">Herbstsemester</div>
                         <div v-for="semester in pickableSemsters"
-                             :class="{'bg-gray-300': semesterIsSelected(semester), 'col-start-1 col-end-1': !semester.is_hs, 'col-start-2 col-end-2': semester.is_hs }"
+                             :class="{'bg-gray-300': semesterIsSelected(semester), 'col-start-1 col-end-1 ': !semester.is_hs, 'col-start-2 col-end-2': semester.is_hs }"
                              class="bg-gray-100 w-full h-8 text-center leading-loose cursor-pointer"
                              @click.stop="()=>select(semester)">
                             <div v-if="semesterIsSelected(semester) && isSaving"

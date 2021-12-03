@@ -1,0 +1,29 @@
+<?php
+
+use Database\Seeders\ServerAdminSeeder;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateServerAdmin extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Artisan::call('db:seed', [
+            '--class' => ServerAdminSeeder::class,
+            '--force' => true,
+        ]);
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+    }
+}

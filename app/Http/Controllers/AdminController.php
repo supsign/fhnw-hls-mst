@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use App\Services\User\PermissionAndRoleService;
 use App\Services\User\UserService;
 use Illuminate\Contracts\View\View;
@@ -12,6 +13,11 @@ class AdminController extends Controller
 {
     public function __construct(protected PermissionAndRoleService $permissionAndRoleService, protected UserService $userService)
     {
+    }
+
+    public function courses(): View
+    {
+        return view('admin.courses', ['courses' => Course::all()]);
     }
 
     public function dashboard(): View

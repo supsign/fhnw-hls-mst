@@ -409,7 +409,7 @@ class InitialCreate extends Migration
         (new CrossQualificationImport)->countAmountToPass();
         (new SpecializationImport)->countAmountToPass();
 
-        if (true || App::environment('testing')) {
+        if (App::environment('testing')) {
             if (Storage::exists('Testingdata\Tab3_Modul.xlsx')) {
                 $excel->import(new CourseExcelImport, 'Testingdata\Tab3_Modul.xlsx');
             }

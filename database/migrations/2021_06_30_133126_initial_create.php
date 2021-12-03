@@ -25,6 +25,7 @@ use Carbon\Carbon;
 use Database\Seeders\CompletionTypeSeeder;
 use Database\Seeders\CourseTypeSeeder;
 use Database\Seeders\LanguageSeeder;
+use Database\Seeders\MentorSeeder;
 use Database\Seeders\StudyFieldSeeder;
 use Database\Seeders\StudyProgramSeeder;
 use Database\Seeders\TaxonomySeeder;
@@ -403,6 +404,11 @@ class InitialCreate extends Migration
             $table->foreignId('course_id')->constrained();
             $table->timestampsTz();
         });
+
+        Artisan::call('db:seed', [
+            '--class' => MentorSeeder::class,
+            '--force' => true,
+        ]);
 
         (new AssessmentImport)->import();
         (new CourseCourseGroupYearImporter)->import();

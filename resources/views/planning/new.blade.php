@@ -8,18 +8,21 @@
             <x-slot name="title">
                 Studienplanung erstellen
             </x-slot>
-            <vue-form id="new_planning" method="POST"
-                      action="{{ $mentorStudent ? route('mentor.planning.store', $mentorStudent->student) : route('planning.store')}}">
+            <vue-form 
+                id="new_planning" 
+                method="POST"
+                action="{{ $mentorStudent ? route('mentor.planning.store', $mentorStudent->student) : (!empty($planning) ? route('planning.store.copy', $planning) : route('planning.store')) }}"
+            >
                 @csrf
                 <div class="flex flex-col space-y-8">
                     <vue-create-planning-form
-                        :study-programs="{{$studyPrograms}}"
-                        :study-fields="{{$studyFields}}"
-                        :study-field-years="{{$studyFieldYears}}"
-                        :semesters="{{$semesters}}"
-                        :student="{{$student ?? json_encode(null)}}"
-                        :specializations="{{$specializations}}"
-                        :cross-qualifications="{{$crossQualifications}}"
+                        :study-programs="{{ $studyPrograms }}"
+                        :study-fields="{{ $studyFields }}"
+                        :study-field-years="{{ $studyFieldYears }}"
+                        :semesters="{{ $semesters }}"
+                        :student="{{ $student ?? json_encode(null) }}"
+                        :specializations="{{ $specializations }}"
+                        :cross-qualifications="{{ $crossQualifications }}"
                     ></vue-create-planning-form>
                     <x-base.button class="mt-4 button-primary w-36 justify-center" type="submit">Erstellen
                     </x-base.button>

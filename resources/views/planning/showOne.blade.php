@@ -9,6 +9,9 @@
                 <div class="flex flex-row justify-between">
                     <div class="my-auto">@lang('l.planning')</div>
                     <div class="space-x-4 flex">
+                        <x-base.link href="{{ route('planning.create.copy', $planning) }}">
+                            <i
+                                class="fas fa-copy text-blue-600 text-xl" aria-hidden="true"></i></x-base.link>
                         <x-base.link href="{{ route('planning.print', $planning) }}">
                             <i
                                     class="fas fa-print text-blue-600 text-xl" aria-hidden="true"></i></x-base.link>

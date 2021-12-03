@@ -11,12 +11,10 @@ use App\Models\StudyField;
 use App\Models\StudyFieldYear;
 use App\Models\StudyProgram;
 use App\Services\CrossQualification\CrossQualificationService;
-use App\Services\CrossQualificationYear\CrossQualificationYearService;
 use App\Services\Planning\FillPlanningWithRecommendationsService;
 use App\Services\Planning\PlanningService;
 use App\Services\Semester\SemesterService;
 use App\Services\Specialization\SpecializationService;
-use App\Services\SpecializationYear\SpecializationYearService;
 use App\Services\StudyField\StudyFieldService;
 use App\Services\StudyFieldYear\StudyFieldYearService;
 use App\Services\User\PermissionAndRoleService;
@@ -31,6 +29,23 @@ class PlanningController extends Controller
         protected PlanningService $planningService,
         protected StudyFieldYearService $studyFieldYearService,
     ) {
+    }
+
+    public function copy(Planning $planning)
+    {
+        $this->permissionAndRoleService->canPlanScheduleOrAbort();
+
+        return view('planning.new', [
+            'studyFields' => StudyField::where('study_program_id', 6)->get(),
+            'studyPrograms' => StudyProgram::all(),
+            'studyFieldYears' => StudyFieldYear::all(),
+            'semesters' => Semester::where('is_hs', true)->get(),
+            'student' => $planning->student,
+            'specializations' => Specialization::all(),
+            'crossQualifications' => CrossQualification::all(),
+            'mentorStudent' => null,
+            'planning' => $planning,
+        ]);
     }
 
     public function create()
@@ -66,10 +81,8 @@ class PlanningController extends Controller
 
     public function store(
         StoreRequest $request,
-        SpecializationYearService $specializationYearService,
         SpecializationService $specializationService,
         CrossQualificationService $crossQualificationService,
-        CrossQualificationYearService $crossQualificationYearService
     ) {
         $this->permissionAndRoleService->canPlanScheduleOrAbort();
 
@@ -83,28 +96,42 @@ class PlanningController extends Controller
             return redirect()->route('planning.create');
         }
 
-        /* @var $specialization Specialization */
-        $specialization = $specializationService->getById($request->specialization);
-        $specializationYear = $specializationYearService->findBySpecializationAndStudyFieldYear(
-            $specialization,
-            $studyFieldYear
-        );
-
-        /* @var $crossQualification CrossQualification */
-        $crossQualification = $crossQualificationService->getById($request->crossQualification);
-        $crossQualificationYear = $crossQualificationYearService->findByCrossQualificationAndStudyFieldYear(
-            $crossQualification,
-            $studyFieldYear
-        );
-
         $planning = $this->planningService->createEmptyPlanning(
             Auth::user()->student,
             $studyFieldYear,
-            $crossQualificationYear,
-            $specializationYear
+            $crossQualificationService->getById($request->crossQualification),
+            $specializationService->getById($request->specialization),
         );
 
         return redirect()->route('planning.showOne', $planning);
+    }
+
+    public function storeCopy(
+        StoreRequest $request,
+        Planning $planning,
+        SpecializationService $specializationService,
+        CrossQualificationService $crossQualificationService,
+    ) {
+        $this->permissionAndRoleService->canPlanScheduleOrAbort();
+
+        $studyFieldYear = $this->studyFieldYearService->getByStudyFieldIdAndSemesterId(
+            $request->studyField,
+            $request->semester,
+        );
+
+        if (!$studyFieldYear) {
+            //  Todo: Swal Einbauen
+            return redirect()->route('planning.create.copy', $planning);
+        }
+
+        $newPlanning = $this->planningService->copy(
+            $planning,
+            $studyFieldYear,
+            $crossQualificationService->getById($request->crossQualification),
+            $specializationService->getById($request->specialization),
+        );
+
+        return redirect()->route('planning.showOne', $newPlanning);
     }
 
     public function showOne(Planning $planning)

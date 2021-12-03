@@ -37,16 +37,20 @@ Route::middleware(['web', 'auth'])->group(
 
         // Plannings
         Route::get('plannings/create', [PlanningController::class, 'create'])->name('planning.create');
+        Route::get('plannings/create/{planning}', [PlanningController::class, 'copy'])->name('planning.create.copy');
         Route::post('plannings', [PlanningController::class, 'store'])->name('planning.store');
+        Route::post('plannings/{planning}', [PlanningController::class, 'storeCopy'])->name('planning.store.copy');
         Route::get('plannings/{planning}', [PlanningController::class, 'showOne'])->name('planning.showOne');
         Route::get('plannings/{planning}/print', [PlanningController::class, 'print'])->name('planning.print');
         Route::delete('plannings/{planning}', [PlanningController::class, 'delete'])->name('planning.delete');
         Route::post('plannings/{planning}/setrecommendations', [PlanningController::class, 'setRecommendations'])->name('planning.setRecommendations');
 
-        // Planning as Student
+        // Planning as Mentor
         Route::get('students/{student}/plannings', [MentorPlanningController::class, 'list'])->name('mentor.planning.list');
         Route::get('students/{student}/plannings/create', [MentorPlanningController::class, 'create'])->name('mentor.planning.create');
+        Route::get('students/{student}/plannings/create/{planning}', [MentorPlanningController::class, 'copy'])->name('mentor.planning.create.copy');
         Route::post('students/{student}/plannings', [MentorPlanningController::class, 'store'])->name('mentor.planning.store');
+        Route::post('students/{student}/plannings/{planning}', [MentorPlanningController::class, 'storeCopy'])->name('mentor.planning.store.copy');
         Route::get('students/{student}/plannings/{planning}', [MentorPlanningController::class, 'showOne'])->name('mentor.planning.showOne');
         Route::delete('students/{student}/plannings/{planning}', [MentorPlanningController::class, 'delete'])->name('mentor.planning.delete');
         Route::post('students/{student}/plannings/{planning}/setrecommendations', [MentorPlanningController::class, 'setRecommendations'])->name('mentor.planning.setRecommendations');

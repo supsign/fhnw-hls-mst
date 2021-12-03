@@ -8,7 +8,7 @@ return [
     'student' => 'Student',
     'name' => 'Name',
     'role' => 'Rolle',
-    'roleAssign' => 'Rolle hinzufügen',
+    'roleAdd' => 'Rolle hinzufügen',
     'roleRemove' => 'Rolle entfernen',
     'studyField' => 'Studiengang',
     'studyProgram' => 'Studienrichtung',
@@ -24,4 +24,6 @@ return [
     'completionPassed' => 'Bestanden oder angerechnet',
     'completionFailed' => 'Durchgefallen - nicht bestanden',
     'completionNone' => 'Kein Abschluss oder angemeldet',
+    'courseEdit' => 'Module bearbeiten',
+    'roleAssign' => 'Rollen zuweisen',
 ];

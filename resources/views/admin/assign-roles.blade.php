@@ -5,7 +5,7 @@
 
     <x-app.card class="mb-4">
         <x-slot name="title">
-            @lang('l.roleAssign')
+            @lang('l.roleAdd')
         </x-slot>
         <div>
             <div>

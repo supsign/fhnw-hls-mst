@@ -4,7 +4,7 @@ namespace App\Services\User;
 
 use App;
 use App\Models\User;
-use App\Services\Helpers\hashes;
+use App\Services\Helpers\Hashes;
 use App\Services\Mentor\MentorService;
 use App\Services\Student\StudentService;
 

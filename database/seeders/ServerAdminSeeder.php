@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use App\Services\User\PermissionAndRoleService;
 use App\Services\User\UserService;
 use Illuminate\Database\Seeder;
 
@@ -11,7 +9,6 @@ class ServerAdminSeeder extends Seeder
 {
     public function __construct(
         protected UserService $userService,
-        protected PermissionAndRoleService $permissionAndRoleService
     ) {
     }
 

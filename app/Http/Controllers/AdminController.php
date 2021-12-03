@@ -15,6 +15,11 @@ class AdminController extends Controller
     {
     }
 
+    public function courses(): View
+    {
+        return view('admin.courses', ['courses' => Course::all()]);
+    }
+
     public function dashboard(): View
     {
         $this->permissionAndRoleService->canManageBackendOrAbort();

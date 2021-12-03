@@ -16,7 +16,7 @@ export class CoursePlanningModel extends EntityModel<IBaseState<ICoursePlanning>
         return this._store.getters[`${this._modelName}/getCoursePlanning`](planningId, courseId);
     }
 
-    public byPlanningId(planningId: number) {
+    public byPlanningId(planningId: number): ICoursePlanning[] {
         return this._store.getters[`${this._modelName}/byPlanningId`](planningId);
     }
 }

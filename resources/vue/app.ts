@@ -20,6 +20,7 @@ import VueStateWrapper from "./components/Assessment/VueStateWrapper.vue";
 import VueShowAndSelectMentors from "./components/mentor/VueShowAndSelectMentors.vue";
 import VueAssessmentState from "./components/Assessment/VueAssessmentState.vue";
 import VueCreatePlanningForm from "./components/planning/vueCreatePlanningForm.vue";
+import VuePlanningSemester from "./components/planning/vuePlanningSemester.vue";
 import VueCourseDetail from "./components/planning/vueCourseDetail.vue";
 import {courseStore} from "./store/course/course.store";
 import {semesterStore} from "./store/semester/semester.store";
@@ -59,6 +60,7 @@ const app = new Vue({
         VueCreatePlanningForm,
         VueShowAndSelectMentors,
         VueCourseDetail,
+        VuePlanningSemester,
     },
     store
 });

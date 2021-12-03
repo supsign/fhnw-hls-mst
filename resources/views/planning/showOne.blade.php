@@ -74,19 +74,20 @@
         <vue-store-fill model="skillStudent"
                         :entities="{{$planning->student->skillStudent}}"></vue-store-fill>
 
-        <div class="lg:grid lg:grid-cols-3 lg:gap-4">
-            @foreach($courseGroupYears as $courseGroupYear)
-                <vue-store-fill model="course" :entities="{{$courseGroupYear->courses}}"></vue-store-fill>
 
-                <div>
-                    <vue-plan-wrapper>
-                        <template v-slot:header>
-                            <div class="my-auto w-2/3 text-sm">
-                                {{$courseGroupYear->courseGroup->name}}
-                            </div>
-                            <vue-course-group-state :course-group-year="{{$courseGroupYear}}"
-                                                    :courses="{{$courseGroupYear->courses}}"
-                                                    :completions="{{$planning->student->completions}}"></vue-course-group-state>
+        <div class="lg:flex lg:flex-row lg:gap-4">
+            <div class="lg:grid lg:grid-cols-2 lg:gap-4 lg:w-3/4">
+                @foreach($courseGroupYears as $courseGroupYear)
+
+                    <div>
+                        <vue-plan-wrapper>
+                            <template v-slot:header>
+                                <div class="my-auto w-2/3 text-sm">
+                                    {{$courseGroupYear->courseGroup->name}}
+                                </div>
+                                <vue-course-group-state :course-group-year="{{$courseGroupYear}}"
+                                                        :courses="{{$courseGroupYear->getCourses()}}"
+                                                        :completions="{{$planning->student->completions}}"></vue-course-group-state>
 
                         </template>
                         @foreach($courseGroupYear->courseCourseGroupYears()->with('course')->get() as $courseCourseGroupYear)
@@ -104,10 +105,15 @@
                                 </template>
                             </vue-course-detail>
                         @endforeach
-                    </vue-plan-wrapper>
-                </div>
-            @endforeach
-            <x-assessment.assessment-state :planning="$planning"></x-assessment.assessment-state>
+                        </vue-plan-wrapper>
+                    </div>
+                @endforeach
+            </div>
+            <div class="lg:w-1/4">
+                <x-planning.planning-semester :planning="$planning" />
+            </div>
         </div>
+        <x-assessment.assessment-state :planning="$planning"></x-assessment.assessment-state>
     </div>
 </x-layout.app>
+

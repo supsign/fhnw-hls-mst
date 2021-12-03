@@ -20,12 +20,15 @@
 
     </head>
     <body class="font-body">
-    <div id="app" class="w-full h-cover bg-gray-200 overflow-auto">
+    <div id="app" class="w-full h-cover bg-gray-200">
         <div class="flex flex-col h-screen">
             <x-admin.top/>
             <x-layout.header/>
-            <div id="main" class="flex-grow mb-4">
-                {{ $slot }}
+            <div id="main" class="mb-4 mx-auto container mt-4 lg:flex lg:flex-row"> <!-- lg:flex-grow -->
+                <x-admin.menu />
+                <div class="flex flex-col lg:flex-grow ml-4">
+                    {{ $slot }}
+                </div>
             </div>
             <x-layout.footer/>
             <x-layout.bottom/>

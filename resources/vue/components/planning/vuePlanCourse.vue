@@ -3,14 +3,14 @@
         <div v-if="!coursePlanning" class="flex text-center justify-center" @click="()=>{pickerIsOpen = true}">
             <img :src="'/img/calendarIcon.svg'" alt="module_icon" class="cursor-pointer w-7 h-7 my-auto">
         </div>
-        <div v-else-if="coursePlanningSemester" class="text-sm" @click="()=>{pickerIsOpen = true}">
+        <div v-else-if="coursePlanningSemester" class="text-sm cursor-pointer" @click="()=>{pickerIsOpen = true}">
             {{ coursePlanningSemester.year - 2000 }}
             {{ coursePlanningSemester.is_hs ? 'HS' : 'FS' }}
         </div>
         <vue-semester-picker v-if="pickerIsOpen" :course="course" :is-saving="isSaving"
                              :isSaving="isSaving"
                              :selected-semester="coursePlanningSemester"
-                             :semesters="pickableSemsters"
+                             :semesters="semesters"
                              @cancel="cancel"
                              @remove="remove"
                              @select="select"></vue-semester-picker>
@@ -58,19 +58,6 @@ export default class VuePlanCourse extends BaseComponent {
 
     public get coursePlanningSemester(): ISemester {
         return this.semesters.find((semester) => semester.id === this.coursePlanning?.semester_id);
-    }
-
-    public get pickableSemsters(): ISemester[] {
-        return this.semesters.filter((semester) => {
-            const now = new Date();
-            if (typeof semester.start_date === 'string') {
-                semester.start_date = new Date(semester.start_date);
-            }
-
-            return semester.start_date.getTime() > now.getTime();
-        }).filter((semester) => {
-            return (semester.is_hs && this.course.is_hs) || (!semester.is_hs && this.course.is_fs)
-        })
     }
 
     public cancel() {

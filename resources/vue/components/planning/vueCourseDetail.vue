@@ -18,6 +18,7 @@
             v-if="courseYear && detailModalIsOpen"
             :course="course"
             :courseYear="courseYear"
+            :is_planed="!!coursePlanning"
             :missingCourses="missingCourses"
             @cancel.stop="closeModal"
         ></vue-course-detail-modal>
@@ -33,6 +34,7 @@ import VuePlanCourse from "./vuePlanCourse.vue";
 import VueCourseDetailModal from "./vueCourseDetailModal.vue";
 import {ISkill} from "../../interfaces/skill.interface";
 import {ICourseSkill} from "../../interfaces/courseSkill.interface";
+import {ICoursePlanning} from "../../store/coursePlanning/coursePlanning.interface";
 
 @Component({
     components: {
@@ -58,6 +60,16 @@ export default class VueCourseDetail extends BaseComponent {
     courseIsSuccessfullyCompleted: boolean;
     public detailModalIsOpen = false;
 
+    public get coursePlanning(): ICoursePlanning | null {
+        if (!this.planningId) {
+            return;
+        }
+        if (!this.course.id) {
+            return;
+        }
+        return this.models.coursePlanning.getCoursePlanning(this.planningId, this.course.id);
+    }
+
     public get requiredSkills(): ICourseSkill[] {
         if (!this.course) {
             return [];
@@ -81,13 +93,21 @@ export default class VueCourseDetail extends BaseComponent {
     }
 
     public get notPlannedNotCompletedCourseSkillIds(): number[] {
+        const semesterOfPlanning = this.models.semester.getById(this.coursePlanning?.semester_id);
         return this.notCompletedSkillIds.filter((skillId) => {
-            return !this.models.coursePlanning.all.find(coursePlanning => coursePlanning.planned_skills.find(skill => skill.id === skillId))
+            return !this.models.coursePlanning.all.filter((coursePlanning => {
+                if (!semesterOfPlanning) {
+                    return false;
+                }
+
+                const semester = this.models.semester.getById(coursePlanning.semester_id);
+                return new Date(semester.start_date).getTime() < new Date(semesterOfPlanning.start_date).getTime()
+            })).find(coursePlanning => coursePlanning.planned_skills.find(skill => skill.id === skillId))
         })
     }
 
     public get missingCourses() {
-        return this.notPlannedNotCompletedCourseSkillIds.map(skillId => this.models.course.getByAcquisitionSkillId(skillId)).filter(course => course)
+        return this.models.course.getByAcquisitionSkillIds(this.notPlannedNotCompletedCourseSkillIds);
     }
 
     public get course(): ICourse {
@@ -97,20 +117,6 @@ export default class VueCourseDetail extends BaseComponent {
     public get semesters(): ISemester[] {
         return this.models.semester.all
     }
-
-    // public get skillsToBePlaned() {
-    //     return this.notAcquiredSkills.filter((skillToBePlanned) => !this.models.coursePlanning.all.map(coursePlanning => coursePlanning.planned_skills).reduce((acc, curVal) => {
-    //         return acc.concat(curVal)
-    //     }, []).find(plannedSkill => plannedSkill.id === skillToBePlanned.id))
-    // }
-    //
-    // public get missingCoursesNN(): ICourse[] {
-    //     return this.skillsToBePlaned.map((skill) => skill.gain_course).filter((course) => !!course);
-    // }
-    //
-    // public get missingCourses(): ICourse[] {
-    //     return [...new Set(this.missingCoursesNN.map(course => course.id))].map(courseId => this.missingCoursesNN.find(course => course.id === courseId));
-    // }
 
     public closeModal() {
         this.detailModalIsOpen = false;

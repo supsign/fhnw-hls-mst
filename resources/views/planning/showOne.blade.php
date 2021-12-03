@@ -42,7 +42,7 @@
             <vue-form method="POST"
                       action="{{ $mentorStudent ? route('mentor.planning.setRecommendations', [$mentorStudent->student, $planning])  : route('planning.setRecommendations', $planning) }}">
                 @csrf
-                <button class="button-primary mb-4" type="submit">gem. Studienplan planen</button>
+                <button class="button-primary mb-4" type="submit">gem. Musterstudienplan planen</button>
             </vue-form>
         </div>
 

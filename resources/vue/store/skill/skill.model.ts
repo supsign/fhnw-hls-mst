@@ -9,6 +9,6 @@ export class SkillModel extends EntityModel<IBaseState<ISkill>,
     typeof skillRequestModel,
     ISkill> {
     constructor(store: Store<IBaseState<ISkill>>) {
-        super("coursePlanning", store, skillRequestModel);
+        super("skill", store, skillRequestModel);
     }
 }

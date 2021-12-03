@@ -6,7 +6,15 @@ export const requestModel = (): typeof courseRequestModel => {
     return courseRequestModel;
 };
 
-export const getByAcquisitionSkillId = (state: IBaseState<ICourse>) =>
-    (skillId: number): ICourse => {
-        return state.entities.local.find(entity => entity.course_skills.find(courseSkill => courseSkill.is_acquisition && courseSkill.skill_id === skillId));
+export const getByAcquisitionSkillIds = (state: IBaseState<ICourse>) =>
+    (skillIds: number[]): ICourse[] => {
+        const courses = state.entities.local.filter(
+            entity => {
+                return entity.course_skills.find(
+                    courseSkill => {
+                        return courseSkill.is_acquisition && skillIds.includes(courseSkill.skill_id)
+                    })
+            });
+
+        return [...new Set(courses.map(item => item.id))].map(id => courses.find(course => course.id === id));
     };

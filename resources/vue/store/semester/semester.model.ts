@@ -9,6 +9,6 @@ export class SemesterModel extends EntityModel<IBaseState<ISemester>,
     typeof semesterRequestModel,
     ISemester> {
     constructor(store: Store<IBaseState<ISemester>>) {
-        super("coursePlanning", store, semesterRequestModel);
+        super("semester", store, semesterRequestModel);
     }
 }

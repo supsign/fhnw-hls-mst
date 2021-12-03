@@ -9,10 +9,10 @@ export class CourseModel extends EntityModel<IBaseState<ICourse>,
     typeof courseRequestModel,
     ICourse> {
     constructor(store: Store<IBaseState<ICourse>>) {
-        super("coursePlanning", store, courseRequestModel);
+        super("course", store, courseRequestModel);
     }
 
-    public getByAcquisitionSkillId(skillId: number): ICourse {
-        return this._store.getters[`${this._modelName}/getByAcquisitionSkillId`](skillId);
+    public getByAcquisitionSkillIds(skillIds: number[]): ICourse {
+        return this._store.getters[`${this._modelName}/getByAcquisitionSkillIds`](skillIds);
     }
 }

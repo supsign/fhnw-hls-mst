@@ -12,6 +12,7 @@ class StudentCreditService
         if (!$student) {
             return '-';
         }
+
         $completions = $student->completions;
         $countCompletions = $completions->count();
 
@@ -22,7 +23,7 @@ class StudentCreditService
         return (string)$this->getCredits($completions);
     }
 
-    public function getCredits(Collection $completions): int
+    protected function getCredits(Collection $completions): int
     {
         $credits = 0;
 

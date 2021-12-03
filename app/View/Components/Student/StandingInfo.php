@@ -10,12 +10,12 @@ use Illuminate\View\Component;
 class StandingInfo extends Component
 {
     public string $now;
-    public int $studentsCredits;
+    public string $studentsCredits;
 
     public function __construct(public Student $student, protected StudentCreditService $studentCreditService)
     {
         $this->now = Carbon::now()->format('d.m.Y H:i');
-        $this->studentsCredits = $this->studentCreditService->getCredits($this->student->completions);
+        $this->studentsCredits = $this->studentCreditService->getCreditsAsString($this->student);
     }
 
     public function render()

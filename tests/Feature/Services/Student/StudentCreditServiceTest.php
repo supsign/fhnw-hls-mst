@@ -45,7 +45,7 @@ class StudentCreditServiceTest extends TestCase
             $courseYear->course,
             $course->credits,
         );
-        $credits = $this->studentEctsService->getCredits($student->completions()->get());
+        $credits = $this->studentEctsService->getCreditsAsString($student);
         $this->assertEquals($course->credits, $credits);
     }
 

@@ -29,6 +29,10 @@ class StudentCreditService
 
         /** @var $completion Completion * */
         foreach ($completions as $completion) {
+            if ($completion->student->studyField && !$completion->studyFields->contains($completion->student->studyField)) {
+                continue;
+            }
+
             // bestanden
             if ($completion->completion_type_id === 2) {
                 $credits += $completion->credits;

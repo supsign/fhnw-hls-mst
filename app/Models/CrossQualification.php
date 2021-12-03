@@ -17,9 +17,9 @@ class CrossQualification extends BaseModel
         return $this->hasMany(Planning::class);
     }
 
-    public function recommendations()
+    public function recommendation()
     {
-        return $this->hasMany(Recommendation::class);
+        return $this->belongsTo(Recommendation::class);
     }
 
     public function studyField()

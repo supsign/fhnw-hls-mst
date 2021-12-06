@@ -15,7 +15,7 @@ class StudentCreditService
         return (string)$this->getCredits($student);
     }
 
-    protected function getCredits(Student $student): int 
+    protected function getCredits(Student $student): int
     {
         $credits = 0;
 

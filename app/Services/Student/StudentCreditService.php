@@ -7,7 +7,6 @@ use App\Models\Student;
 class StudentCreditService
 {
     public function getCreditsAsString(Student $student = null): string
-
     {
         if (!$student || !$student->completions()->count()) {
             return '-';

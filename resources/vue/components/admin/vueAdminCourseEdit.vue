@@ -5,22 +5,26 @@
 
         <div v-if="course.is_hs"
              class="w-24"
+             @click="changeHs"
         >
             <i class="fas fa-check-square text-blue-700"></i>
         </div>
         <div v-else
              class="w-24"
+             @click="changeHs"
         >
             <i class="far fa-square text-blue-700"></i>
         </div>
 
         <div v-if="course.is_fs"
              class="w-24"
+             @click="changeFS"
         >
             <i class="fas fa-check-square text-blue-700"></i>
         </div>
         <div v-else
              class="w-24"
+             @click="changeFS"
         >
             <i class="far fa-square text-blue-700"></i>
         </div>
@@ -49,8 +53,14 @@ export default class VueAdminCourseEdit extends BaseComponent {
     public hs = false;
     public fs = false;
 
+    public created() {
+        this.hs = this.course.is_hs;
+        this.fs = this.course.is_fs;
+    }
+
     public changeHs() {
         this.hs = !this.hs;
+        console.log(this.hs);
         // axios.patch(`/webapi/courses/${this.course.id}`, {
         //     is_hs: this.hs
         // });
@@ -58,6 +68,7 @@ export default class VueAdminCourseEdit extends BaseComponent {
 
     public changeFS() {
         this.fs = !this.fs;
+        console.log(this.fs);
         // axios.patch(`/webapi/courses/${this.course.id}`, {
         //     is_fs: this.fs
         // });

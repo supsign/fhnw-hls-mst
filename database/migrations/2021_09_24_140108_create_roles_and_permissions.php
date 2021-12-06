@@ -2,8 +2,6 @@
 
 use Database\Seeders\RoleAndPermissionSeeder;
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 
 class CreateRolesAndPermissions extends Migration
 {

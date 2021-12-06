@@ -25,17 +25,20 @@ class CoursePlanningController extends Controller
 
     public function delete(CoursePlanning $coursePlanning)
     {
-        $this->permissionAndRoleService->canPlanScheduleOrAbort();
+        $planning = $coursePlanning->planning;
+        $student = $planning->student;
+        $this->permissionAndRoleService->canPlanScheduleOrAbort($student, $planning);
 
         $this->coursePlanningService->delete($coursePlanning);
     }
 
     public function post(PostRequest $request, PlanningService $planningService, CourseService $courseService, SemesterService $semesterService)
     {
-        $this->permissionAndRoleService->canPlanScheduleOrAbort();
-
         /* @var $planning Planning */
         $planning = $planningService->getById($request->planning_id);
+
+        $student = $planning->student;
+        $this->permissionAndRoleService->canPlanScheduleOrAbort($student, $planning);
 
         /* @var $course Course */
         $course = $courseService->getById($request->course_id);
@@ -52,7 +55,9 @@ class CoursePlanningController extends Controller
 
     public function patch(PatchCoursePlanningRequest $request, CoursePlanning $coursePlanning, SemesterService $semesterService)
     {
-        $this->permissionAndRoleService->canPlanScheduleOrAbort();
+        $planning = $coursePlanning->planning;
+        $student = $planning->student;
+        $this->permissionAndRoleService->canPlanScheduleOrAbort($student, $planning);
 
         /* @var $semester Semester */
         $semester = $semesterService->getById($request->semester_id);
@@ -66,7 +71,9 @@ class CoursePlanningController extends Controller
 
     public function getById(CoursePlanning $coursePlanning)
     {
-        $this->permissionAndRoleService->canPlanScheduleOrAbort();
+        $planning = $coursePlanning->planning;
+        $student = $planning->student;
+        $this->permissionAndRoleService->canPlanScheduleOrAbort($student, $planning);
 
         return $coursePlanning;
     }

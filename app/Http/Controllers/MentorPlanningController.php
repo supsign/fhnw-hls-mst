@@ -35,7 +35,7 @@ class MentorPlanningController extends Controller
 
     public function copy(Student $student, Planning $planning, MentorStudentService $mentorStudentService)
     {
-        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student);
+        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student, $planning);
 
         $mentorStudent = $mentorStudentService->getByMentorAndStudent(Auth::user()?->mentor, $student);
 
@@ -112,7 +112,7 @@ class MentorPlanningController extends Controller
         SpecializationService $specializationService,
         CrossQualificationService $crossQualificationService,
     ) {
-        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($planning->student);
+        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($planning->student, $planning);
 
         $studyFieldYear = $this->studyFieldYearService->getByStudyFieldIdAndSemesterId(
             $request->studyField,
@@ -136,7 +136,7 @@ class MentorPlanningController extends Controller
 
     public function showOne(Student $student, Planning $planning, MentorStudentService $mentorStudentService)
     {
-        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student);
+        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student, $planning);
 
         $mentorStudent = $mentorStudentService->getByMentorAndStudent(Auth::user()?->mentor, $student);
 
@@ -155,7 +155,7 @@ class MentorPlanningController extends Controller
 
     public function delete(Student $student, Planning $planning, PlanningService $planningService)
     {
-        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student);
+        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student, $planning);
         $planningService->cascadingDelete($planning);
 
         return redirect()->route('mentor.planning.list', $student);
@@ -178,7 +178,7 @@ class MentorPlanningController extends Controller
 
     public function setRecommendations(Student $student, Planning $planning, FillPlanningWithRecommendationsService $fillPlanningWithRecommendationsService, MentorStudentService $mentorStudentService)
     {
-        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student);
+        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student, $planning);
 
         $fillPlanningWithRecommendationsService->fill($planning);
 

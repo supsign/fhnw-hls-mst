@@ -20,9 +20,8 @@ class WebApiMentorController extends Controller
 
     public function attachToStudent(Mentor $mentor, AttachStudentToMentorService $attacheStudentToMentorService): Mentor
     {
-        $this->permissionAndRoleService->canPlanScheduleOrAbort();
-
         $user = Auth::user();
+        $this->permissionAndRoleService->canPlanMySchedulesOrAbort($user->student);
 
         if (!$user->student) {
             abort(409, 'User is not a student.');
@@ -33,9 +32,8 @@ class WebApiMentorController extends Controller
 
     public function detachStudent(Mentor $mentor, AttachStudentToMentorService $attacheStudentToMentorService): void
     {
-        $this->permissionAndRoleService->canPlanScheduleOrAbort();
-
         $user = Auth::user();
+        $this->permissionAndRoleService->canPlanMySchedulesOrAbort($user->student);
 
         if (!$user->student) {
             abort(409, 'User is not a student.');
@@ -46,6 +44,8 @@ class WebApiMentorController extends Controller
 
     public function getByEventoId(Request $request)
     {
+        $this->permissionAndRoleService->canManageBackendOrAbort();
+
         return $this->mentorService->getByEventoPersonId($request->eventoId);
     }
 }

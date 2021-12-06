@@ -9,7 +9,7 @@
     <div class="mb-4">
         <vue-planning-semester
             :semester="{{ $semester }}"
-            :planning="{{ $planning }}"
+            :planning-id="{{ $planning->id }}"
             :completions="{{ $planning->student->completions }}"
             :courses="{{ $planning->courses }}"
         ></vue-planning-semester>

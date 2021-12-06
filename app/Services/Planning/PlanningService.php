@@ -13,10 +13,11 @@ use App\Services\Completion\CourseCompletionService;
 class PlanningService extends BaseModelService
 {
     public function __construct(
-        protected Planning $model,
-        protected CoursePlanningService $coursePlanningService,
+        protected Planning                $model,
+        protected CoursePlanningService   $coursePlanningService,
         protected CourseCompletionService $courseCompletionService
-    ) {
+    )
+    {
         parent::__construct($model);
     }
 
@@ -28,11 +29,12 @@ class PlanningService extends BaseModelService
     }
 
     public function createEmptyPlanning(
-        Student $student,
-        StudyFieldYear $studyFieldYear,
+        Student                $student,
+        StudyFieldYear         $studyFieldYear,
         CrossQualificationYear $crossQualificationYear = null,
-        SpecializationYear $specializationYear = null
-    ): Planning {
+        SpecializationYear     $specializationYear = null
+    ): Planning
+    {
         if ($crossQualificationYear && $specializationYear) {
             abort(409, 'CreateEmptyPlanning: CrossQualificationYear and SpecializationYear are exclusive');
         }
@@ -74,7 +76,7 @@ class PlanningService extends BaseModelService
     {
         $credits = 0;
 
-        foreach ($planning->student->studyFieldYear->courses as $course) {
+        foreach ($planning->studyFieldYear->courses as $course) {
             $credits += $this->courseCompletionService->getCredits($course, $planning->student);
         }
 

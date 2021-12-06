@@ -18,7 +18,7 @@
             v-if="courseYear && detailModalIsOpen"
             :course="course"
             :courseYear="courseYear"
-            :is_planed="!!coursePlanning"
+            :isPlaned="!!coursePlanning"
             :missingCourses="missingCourses"
             @cancel.stop="closeModal"
         ></vue-course-detail-modal>
@@ -78,14 +78,6 @@ export default class VueCourseDetail extends BaseComponent {
         return this.course.course_skills.filter(courseSkill => !courseSkill.is_acquisition);
     }
 
-    public get acquiredSkills(): ICourseSkill[] {
-        if (!this.course) {
-            return [];
-        }
-
-        return this.course.course_skills.filter(courseSkill => courseSkill.is_acquisition);
-    }
-
     public get notCompletedSkillIds(): number[] {
         return this.requiredSkills.filter((courseSkill) => {
             return !this.models.skillStudent.all.find(skillStudent => skillStudent.skill_id === courseSkill.skill_id)
@@ -93,18 +85,32 @@ export default class VueCourseDetail extends BaseComponent {
     }
 
     public get notPlannedNotCompletedCourseSkillIds(): number[] {
-        const semesterOfPlanning = this.models.semester.getById(this.coursePlanning?.semester_id);
-        return this.notCompletedSkillIds.filter((skillId) => {
-            return !this.models.coursePlanning.all.filter((coursePlanning => {
-                if (!semesterOfPlanning) {
-                    return false;
-                }
-
-                const semester = this.models.semester.getById(coursePlanning.semester_id);
-                return new Date(semester.start_date).getTime() < new Date(semesterOfPlanning.start_date).getTime()
-            })).find(coursePlanning => coursePlanning.planned_skills.find(skill => skill.id === skillId))
+        return this.notCompletedSkillIds.filter(notCompletetedSkillId => {
+            return !this.plannedSkillIdsBefore.includes(notCompletetedSkillId)
         })
     }
+
+    public get plannedSkillIdsBefore(): number[] {
+        const courseIdsBefore = this.coursePlanningsBefore.map(coursePlanning => coursePlanning.course_id);
+        return this.models.courseSkill
+            .getByCoursesIds(courseIdsBefore)
+            .filter(courseSkill => courseSkill.is_acquisition === true)
+            .map(courseSkill => courseSkill.skill_id)
+    }
+
+    public get coursePlanningsBefore(): ICoursePlanning[] {
+        const semesterOfPlanning = this.models.semester.getById(this.coursePlanning?.semester_id);
+        if (!semesterOfPlanning) {
+            return []
+        }
+
+        return this.models.coursePlanning.all.filter(coursePlanning => {
+                const semester = this.models.semester.getById(coursePlanning.semester_id);
+                return new Date(semester.start_date).getTime() < new Date(semesterOfPlanning.start_date).getTime();
+            }
+        );
+    }
+
 
     public get missingCourses() {
         return this.models.course.getByAcquisitionSkillIds(this.notPlannedNotCompletedCourseSkillIds);

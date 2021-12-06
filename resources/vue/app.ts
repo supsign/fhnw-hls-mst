@@ -26,6 +26,7 @@ import {courseStore} from "./store/course/course.store";
 import {semesterStore} from "./store/semester/semester.store";
 import {skillStore} from "./store/skill/skill.store";
 import {skillStudentStore} from "./store/skillStudent/skillStudent.store";
+import {courseSkillStore} from "./store/courseSkill/courseSkill.store";
 
 library.add(faUserSecret);
 library.add(faCheck);
@@ -40,7 +41,8 @@ const store = new Vuex.Store({
         course: courseStore,
         semester: semesterStore,
         skill: skillStore,
-        skillStudent: skillStudentStore
+        skillStudent: skillStudentStore,
+        courseSkill: courseSkillStore
     },
 });
 

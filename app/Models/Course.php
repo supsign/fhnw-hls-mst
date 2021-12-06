@@ -7,6 +7,8 @@ namespace App\Models;
  */
 class Course extends BaseModel
 {
+//    protected $visible = ['id', 'contents', 'credits', 'is_fs', 'is_hs', 'name', 'number', 'number_unformated', 'course_skills'];
+
     public function assessments()
     {
         return $this->belongsToMany(Assessment::class);

@@ -7,19 +7,17 @@
                     <i v-if="isCollapsed" aria-hidden="true" class="fas fa-arrow-right"></i>
                     <i v-if="!isCollapsed" aria-hidden="true" class="fas fa-arrow-down"></i>
                 </div>
-                <div class="sm:text-sm lg:text-base">{{ semester.is_hs ? 'HS' : 'FS' }} {{ semester.year}}</div>
+                <div class="sm:text-sm lg:text-base">{{ semester.is_hs ? 'HS' : 'FS' }} {{ semester.year }}</div>
             </div>
 
-            <div v-for="coursePlanning in allCoursePlanningsInSemesterNotSuccessfullyCompleted">
-                <div v-if="!isCollapsed"
-                     class="px-5 sm:text-sm lg:text-base flex flex-col pt-2 mt-2 pb-0 text-sm lg:text-base border-t">
+            <div v-if="!isCollapsed">
+                <vue-course-detail v-for="coursePlanning in allCoursePlanningsInSemesterNotSuccessfullyCompleted"
+                                   :key="coursePlanning.id"
+                                   :courseId="coursePlanning.course_id"
+                                   :planningId="planningId"
 
-                    <div class="flex flex-row justify-between">
-                        <div>Kursname </div>
-                        <div>ECTS </div>
-                    </div>
-                    <div>Kurs-ID: {{ coursePlanning.course_id }}</div>
-                </div>
+                >
+                </vue-course-detail>
             </div>
         </div>
     </div>
@@ -28,18 +26,23 @@
 <script lang="ts">
 import {Component, Prop} from "vue-property-decorator";
 import BaseComponent from "../base/baseComponent";
+import VueCourseDetail from "./vueCourseDetail.vue";
 import {ISemester} from "../../interfaces/semester.interface";
 import {ICoursePlanning} from "../../store/coursePlanning/coursePlanning.interface";
 import {ICompletion} from "../../interfaces/completion.interface";
 import {ICourse} from "../../interfaces/course.interface";
 
-@Component
+@Component({
+    components: {
+        VueCourseDetail
+    }
+})
 export default class VuePlanningSemester extends BaseComponent {
     @Prop({type: Object})
     public semester: ISemester
 
-    @Prop({type: Object})
-    public planning: ICoursePlanning
+    @Prop({type: Number})
+    public planningId: number
 
     @Prop({type: Array})
     public completions: ICompletion[]
@@ -50,6 +53,24 @@ export default class VuePlanningSemester extends BaseComponent {
     public isCollapsed = true;
 
     public break = 1024;
+
+    public get coursePlannings(): ICoursePlanning[] {
+        return this.models.coursePlanning.byPlanningId(this.planningId);
+    }
+
+    public get allCoursePlanningsInSemester(): ICoursePlanning[] {
+        return this.coursePlannings.filter((coursePlanning) => coursePlanning.semester_id === this.semester.id);
+    }
+
+    public get allCoursePlanningsInSemesterNotSuccessfullyCompleted() {
+        return this.allCoursePlanningsInSemester.filter((coursePlanning) => {
+            return !this.coursesIsCompletedSuccessfully(this.getCourse(coursePlanning))
+        })
+    }
+
+    public get currentYear() {
+        return new Date().getFullYear();
+    }
 
     public toggleCollapse() {
         this.isCollapsed = !this.isCollapsed;
@@ -74,20 +95,6 @@ export default class VuePlanningSemester extends BaseComponent {
         window.removeEventListener('resize', this.handlerResize);
     }
 
-    public get coursePlannings(): ICoursePlanning[] {
-        return this.models.coursePlanning.byPlanningId(this.planning.id);
-    }
-
-    public get allCoursePlanningsInSemester(): ICoursePlanning[] {
-        return this.coursePlannings.filter((coursePlanning) => coursePlanning.semester_id === this.semester.id);
-    }
-
-    public get allCoursePlanningsInSemesterNotSuccessfullyCompleted() {
-        return this.allCoursePlanningsInSemester.filter((coursePlanning) => {
-            return !this.coursesIsCompletedSuccessfully(this.getCourse(coursePlanning))
-        })
-    }
-
     public coursesIsCompletedSuccessfully(course: ICourse): boolean {
         return !!this.completions.find((completion) => {
             return completion.course_id === course.id && (completion.completion_type_id === 2 || completion.completion_type_id === 4)
@@ -96,10 +103,6 @@ export default class VuePlanningSemester extends BaseComponent {
 
     public getCourse(coursePlanning: ICoursePlanning): ICourse {
         return this.courses.find(course => course.id === coursePlanning.course_id);
-    }
-
-    public get currentYear() {
-        return new Date().getFullYear();
     }
 }
 </script>

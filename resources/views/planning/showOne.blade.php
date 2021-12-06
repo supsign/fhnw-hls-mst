@@ -69,11 +69,16 @@
         </x-app.card>
         <vue-store-fill model="coursePlanning" :entities="{{$planning->coursePlannings}}"></vue-store-fill>
         <vue-store-fill model="semester" :entities="{{\App\Models\Semester::all()}}"></vue-store-fill>
+        @php
+            $courses = $planning->studyFieldYear->courses;
+            $courseSkills = App\Models\CourseSkill::whereIn('course_id', $courses->pluck('id'))->where(['is_acquisition' => true])->get()
+        @endphp
         <vue-store-fill model="course"
-                        :entities="{{$planning->studyFieldYear->courses}}"></vue-store-fill>
+                        :entities="{{$courses}}"></vue-store-fill>
         <vue-store-fill model="skillStudent"
                         :entities="{{$planning->student->skillStudent}}"></vue-store-fill>
-
+        <vue-store-fill model="courseSkill"
+                        :entities="{{$courseSkills}}"></vue-store-fill>
 
         <div class="lg:flex lg:flex-row lg:gap-4">
             <div class="lg:grid lg:grid-cols-2 lg:gap-4 lg:w-3/4">
@@ -86,31 +91,31 @@
                                     {{$courseGroupYear->courseGroup->name}}
                                 </div>
                                 <vue-course-group-state :course-group-year="{{$courseGroupYear}}"
-                                                        :courses="{{$courseGroupYear->getCourses()}}"
+                                                        :courses="{{$courseGroupYear->courses}}"
                                                         :completions="{{$planning->student->completions}}"></vue-course-group-state>
 
-                        </template>
-                        @foreach($courseGroupYear->courseCourseGroupYears()->with('course')->get() as $courseCourseGroupYear)
+                            </template>
+                            @foreach($courseGroupYear->courseCourseGroupYears()->with('course')->get() as $courseCourseGroupYear)
 
-                            @inject('courseCompletionService', 'App\Services\Completion\CourseCompletionService')
-                            <vue-course-detail
-                                :course-id="{{$courseCourseGroupYear->course_id}}"
-                                :course-year="{{$courseCourseGroupYear->course->getCourseYearBySemesterOrLatest() ?? json_encode(null)}}"
-                                :planning-id="{{$planning->id}}"
-                                {{$courseCompletionService->courseIsSuccessfullyCompleted($courseCourseGroupYear->course, $planning->student) ?'course-isSuccessfully-completed' : ''}}
-                            >
-                                <template v-slot:icon>
-                                    <x-planning.completion :student="$planning->student"
-                                                           :course="$courseCourseGroupYear->course"></x-planning.completion>
-                                </template>
-                            </vue-course-detail>
-                        @endforeach
+                                @inject('courseCompletionService', 'App\Services\Completion\CourseCompletionService')
+                                <vue-course-detail
+                                    :course-id="{{$courseCourseGroupYear->course_id}}"
+                                    :course-year="{{$courseCourseGroupYear->course->getCourseYearBySemesterOrLatest() ?? json_encode(null)}}"
+                                    :planning-id="{{$planning->id}}"
+                                    {{$courseCompletionService->courseIsSuccessfullyCompleted($courseCourseGroupYear->course, $planning->student) ?'course-isSuccessfully-completed' : ''}}
+                                >
+                                    <template v-slot:icon>
+                                        <x-planning.completion :student="$planning->student"
+                                                               :course="$courseCourseGroupYear->course"></x-planning.completion>
+                                    </template>
+                                </vue-course-detail>
+                            @endforeach
                         </vue-plan-wrapper>
                     </div>
                 @endforeach
             </div>
             <div class="lg:w-1/4">
-                <x-planning.planning-semester :planning="$planning" />
+                <x-planning.planning-semester :planning="$planning"/>
             </div>
         </div>
         <x-assessment.assessment-state :planning="$planning"></x-assessment.assessment-state>

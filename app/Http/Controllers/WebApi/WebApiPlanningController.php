@@ -15,7 +15,6 @@ class WebApiPlanningController extends Controller
 
     public function setLock(Request $request, Planning $planning)
     {
-        // Todo planning ergänzen nach merge von 154
-        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($planning->student);
+        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($planning->student, $planning);
     }
 }

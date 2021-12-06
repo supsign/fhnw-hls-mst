@@ -516,8 +516,7 @@ namespace App\Models{
  * @property-read int|null $cross_qualification_years_count
  * @property-read \App\Models\BaseCollection|\App\Models\Planning[] $plannings
  * @property-read int|null $plannings_count
- * @property-read \App\Models\BaseCollection|\App\Models\Recommendation[] $recommendations
- * @property-read int|null $recommendations_count
+ * @property-read \App\Models\Recommendation $recommendation
  * @property-read \App\Models\StudyField $studyField
  * @method static \App\Models\BaseCollection|static[] all($columns = ['*'])
  * @method static \App\Models\BaseCollection|static[] get($columns = ['*'])
@@ -688,8 +687,6 @@ namespace App\Models{
  * @property int $id
  * @property int $mentor_id
  * @property int $student_id
- * @property string|null $firstname
- * @property string|null $lastname
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Mentor $mentor
@@ -700,9 +697,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|MentorStudent newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|MentorStudent query()
  * @method static \Illuminate\Database\Eloquent\Builder|MentorStudent whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|MentorStudent whereFirstname($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MentorStudent whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|MentorStudent whereLastname($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MentorStudent whereMentorId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MentorStudent whereStudentId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MentorStudent whereUpdatedAt($value)

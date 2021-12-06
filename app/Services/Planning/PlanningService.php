@@ -2,22 +2,25 @@
 
 namespace App\Services\Planning;
 
-use App\Models\CrossQualificationYear;
+use App\Models\CrossQualification;
 use App\Models\Planning;
-use App\Models\SpecializationYear;
+use App\Models\Specialization;
 use App\Models\Student;
 use App\Models\StudyFieldYear;
 use App\Services\Base\BaseModelService;
 use App\Services\Completion\CourseCompletionService;
+use App\Services\CrossQualificationYear\CrossQualificationYearService;
+use App\Services\SpecializationYear\SpecializationYearService;
 
 class PlanningService extends BaseModelService
 {
     public function __construct(
-        protected Planning                $model,
-        protected CoursePlanningService   $coursePlanningService,
-        protected CourseCompletionService $courseCompletionService
-    )
-    {
+        protected Planning $model,
+        protected CoursePlanningService $coursePlanningService,
+        protected CourseCompletionService $courseCompletionService,
+        protected CrossQualificationYearService $crossQualificationYearService,
+        protected SpecializationYearService $specializationYearService,
+    ) {
         parent::__construct($model);
     }
 
@@ -28,16 +31,57 @@ class PlanningService extends BaseModelService
         return $this;
     }
 
-    public function createEmptyPlanning(
-        Student                $student,
-        StudyFieldYear         $studyFieldYear,
-        CrossQualificationYear $crossQualificationYear = null,
-        SpecializationYear     $specializationYear = null
-    ): Planning
+    public function copy(
+        Planning $oldPlanning,
+        StudyFieldYear $studyFieldYear = null,
+        CrossQualification $crossQualification = null,
+        Specialization $specialization = null,
+    ): Planning {
+        $newPlanning = $this->createEmptyPlanning(
+            $oldPlanning->student,
+            $studyFieldYear ?? $oldPlanning->studyFieldYear,
+            $crossQualification,
+            $specialization,
+        );
+
+        $this->copyCoursePlannings($oldPlanning, $newPlanning);
+
+        return $newPlanning;
+    }
+
+    protected function copyCoursePlannings(Planning $from, Planning $to): self
     {
+        foreach ($from->coursePlannings AS $coursePlanning) {
+            $to->coursePlannings()->create([
+                'course_id' => $coursePlanning->course_id,
+                'planning_id' => $to->id,
+                'semester_id' => $coursePlanning->semester_id,
+            ]);
+        }
+
+        return $this;
+    }
+
+    public function createEmptyPlanning(
+        Student $student,
+        StudyFieldYear $studyFieldYear,
+        CrossQualification $crossQualification = null,
+        Specialization $specialization = null,
+    ): Planning {
+        $specializationYear = $this->specializationYearService->findBySpecializationAndStudyFieldYear(
+            $specialization,
+            $studyFieldYear
+        );
+
+        $crossQualificationYear = $this->crossQualificationYearService->findByCrossQualificationAndStudyFieldYear(
+            $crossQualification,
+            $studyFieldYear
+        );
+
         if ($crossQualificationYear && $specializationYear) {
             abort(409, 'CreateEmptyPlanning: CrossQualificationYear and SpecializationYear are exclusive');
         }
+
         if ($crossQualificationYear && ($crossQualificationYear->study_field_year_id !== $studyFieldYear->id)) {
             abort(409, 'CreateEmptyPlanning: CrossQualificationYear ist not compatible with StudyFieldYear');
         }

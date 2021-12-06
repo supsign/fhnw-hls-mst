@@ -9,10 +9,10 @@
         </x-slot>
 
         <div class="flex flex-row font-bold mb-2">
-            <div class="w-60">Modul-Nummer</div>
-            <div class="flex-grow">Name</div>
-            <div class="w-24">HS</div>
-            <div class="w-24">FS</div>
+            <div class="w-60">@lang('l.courseNumber')</div>
+            <div class="flex-grow">@lang('l.name')</div>
+            <div class="w-16">@lang('l.hs')</div>
+            <div class="w-16">@lang('l.fs')</div>
         </div>
         @foreach($courses as $course)
             <vue-admin-course-edit :course="{{ $course }}"></vue-admin-course-edit>

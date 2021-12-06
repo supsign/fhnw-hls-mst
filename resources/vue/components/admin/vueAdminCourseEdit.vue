@@ -4,29 +4,29 @@
         <div class="flex-grow">{{ course.name}}</div>
 
         <div v-if="course.is_hs"
-             class="w-24"
+             class="w-16"
              @click="changeHs"
         >
-            <i class="fas fa-check-square text-blue-700"></i>
+            <i class="fas fa-check-square text-blue-700 cursor-pointer"></i>
         </div>
         <div v-else
-             class="w-24"
+             class="w-16"
              @click="changeHs"
         >
-            <i class="far fa-square text-blue-700"></i>
+            <i class="far fa-square text-blue-700 cursor-pointer"></i>
         </div>
 
         <div v-if="course.is_fs"
-             class="w-24"
+             class="w-16"
              @click="changeFS"
         >
-            <i class="fas fa-check-square text-blue-700"></i>
+            <i class="fas fa-check-square text-blue-700 cursor-pointer"></i>
         </div>
         <div v-else
-             class="w-24"
+             class="w-16"
              @click="changeFS"
         >
-            <i class="far fa-square text-blue-700"></i>
+            <i class="far fa-square text-blue-700 cursor-pointer"></i>
         </div>
 
     </div>

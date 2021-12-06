@@ -26,4 +26,7 @@ return [
     'completionNone' => 'Kein Abschluss oder angemeldet',
     'courseEdit' => 'Module bearbeiten',
     'roleAssign' => 'Rollen zuweisen',
+    'courseNumber' => 'Modul-Nummer',
+    'hs' => 'HS',
+    'fs' => 'FS',
 ];

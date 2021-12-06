@@ -39,7 +39,7 @@ class CourseService extends BaseModelService
 
         $lastSemester = null;
 
-        foreach ($course->courseYears()->with('semester')->get() AS $courseYears) {
+        foreach ($course->courseYears()->with('semester')->get() as $courseYears) {
             if (!isset($lastSemester)) {
                 $lastSemester = $courseYears->semester;
                 continue;
@@ -73,10 +73,10 @@ class CourseService extends BaseModelService
         );
     }
 
-    public function setSemesterType(Course $course, bool $isHs = null, bool $isFs = null): self
+    public function setSemesterType(Course $course, bool $isHs = null, bool $isFs = null): Course
     {
         if (is_null($isHs) && is_null($isFs)) {
-            return null;
+            return $course;
         }
 
         $update = [];
@@ -93,6 +93,6 @@ class CourseService extends BaseModelService
             $course->update($update);
         }
 
-        return $this;
+        return $course;
     }
 }

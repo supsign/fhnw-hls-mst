@@ -4,7 +4,7 @@ namespace App\Http\Requests\Course;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PatchRequest extends FormRequest
+class PatchCourseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

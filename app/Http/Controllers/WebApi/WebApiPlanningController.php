@@ -17,6 +17,5 @@ class WebApiPlanningController extends Controller
     {
         // Todo planning ergänzen nach merge von 154
         $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($planning->student);
-
     }
 }

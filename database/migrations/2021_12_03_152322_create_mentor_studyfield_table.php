@@ -1,5 +1,6 @@
 <?php
 
+use Database\Seeders\MentorSeeder;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,6 +21,11 @@ class CreateMentorStudyfieldTable extends Migration
             $table->boolean('is_deputy')->default(false);
             $table->timestamps();
         });
+
+        Artisan::call('db:seed', [
+            '--class' => MentorSeeder::class,
+            '--force' => true,
+        ]);
     }
 
     /**

@@ -26,7 +26,7 @@ class MentorService extends BaseModelService
         MentorStudyField::firstOrCreate([
             'mentor_id' => $mentor->id,
             'study_field_id' => $studyField->id,
-            'is_deputy' => $isDeputy
+            'is_deputy' => $isDeputy,
         ]);
 
         return $this;

@@ -24,7 +24,7 @@ class MentorSeeder extends Seeder
             $degen,
             $medTech = $studyFieldService->getByEventoId(9309072)
         );
-        
+
         $mentorService->addStudyField(
             $hemm = $mentorService->createOrUpdateOnEventoPersonId(764996, 'Hemm-Ode', 'Simone'),
             $medInfo,
@@ -51,7 +51,6 @@ class MentorSeeder extends Seeder
             $mentorService->createOrUpdateOnEventoPersonId(10075603, 'Langer', 'Miriam'),
             $studyFieldService->getByEventoId(9310716)
         );
-
 
         $mentorService->addStudyField(
             $gotz = $mentorService->createOrUpdateOnEventoPersonId(7631, 'Schlotterbeck', 'Götz'),

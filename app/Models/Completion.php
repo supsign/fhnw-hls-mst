@@ -31,15 +31,15 @@ class Completion extends BaseModel
 
     public function getStudyFieldYearsAttribute(): BaseCollection
     {
-        $studyFieldYearss = new BaseCollection;
+        $studyFieldYears = new BaseCollection;
         $course = $this->courseYear->course()->with('courseGroupYears')->first();
 
         foreach ($course->courseGroupYears AS $courseGroupYear) {
-            if (!$studyFieldYearss->contains($courseGroupYear->studyFieldYear)) {
-                $studyFieldYearss->push($courseGroupYear->studyFieldYear);
+            if (!$studyFieldYears->contains($courseGroupYear->studyFieldYear)) {
+                $studyFieldYears->push($courseGroupYear->studyFieldYear);
             }
         }
 
-        return $studyFieldYearss;
+        return $studyFieldYears;
     }
 }

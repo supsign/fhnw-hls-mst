@@ -13,12 +13,11 @@ class StandingController extends Controller
 {
     public function __construct(
         private PermissionAndRoleService $permissionAndRoleService,
-        protected StudyFieldService      $studyFieldService,
-        protected SemesterService        $semesterService,
-        protected PlanningService        $planningService,
-        protected StudyFieldYearService  $studyFieldYearService,
-    )
-    {
+        protected StudyFieldService $studyFieldService,
+        protected SemesterService $semesterService,
+        protected PlanningService $planningService,
+        protected StudyFieldYearService $studyFieldYearService,
+    ) {
     }
 
     public function index()
@@ -37,7 +36,6 @@ class StandingController extends Controller
             // ToDO Alert bringen
             redirect(route('home'));
         }
-
 
         return view('pages.standing', ['student' => $student]);
     }

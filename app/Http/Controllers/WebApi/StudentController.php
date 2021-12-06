@@ -16,6 +16,7 @@ class StudentController extends Controller
     public function getByEventoId(Request $request)
     {
         $this->permissionAndRoleService->canManageBackendOrAbort();
+
         return $this->studentService->getByEventoPersonId($request->eventoId);
     }
 }

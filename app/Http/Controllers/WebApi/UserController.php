@@ -16,6 +16,7 @@ class UserController extends Controller
     public function getByEmail(Request $request)
     {
         $this->permissionAndRoleService->canManageBackendOrAbort();
+
         return $this->userService->getByEmail($request->email);
     }
 }

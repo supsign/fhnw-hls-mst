@@ -144,7 +144,6 @@ class PermissionAndRoleService
 
     public function canPlanScheduleOrAbort(Student $student, Planning $planning = null): self
     {
-
         if (
             !$this->canPlanMySchedules($student, $planning) &&
             !$this->canPlanStudentSchedules($student, $planning)

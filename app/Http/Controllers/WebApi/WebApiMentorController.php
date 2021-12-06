@@ -13,10 +13,9 @@ use Illuminate\Support\Facades\Request;
 class WebApiMentorController extends Controller
 {
     public function __construct(
-        protected MentorService            $mentorService,
+        protected MentorService $mentorService,
         protected PermissionAndRoleService $permissionAndRoleService,
-    )
-    {
+    ) {
     }
 
     public function attachToStudent(Mentor $mentor, AttachStudentToMentorService $attacheStudentToMentorService): Mentor
@@ -46,6 +45,7 @@ class WebApiMentorController extends Controller
     public function getByEventoId(Request $request)
     {
         $this->permissionAndRoleService->canManageBackendOrAbort();
+
         return $this->mentorService->getByEventoPersonId($request->eventoId);
     }
 }

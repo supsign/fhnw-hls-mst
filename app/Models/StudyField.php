@@ -12,6 +12,11 @@ class StudyField extends BaseModel
         return $this->hasMany(Course::class);
     }
 
+    public function mentors()
+    {
+        return $this->belongsToMany(Mentor::class);
+    }
+
     public function specializations()
     {
         return $this->hasMany(Specialization::class);

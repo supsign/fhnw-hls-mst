@@ -90,7 +90,7 @@ class CourseService extends BaseModelService
         }
 
         if (!empty($update)) {
-            $this->model::update($update);
+            $course->update($update);
         }
 
         return $this;

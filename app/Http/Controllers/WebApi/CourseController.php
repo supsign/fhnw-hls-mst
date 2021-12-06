@@ -19,7 +19,8 @@ class CourseController extends Controller
     public function patch(Course $course, PatchRequest $request)
     {
         $this->permissionAndRoleService->canManageBackendOrAbort();
+        $this->courseService->setSemesterType($course, $request->is_hs, $request->is_fs);
 
-        return $this->courseService->setSemesterType($course, $request->is_hs, $request->is_fs);
+        return response('success', 200);
     }
 }

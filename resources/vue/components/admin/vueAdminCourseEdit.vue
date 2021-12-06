@@ -60,18 +60,16 @@ export default class VueAdminCourseEdit extends BaseComponent {
 
     public changeHs() {
         this.hs = !this.hs;
-        console.log(this.hs);
-        // axios.patch<ICourse>(`/webapi/courses/${this.course.id}`, {
-        //     is_hs: this.hs
-        // });
+        axios.patch<ICourse>(`/webapi/courses/${this.course.id}`, {
+            is_hs: this.hs
+        });
     }
 
     public changeFS() {
         this.fs = !this.fs;
-        console.log(this.fs);
-        // axios.patch<ICourse>(`/webapi/courses/${this.course.id}`, {
-        //     is_fs: this.fs
-        // });
+        axios.patch<ICourse>(`/webapi/courses/${this.course.id}`, {
+            is_fs: this.fs
+        });
     }
 }
 </script>

@@ -21,7 +21,7 @@ class StudentCreditService
 
         /** @var $completion Completion * */
         foreach ($student->completions as $completion) {
-            if ($completion->student->studyFieldYear && !$completion->studyFieldYears->contains($completion->student->studyFieldYear)) {
+            if ($student->studyFieldYear?->courses->count() && $student->studyFieldYear->courses->contains($completion->courseYear->course)) {
                 continue;
             }
 

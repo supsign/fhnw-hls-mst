@@ -13,4 +13,12 @@ class LockPlanningService
 
         return $planning;
     }
+
+    public function unLock(Planning $planning): Planning
+    {
+        $planning->is_locked = false;
+        $planning->save();
+
+        return $planning;
+    }
 }

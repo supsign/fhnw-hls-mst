@@ -3,7 +3,7 @@
         <div class="w-60">{{ course.number}}</div>
         <div class="flex-grow">{{ course.name}}</div>
 
-        <div v-if="course.is_hs"
+        <div v-if="hs"
              class="w-16"
              @click="changeHs"
         >
@@ -16,7 +16,7 @@
             <i class="far fa-square text-blue-700 cursor-pointer"></i>
         </div>
 
-        <div v-if="course.is_fs"
+        <div v-if="fs"
              class="w-16"
              @click="changeFS"
         >
@@ -61,7 +61,7 @@ export default class VueAdminCourseEdit extends BaseComponent {
     public changeHs() {
         this.hs = !this.hs;
         console.log(this.hs);
-        // axios.patch(`/webapi/courses/${this.course.id}`, {
+        // axios.patch<ICourse>(`/webapi/courses/${this.course.id}`, {
         //     is_hs: this.hs
         // });
     }
@@ -69,7 +69,7 @@ export default class VueAdminCourseEdit extends BaseComponent {
     public changeFS() {
         this.fs = !this.fs;
         console.log(this.fs);
-        // axios.patch(`/webapi/courses/${this.course.id}`, {
+        // axios.patch<ICourse>(`/webapi/courses/${this.course.id}`, {
         //     is_fs: this.fs
         // });
     }

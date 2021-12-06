@@ -5,12 +5,15 @@ namespace App\Http\Controllers\WebApi;
 use App\Http\Controllers\Controller;
 use App\Models\Mentor;
 use App\Services\Mentor\AttachStudentToMentorService;
+use App\Services\Mentor\MentorService;
 use App\Services\User\PermissionAndRoleService;
 use Auth;
+use Illuminate\Support\Facades\Request;
 
 class WebApiMentorController extends Controller
 {
     public function __construct(
+        protected MentorService $mentorService,
         protected PermissionAndRoleService $permissionAndRoleService,
     ) {
     }
@@ -39,5 +42,10 @@ class WebApiMentorController extends Controller
         }
 
         $attacheStudentToMentorService->detach($mentor, $user->student);
+    }
+
+    public function getByEventoId(Request $request)
+    {
+        return $this->mentorService->getByEventoPersonId($request->eventoId);
     }
 }

@@ -6,7 +6,6 @@ use App\Services\User\PermissionAndRoleService;
 use App\Services\User\UserService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
 
 class AdminController extends Controller
 {

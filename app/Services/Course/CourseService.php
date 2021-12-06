@@ -72,4 +72,26 @@ class CourseService extends BaseModelService
             ]
         );
     }
+    public function setSemesterType(Course $course, bool $isHs = null, bool $isFs = null): self
+    {
+        if (is_null($isHs) && is_null($isFs)) {
+            return null;
+        }
+
+        $update = [];
+
+        if (is_bool($isHs)) {
+            $update['is_hs'] = $isHs;
+        }
+
+        if (is_bool($isFs)) {
+            $update['is_fs'] = $isFs;
+        }
+
+        if (!empty($update)) {
+            $this->model::update($update);
+        }
+
+        return $this;
+    }
 }

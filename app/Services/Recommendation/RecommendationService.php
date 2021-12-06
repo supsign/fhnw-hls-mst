@@ -32,4 +32,9 @@ class RecommendationService extends BaseModelService
     {
         return $this->model::where(['name' => $name])->first();
     }
+
+    public function getFirstOrCreateByName(string $name): Recommendation
+    {
+        return $this->getFirstByName($name) ?? $this->create($name);
+    }
 }

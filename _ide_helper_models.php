@@ -516,8 +516,7 @@ namespace App\Models{
  * @property-read int|null $cross_qualification_years_count
  * @property-read \App\Models\BaseCollection|\App\Models\Planning[] $plannings
  * @property-read int|null $plannings_count
- * @property-read \App\Models\BaseCollection|\App\Models\Recommendation[] $recommendations
- * @property-read int|null $recommendations_count
+ * @property-read \App\Models\Recommendation $recommendation
  * @property-read \App\Models\StudyField $studyField
  * @method static \App\Models\BaseCollection|static[] all($columns = ['*'])
  * @method static \App\Models\BaseCollection|static[] get($columns = ['*'])
@@ -664,6 +663,8 @@ namespace App\Models{
  * @property-read int|null $plannings_count
  * @property-read \App\Models\BaseCollection|\App\Models\Student[] $students
  * @property-read int|null $students_count
+ * @property-read \App\Models\BaseCollection|\App\Models\StudyField[] $studyFields
+ * @property-read int|null $study_fields_count
  * @property-read \App\Models\User|null $user
  * @method static \App\Models\BaseCollection|static[] all($columns = ['*'])
  * @method static \App\Models\BaseCollection|static[] get($columns = ['*'])
@@ -712,6 +713,32 @@ namespace App\Models{
 
 namespace App\Models{
 /**
+ * App\Models\MentorStudyField
+ *
+ * @property int $id
+ * @property int $mentor_id
+ * @property int $study_field_id
+ * @property bool $is_deputy
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \App\Models\BaseCollection|static[] all($columns = ['*'])
+ * @method static \App\Models\BaseCollection|static[] get($columns = ['*'])
+ * @method static \Illuminate\Database\Eloquent\Builder|MentorStudyField newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|MentorStudyField newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|MentorStudyField query()
+ * @method static \Illuminate\Database\Eloquent\Builder|MentorStudyField whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|MentorStudyField whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|MentorStudyField whereIsDeputy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|MentorStudyField whereMentorId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|MentorStudyField whereStudyFieldId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|MentorStudyField whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
+	class IdeHelperMentorStudyField extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
  * App\Models\Planning
  *
  * @mixin IdeHelperPlanning
@@ -724,6 +751,7 @@ namespace App\Models{
  * @property string|null $name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property bool $is_locked
  * @property-read \App\Models\BaseCollection|\App\Models\Semester[] $coursePlanningSemester
  * @property-read int|null $course_planning_semester_count
  * @property-read \App\Models\BaseCollection|\App\Models\CoursePlanning[] $coursePlannings
@@ -745,6 +773,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Planning whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Planning whereCrossQualificationYearId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Planning whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Planning whereIsLocked($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Planning whereMentorId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Planning whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Planning whereSpecializationYearId($value)
@@ -859,6 +888,7 @@ namespace App\Models{
  * @property-read int|null $course_skill_count
  * @property-read \App\Models\BaseCollection|\App\Models\Course[] $courses
  * @property-read int|null $courses_count
+ * @property-read \App\Models\Course|null $gain_course
  * @property-read \App\Models\BaseCollection|\App\Models\SkillStundent[] $skillStudent
  * @property-read int|null $skill_student_count
  * @property-read \App\Models\BaseCollection|\App\Models\Student[] $students
@@ -1029,6 +1059,8 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\BaseCollection|\App\Models\Course[] $courses
  * @property-read int|null $courses_count
+ * @property-read \App\Models\BaseCollection|\App\Models\Mentor[] $mentors
+ * @property-read int|null $mentors_count
  * @property-read \App\Models\BaseCollection|\App\Models\Specialization[] $specializations
  * @property-read int|null $specializations_count
  * @property-read \App\Models\BaseCollection|\App\Models\StudyFieldYear[] $studyFieldYears
@@ -1072,7 +1104,7 @@ namespace App\Models{
  * @property-read int|null $course_group_years_count
  * @property-read \App\Models\BaseCollection|\App\Models\CrossQualificationYear[] $crossQualificationYears
  * @property-read int|null $cross_qualification_years_count
- * @property-read mixed $courses
+ * @property-read \App\Models\BaseCollection $courses
  * @property-read StudyFieldYear|null $originStudyFieldYear
  * @property-read \App\Models\Recommendation|null $recommendation
  * @property-read \App\Models\BaseCollection|\App\Models\SpecializationYear[] $specializationYears

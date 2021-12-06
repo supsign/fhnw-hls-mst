@@ -17,7 +17,11 @@ class AdminController extends Controller
 
     public function courses(): View
     {
-        return view('admin.courses', ['courses' => Course::all()]);
+        $this->permissionAndRoleService->canManageBackendOrAbort();
+
+        return view('admin.courses', [
+            'courses' => Course::all()->sortBy('name'),
+        ]);
     }
 
     public function dashboard(): View
@@ -33,15 +37,6 @@ class AdminController extends Controller
 
         return view('admin.assign-roles', [
             'roles' => Role::where('name', '<>', 'server-admin')->get(),
-        ]);
-    }
-
-    public function editCourses(): View
-    {
-        $this->permissionAndRoleService->canManageBackendOrAbort();
-
-        return view('admin.courses', [
-            'courses' => Course::all(),
         ]);
     }
 

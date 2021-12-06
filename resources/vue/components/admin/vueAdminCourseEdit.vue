@@ -7,26 +7,26 @@
              class="w-8 lg:w-16"
              @click="changeHs"
         >
-            <i class="fas fa-check-square text-blue-700 cursor-pointer"></i>
+            <i class="fas fa-check-square text-blue-700 cursor-pointer" aria-hidden="true"></i>
         </div>
         <div v-else
              class="w-8 lg:w-16"
              @click="changeHs"
         >
-            <i class="far fa-square text-blue-700 cursor-pointer"></i>
+            <i class="far fa-square text-blue-700 cursor-pointer" aria-hidden="true"></i>
         </div>
 
         <div v-if="fs"
              class="w-8 lg:w-16"
              @click="changeFS"
         >
-            <i class="fas fa-check-square text-blue-700 cursor-pointer"></i>
+            <i class="fas fa-check-square text-blue-700 cursor-pointer" aria-hidden="true"></i>
         </div>
         <div v-else
              class="w-8 lg:w-16"
              @click="changeFS"
         >
-            <i class="far fa-square text-blue-700 cursor-pointer"></i>
+            <i class="far fa-square text-blue-700 cursor-pointer" aria-hidden="true"></i>
         </div>
 
     </div>
@@ -38,8 +38,6 @@ import BaseComponent from "../base/baseComponent";
 import {ICourse} from "../../interfaces/course.interface";
 import VueCheckbox from "../form/vueCheckbox.vue";
 import axios from "axios";
-import {IMentor} from "../../interfaces/mentor.interface";
-import {Toast} from "../../helpers/toast";
 
 @Component({
     components: {

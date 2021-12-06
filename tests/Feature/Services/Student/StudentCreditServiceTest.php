@@ -38,11 +38,16 @@ class StudentCreditServiceTest extends TestCase
         $student = $this->studentService->createOrUpdateOnEventoPersonId($studentEventoId);
         $uniqueNumber = $this->faker->unique()->name;
         $course = $this->courseService->firstOrCreateByNumber($uniqueNumber, 1, 1, 'blub', 3);
-        $courseYear = CourseYear::first();
+        // $courseYear = $this->courseYearService->createOrUpdateOnEventoId(
+        //     $this->faker->unique->numberBetween(1, 9999999),
+        //     $course,
+        //     '2-21FS.somestupiduniquestring.EN/a',
+        //     'test'
+        // );
         $this->completionService->createOrUpdateOnEventoIdAsCredit(
             $this->faker->unique->numberBetween(1, 9999999),
             $student,
-            $courseYear->course,
+            $course,
             $course->credits,
         );
         $credits = $this->studentEctsService->getCreditsAsString($student);

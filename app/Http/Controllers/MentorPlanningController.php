@@ -94,6 +94,7 @@ class MentorPlanningController extends Controller
 
         if (!$studyFieldYear) {
             Alert::error('Fehler', 'Studiengang und Semester passen nicht zusammen');
+
             return redirect()->route('planning.create');
         }
 
@@ -105,6 +106,7 @@ class MentorPlanningController extends Controller
         );
 
         Alert::toast('Saved', 'success');
+
         return redirect()->route('mentor.planning.showOne', [$student, $planning]);
     }
 
@@ -123,6 +125,7 @@ class MentorPlanningController extends Controller
 
         if (!$studyFieldYear) {
             Alert::error('Fehler', 'Studiengang und Semester passen nicht zusammen');
+
             return redirect()->route('planning.create.copy', $planning);
         }
 
@@ -134,6 +137,7 @@ class MentorPlanningController extends Controller
         );
 
         Alert::toast('Saved', 'success');
+
         return redirect()->route('mentor.planning.showOne', [$newPlanning->student, $newPlanning]);
     }
 
@@ -162,6 +166,7 @@ class MentorPlanningController extends Controller
         $planningService->cascadingDelete($planning);
 
         Alert::toast('Deleted', 'success');
+
         return redirect()->route('mentor.planning.list', $student);
     }
 

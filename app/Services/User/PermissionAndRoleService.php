@@ -75,32 +75,52 @@ class PermissionAndRoleService
         return $this;
     }
 
-    public function canPlanScheduleOrAbort(): self
+    public function canPlanMySchedulesOrAbort(Student $student = null, Planning $planning = null): self
     {
-        if (!Auth::user()->hasPermissionTo('plan schedule')) {
+        if (!$this->canPlanMySchedules($student, $planning)) {
             abort(403, __('l.noAccess'));
         }
 
         return $this;
     }
 
-    public function canPlanMySchedulesOrAbort(Planning $planning): self
+    protected function canPlanMySchedules(Student $student = null, Planning $planning = null): bool
     {
+        if (!$student) {
+            return false;
+        }
+
         $user = Auth::user();
 
         if (!$user->hasPermissionTo('plan my schedules')) {
-            abort(403, __('l.noAccess'));
+            return false;
         }
 
-        if ($planning->student_id !== $user->student_id) {
-            abort(403, __('l.noAccess'));
+        if ($planning && $planning->student_id !== $user->student_id) {
+            return false;
         }
 
-        return $this;
+        if ($student->id !== $user->student_id) {
+            return false;
+        }
+
+        return true;
     }
 
     public function canPlanStudentSchedulesOrAbort(Student $student, Planning $planning = null): self
     {
+        if (!$this->canPlanStudentSchedules($student, $planning)) {
+            abort(403, __('l.noAccess'));
+        }
+
+        return $this;
+    }
+
+    protected function canPlanStudentSchedules(Student $student = null, Planning $planning = null): bool
+    {
+        if (!$student) {
+            return false;
+        }
         $user = Auth::user();
 
         $hasPermisson = $user->hasPermissionTo('plan students schedules');
@@ -112,10 +132,23 @@ class PermissionAndRoleService
         $isMentorOfStudent = $stuentsOfMentor->contains($student);
 
         if (!$hasPermisson || !$mentor || !$isMentorOfStudent) {
-            abort(403, __('l.noAccess'));
+            return false;
         }
 
         if ($planning && $planning->student_id !== $student->id) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function canPlanScheduleOrAbort(Student $student, Planning $planning = null): self
+    {
+
+        if (
+            !$this->canPlanMySchedules($student, $planning) &&
+            !$this->canPlanStudentSchedules($student, $planning)
+        ) {
             abort(403, __('l.noAccess'));
         }
 

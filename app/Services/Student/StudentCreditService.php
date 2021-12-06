@@ -3,33 +3,25 @@
 namespace App\Services\Student;
 
 use App\Models\Student;
-use Illuminate\Support\Collection;
 
 class StudentCreditService
 {
     public function getCreditsAsString(Student $student = null): string
     {
-        if (!$student) {
+        if (!$student || $student->completions()->count()) {
             return '-';
         }
 
-        $completions = $student->completions;
-        $countCompletions = $completions->count();
-
-        if ($countCompletions === 0) {
-            return '-';
-        }
-
-        return (string)$this->getCredits($completions);
+        return (string)$this->getCredits($student);
     }
 
-    protected function getCredits(Collection $completions): int
+    protected function getCredits(Student $student): int 
     {
         $credits = 0;
 
         /** @var $completion Completion * */
-        foreach ($completions as $completion) {
-            if ($completion->student->studyField && !$completion->studyFields->contains($completion->student->studyField)) {
+        foreach ($student->completions as $completion) {
+            if ($completion->student->studyFieldYear && !$completion->studyFieldYears->contains($completion->student->studyFieldYear)) {
                 continue;
             }
 

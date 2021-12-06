@@ -16,12 +16,14 @@ class WebApiPlanningController extends Controller
     public function lock(Planning $planning, LockPlanningService $lockPlanningService)
     {
         $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($planning->student, $planning);
+
         return $lockPlanningService->lock($planning);
     }
 
     public function unLock(Planning $planning, LockPlanningService $lockPlanningService)
     {
         $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($planning->student, $planning);
+
         return $lockPlanningService->lock($planning);
     }
 }

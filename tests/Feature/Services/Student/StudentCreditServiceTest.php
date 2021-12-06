@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Services\Student;
 
-use App\Models\CourseYear;
+use App\Models\StudyFieldYear;
 use App\Services\Completion\CompletionService;
 use App\Services\Course\CourseService;
 use App\Services\CourseYear\CourseYearService;
@@ -32,41 +32,16 @@ class StudentCreditServiceTest extends TestCase
         $this->courseYearService = $this->app->make(CourseYearService::class);
     }
 
-    public function testCountEctsService()
-    {
-        $studentEventoId = $this->faker->unique->numberBetween(1, 9999999);
-        $student = $this->studentService->createOrUpdateOnEventoPersonId($studentEventoId);
-        $uniqueNumber = $this->faker->unique()->name;
-        $course = $this->courseService->firstOrCreateByNumber($uniqueNumber, 1, 1, 'blub', 3);
-        // $courseYear = $this->courseYearService->createOrUpdateOnEventoId(
-        //     $this->faker->unique->numberBetween(1, 9999999),
-        //     $course,
-        //     '2-21FS.somestupiduniquestring.EN/a',
-        //     'test'
-        // );
-        $this->completionService->createOrUpdateOnEventoIdAsCredit(
-            $this->faker->unique->numberBetween(1, 9999999),
-            $student,
-            $course,
-            $course->credits,
-        );
-        $credits = $this->studentEctsService->getCreditsAsString($student);
-        $this->assertEquals($course->credits, $credits);
-    }
-
     public function testCountEctsServiceAsString()
     {
         $studentEventoId = $this->faker->unique->numberBetween(1, 9999999);
         $student = $this->studentService->createOrUpdateOnEventoPersonId($studentEventoId);
         $credits = $this->studentEctsService->getCreditsAsString($student);
         $this->assertEquals('-', $credits);
-        $course = $course = $this->courseService->firstOrCreateByNumber(
-            $this->faker->unique->numberBetween(1, 9999999),
-            1,
-            1,
-            'blub',
-            3
-        );
+
+        $studyFieldYear = StudyFieldYear::inRandomOrder()->first();
+        $student->update(['study_field_year_id' => $studyFieldYear->id]);
+        $course = $studyFieldYear->courses->first();
         $this->courseYearService->createOrUpdateOnEventoId(
             $this->faker->unique->numberBetween(1, 9999999),
             $course,

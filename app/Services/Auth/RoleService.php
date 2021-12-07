@@ -7,20 +7,28 @@ use Exception;
 
 class RoleService
 {
-    public function evaluate(ShibbolethProperties $shibbolethProperties): Role
+    public function evaluate(ShibbolethProperties $shibbolethProperties): string
     {
-        if (!$shibbolethProperties->mail) {
+        if (!$shibbolethProperties->mail || !$shibbolethProperties->entitlement) {
             throw new Exception('no authorized role identified');
         }
 
-        if (!$shibbolethProperties->fhnwIDPerson) {
-            throw new Exception('no authorized role identified');
-        }
+        $staticPartOfUrl = 'http://fhnw.ch/aai/res/hls/stab/';
 
-        if (str_contains($shibbolethProperties->fhnwDetailedAffiliation, 'staff-hls-alle')) {
-            return Role::mentor();
-        }
+        switch (true) {
+            case str_contains($shibbolethProperties->entitlement, $staticPartOfUrl.'mst_admin'):
+                return 'app-admin';
 
-        return Role::student();
+            case str_contains($shibbolethProperties->entitlement, $staticPartOfUrl.'mst_stgl'):
+            case str_contains($shibbolethProperties->entitlement, $staticPartOfUrl.'mst_mentor'):
+                return 'mentor';
+
+            case str_contains($shibbolethProperties->entitlement, $staticPartOfUrl.'mst_adm_student'):
+            case str_contains($shibbolethProperties->entitlement, $staticPartOfUrl.'mst_edu_student'):
+                return 'student';
+
+            default:
+                throw new Exception('no authorized role identified');
+        }
     }
 }

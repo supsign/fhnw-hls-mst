@@ -27,6 +27,7 @@ import {semesterStore} from "./store/semester/semester.store";
 import {skillStore} from "./store/skill/skill.store";
 import {skillStudentStore} from "./store/skillStudent/skillStudent.store";
 import {courseSkillStore} from "./store/courseSkill/courseSkill.store";
+import VueSessionSweetalert from "./components/base/vueSessionSweetalert.vue";
 
 library.add(faUserSecret);
 library.add(faCheck);
@@ -63,6 +64,7 @@ const app = new Vue({
         VueShowAndSelectMentors,
         VueCourseDetail,
         VuePlanningSemester,
+        VueSessionSweetalert
     },
     store
 });

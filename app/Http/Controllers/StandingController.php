@@ -26,16 +26,16 @@ class StandingController extends Controller
 
         $user = Auth::user();
 
-        if (!$user->student) {
+        $student = $user->student;
+
+        if (!$student) {
             abort(403, __('l.noAccess'));
         }
 
-        if (!$user->student->studyFieldYear) {
+        if (!$student->studyFieldYear) {
             // ToDO Alert bringen
             redirect(route('home'));
         }
-
-        $student = $user->student;
 
         return view('pages.standing', ['student' => $student]);
     }

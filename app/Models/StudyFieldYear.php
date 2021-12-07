@@ -49,6 +49,7 @@ class StudyFieldYear extends BaseModel
         foreach ($this->courseGroupYears()->with('courseCourseGroupYears')->get() as $courseGroupYear) {
             foreach ($courseGroupYear->courseCourseGroupYears as $courseCourseGroupYear) {
                 $courseIds[] = $courseCourseGroupYear->course_id;
+
             }
         }
 

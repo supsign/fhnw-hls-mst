@@ -10,6 +10,7 @@
   "require": {
     "php": "^8.0",
     "ext-json": "*",
+    "barryvdh/laravel-dompdf": "^0.9.0",
     "fideloper/proxy": "^4.4",
     "fruitcake/laravel-cors": "^2.0",
     "guzzlehttp/guzzle": "^7.0.1",
@@ -18,9 +19,9 @@
     "laravel/ui": "^3.3",
     "lcobucci/jwt": "^4.1",
     "maatwebsite/excel": "^3.1",
+    "realrashid/sweet-alert": "^4.1",
     "spatie/laravel-permission": "^5.1",
-    "supsign/laravel-csv-reader": "dev-master",
-    "barryvdh/laravel-dompdf": "^0.9.0"
+    "supsign/laravel-csv-reader": "dev-master"
   },
   "require-dev": {
     "barryvdh/laravel-debugbar": "^3.3",

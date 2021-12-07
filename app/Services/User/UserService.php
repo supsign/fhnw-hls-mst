@@ -73,7 +73,6 @@ class UserService
     public function updateOrCreateAsAppAdmin(string $email, int $eventoPersonId, string $firstname = null, string $lastname = null): User
     {
         $user = $this->updateOrCrateUserOnMail($email);
-
         $this->attachStudent($user, $eventoPersonId);
         $this->attachMentor($user, $eventoPersonId, $firstname, $lastname);
         $this->permissionAndRoleService->assignMentor($user);

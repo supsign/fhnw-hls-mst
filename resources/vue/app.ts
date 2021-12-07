@@ -20,6 +20,13 @@ import VueStateWrapper from "./components/Assessment/VueStateWrapper.vue";
 import VueShowAndSelectMentors from "./components/mentor/VueShowAndSelectMentors.vue";
 import VueAssessmentState from "./components/Assessment/VueAssessmentState.vue";
 import VueCreatePlanningForm from "./components/planning/vueCreatePlanningForm.vue";
+import VuePlanningSemester from "./components/planning/vuePlanningSemester.vue";
+import VueCourseDetail from "./components/planning/vueCourseDetail.vue";
+import {courseStore} from "./store/course/course.store";
+import {semesterStore} from "./store/semester/semester.store";
+import {skillStore} from "./store/skill/skill.store";
+import {skillStudentStore} from "./store/skillStudent/skillStudent.store";
+import {courseSkillStore} from "./store/courseSkill/courseSkill.store";
 import VueSessionSweetalert from "./components/base/vueSessionSweetalert.vue";
 
 library.add(faUserSecret);
@@ -31,7 +38,12 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
     strict: true,
     modules: {
-        coursePlanning: coursePlanningStore
+        coursePlanning: coursePlanningStore,
+        course: courseStore,
+        semester: semesterStore,
+        skill: skillStore,
+        skillStudent: skillStudentStore,
+        courseSkill: courseSkillStore
     },
 });
 
@@ -50,7 +62,9 @@ const app = new Vue({
         VueAssessmentState,
         VueCreatePlanningForm,
         VueShowAndSelectMentors,
-        VueSessionSweetalert,
+        VueCourseDetail,
+        VuePlanningSemester,
+        VueSessionSweetalert
     },
     store
 });

@@ -20,7 +20,7 @@ class Completion extends Component
      */
     public function __construct(public Course $course, public Student $student, protected CourseCompletionService $courseCompletionService)
     {
-        $completionsOfCourse = $this->courseCompletionService->getCompletionsByStudent($course, $this->student);
+        // $completionsOfCourse = $this->courseCompletionService->getCompletionsByStudent($course, $this->student); What does it do?
 
         $this->evaluateSymbol($course, $this->student);
     }

@@ -150,9 +150,11 @@ class PlanningController extends Controller
         $user = Auth::user();
         $this->permissionAndRoleService->canPlanMySchedulesOrAbort($user->student, $planning);
 
+        $planning->student->completions()->with('courseYear')->get();
+
         $viewParameter = [
             'planning' => $planning,
-            'courseGroupYears' => $planning->studyFieldYear->courseGroupYears,
+            'courseGroupYears' => $planning->studyFieldYear->courseGroupYears()->with(['courses', 'courseGroup', 'courseCourseGroupYears'])->get(),
             'mentorStudent' => null,
         ];
 

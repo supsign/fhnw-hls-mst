@@ -24,4 +24,5 @@ return [
     'completionPassed' => 'Bestanden oder angerechnet',
     'completionFailed' => 'Durchgefallen - nicht bestanden',
     'completionNone' => 'Kein Abschluss oder angemeldet',
+    'termPlanned' => 'geplante Semester',
 ];

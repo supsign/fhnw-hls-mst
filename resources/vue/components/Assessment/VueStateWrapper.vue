@@ -1,5 +1,5 @@
 <template>
-    <div class="rounded border shadow-md fixed bottom-0 left-0 mt-2 w-full bg-hls-200"
+    <div class="rounded border shadow-md fixed bottom-0 left-0 mt-2 w-full bg-hls-200 lg:h-16"
          v-if="!!assessment">
         <div class="border-b text-sm lg:text-base p-3 bg-hls transition duration-200 ease-in-out overflow-y-scroll max-h-56"
              :class=" { hidden: !showAssessment || showSpecialization || showCrossQualification }"
@@ -40,23 +40,23 @@
                                            ref="crossQualificationState"
             ></vue-cross-qualification-state>
         </div>
-        <div class="md:w-full mx-auto grid grid-cols-3">
-            <div class="text-center border-l border-hls text-sm hover:bg-hls hover:border-gray-200" @click="toggleShowCrossQualification">
+        <div class="md:w-full mx-auto grid grid-cols-3 h-full">
+            <div class="text-center border-l border-hls text-sm hover:bg-hls hover:border-gray-200 my-auto h-full" @click="toggleShowCrossQualification">
                 <div>{{ countCredits }}&nbsp;|&nbsp;180</div>
                 <div>ECTS</div>
             </div>
             <div v-if="!specialization && !crossQualification"></div>
             <div v-if="!!crossQualification"
-                 class="text-center border-l border-hls text-sm hover:bg-hls hover:border-gray-200" @click="toggleShowCrossQualification">
+                 class="text-center border-l border-hls text-sm hover:bg-hls hover:border-gray-200 my-auto h-full" @click="toggleShowCrossQualification">
                 <div>{{ crossQualificationAmount }}&nbsp;|&nbsp;{{ crossQualificationYear.amount_to_pass }}</div>
                 <div>CrossQual.</div>
             </div>
             <div v-if="!!specialization"
-                 class="text-center border-l border-hls text-sm hover:bg-hls hover:border-gray-200" @click="toggleShowSpecialization">
+                 class="text-center border-l border-hls text-sm hover:bg-hls hover:border-gray-200 my-auto h-full" @click="toggleShowSpecialization">
                 <div>{{ specializationAmount }}&nbsp;|&nbsp;{{ specializationYear.amount_to_pass }}</div>
                 <div>Specialization</div>
             </div>
-            <div class="text-center border-l border-hls text-sm hover:bg-hls hover:border-gray-200" @click="toggleShowAssessment">
+            <div class="text-center border-l border-hls text-sm hover:bg-hls hover:border-gray-200 my-auto h-full" @click="toggleShowAssessment">
                 <div>{{ assessmentAmount }}&nbsp;|&nbsp;{{ assessment.amount_to_pass }}</div>
                 <div>Assessment</div>
             </div>

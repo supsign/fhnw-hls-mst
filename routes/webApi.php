@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\WebApi\CourseController;
 use App\Http\Controllers\WebApi\CoursePlanningController;
 use App\Http\Controllers\WebApi\StudentController;
 use App\Http\Controllers\WebApi\UserController;
@@ -8,6 +9,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(
     function () {
+        Route::patch('courses/{course}', [CourseController::class, 'patch'])->name('webapi.course.patch');
+
         Route::get('courseplannings/{coursePlanning}', [CoursePlanningController::class, 'getById'])->name('webapi.courseplannings.getById');
         Route::patch('courseplannings/{coursePlanning}', [CoursePlanningController::class, 'patch'])->name('webapi.courseplannings.patch');
         Route::delete('courseplannings/{coursePlanning}', [CoursePlanningController::class, 'delete'])->name('webapi.courseplannings.delete');

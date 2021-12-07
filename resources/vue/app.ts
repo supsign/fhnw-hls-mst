@@ -20,6 +20,7 @@ import VueStateWrapper from "./components/Assessment/VueStateWrapper.vue";
 import VueShowAndSelectMentors from "./components/mentor/VueShowAndSelectMentors.vue";
 import VueAssessmentState from "./components/Assessment/VueAssessmentState.vue";
 import VueCreatePlanningForm from "./components/planning/vueCreatePlanningForm.vue";
+import VueAdminCourseEdit from "./components/admin/vueAdminCourseEdit.vue";
 import VuePlanningSemester from "./components/planning/vuePlanningSemester.vue";
 import VueCourseDetail from "./components/planning/vueCourseDetail.vue";
 import {courseStore} from "./store/course/course.store";
@@ -28,6 +29,7 @@ import {skillStore} from "./store/skill/skill.store";
 import {skillStudentStore} from "./store/skillStudent/skillStudent.store";
 import {courseSkillStore} from "./store/courseSkill/courseSkill.store";
 import VueSessionSweetalert from "./components/base/vueSessionSweetalert.vue";
+
 
 library.add(faUserSecret);
 library.add(faCheck);
@@ -62,6 +64,7 @@ const app = new Vue({
         VueAssessmentState,
         VueCreatePlanningForm,
         VueShowAndSelectMentors,
+        VueAdminCourseEdit,
         VueCourseDetail,
         VuePlanningSemester,
         VueSessionSweetalert

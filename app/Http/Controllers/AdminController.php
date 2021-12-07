@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use App\Services\User\PermissionAndRoleService;
 use App\Services\User\UserService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class AdminController extends Controller
 {
@@ -13,11 +15,29 @@ class AdminController extends Controller
     {
     }
 
+    public function courses(): View
+    {
+        $this->permissionAndRoleService->canManageBackendOrAbort();
+
+        return view('admin.courses', [
+            'courses' => Course::all()->sortBy('name'),
+        ]);
+    }
+
     public function dashboard(): View
     {
         $this->permissionAndRoleService->canManageBackendOrAbort();
 
         return view('admin.dashboard');
+    }
+
+    public function assignRoles(): View
+    {
+        $this->permissionAndRoleService->canManageBackendOrAbort();
+
+        return view('admin.assign-roles', [
+            'roles' => Role::where('name', '<>', 'server-admin')->get(),
+        ]);
     }
 
     public function assignRoleToUser(Request $request)

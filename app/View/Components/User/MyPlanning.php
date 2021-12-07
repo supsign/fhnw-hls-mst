@@ -10,7 +10,6 @@ use Illuminate\View\Component;
 
 class MyPlanning extends Component
 {
-
     public Collection $plannings;
 
     /**

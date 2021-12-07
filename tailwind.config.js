@@ -16,6 +16,7 @@ module.exports = {
                 hls: {
                     DEFAULT: '#FDE70E',
                     200: '#fef387',
+                    700: '#ead20a',
                 },
             },
             height: {

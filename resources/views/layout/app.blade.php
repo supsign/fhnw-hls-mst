@@ -12,7 +12,6 @@
 
     @include('3rd-parties.smartlook')
 
-
     <title>{{ str_replace('<br>', ',', $title) }} | HLS MST</title>
 
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -23,16 +22,21 @@
 
 </head>
 <body class="font-body">
-<div id="app" class="w-full h-cover bg-gray-200 overflow-auto">
-    <div class="flex flex-col h-screen relative">
-        <x-layout.top/>
-        <x-layout.header/>
-        <div id="main" class="flex-grow mb-4">
-            {{ $slot }}
+    <div id="app" class="w-full bg-gray-200 overflow-auto">
+        <div class="flex flex-col h-screen relative">
+            <x-layout.top/>
+            <x-layout.header/>
+            <div id="main" class="flex-grow mb-4">
+                {{ $slot }}
+            </div>
+            <x-layout.footer/>
+            <x-layout.bottom/>
         </div>
-        <x-layout.footer/>
-        <x-layout.bottom/>
     </div>
+    @if(Session::has('alert.config'))
+        <vue-session-sweetalert :swal-option="{{ Session::pull('alert.config') }}"/>
+    @endif
 </div>
+
 </body>
 </html>

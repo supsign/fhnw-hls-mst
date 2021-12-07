@@ -37,8 +37,6 @@ class CourseService extends BaseModelService
             return $course->courseYears()->where('semester_id', $semester->id)->first();
         }
 
-        $lastSemester = null;
-
         $courseYears = $course->courseYears;
 
         return $courseYears->load('semester')->sortByDesc('semester.start_date')->first();
@@ -56,5 +54,28 @@ class CourseService extends BaseModelService
                 'credits' => $credits,
             ]
         );
+    }
+
+    public function setSemesterType(Course $course, bool $isHs = null, bool $isFs = null): Course
+    {
+        if (is_null($isHs) && is_null($isFs)) {
+            return $course;
+        }
+
+        $update = [];
+
+        if (is_bool($isHs)) {
+            $update['is_hs'] = $isHs;
+        }
+
+        if (is_bool($isFs)) {
+            $update['is_fs'] = $isFs;
+        }
+
+        if (!empty($update)) {
+            $course->update($update);
+        }
+
+        return $course;
     }
 }

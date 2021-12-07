@@ -10,7 +10,6 @@ use App\Services\User\UserService;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use PhpParser\Node\Stmt\TryCatch;
 
 class AuthService
 {
@@ -43,28 +42,39 @@ class AuthService
             abort(403, $th->getMessage());
         }
 
-        if ('student' === $role->getName()) {
-            $user = $this->userService->updateOrCreateUserAsStudent(
-                email: $shibbolethProperties->mail,
-                eventoPersonId: $shibbolethProperties->fhnwIDPerson
-            );
-        } else {
-            $user = $this->userService->udpateOrCreateAsMentor(
-                email: $shibbolethProperties->mail,
-                eventoPersonId: $shibbolethProperties->fhnwIDPerson,
-                firstname: $shibbolethProperties->givenName,
-                lastname: $shibbolethProperties->surname
-            );
+        switch ($role) {
+            case 'student':
+                $user = $this->userService->updateOrCreateUserAsStudent(
+                    email: $shibbolethProperties->mail,
+                    eventoPersonId: $shibbolethProperties->fhnwIDPerson
+                );
+                break;
+
+            case 'mentor':
+                $user = $this->userService->udpateOrCreateAsMentor(
+                    email: $shibbolethProperties->mail,
+                    eventoPersonId: $shibbolethProperties->fhnwIDPerson,
+                    firstname: $shibbolethProperties->givenName,
+                    lastname: $shibbolethProperties->surname
+                );
+                break;
+
+            case 'app-admin':
+                $user = $this->userService->updateOrCreateAsAppAdmin(
+                    email: $shibbolethProperties->mail,
+                    eventoPersonId: $shibbolethProperties->fhnwIDPerson,
+                    firstname: $shibbolethProperties->givenName,
+                    lastname: $shibbolethProperties->surname
+                );
+                break;
         }
 
-        if (!$user) {
+        if (empty($user)) {
             throw new Exception('user not created or updated');
         }
 
         Auth::login($user);
-
         Session::regenerate();
-
         Session::put('lastname', $shibbolethProperties->surname);
         Session::put('firstname', $shibbolethProperties->givenName);
         Session::put('email', $shibbolethProperties->mail);

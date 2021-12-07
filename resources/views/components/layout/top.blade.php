@@ -11,6 +11,8 @@
 {{--                <a class="my-auto px-2 md:px-6" href="{{ route('admin.dashboard') }}">@lang('l.dashboard')</a>--}}
 {{--            @endif--}}
 {{--            <a class="my-auto px-6" href="{{ route('user.index') }}">About me</a> --}}
+
         </div>
     </div>
 </div>
+

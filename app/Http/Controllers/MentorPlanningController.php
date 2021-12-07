@@ -21,6 +21,7 @@ use App\Services\StudyField\StudyFieldService;
 use App\Services\StudyFieldYear\StudyFieldYearService;
 use App\Services\User\PermissionAndRoleService;
 use Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class MentorPlanningController extends Controller
 {
@@ -35,7 +36,7 @@ class MentorPlanningController extends Controller
 
     public function copy(Student $student, Planning $planning, MentorStudentService $mentorStudentService)
     {
-        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student);
+        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student, $planning);
 
         $mentorStudent = $mentorStudentService->getByMentorAndStudent(Auth::user()?->mentor, $student);
 
@@ -92,7 +93,8 @@ class MentorPlanningController extends Controller
         );
 
         if (!$studyFieldYear) {
-            //  Todo: Swal Einbauen
+            Alert::error('Fehler', 'Studiengang und Semester passen nicht zusammen');
+
             return redirect()->route('planning.create');
         }
 
@@ -103,6 +105,8 @@ class MentorPlanningController extends Controller
             $specializationService->getById($request->specialization),
         );
 
+        Alert::toast('Saved', 'success');
+
         return redirect()->route('mentor.planning.showOne', [$student, $planning]);
     }
 
@@ -112,7 +116,7 @@ class MentorPlanningController extends Controller
         SpecializationService $specializationService,
         CrossQualificationService $crossQualificationService,
     ) {
-        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($planning->student);
+        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($planning->student, $planning);
 
         $studyFieldYear = $this->studyFieldYearService->getByStudyFieldIdAndSemesterId(
             $request->studyField,
@@ -120,7 +124,8 @@ class MentorPlanningController extends Controller
         );
 
         if (!$studyFieldYear) {
-            //  Todo: Swal Einbauen
+            Alert::error('Fehler', 'Studiengang und Semester passen nicht zusammen');
+
             return redirect()->route('planning.create.copy', $planning);
         }
 
@@ -131,12 +136,14 @@ class MentorPlanningController extends Controller
             $specializationService->getById($request->specialization),
         );
 
+        Alert::toast('Saved', 'success');
+
         return redirect()->route('mentor.planning.showOne', [$newPlanning->student, $newPlanning]);
     }
 
     public function showOne(Student $student, Planning $planning, MentorStudentService $mentorStudentService)
     {
-        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student);
+        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student, $planning);
 
         $mentorStudent = $mentorStudentService->getByMentorAndStudent(Auth::user()?->mentor, $student);
 
@@ -155,8 +162,10 @@ class MentorPlanningController extends Controller
 
     public function delete(Student $student, Planning $planning, PlanningService $planningService)
     {
-        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student);
+        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student, $planning);
         $planningService->cascadingDelete($planning);
+
+        Alert::toast('Deleted', 'success');
 
         return redirect()->route('mentor.planning.list', $student);
     }
@@ -178,7 +187,7 @@ class MentorPlanningController extends Controller
 
     public function setRecommendations(Student $student, Planning $planning, FillPlanningWithRecommendationsService $fillPlanningWithRecommendationsService, MentorStudentService $mentorStudentService)
     {
-        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student);
+        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student, $planning);
 
         $fillPlanningWithRecommendationsService->fill($planning);
 

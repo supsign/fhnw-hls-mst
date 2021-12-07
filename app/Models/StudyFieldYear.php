@@ -12,11 +12,6 @@ class StudyFieldYear extends BaseModel
         return $this->belongsTo(Assessment::class);
     }
 
-    public function courseGroupYears()
-    {
-        return $this->hasMany(CourseGroupYear::class);
-    }
-
     public function beginSemester()
     {
         return $this->belongsTo(Semester::class, 'begin_semester_id');
@@ -47,15 +42,36 @@ class StudyFieldYear extends BaseModel
         return $this->hasMany(CrossQualificationYear::class);
     }
 
-    public function getCoursesAttribute()
+    public function getCoursesAttribute(): BaseCollection
     {
-        $courses = collect();
-        foreach ($this->courseGroupYears as $courseGroupYear) {
-            foreach ($courseGroupYear->courses as $course) {
-                $courses->add($course);
+        $courseIds = [];
+
+        foreach ($this->courseGroupYears()->with('courseCourseGroupYears')->get() as $courseGroupYear) {
+            foreach ($courseGroupYear->courseCourseGroupYears as $courseCourseGroupYear) {
+                $courseIds[] = $courseCourseGroupYear->course_id;
             }
         }
 
-        return $courses->unique();
+        $courseQuery = Course::distinct();
+
+        $courseQuery->with('courseSkills');
+
+        return $courseQuery->find($courseIds);
     }
+
+    public function courseGroupYears()
+    {
+        return $this->hasMany(CourseGroupYear::class);
+    }
+
+//    public function getSkillsAttribute(): BaseCollection
+//    {
+//        $skills = new BaseCollection;
+//
+//        foreach ($this->getCoursesAttribute(true) AS $course) {
+//            $skills = $skills->merge($course->skills);
+//        }
+//
+//        return $skills->unique();
+//    }
 }

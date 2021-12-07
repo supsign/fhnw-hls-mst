@@ -7,6 +7,8 @@ namespace App\Models;
  */
 class Course extends BaseModel
 {
+//    protected $visible = ['id', 'contents', 'credits', 'is_fs', 'is_hs', 'name', 'number', 'number_unformated', 'course_skills'];
+
     public function assessments()
     {
         return $this->belongsToMany(Assessment::class);
@@ -57,14 +59,19 @@ class Course extends BaseModel
         return $this->belongsToMany(Recommendation::class);
     }
 
+    public function skillsAcquisition()
+    {
+        return $this->skills()->wherePivot('is_acquisition', true);
+    }
+
     public function skills()
     {
         return $this->belongsToMany(Skill::class);
     }
 
-    public function skillsAcquisition()
+    public function requiredSkills()
     {
-        return $this->skills()->wherePivot('is_acquisition', true);
+        return $this->skills()->wherePivot('is_acquisition', false);
     }
 
     public function specializationYears()

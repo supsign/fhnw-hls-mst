@@ -37,26 +37,9 @@ class CourseService extends BaseModelService
             return $course->courseYears()->where('semester_id', $semester->id)->first();
         }
 
-        $lastSemester = null;
+        $courseYears = $course->courseYears;
 
-        foreach ($course->courseYears()->with('semester')->get() as $courseYears) {
-            if (!isset($lastSemester)) {
-                $lastSemester = $courseYears->semester;
-                continue;
-            }
-
-            if ($courseYears->semester->year > $lastSemester->year) {
-                $lastSemester = $courseYears->semester;
-                continue;
-            }
-
-            if ($courseYears->semester->year === $lastSemester->year && $courseYears->semester->is_hs) {
-                $lastSemester = $courseYears->semester;
-                continue;
-            }
-        }
-
-        return $course->courseYears()->where('semester_id', $lastSemester->id)->first();
+        return $courseYears->load('semester')->sortByDesc('semester.start_date')->first();
     }
 
     public function firstOrCreateByNumber(string $number, int $courseTypeId, int $languageId = 1, string $name = null, int $credits = 0): Course

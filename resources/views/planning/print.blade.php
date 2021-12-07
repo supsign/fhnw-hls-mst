@@ -27,7 +27,7 @@
     <div>Total: {{ $planning->getTotalCredits() }}</div>
 </div>
 <div class="">
-    @foreach ($planning->coursePlanningSemester->unique() AS $semester)
+    @foreach ($planning->coursePlanningSemester AS $semester)
         <div class="mb-4">
             <div class="font-bold">{{ $semester->is_hs ? 'HS' : 'FS' }} {{ $semester->year }}</div>
 

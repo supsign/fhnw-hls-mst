@@ -689,8 +689,6 @@ namespace App\Models{
  * @property int $id
  * @property int $mentor_id
  * @property int $student_id
- * @property string|null $firstname
- * @property string|null $lastname
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Mentor $mentor
@@ -701,9 +699,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|MentorStudent newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|MentorStudent query()
  * @method static \Illuminate\Database\Eloquent\Builder|MentorStudent whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|MentorStudent whereFirstname($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MentorStudent whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|MentorStudent whereLastname($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MentorStudent whereMentorId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MentorStudent whereStudentId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MentorStudent whereUpdatedAt($value)

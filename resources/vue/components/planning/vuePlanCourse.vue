@@ -1,9 +1,9 @@
 <template>
     <div class="w-16 text-center">
-        <div v-if="!coursePlanning" class="flex text-center justify-center" @click="()=>{pickerIsOpen = true}">
+        <div v-if="!coursePlanning" class="flex text-center justify-center" @click.stop="()=>{pickerIsOpen = true}">
             <img :src="'/img/calendarIcon.svg'" alt="module_icon" class="cursor-pointer w-7 h-7 my-auto">
         </div>
-        <div v-else-if="coursePlanningSemester" class="text-sm cursor-pointer" @click="()=>{pickerIsOpen = true}">
+        <div v-else-if="coursePlanningSemester" class="text-sm cursor-pointer" @click.stop="()=>{pickerIsOpen = true}">
             {{ coursePlanningSemester.year - 2000 }}
             {{ coursePlanningSemester.is_hs ? 'HS' : 'FS' }}
         </div>

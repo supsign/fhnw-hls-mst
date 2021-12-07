@@ -13,7 +13,7 @@ class CourseYearService extends BaseModelService
 {
     use GetByEventoId;
     use CreateOrUpdateOnEventoId {
-        createOrUpdateOnEventoId AS protected createOrUpdateOnEventoIdTrait;
+        createOrUpdateOnEventoId as protected createOrUpdateOnEventoIdTrait;
     }
 
     public function __construct(protected CourseYear $model, protected SemesterService $semesterService)
@@ -37,7 +37,7 @@ class CourseYearService extends BaseModelService
             'semester_id' => $semester->id,
             'name' => $name,
             'number' => $number,
-            'contents' => str_replace(['<font face=Arial size=2>', '</font>'], '', $course->contents),
+            'contents' => strip_tags($course->contents, '<ul><li><p><div><blockquote>'),
             'is_audit' => str_contains($name, '(Prüfung)'),
         ]);
     }

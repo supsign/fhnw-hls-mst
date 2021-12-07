@@ -56,7 +56,7 @@ class Planning extends BaseModel
 
     public function coursePlanningSemester()
     {
-        return $this->belongsToMany(Semester::class, CoursePlanning::class)->orderBy('year')->orderBy('is_hs');
+        return $this->belongsToMany(Semester::class, CoursePlanning::class)->distinct()->orderBy('year')->orderBy('is_hs');
     }
 
     public function getObtainedCredits(): int

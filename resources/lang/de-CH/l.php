@@ -29,4 +29,5 @@ return [
     'courseNumber' => 'Modul-Nummer',
     'hs' => 'HS',
     'fs' => 'FS',
+    'termPlanned' => 'geplante Semester',
 ];

@@ -19,6 +19,7 @@ use App\Services\StudyField\StudyFieldService;
 use App\Services\StudyFieldYear\StudyFieldYearService;
 use App\Services\User\PermissionAndRoleService;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PlanningController extends Controller
 {
@@ -33,7 +34,8 @@ class PlanningController extends Controller
 
     public function copy(Planning $planning)
     {
-        $this->permissionAndRoleService->canPlanScheduleOrAbort();
+        $user = Auth::user();
+        $this->permissionAndRoleService->canPlanMySchedulesOrAbort($user->student);
 
         return view('planning.new', [
             'studyFields' => StudyField::where('study_program_id', 6)->get(),
@@ -50,8 +52,8 @@ class PlanningController extends Controller
 
     public function create()
     {
-        $this->permissionAndRoleService->canPlanScheduleOrAbort();
         $user = Auth::user();
+        $this->permissionAndRoleService->canPlanMySchedulesOrAbort($user->student);
 
         return view('planning.new', [
             'studyFields' => StudyField::where('study_program_id', 6)->get(),
@@ -67,10 +69,11 @@ class PlanningController extends Controller
 
     public function print(Planning $planning)
     {
-        $this->permissionAndRoleService->canPlanScheduleOrAbort();
+        $user = Auth::user();
+        $this->permissionAndRoleService->canPlanMySchedulesOrAbort($user->student, $planning);
 
-        $firstname = Auth::user()->firstname;
-        $lastname = Auth::user()->lastname;
+        $firstname = $user->firstname;
+        $lastname = $user->lastname;
         $pdf = app('dompdf.wrapper');
         $pdf->setPaper('A4', 'portrait');
         $pdf->getDomPDF()->set_option('enable_php', true);
@@ -84,7 +87,8 @@ class PlanningController extends Controller
         SpecializationService $specializationService,
         CrossQualificationService $crossQualificationService,
     ) {
-        $this->permissionAndRoleService->canPlanScheduleOrAbort();
+        $user = Auth::user();
+        $this->permissionAndRoleService->canPlanMySchedulesOrAbort($user->student);
 
         $studyFieldYear = $this->studyFieldYearService->getByStudyFieldIdAndSemesterId(
             $request->studyField,
@@ -92,16 +96,19 @@ class PlanningController extends Controller
         );
 
         if (!$studyFieldYear) {
-            //  Todo: Swal Einbauen
+            Alert::error('Fehler', 'Studiengang und Semester passen nicht zusammen');
+
             return redirect()->route('planning.create');
         }
 
         $planning = $this->planningService->createEmptyPlanning(
-            Auth::user()->student,
+            $user->student,
             $studyFieldYear,
             $crossQualificationService->getById($request->crossQualification),
             $specializationService->getById($request->specialization),
         );
+
+        Alert::toast('Saved', 'success');
 
         return redirect()->route('planning.showOne', $planning);
     }
@@ -112,7 +119,8 @@ class PlanningController extends Controller
         SpecializationService $specializationService,
         CrossQualificationService $crossQualificationService,
     ) {
-        $this->permissionAndRoleService->canPlanScheduleOrAbort();
+        $user = Auth::user();
+        $this->permissionAndRoleService->canPlanMySchedulesOrAbort($user->student, $planning);
 
         $studyFieldYear = $this->studyFieldYearService->getByStudyFieldIdAndSemesterId(
             $request->studyField,
@@ -120,7 +128,8 @@ class PlanningController extends Controller
         );
 
         if (!$studyFieldYear) {
-            //  Todo: Swal Einbauen
+            Alert::error('Fehler', 'Studiengang und Semester passen nicht zusammen');
+
             return redirect()->route('planning.create.copy', $planning);
         }
 
@@ -131,16 +140,21 @@ class PlanningController extends Controller
             $specializationService->getById($request->specialization),
         );
 
+        Alert::toast('Saved', 'success');
+
         return redirect()->route('planning.showOne', $newPlanning);
     }
 
     public function showOne(Planning $planning)
     {
-        $this->permissionAndRoleService->canPlanScheduleOrAbort();
+        $user = Auth::user();
+        $this->permissionAndRoleService->canPlanMySchedulesOrAbort($user->student, $planning);
+
+        $planning->student->completions()->with('courseYear')->get();
 
         $viewParameter = [
             'planning' => $planning,
-            'courseGroupYears' => $planning->studyFieldYear->courseGroupYears,
+            'courseGroupYears' => $planning->studyFieldYear->courseGroupYears()->with(['courses', 'courseGroup', 'courseCourseGroupYears'])->get(),
             'mentorStudent' => null,
         ];
 
@@ -149,15 +163,19 @@ class PlanningController extends Controller
 
     public function delete(PlanningService $planningService, Planning $planning)
     {
-        $this->permissionAndRoleService->canPlanScheduleOrAbort();
+        $user = Auth::user();
+        $this->permissionAndRoleService->canPlanMySchedulesOrAbort($user->student, $planning);
         $planningService->cascadingDelete($planning);
+
+        Alert::toast('Deleted', 'success');
 
         return redirect()->route('home');
     }
 
     public function setRecommendations(Planning $planning, FillPlanningWithRecommendationsService $fillPlanningWithRecommendationsService)
     {
-        $this->permissionAndRoleService->canPlanScheduleOrAbort();
+        $user = Auth::user();
+        $this->permissionAndRoleService->canPlanMySchedulesOrAbort($user->student, $planning);
 
         $fillPlanningWithRecommendationsService->fill($planning);
 

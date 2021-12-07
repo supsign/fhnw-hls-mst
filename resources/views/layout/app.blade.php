@@ -33,5 +33,10 @@
             <x-layout.bottom/>
         </div>
     </div>
+    @if(Session::has('alert.config'))
+        <vue-session-sweetalert :swal-option="{{ Session::pull('alert.config') }}"/>
+    @endif
+</div>
+
 </body>
 </html>

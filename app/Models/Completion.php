@@ -28,4 +28,18 @@ class Completion extends BaseModel
     {
         return $this->courseYear->course_id;
     }
+
+    public function getStudyFieldYearsAttribute(): BaseCollection
+    {
+        $studyFieldYears = new BaseCollection;
+        $course = $this->courseYear->course()->with('courseGroupYears')->first();
+
+        foreach ($course->courseGroupYears AS $courseGroupYear) {
+            if (!$studyFieldYears->contains($courseGroupYear->studyFieldYear)) {
+                $studyFieldYears->push($courseGroupYear->studyFieldYear);
+            }
+        }
+
+        return $studyFieldYears;
+    }
 }

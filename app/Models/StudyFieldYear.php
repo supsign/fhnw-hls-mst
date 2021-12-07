@@ -47,9 +47,10 @@ class StudyFieldYear extends BaseModel
         return $this->hasMany(CrossQualificationYear::class);
     }
 
-    public function getCoursesAttribute()
+    public function getCoursesAttribute(): BaseCollection
     {
-        $courses = collect();
+        $courses = new BaseCollection;
+
         foreach ($this->courseGroupYears as $courseGroupYear) {
             foreach ($courseGroupYear->courses as $course) {
                 $courses->add($course);

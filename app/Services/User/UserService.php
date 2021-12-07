@@ -36,7 +36,7 @@ class UserService
         }
 
         $user->mentor()->associate($mentor)->save();
-        
+
         return $this;
     }
 

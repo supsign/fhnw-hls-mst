@@ -44,7 +44,7 @@ class AuthService
 
         var_dump($role);
 
-        switch($role) {
+        switch ($role) {
             case 'student':
                 $user = $this->userService->updateOrCreateUserAsStudent(
                     email: $shibbolethProperties->mail,

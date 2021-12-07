@@ -19,6 +19,7 @@ use App\Services\StudyField\StudyFieldService;
 use App\Services\StudyFieldYear\StudyFieldYearService;
 use App\Services\User\PermissionAndRoleService;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PlanningController extends Controller
 {
@@ -95,7 +96,8 @@ class PlanningController extends Controller
         );
 
         if (!$studyFieldYear) {
-            //  Todo: Swal Einbauen
+            Alert::error('Fehler', 'Studiengang und Semester passen nicht zusammen');
+
             return redirect()->route('planning.create');
         }
 
@@ -105,6 +107,8 @@ class PlanningController extends Controller
             $crossQualificationService->getById($request->crossQualification),
             $specializationService->getById($request->specialization),
         );
+
+        Alert::toast('Saved', 'success');
 
         return redirect()->route('planning.showOne', $planning);
     }
@@ -124,7 +128,8 @@ class PlanningController extends Controller
         );
 
         if (!$studyFieldYear) {
-            //  Todo: Swal Einbauen
+            Alert::error('Fehler', 'Studiengang und Semester passen nicht zusammen');
+
             return redirect()->route('planning.create.copy', $planning);
         }
 
@@ -134,6 +139,8 @@ class PlanningController extends Controller
             $crossQualificationService->getById($request->crossQualification),
             $specializationService->getById($request->specialization),
         );
+
+        Alert::toast('Saved', 'success');
 
         return redirect()->route('planning.showOne', $newPlanning);
     }
@@ -157,6 +164,8 @@ class PlanningController extends Controller
         $user = Auth::user();
         $this->permissionAndRoleService->canPlanMySchedulesOrAbort($user->student, $planning);
         $planningService->cascadingDelete($planning);
+
+        Alert::toast('Deleted', 'success');
 
         return redirect()->route('home');
     }

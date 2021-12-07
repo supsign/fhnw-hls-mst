@@ -42,8 +42,6 @@ class AuthService
             abort(403, $th->getMessage());
         }
 
-        var_dump($role);
-
         switch ($role) {
             case 'student':
                 $user = $this->userService->updateOrCreateUserAsStudent(

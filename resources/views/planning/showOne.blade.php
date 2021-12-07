@@ -16,13 +16,15 @@
                             <i
                                 class="fas fa-print text-blue-600 text-xl" aria-hidden="true"></i></x-base.link>
 
-                        <vue-form method="POST"
-                                  action="{{ $mentorStudent ? route('mentor.planning.delete', [$mentorStudent->student, $planning]) : route('planning.delete', $planning) }}">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" name="delete_planning"><i
-                                    class="fas fa-trash text-red-600 text-xl" aria-hidden="true"></i></button>
-                        </vue-form>
+                        @if(!(!$mentorStudent && $planning->is_locked))
+                            <vue-form method="POST"
+                                      action="{{ $mentorStudent ? route('mentor.planning.delete', [$mentorStudent->student, $planning]) : route('planning.delete', $planning) }}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" name="delete_planning"><i
+                                        class="fas fa-trash text-red-600 text-xl" aria-hidden="true"></i></button>
+                            </vue-form>
+                        @endif
                     </div>
 
 
@@ -42,11 +44,13 @@
 
         </x-app.card>
         <div>
-            <vue-form method="POST"
-                      action="{{ $mentorStudent ? route('mentor.planning.setRecommendations', [$mentorStudent->student, $planning])  : route('planning.setRecommendations', $planning) }}">
-                @csrf
-                <button class="button-primary mb-4" type="submit">gem. Musterstudienplan planen</button>
-            </vue-form>
+            @if(!(!$mentorStudent && $planning->is_locked))
+                <vue-form method="POST"
+                          action="{{ $mentorStudent ? route('mentor.planning.setRecommendations', [$mentorStudent->student, $planning])  : route('planning.setRecommendations', $planning) }}">
+                    @csrf
+                    <button class="button-primary mb-4" type="submit">gem. Musterstudienplan planen</button>
+                </vue-form>
+            @endif
         </div>
 
         <x-app.card class="mb-4">
@@ -95,7 +99,8 @@
                                 </div>
                                 <vue-course-group-state :course-group-year="{{$courseGroupYear}}"
                                                         :courses="{{$courseGroupYear->courses}}"
-                                                        :completions="{{$planning->student->completions}}"></vue-course-group-state>
+                                                        :completions="{{$planning->student->completions}}"
+                                ></vue-course-group-state>
 
                             </template>
                             @foreach($courseGroupYear->courseCourseGroupYears()->with('course')->get() as $courseCourseGroupYear)
@@ -105,11 +110,15 @@
                                     :course-id="{{$courseCourseGroupYear->course_id}}"
                                     :course-year="{{$courseCourseGroupYear->course->getCourseYearBySemesterOrLatest() ?? json_encode(null)}}"
                                     :planning-id="{{$planning->id}}"
-                                    {{$courseCompletionService->courseIsSuccessfullyCompleted($courseCourseGroupYear->course, $planning->student) ?'course-isSuccessfully-completed' : ''}}
+                                    {{$courseCompletionService->courseIsSuccessfullyCompleted($courseCourseGroupYear->course, $planning->student) ?'course-is-successfully-completed' : ''}}
+                                    @if(!$mentorStudent && $planning->is_locked)
+                                    planning-is-locked
+                                    @endif
                                 >
                                     <template v-slot:icon>
                                         <x-planning.completion :student="$planning->student"
-                                                               :course="$courseCourseGroupYear->course"></x-planning.completion>
+                                                               :course="$courseCourseGroupYear->course"
+                                        ></x-planning.completion>
                                     </template>
                                 </vue-course-detail>
                             @endforeach
@@ -118,7 +127,7 @@
                 @endforeach
             </div>
             <div class="lg:w-1/4">
-                <x-planning.planning-semester :planning="$planning"/>
+                <x-planning.planning-semester :planning="$planning" :mentorStudent="$mentorStudent"/>
             </div>
         </div>
         <x-assessment.assessment-state :planning="$planning"></x-assessment.assessment-state>

@@ -17,11 +17,13 @@
                     <div class="sourceHtml mb-8" v-html="courseYear.contents">
                     </div>
 
-                    <div v-if="missingCourses.length > 0 || !isPlaned" class="font-bold">Fehlende Kurse</div>
-                    <div v-if="!isPlaned"> Bitte planen Sie zuerst das Modul ein.</div>
-                    <ul v-else class="list-disc list-outside ml-4">
-                        <li v-for="missingCourse in missingCourses">{{ missingCourse.name }}</li>
-                    </ul>
+                    <div v-if="!courseIsSuccessfullyCompleted">
+                        <div v-if="missingCourses.length > 0 || !isPlaned" class="font-bold">Fehlende Kurse</div>
+                        <div v-if="!isPlaned"> Bitte planen Sie zuerst das Modul ein.</div>
+                        <ul v-else class="list-disc list-outside ml-4">
+                            <li v-for="missingCourse in missingCourses">{{ missingCourse.name }}</li>
+                        </ul>
+                    </div>
                 </div>
 
             </div>
@@ -48,6 +50,9 @@ export default class VueCourseDetailModal extends BaseComponent {
 
     @Prop({type: Boolean})
     isPlaned: boolean
+
+    @Prop({type: Boolean})
+    courseIsSuccessfullyCompleted: boolean;
 
     @Emit()
     public cancel() {

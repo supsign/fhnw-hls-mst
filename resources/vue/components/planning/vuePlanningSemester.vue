@@ -15,6 +15,7 @@
                                    :key="coursePlanning.id"
                                    :courseId="coursePlanning.course_id"
                                    :planningId="planningId"
+                                   :planningIsLocked="planningIsLocked"
 
                 >
                 </vue-course-detail>
@@ -49,6 +50,9 @@ export default class VuePlanningSemester extends BaseComponent {
 
     @Prop({type: Array})
     public courses: ICourse[]
+
+    @Prop({type: Boolean, default: false})
+    planningIsLocked: boolean
 
     public isCollapsed = true;
 

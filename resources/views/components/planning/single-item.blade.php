@@ -6,6 +6,9 @@
         <div>{{ $planning->specializationYear?->specialization->name }}</div>
         <div>{{ $planning->name }}</div>
         <div>@lang('l.startDate'): {{ $planning->studyFieldYear->beginSemester->year }}</div>
+        @if($planning->is_locked)
+            <div class="w-100 text-right text-sm text-gray-500 mt-1"> fixiert</div>
+        @endif
     </div>
 </div>
 

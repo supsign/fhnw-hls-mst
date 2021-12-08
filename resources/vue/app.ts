@@ -30,7 +30,7 @@ import {skillStudentStore} from "./store/skillStudent/skillStudent.store";
 import {courseSkillStore} from "./store/courseSkill/courseSkill.store";
 import VueSessionSweetalert from "./components/base/vueSessionSweetalert.vue";
 import VueAdminMentorStudyFields from "./components/admin/vueAdminMentorStudyFields.vue";
-
+import VueLockPlanning from "./components/planning/vueLockPlanning.vue";
 
 library.add(faUserSecret);
 library.add(faCheck);
@@ -69,7 +69,8 @@ const app = new Vue({
         VueCourseDetail,
         VuePlanningSemester,
         VueSessionSweetalert,
-        VueAdminMentorStudyFields
+        VueAdminMentorStudyFields,
+        VueLockPlanning
     },
     store
 });

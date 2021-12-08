@@ -10,6 +10,7 @@
             v-if="!courseIsSuccessfullyCompleted"
             :course="course"
             :planningId="planningId"
+            :planningIsLocked="planningIsLocked"
             :semesters="semesters"
             class="flex-none my-auto"
         >
@@ -17,6 +18,7 @@
         <vue-course-detail-modal
             v-if="courseYear && detailModalIsOpen"
             :course="course"
+            :courseIsSuccessfullyCompleted="courseIsSuccessfullyCompleted"
             :courseYear="courseYear"
             :isPlaned="!!coursePlanning"
             :missingCourses="missingCourses"
@@ -55,6 +57,9 @@ export default class VueCourseDetail extends BaseComponent {
 
     @Prop({type: Array})
     skills: ISkill[]
+
+    @Prop({type: Boolean, default: false})
+    planningIsLocked: boolean
 
     @Prop({type: Boolean})
     courseIsSuccessfullyCompleted: boolean;

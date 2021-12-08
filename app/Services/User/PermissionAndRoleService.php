@@ -121,7 +121,7 @@ class PermissionAndRoleService
         if (!$student) {
             return false;
         }
-        
+
         $user = Auth::user();
         $hasPermisson = $user->can('plan students schedules');
         $mentor = $user->mentor;

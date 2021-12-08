@@ -29,7 +29,7 @@ class AdminRolesController extends Controller
         $this->permissionAndRoleService->canManageBackendOrAbort();
         $user = $this->userService->getById($request->user_id);
         $role = $this->permissionAndRoleService->getRoleById($request->role_id);
-        $method = 'assign' . str_replace('-', '', $role->name);
+        $method = 'assign'.str_replace('-', '', $role->name);
 
         if ($user && $role && method_exists($this->permissionAndRoleService, $method)) {
             $this->permissionAndRoleService->$method($user);
@@ -44,7 +44,7 @@ class AdminRolesController extends Controller
         $this->permissionAndRoleService->canManageBackendOrAbort();
         $user = $this->userService->getById($request->user_id);
         $role = $this->permissionAndRoleService->getRoleById($request->role_id);
-        $method = 'remove' . str_replace('-', '', $role->name);
+        $method = 'remove'.str_replace('-', '', $role->name);
 
         if ($user && $role && method_exists($this->permissionAndRoleService, $method)) {
             $this->permissionAndRoleService->$method($user);

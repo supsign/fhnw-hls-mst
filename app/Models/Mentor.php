@@ -7,6 +7,9 @@ namespace App\Models;
  */
 class Mentor extends BaseModel
 {
+    protected $with = ['mentorStudyFields'];
+    protected $hidden = ['evento_person_id_hash'];
+
     public function plannings()
     {
         return $this->hasMany(Planning::class);

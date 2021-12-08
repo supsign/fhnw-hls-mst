@@ -1,14 +1,31 @@
 <template>
-    <div>
-        <vue-select v-model="selectedMentor" :name="'Mentor:in'" :options="availableMentors"
-                    :search-keys="['firstname', 'lastname']"
-                    :show-option="showOption" class="mt-4" searchable @input="selectMentor"></vue-select>
-        <div class="mt-4 space-y-2">
-            <div v-for="mentor in myMentors">
-                <span @click="()=>remove(mentor)">
-                    <i aria-hidden="true" class="far fa-trash alt mr-2 cursor-pointer"> </i>
-                </span>
-                {{ mentor.firstname }} {{ mentor.lastname }}
+    <div class="p-2 rounded  bg-white flex flex-col shadow-xl">
+        <div class="divide-y p-3 text-sm md:text-base flex-grow">
+            <div class="pb-2 flex flex-row justify-between">
+                <div>Freigegebene Stgl</div>
+                <div>
+                    <button v-if="studyField" class="button-primary"
+                            @click="approve">freigeben
+                    </button>
+                </div>
+            </div>
+            <div>
+                <!--        <vue-select v-model="selectedMentor" :name="'Mentor:in'" :options="availableMentors"-->
+                <!--                    :search-keys="['firstname', 'lastname']"-->
+                <!--                    :show-option="showOption" class="mt-4" searchable @input="selectMentor"></vue-select>-->
+
+                <div v-if="!studyField">Bitte wenden sie sich an die Administration, um Planungen für Stgl
+                    freizugeben.
+                </div>
+                <div class="mt-4 space-y-2">
+                    <div v-if="!myMentors.length">Keine Freigaben erteilt</div>
+                    <div v-for="mentor in myMentors">
+                        <span @click="()=>remove(mentor)">
+                            <i aria-hidden="true" class="far fa-trash alt mr-2 cursor-pointer"> </i>
+                        </span>
+                        {{ mentor.firstname }} {{ mentor.lastname }}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -21,6 +38,7 @@ import {IMentor} from "../../interfaces/mentor.interface";
 import VueSelect from "../form/vueSelect.vue";
 import axios from "axios";
 import {Toast} from "../../helpers/toast";
+import {IStudyField} from "../../interfaces/studyField.interface";
 
 @Component({
     components: {VueSelect}
@@ -28,10 +46,13 @@ import {Toast} from "../../helpers/toast";
 export default class VueShowAndSelectMentors extends BaseComponent {
 
     @Prop({type: Array})
-    public allMentors: IMentor[]
+    public allMentors: IMentor[];
 
     @Prop({type: Array})
-    public initMyMentors: IMentor[]
+    public initMyMentors: IMentor[];
+
+    @Prop({type: Object})
+    public studyField: IStudyField;
 
     public myMentors: IMentor[] = [];
 
@@ -65,6 +86,19 @@ export default class VueShowAndSelectMentors extends BaseComponent {
                 }
                 this.myMentors.splice(index, 1);
             })
+    }
+
+    public approve() {
+        if (!this.studyField) {
+            return;
+        }
+        const mentors = this.availableMentors
+            .filter(mentor => {
+                return mentor.mentor_study_fields?.find(mentorStudyField => {
+                    return mentorStudyField.study_field_id === this.studyField.id
+                })
+            });
+        mentors.forEach(mentor => this.selectMentor(mentor));
     }
 
     public remove(mentor: IMentor) {

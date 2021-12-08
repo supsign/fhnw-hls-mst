@@ -4,6 +4,7 @@ namespace App\View\Components\Student;
 
 use App\Models\Mentor;
 use App\Models\Student;
+use App\Models\StudyField;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
@@ -13,6 +14,7 @@ class Mentors extends Component
 {
     public Collection $allMentors;
     public Collection $myMentors;
+    public ?StudyField $studyField;
 
     /**
      * Create a new component instance.
@@ -24,6 +26,8 @@ class Mentors extends Component
         $this->allMentors = Mentor::all();
 
         $this->myMentors = $student->mentors;
+
+        $this->studyField = $this->student->studyFieldYear?->studyField;
     }
 
     /**

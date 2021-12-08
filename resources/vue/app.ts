@@ -29,6 +29,7 @@ import {skillStore} from "./store/skill/skill.store";
 import {skillStudentStore} from "./store/skillStudent/skillStudent.store";
 import {courseSkillStore} from "./store/courseSkill/courseSkill.store";
 import VueSessionSweetalert from "./components/base/vueSessionSweetalert.vue";
+import VueAdminMentorStudyFields from "./components/admin/vueAdminMentorStudyFields.vue";
 
 
 library.add(faUserSecret);
@@ -67,7 +68,8 @@ const app = new Vue({
         VueAdminCourseEdit,
         VueCourseDetail,
         VuePlanningSemester,
-        VueSessionSweetalert
+        VueSessionSweetalert,
+        VueAdminMentorStudyFields
     },
     store
 });

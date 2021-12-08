@@ -1,34 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\Course;
+use App\Http\Controllers\Controller;
 use App\Services\User\PermissionAndRoleService;
 use App\Services\User\UserService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 
-class AdminController extends Controller
+class AdminRolesController extends Controller
 {
     public function __construct(protected PermissionAndRoleService $permissionAndRoleService, protected UserService $userService)
     {
-    }
-
-    public function courses(): View
-    {
-        $this->permissionAndRoleService->canManageBackendOrAbort();
-
-        return view('admin.courses', [
-            'courses' => Course::all()->sortBy('name'),
-        ]);
-    }
-
-    public function dashboard(): View
-    {
-        $this->permissionAndRoleService->canManageBackendOrAbort();
-
-        return view('admin.dashboard');
     }
 
     public function assignRoles(): View
@@ -45,7 +29,7 @@ class AdminController extends Controller
         $this->permissionAndRoleService->canManageBackendOrAbort();
         $user = $this->userService->getById($request->user_id);
         $role = $this->permissionAndRoleService->getRoleById($request->role_id);
-        $method = 'assign'.str_replace('-', '', $role->name);
+        $method = 'assign' . str_replace('-', '', $role->name);
 
         if ($user && $role && method_exists($this->permissionAndRoleService, $method)) {
             $this->permissionAndRoleService->$method($user);
@@ -60,7 +44,7 @@ class AdminController extends Controller
         $this->permissionAndRoleService->canManageBackendOrAbort();
         $user = $this->userService->getById($request->user_id);
         $role = $this->permissionAndRoleService->getRoleById($request->role_id);
-        $method = 'remove'.str_replace('-', '', $role->name);
+        $method = 'remove' . str_replace('-', '', $role->name);
 
         if ($user && $role && method_exists($this->permissionAndRoleService, $method)) {
             $this->permissionAndRoleService->$method($user);

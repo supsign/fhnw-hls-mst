@@ -27,6 +27,11 @@ class Mentor extends BaseModel
         return $this->belongsToMany(StudyField::class);
     }
 
+    public function mentorStudyFields()
+    {
+        return $this->hasMany(MentorStudyField::class);
+    }
+
     public function user()
     {
         return $this->hasOne(User::class);

@@ -42,9 +42,8 @@ class UserService
 
     protected function attachStudent(User $user, int $eventoPersonId): self
     {
-
         $student = $this->studentService->createOrUpdateOnEventoPersonId($eventoPersonId);
-    
+
         if (!$student) {
             return $this;
         }

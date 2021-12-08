@@ -13,6 +13,7 @@ class RoleService
             throw new Exception('no authorized role identified');
         }
 
+        $shibbolethProperties->entitlement = strtolower($shibbolethProperties->entitlement);
         $staticPartOfUrl = 'http://fhnw.ch/aai/res/hls/stab/';
 
         switch (true) {

@@ -42,9 +42,7 @@ class UserService
 
     protected function attachStudent(User $user, int $eventoPersonId): self
     {
-        $student = App::environment() === 'local'
-            ? $student = $this->studentService->createOrUpdateOnEventoPersonId($eventoPersonId)
-            : $student = $this->studentService->getByEventoPersonId($eventoPersonId);
+        $student = $this->studentService->createOrUpdateOnEventoPersonId($eventoPersonId);
 
         if (!$student) {
             return $this;
@@ -84,6 +82,7 @@ class UserService
     public function udpateOrCreateAsMentor(string $email, int $eventoPersonId, string $firstname = null, string $lastname = null): User
     {
         $user = $this->updateOrCrateUserOnMail($email);
+        $this->attachStudent($user, $eventoPersonId);
         $this->attachMentor($user, $eventoPersonId, $firstname, $lastname);
         $this->permissionAndRoleService->assignMentor($user);
 

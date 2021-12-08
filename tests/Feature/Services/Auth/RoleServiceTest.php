@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Services\Auth;
 
-use App\Services\Auth\Role;
 use App\Services\Auth\RoleService;
 use App\Services\Token\ShibbolethProperties;
 use Exception;
@@ -54,9 +53,9 @@ class RoleServiceTest extends TestCase
         $shibbolethProperties = new ShibbolethProperties();
         $shibbolethProperties->mail = $this->faker->email;
         $shibbolethProperties->fhnwIDPerson = $this->faker->randomNumber(5);
+        $shibbolethProperties->entitlement = 'http://fhnw.ch/aai/res/hls/stab/mst_edu_student';
         $role = $this->roleService->evaluate($shibbolethProperties);
-        $this->assertInstanceOf(Role::class, $role);
-        $this->assertTrue($role->getName() === 'student');
+        $this->assertTrue($role === 'student');
     }
 
     public function testEvaluateStudentMentor()
@@ -64,9 +63,8 @@ class RoleServiceTest extends TestCase
         $shibbolethProperties = new ShibbolethProperties();
         $shibbolethProperties->mail = $this->faker->email;
         $shibbolethProperties->fhnwIDPerson = $this->faker->randomNumber(5);
-        $shibbolethProperties->fhnwDetailedAffiliation = 'asdasdf:asdf"asdf;staff-hls-alle;asdf';
+        $shibbolethProperties->entitlement = 'http://fhnw.ch/aai/res/hls/stab/mst_mentor';
         $role = $this->roleService->evaluate($shibbolethProperties);
-        $this->assertInstanceOf(Role::class, $role);
-        $this->assertTrue($role->getName() === 'mentor');
+        $this->assertTrue($role === 'mentor');
     }
 }

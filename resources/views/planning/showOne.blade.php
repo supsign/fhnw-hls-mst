@@ -39,6 +39,9 @@
                 <div>{{ $planning->crossQualificationYear?->crossQualification->name }}</div>
                 <div>{{ $planning->specializationYear?->specialization->name }}</div>
                 <div>@lang('l.startDate'): {{ $planning->studyFieldYear->beginSemester->year }}</div>
+                @if($mentorStudent)
+                    <vue-lock-planning :planning="{{$planning}}"></vue-lock-planning>
+                @endif
             </div>
 
 

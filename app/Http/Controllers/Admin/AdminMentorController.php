@@ -10,7 +10,6 @@ use Illuminate\Contracts\View\View;
 
 class AdminMentorController extends Controller
 {
-
     public function __construct(protected PermissionAndRoleService $permissionAndRoleService)
     {
     }
@@ -19,6 +18,7 @@ class AdminMentorController extends Controller
     {
         $this->permissionAndRoleService->canManageBackendOrAbort();
         $mentors = Mentor::orderBy('lastname')->get();
+
         return view('admin.mentors', ['mentors' => $mentors]);
     }
 
@@ -26,9 +26,10 @@ class AdminMentorController extends Controller
     {
         $this->permissionAndRoleService->canManageBackendOrAbort();
         $studyFields = StudyField::all();
+
         return view('admin.mentor', [
             'mentor' => $mentor,
-            'studyFields' => $studyFields
+            'studyFields' => $studyFields,
         ]);
     }
 }

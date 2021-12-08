@@ -1,7 +1,7 @@
 <template>
-    <div class="rounded border shadow-md fixed bottom-0 left-0 mt-2 w-full bg-hls-200 lg:h-16"
+    <div class="rounded border shadow-md fixed bottom-0 left-0 mt-2 w-full bg-hls-200"
          v-if="!!assessment">
-        <div class="border-b text-sm lg:text-base p-3 bg-hls transition duration-200 ease-in-out overflow-y-scroll max-h-56"
+        <div class="border-b text-sm lg:text-base p-3 bg-hls transition duration-200 ease-in-out overflow-y-scroll max-h-56 lg:overflow-y-auto lg:max-h-full"
              :class=" { hidden: !showAssessment || showSpecialization || showCrossQualification }"
              >
             <vue-assessment-state :assessment="assessment"
@@ -13,7 +13,7 @@
             ></vue-assessment-state>
         </div>
         <div v-if="!!specialization"
-             class="border-b text-sm lg:text-base p-3 bg-hls transition duration-200 ease-in-out overflow-y-scroll max-h-56"
+             class="border-b text-sm lg:text-base p-3 bg-hls transition duration-200 ease-in-out overflow-y-scroll max-h-56 lg:overflow-y-auto lg:max-h-full"
              :class=" { hidden: !showSpecialization || showAssessment || showCrossQualification }"
         >
             <vue-specialization-state :specialization="specialization"
@@ -27,7 +27,7 @@
             ></vue-specialization-state>
         </div>
         <div v-if="!!crossQualification"
-             class="border-b text-sm lg:text-base p-3 bg-hls transition duration-200 ease-in-out overflow-y-scroll max-h-56"
+             class="border-b text-sm lg:text-base p-3 bg-hls transition duration-200 ease-in-out overflow-y-scroll max-h-56 lg:overflow-y-auto lg:max-h-full"
              :class=" { hidden: !showCrossQualification || showAssessment || showSpecialization }"
         >
             <vue-cross-qualification-state :cross-qualification="crossQualification"
@@ -40,25 +40,28 @@
                                            ref="crossQualificationState"
             ></vue-cross-qualification-state>
         </div>
-        <div class="md:w-full mx-auto grid grid-cols-3 h-full">
-            <div class="text-center border-l border-hls text-sm hover:bg-hls hover:border-gray-200 my-auto h-full" @click="toggleShowCrossQualification">
+        <div class="md:w-full mx-auto grid grid-cols-3 lg:h-16">
+            <div class="text-center border-l border-hls text-sm my-auto h-full lg:flex lg:justify-center lg:items-center lg:space-x-2" @click="toggleShowCrossQualification">
                 <div>{{ countCredits }}&nbsp;|&nbsp;180</div>
                 <div>ECTS</div>
             </div>
             <div v-if="!specialization && !crossQualification"></div>
             <div v-if="!!crossQualification"
-                 class="text-center border-l border-hls text-sm hover:bg-hls hover:border-gray-200 my-auto h-full" @click="toggleShowCrossQualification">
+                 class="text-center border-l border-hls text-sm hover:bg-hls hover:border-gray-200 my-auto cursor-pointer lg:h-full lg:flex lg:justify-center lg:items-center lg:space-x-2" @click="toggleShowCrossQualification">
                 <div>{{ crossQualificationAmount }}&nbsp;|&nbsp;{{ crossQualificationYear.amount_to_pass }}</div>
                 <div>CrossQual.</div>
+                <div class="hidden lg:block">Punkte</div>
             </div>
             <div v-if="!!specialization"
-                 class="text-center border-l border-hls text-sm hover:bg-hls hover:border-gray-200 my-auto h-full" @click="toggleShowSpecialization">
+                 class="text-center border-l border-hls text-sm hover:bg-hls hover:border-gray-200 my-auto cursor-pointer lg:h-full lg:flex lg:justify-center lg:items-center lg:space-x-2" @click="toggleShowSpecialization">
                 <div>{{ specializationAmount }}&nbsp;|&nbsp;{{ specializationYear.amount_to_pass }}</div>
                 <div>Specialization</div>
+                <div class="hidden lg:block">Punkte</div>
             </div>
-            <div class="text-center border-l border-hls text-sm hover:bg-hls hover:border-gray-200 my-auto h-full" @click="toggleShowAssessment">
+            <div class="text-center border-l border-hls text-sm hover:bg-hls hover:border-gray-200 my-auto cursor-pointer lg:h-full lg:flex lg:justify-center lg:items-center lg:space-x-2" @click="toggleShowAssessment">
                 <div>{{ assessmentAmount }}&nbsp;|&nbsp;{{ assessment.amount_to_pass }}</div>
                 <div>Assessment</div>
+                <div class="hidden lg:block">Punkte</div>
             </div>
         </div>
     </div>

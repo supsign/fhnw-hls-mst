@@ -19,6 +19,6 @@ class ServerAdminSeeder extends Seeder
      */
     public function run()
     {
-        $this->userService->udpateOrCreateAsMentor('hls@supsign.ch', 1, 'admin', 'admin')->assignRole('server-admin');
+        $this->userService->updateOrCreateAsAppAdmin('hls@supsign.ch', 1, 'admin', 'admin');
     }
 }

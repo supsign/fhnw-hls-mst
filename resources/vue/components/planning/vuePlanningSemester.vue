@@ -7,7 +7,10 @@
                     <i v-if="isCollapsed" aria-hidden="true" class="fas fa-arrow-right"></i>
                     <i v-if="!isCollapsed" aria-hidden="true" class="fas fa-arrow-down"></i>
                 </div>
-                <div class="sm:text-sm lg:text-base">{{ semester.is_hs ? 'HS' : 'FS' }} {{ semester.year }}</div>
+                <div class="flex justify-between w-full">
+                    <div class="sm:text-sm lg:text-base">{{ semester.is_hs ? 'HS' : 'FS' }} {{ semester.year }}</div>
+                    <div>{{ getAllPointsInSemester(semester) }} ECTS</div>
+                </div>
             </div>
 
             <div v-if="!isCollapsed">
@@ -16,7 +19,6 @@
                                    :courseId="coursePlanning.course_id"
                                    :planningId="planningId"
                                    :planningIsLocked="planningIsLocked"
-
                 >
                 </vue-course-detail>
             </div>
@@ -32,6 +34,8 @@ import {ISemester} from "../../interfaces/semester.interface";
 import {ICoursePlanning} from "../../store/coursePlanning/coursePlanning.interface";
 import {ICompletion} from "../../interfaces/completion.interface";
 import {ICourse} from "../../interfaces/course.interface";
+import {parseDatesInModel} from "../../helpers/interceptors/parseDates";
+import VueAssessmentState from "../Assessment/VueAssessmentState.vue";
 
 @Component({
     components: {
@@ -107,6 +111,27 @@ export default class VuePlanningSemester extends BaseComponent {
 
     public getCourse(coursePlanning: ICoursePlanning): ICourse {
         return this.courses.find(course => course.id === coursePlanning.course_id);
+    }
+
+    public getAllCourseIdsFromCoursePlanning() {
+        return this.allCoursePlanningsInSemester.map(coursePlanning=>coursePlanning.course_id);
+    }
+
+    public getAllPointsInSemester(semester: ISemester) {
+        let credits = 0;
+
+        for (const course of this.courses) {
+            for(const coursePlanning of this.coursePlannings) {
+                if(coursePlanning.course_id === course.id && coursePlanning.semester_id === semester.id) {
+                    credits += course.credits;
+                }
+            }
+        }
+        return credits;
+    }
+
+    public courseIsPlanned(course: ICourse): boolean {
+        return !!this.coursePlannings.find(coursePlanning => coursePlanning.course_id === course.id)
     }
 }
 </script>

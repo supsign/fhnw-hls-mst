@@ -5,6 +5,9 @@
             :planning-id="{{ $planning->id }}"
             :completions="{{ $planning->student->completions }}"
             :courses="{{ $planning->courses }}"
+            @if(!$mentorStudent && $planning->is_locked)
+            planning-is-locked
+            @endif
         ></vue-planning-semester>
     </div>
 @endforeach

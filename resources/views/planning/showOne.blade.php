@@ -98,42 +98,41 @@
                 </div>
                 <div class="md:grid md:grid-cols-1 lg:grid-cols-2 lg:gap-4">
                     @foreach($courseGroupYears as $courseGroupYear)
+                        <div>
+                            <vue-plan-wrapper>
+                                <template v-slot:header>
+                                    <div class="my-auto w-2/3 text-sm">
+                                        {{$courseGroupYear->courseGroup->name}}
+                                    </div>
+                                    <vue-course-group-state :course-group-year="{{$courseGroupYear}}"
+                                                            :courses="{{$courseGroupYear->courses}}"
+                                                            :completions="{{$planning->student->completions}}">
 
-                    <div>
-                        <vue-plan-wrapper>
-                            <template v-slot:header>
-                                <div class="my-auto w-2/3 text-sm">
-                                    {{$courseGroupYear->courseGroup->name}}
-                                </div>
-                                <vue-course-group-state :course-group-year="{{$courseGroupYear}}"
-                                                        :courses="{{$courseGroupYear->courses}}"
-                                                        :completions="{{$planning->student->completions}}">
+                                    </vue-course-group-state>
 
-                                </vue-course-group-state>
-
-                            </template>
-                            @foreach($courseGroupYear->courseCourseGroupYears()->with('course')->get() as $courseCourseGroupYear)
-
-                                @inject('courseCompletionService', 'App\Services\Completion\CourseCompletionService')
-                                <vue-course-detail
-                                    :course-id="{{$courseCourseGroupYear->course_id}}"
-                                    :course-year="{{$courseCourseGroupYear->course->getCourseYearBySemesterOrLatest() ?? json_encode(null)}}"
-                                    :planning-id="{{$planning->id}}"
-                                    {{$courseCompletionService->courseIsSuccessfullyCompleted($courseCourseGroupYear->course, $planning->student) ?'course-is-successfully-completed' : ''}}
-                                    @if(!$mentorStudent && $planning->is_locked)
-                                    planning-is-locked
-                                    @endif
-                                >
-                                    <template v-slot:icon>
-                                        <x-planning.completion :student="$planning->student"
-                                                               :course="$courseCourseGroupYear->course"
-                                        ></x-planning.completion>
-                                    </template>
-                                </vue-course-detail>
-                            @endforeach
-                        </vue-plan-wrapper>
-                    </div>
-                @endforeach
+                                </template>
+                                @foreach($courseGroupYear->courseCourseGroupYears()->with('course')->get() as $courseCourseGroupYear)
+                                    @inject('courseCompletionService', 'App\Services\Completion\CourseCompletionService')
+                                    <vue-course-detail
+                                        :course-id="{{$courseCourseGroupYear->course_id}}"
+                                        :course-year="{{$courseCourseGroupYear->course->getCourseYearBySemesterOrLatest() ?? json_encode(null)}}"
+                                        :planning-id="{{$planning->id}}"
+                                        {{$courseCompletionService->courseIsSuccessfullyCompleted($courseCourseGroupYear->course, $planning->student) ?'course-is-successfully-completed' : ''}}
+                                        @if(!$mentorStudent && $planning->is_locked)
+                                        planning-is-locked
+                                        @endif
+                                    >
+                                        <template v-slot:icon>
+                                            <x-planning.completion :student="$planning->student"
+                                                                   :course="$courseCourseGroupYear->course"
+                                            ></x-planning.completion>
+                                        </template>
+                                    </vue-course-detail>
+                                @endforeach
+                            </vue-plan-wrapper>
+                        </div>
+                    @endforeach
+                </div>
             </div>
             <div class="hidden md:block md:w-2/4 lg:w-1/4 md:pl-4">
                 <div class="text-xl lg:text-2xl text-gray-500 mb-4">Semesterübersicht</div>

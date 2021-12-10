@@ -42,7 +42,7 @@ class AuthService
         } catch (\Throwable $th) {
             activity('error')
                 ->withProperties($shibbolethProperties)
-                ->log('login failed - invalid user role');
+                ->log('login failed - invalid user role: '.$th->getMessage());
 
             abort(403, $th->getMessage());
         }

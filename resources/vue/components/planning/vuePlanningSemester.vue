@@ -22,7 +22,7 @@
                 >
 
                     <template v-slot:icon>
-                        <vue-completion :icon="icon"
+                        <vue-completion :icon="completion(getCourse(coursePlanning))"
                         >
 
                         </vue-completion>
@@ -41,8 +41,6 @@ import {ISemester} from "../../interfaces/semester.interface";
 import {ICoursePlanning} from "../../store/coursePlanning/coursePlanning.interface";
 import {ICompletion} from "../../interfaces/completion.interface";
 import {ICourse} from "../../interfaces/course.interface";
-import {parseDatesInModel} from "../../helpers/interceptors/parseDates";
-import VueAssessmentState from "../Assessment/VueAssessmentState.vue";
 import VueCompletion from "./vueCompletion.vue";
 
 @Component({
@@ -73,6 +71,8 @@ export default class VuePlanningSemester extends BaseComponent {
 
     public icon = 0;
 
+    public course: ICourse;
+
     public get coursePlannings(): ICoursePlanning[] {
         return this.models.coursePlanning.byPlanningId(this.planningId);
     }
@@ -84,7 +84,7 @@ export default class VuePlanningSemester extends BaseComponent {
     public get allCoursePlanningsInSemesterNotSuccessfullyCompleted() {
         return this.allCoursePlanningsInSemester.filter((coursePlanning) => {
             return !this.coursesIsCompletedSuccessfully(this.getCourse(coursePlanning))
-        })
+        });
     }
 
     public get currentYear() {
@@ -160,18 +160,7 @@ export default class VuePlanningSemester extends BaseComponent {
             icon = 3
         }
 
-        console.log(icon);
         return icon;
-    }
-
-    public getCurrentCoursePlanning() {
-        for(const coursePlanning of this.allCoursePlanningsInSemesterNotSuccessfullyCompleted) {
-            this.completion(this.getCourse(coursePlanning));
-        }
-    }
-
-    public created() {
-        this.getCurrentCoursePlanning();
     }
 }
 </script>

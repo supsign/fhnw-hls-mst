@@ -24,6 +24,7 @@ class FillPlanningWithRecommendationsService
         if (!$recommendation) {
             return $planning;
         }
+
         $courseRecommendations = $recommendation->courseRecommendations;
 
         foreach ($courseRecommendations as $courseRecommendation) {
@@ -36,7 +37,10 @@ class FillPlanningWithRecommendationsService
             }
             $this->coursePlanningService->planCourse($planning, $courseRecommendation->course, $plannedSemester);
         }
-        $planning->load('courses');
+
+        if (isset($planning->courses)) {
+            $planning->load('courses');
+        }
 
         return $planning;
     }

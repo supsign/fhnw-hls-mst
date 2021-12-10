@@ -3,7 +3,7 @@
 namespace App\Services\Auth;
 
 use App\Models\User;
-use App\Services\Helpers\hashes;
+use App\Services\Helpers\Hashes;
 use App\Services\Token\ShibbolethProperties;
 use App\Services\Token\TokenService;
 use App\Services\User\UserService;
@@ -13,12 +13,12 @@ use Illuminate\Support\Facades\Session;
 
 class AuthService
 {
-    use hashes;
+    use Hashes;
 
     public function __construct(
-        private RoleService $roleService,
-        private UserService $userService,
-        private TokenService $tokenService
+        protected RoleService $roleService,
+        protected UserService $userService,
+        protected TokenService $tokenService
     ) {
     }
 
@@ -28,17 +28,22 @@ class AuthService
             return false;
         }
 
-        $shibbolethProperties = $this->tokenService->getShibbolethProperties($jwt);
-        $this->login($shibbolethProperties);
+        $this->login(
+            $this->tokenService->getShibbolethProperties($jwt)
+        );
 
         return true;
     }
 
-    private function login(ShibbolethProperties $shibbolethProperties): User
+    protected function login(ShibbolethProperties $shibbolethProperties): User
     {
         try {
             $role = $this->roleService->evaluate($shibbolethProperties);
         } catch (\Throwable $th) {
+            activity('error')
+                ->withProperties($shibbolethProperties)
+                ->log('login failed - invalid user role');
+
             abort(403, $th->getMessage());
         }
 
@@ -70,6 +75,10 @@ class AuthService
         }
 
         if (empty($user)) {
+            activity('error')
+                ->withProperties($shibbolethProperties)
+                ->log('login failed - user has not been created');
+
             throw new Exception('user not created or updated');
         }
 
@@ -79,10 +88,15 @@ class AuthService
         Session::put('firstname', $shibbolethProperties->givenName);
         Session::put('email', $shibbolethProperties->mail);
 
+        activity('info')
+            ->withProperties($shibbolethProperties)
+            ->performedOn($user)
+            ->log('login succesful');
+
         return $user;
     }
 
-    private function isAuthorizedForLogin(ShibbolethProperties $shibbolethProperties)
+    protected function isAuthorizedForLogin(ShibbolethProperties $shibbolethProperties): bool   //  never used anywhere.
     {
         if (!$shibbolethProperties->mail) {
             return false;

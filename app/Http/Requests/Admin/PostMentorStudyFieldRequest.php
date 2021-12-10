@@ -26,7 +26,7 @@ class PostMentorStudyFieldRequest extends FormRequest
         return [
             'mentor_id' => 'int|required',
             'study_field_id' => 'int|required',
-            'is_deputy' => 'bool|required'
+            'is_deputy' => 'bool|required',
         ];
     }
 }

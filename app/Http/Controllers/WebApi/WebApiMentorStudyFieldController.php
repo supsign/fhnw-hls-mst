@@ -15,10 +15,9 @@ class WebApiMentorStudyFieldController extends Controller
 {
     public function __construct(
         protected PermissionAndRoleService $permissionAndRoleService,
-        protected MentorService            $mentorService,
-        protected StudyFieldService        $studyFieldService
-    )
-    {
+        protected MentorService $mentorService,
+        protected StudyFieldService $studyFieldService
+    ) {
     }
 
     public function postMentorStudyField(PostMentorStudyFieldRequest $request): MentorStudyField

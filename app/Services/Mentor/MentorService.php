@@ -25,9 +25,9 @@ class MentorService extends BaseModelService
     {
         return MentorStudyField::updateOrCreate([
             'mentor_id' => $mentor->id,
-            'study_field_id' => $studyField->id,], [
-            'is_deputy' => $isDeputy
-        ]);
+            'study_field_id' => $studyField->id, ], [
+                'is_deputy' => $isDeputy,
+            ]);
     }
 
     public function createOrUpdateOnEventoPersonId(int $eventoPersonId, string $lastname = null, string $firstname = null): Mentor

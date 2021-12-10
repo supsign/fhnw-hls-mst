@@ -20,6 +20,13 @@
                                    :planningId="planningId"
                                    :planningIsLocked="planningIsLocked"
                 >
+
+                    <template v-slot:icon>
+                        <vue-completion :icon="icon"
+                        >
+
+                        </vue-completion>
+                    </template>
                 </vue-course-detail>
             </div>
         </div>
@@ -36,9 +43,11 @@ import {ICompletion} from "../../interfaces/completion.interface";
 import {ICourse} from "../../interfaces/course.interface";
 import {parseDatesInModel} from "../../helpers/interceptors/parseDates";
 import VueAssessmentState from "../Assessment/VueAssessmentState.vue";
+import VueCompletion from "./vueCompletion.vue";
 
 @Component({
     components: {
+        VueCompletion,
         VueCourseDetail
     }
 })
@@ -61,6 +70,8 @@ export default class VuePlanningSemester extends BaseComponent {
     public isCollapsed = true;
 
     public break = 1024;
+
+    public icon = 0;
 
     public get coursePlannings(): ICoursePlanning[] {
         return this.models.coursePlanning.byPlanningId(this.planningId);
@@ -113,10 +124,6 @@ export default class VuePlanningSemester extends BaseComponent {
         return this.courses.find(course => course.id === coursePlanning.course_id);
     }
 
-    public getAllCourseIdsFromCoursePlanning() {
-        return this.allCoursePlanningsInSemester.map(coursePlanning=>coursePlanning.course_id);
-    }
-
     public getAllPointsInSemester(semester: ISemester) {
         let credits = 0;
 
@@ -132,6 +139,39 @@ export default class VuePlanningSemester extends BaseComponent {
 
     public courseIsPlanned(course: ICourse): boolean {
         return !!this.coursePlannings.find(coursePlanning => coursePlanning.course_id === course.id)
+    }
+
+    public completion(course: ICourse) {
+        let icon: number;
+
+        if(!!this.completions.find((completion) => {
+            return completion.course_id === course.id && (completion.completion_type_id === 2 || completion.completion_type_id === 4)
+        })) {
+            icon = 1
+        }
+
+        if(!!this.completions.find((completion) => {
+            return completion.course_id === course.id && (completion.completion_type_id === 3)
+        })) {
+            icon = 2
+        }
+
+        else {
+            icon = 3
+        }
+
+        console.log(icon);
+        return icon;
+    }
+
+    public getCurrentCoursePlanning() {
+        for(const coursePlanning of this.allCoursePlanningsInSemesterNotSuccessfullyCompleted) {
+            this.completion(this.getCourse(coursePlanning));
+        }
+    }
+
+    public created() {
+        this.getCurrentCoursePlanning();
     }
 }
 </script>

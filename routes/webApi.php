@@ -5,6 +5,7 @@ use App\Http\Controllers\WebApi\CoursePlanningController;
 use App\Http\Controllers\WebApi\StudentController;
 use App\Http\Controllers\WebApi\UserController;
 use App\Http\Controllers\WebApi\WebApiMentorController;
+use App\Http\Controllers\WebApi\WebApiMentorStudyFieldController;
 use App\Http\Controllers\WebApi\WebApiPlanningController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,5 +28,8 @@ Route::middleware('auth')->group(
         Route::get('student/getByEventoId', [StudentController::class, 'getByEventoId'])->name('webapi.student.getByEventoId');
 
         Route::get('user/getByEmail', [UserController::class, 'getByEmail'])->name('webapi.user.getByEmail');
+
+        Route::post('mentorStudyFields', [WebApiMentorStudyFieldController::class, 'postMentorStudyField'])->name('webapi.mentorStudyField.post');
+        Route::delete('mentorStudyFields/{mentorStudyField}', [WebApiMentorStudyFieldController::class, 'deleteMentorStudyField'])->name('webapi.mentorStudyField. delete');
     }
 );

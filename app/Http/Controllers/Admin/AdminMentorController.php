@@ -25,7 +25,7 @@ class AdminMentorController extends Controller
     public function showOne(Mentor $mentor): View
     {
         $this->permissionAndRoleService->canManageBackendOrAbort();
-        $studyFields = StudyField::all();
+        $studyFields = StudyField::where(['study_program_id' => 6])->get();
 
         return view('admin.mentor', [
             'mentor' => $mentor,

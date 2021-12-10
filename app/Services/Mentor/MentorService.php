@@ -12,7 +12,7 @@ use App\Services\Evento\Traits\GetByEventoPersonId;
 class MentorService extends BaseModelService
 {
     use CreateOrUpdateOnEventoPersonId {
-        createOrUpdateOnEventoPersonId AS protected createOrUpdateOnEventoPersonIdTrait;
+        createOrUpdateOnEventoPersonId as protected createOrUpdateOnEventoPersonIdTrait;
     }
     use GetByEventoPersonId;
 
@@ -21,15 +21,13 @@ class MentorService extends BaseModelService
         parent::__construct($model);
     }
 
-    public function addStudyField(Mentor $mentor, StudyField $studyField, bool $isDeputy = false): self
+    public function addStudyField(Mentor $mentor, StudyField $studyField, bool $isDeputy = false): MentorStudyField
     {
-        MentorStudyField::firstOrCreate([
+        return MentorStudyField::updateOrCreate([
             'mentor_id' => $mentor->id,
-            'study_field_id' => $studyField->id,
-            'is_deputy' => $isDeputy,
+            'study_field_id' => $studyField->id,], [
+            'is_deputy' => $isDeputy
         ]);
-
-        return $this;
     }
 
     public function createOrUpdateOnEventoPersonId(int $eventoPersonId, string $lastname = null, string $firstname = null): Mentor

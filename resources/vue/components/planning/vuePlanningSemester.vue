@@ -8,8 +8,8 @@
                     <i v-if="!isCollapsed" aria-hidden="true" class="fas fa-arrow-down"></i>
                 </div>
                 <div class="flex justify-between w-full">
-                    <div class="sm:text-sm lg:text-base">{{ semester.is_hs ? 'HS' : 'FS' }} {{ semester.year }}</div>
-                    <div>{{ getAllPointsInSemester(semester) }} ECTS</div>
+                    <div class="sm:text-sm lg:text-base flex-grow">{{ semester.is_hs ? 'HS' : 'FS' }} {{ semester.year }}</div>
+                    <div class="border-l py-1 px-2 text-center mx-auto w-16 h-full">{{ getAllPointsInSemester(semester) }}</div>
                 </div>
             </div>
 

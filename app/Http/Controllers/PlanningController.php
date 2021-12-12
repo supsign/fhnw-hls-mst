@@ -165,6 +165,11 @@ class PlanningController extends Controller
     {
         $user = Auth::user();
         $this->permissionAndRoleService->canPlanMySchedulesOrAbort($user->student, $planning);
+
+        if ($planning->is_locked) {
+            return redirect()->route('planning.showOne', $planning);
+        }
+
         $planningService->cascadingDelete($planning);
 
         Alert::toast('Deleted', 'success');
@@ -176,6 +181,10 @@ class PlanningController extends Controller
     {
         $user = Auth::user();
         $this->permissionAndRoleService->canPlanMySchedulesOrAbort($user->student, $planning);
+
+        if ($planning->is_locked) {
+            return redirect()->route('planning.showOne', $planning);
+        }
 
         $fillPlanningWithRecommendationsService->fill($planning);
 

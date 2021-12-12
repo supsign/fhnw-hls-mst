@@ -37,6 +37,13 @@ class TokenService
         return $validator->validate($token, new SignedWith($signer, $publicKey), new StrictValidAt($now));
     }
 
+    private function parse(string $jwt): Plain
+    {
+        $parser = new Parser(new JoseEncoder());
+
+        return $parser->parse($jwt);
+    }
+
     public function getShibbolethProperties(string $jwt): ShibbolethProperties
     {
         $claims = $this->parse($jwt)->claims();
@@ -55,13 +62,6 @@ class TokenService
         return $shibbolethProperties;
     }
 
-    private function parse(string $jwt): Plain
-    {
-        $parser = new Parser(new JoseEncoder());
-
-        return $parser->parse($jwt);
-    }
-
     public function issue(ShibbolethProperties $shibbolethProperties): Plain
     {
         if (App::environment() === 'production') {
@@ -74,14 +74,15 @@ class TokenService
         $now = new DateTimeImmutable();
 
         return $builder->issuedBy('https://mst.fhnw.ch')
-        ->issuedAt($now)
-        ->canOnlyBeUsedAfter($now)
-        ->expiresAt($now->modify('+1 hour'))
-        ->withClaim('fhnwIDPerson', $shibbolethProperties->fhnwIDPerson)
-        ->withClaim('mail', $shibbolethProperties->mail)
-        ->withClaim('firstname', $shibbolethProperties->givenName)
-        ->withClaim('lastname', $shibbolethProperties->surname)
-        ->withClaim('fhnwDetailedAffiliation', $shibbolethProperties->fhnwDetailedAffiliation)
-        ->getToken(Signer\Ecdsa\Sha512::create(), $privateKey);
+            ->issuedAt($now)
+            ->canOnlyBeUsedAfter($now)
+            ->expiresAt($now->modify('+1 hour'))
+            ->withClaim('fhnwIDPerson', $shibbolethProperties->fhnwIDPerson)
+            ->withClaim('mail', $shibbolethProperties->mail)
+            ->withClaim('firstname', $shibbolethProperties->givenName)
+            ->withClaim('lastname', $shibbolethProperties->surname)
+            ->withClaim('fhnwDetailedAffiliation', $shibbolethProperties->fhnwDetailedAffiliation)
+            ->withClaim('entitlement', $shibbolethProperties->entitlement)
+            ->getToken(Signer\Ecdsa\Sha512::create(), $privateKey);
     }
 }

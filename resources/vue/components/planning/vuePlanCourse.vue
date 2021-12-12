@@ -1,9 +1,12 @@
 <template>
     <div class="w-16 text-center">
-        <div v-if="!coursePlanning" class="flex text-center justify-center" @click.stop="()=>{pickerIsOpen = true}">
-            <img :src="'/img/calendarIcon.svg'" alt="module_icon" class="cursor-pointer w-7 h-7 my-auto">
+        <div v-if="!coursePlanning && !planningIsLocked" class="flex text-center justify-center"
+             @click.stop="openPicker">
+            <img :src="'/img/calendarIcon.svg'" alt="module_icon"
+                 class="w-7 h-7 my-auto cursor-pointer">
         </div>
-        <div v-else-if="coursePlanningSemester" class="text-sm cursor-pointer" @click.stop="()=>{pickerIsOpen = true}">
+        <div v-else-if="coursePlanningSemester" :class="{'cursor-pointer': !planningIsLocked}" class="text-sm"
+             @click.stop="openPicker">
             {{ coursePlanningSemester.year - 2000 }}
             {{ coursePlanningSemester.is_hs ? 'HS' : 'FS' }}
         </div>
@@ -41,6 +44,9 @@ export default class VuePlanCourse extends BaseComponent {
         type: Array
     })
     public semesters: ISemester[]
+
+    @Prop({type: Boolean, default: false})
+    planningIsLocked: boolean
 
     public pickerIsOpen = false;
 
@@ -96,6 +102,13 @@ export default class VuePlanCourse extends BaseComponent {
             planning_id: this.planningId,
             semester_id: semester.id
         })
+    }
+
+    public openPicker() {
+        if (this.planningIsLocked) {
+            return;
+        }
+        this.pickerIsOpen = true
     }
 
 }

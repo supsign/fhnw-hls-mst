@@ -92,6 +92,7 @@ namespace App\Models{
  * @property-read \App\Models\CompletionType $completionType
  * @property-read \App\Models\CourseYear $courseYear
  * @property-read mixed $course_id
+ * @property-read \App\Models\BaseCollection $study_field_years
  * @property-read \App\Models\Student $student
  * @method static \App\Models\BaseCollection|static[] all($columns = ['*'])
  * @method static \App\Models\BaseCollection|static[] get($columns = ['*'])
@@ -689,6 +690,8 @@ namespace App\Models{
  * @property int $id
  * @property int $mentor_id
  * @property int $student_id
+ * @property string|null $firstname
+ * @property string|null $lastname
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Mentor $mentor
@@ -699,7 +702,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|MentorStudent newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|MentorStudent query()
  * @method static \Illuminate\Database\Eloquent\Builder|MentorStudent whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|MentorStudent whereFirstname($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MentorStudent whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|MentorStudent whereLastname($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MentorStudent whereMentorId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MentorStudent whereStudentId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MentorStudent whereUpdatedAt($value)
@@ -711,12 +716,24 @@ namespace App\Models{
 /**
  * App\Models\MentorStudyField
  *
+ * @mixin IdeHelperMentorStudyField
+ * @property int $id
+ * @property int $mentor_id
+ * @property int $study_field_id
+ * @property bool $is_deputy
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \App\Models\BaseCollection|static[] all($columns = ['*'])
  * @method static \App\Models\BaseCollection|static[] get($columns = ['*'])
  * @method static \Illuminate\Database\Eloquent\Builder|MentorStudyField newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|MentorStudyField newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|MentorStudyField query()
- * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|MentorStudyField whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|MentorStudyField whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|MentorStudyField whereIsDeputy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|MentorStudyField whereMentorId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|MentorStudyField whereStudyFieldId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|MentorStudyField whereUpdatedAt($value)
  */
 	class IdeHelperMentorStudyField extends \Eloquent {}
 }
@@ -870,6 +887,7 @@ namespace App\Models{
  * @property-read int|null $course_skill_count
  * @property-read \App\Models\BaseCollection|\App\Models\Course[] $courses
  * @property-read int|null $courses_count
+ * @property-read \App\Models\Course|null $gain_course
  * @property-read \App\Models\BaseCollection|\App\Models\SkillStundent[] $skillStudent
  * @property-read int|null $skill_student_count
  * @property-read \App\Models\BaseCollection|\App\Models\Student[] $students
@@ -1085,7 +1103,7 @@ namespace App\Models{
  * @property-read int|null $course_group_years_count
  * @property-read \App\Models\BaseCollection|\App\Models\CrossQualificationYear[] $crossQualificationYears
  * @property-read int|null $cross_qualification_years_count
- * @property-read mixed $courses
+ * @property-read \App\Models\BaseCollection $courses
  * @property-read StudyFieldYear|null $originStudyFieldYear
  * @property-read \App\Models\Recommendation|null $recommendation
  * @property-read \App\Models\BaseCollection|\App\Models\SpecializationYear[] $specializationYears

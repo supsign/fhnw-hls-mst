@@ -29,6 +29,10 @@ class CoursePlanningController extends Controller
         $student = $planning->student;
         $this->permissionAndRoleService->canPlanScheduleOrAbort($student, $planning);
 
+        if ($planning->is_locked) {
+            $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student, $planning);
+        }
+
         $this->coursePlanningService->delete($coursePlanning);
     }
 
@@ -39,6 +43,10 @@ class CoursePlanningController extends Controller
 
         $student = $planning->student;
         $this->permissionAndRoleService->canPlanScheduleOrAbort($student, $planning);
+
+        if ($planning->is_locked) {
+            $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student, $planning);
+        }
 
         /* @var $course Course */
         $course = $courseService->getById($request->course_id);
@@ -58,6 +66,10 @@ class CoursePlanningController extends Controller
         $planning = $coursePlanning->planning;
         $student = $planning->student;
         $this->permissionAndRoleService->canPlanScheduleOrAbort($student, $planning);
+
+        if ($planning->is_locked) {
+            $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student, $planning);
+        }
 
         /* @var $semester Semester */
         $semester = $semesterService->getById($request->semester_id);

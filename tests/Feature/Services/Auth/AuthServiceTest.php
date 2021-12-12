@@ -79,6 +79,7 @@ class AuthServiceTest extends TestCase
         $shibbolethProperties = new ShibbolethProperties();
         $shibbolethProperties->mail = $this->faker->email();
         $shibbolethProperties->fhnwIDPerson = $this->faker->randomNumber(5);
+        $shibbolethProperties->entitlement = 'http://fhnw.ch/aai/res/hls/stab/mst_edu_student';
 
         $this->assertFalse(Auth::check());
 
@@ -94,6 +95,7 @@ class AuthServiceTest extends TestCase
         $shibbolethProperties = new ShibbolethProperties();
         $shibbolethProperties->mail = $this->faker->email();
         $shibbolethProperties->fhnwIDPerson = $this->faker->randomNumber(5);
+        $shibbolethProperties->entitlement = 'http://fhnw.ch/aai/res/hls/stab/mst_edu_student';
         $this->studentService->createOrUpdateOnEventoPersonId($shibbolethProperties->fhnwIDPerson);
 
         $this->assertFalse(Auth::check());
@@ -111,7 +113,7 @@ class AuthServiceTest extends TestCase
         $shibbolethProperties = new ShibbolethProperties();
         $shibbolethProperties->mail = $this->faker->email();
         $shibbolethProperties->fhnwIDPerson = $this->faker->randomNumber(5);
-        $shibbolethProperties->fhnwDetailedAffiliation = 'staff-hls-alle;sldkjf;aslkdfj';
+        $shibbolethProperties->entitlement = 'http://fhnw.ch/aai/res/hls/stab/mst_mentor';
 
         $this->assertFalse(Auth::check());
 
@@ -128,7 +130,7 @@ class AuthServiceTest extends TestCase
         $shibbolethProperties = new ShibbolethProperties();
         $shibbolethProperties->mail = $this->faker->email();
         $shibbolethProperties->fhnwIDPerson = $this->faker->randomNumber(5);
-        $shibbolethProperties->fhnwDetailedAffiliation = 'staff-hls-alle;sldkjf;aslkdfj';
+        $shibbolethProperties->entitlement = 'http://fhnw.ch/aai/res/hls/stab/mst_mentor';
         $token = $this->tokenService->issue($shibbolethProperties);
 
         $this->assertFalse(Auth::check());

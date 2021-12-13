@@ -2,7 +2,7 @@
     <x-slot name="title">
         <div class="flex flex-row justify-between">
             <div class="my-auto">
-                Studierende
+                @lang('l.students')
             </div>
         </div>
     </x-slot>
@@ -19,7 +19,7 @@
         </div>
     @else
         <div>
-            Kein Student:inn hat bisher eine Planung für Sie freigegeben.
+            @lang('l.mentorNoStudents')
         </div>
     @endif
 </x-app.card>

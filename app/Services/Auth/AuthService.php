@@ -51,6 +51,8 @@ class AuthService
             activity('error')
                 ->withProperties($shibbolethProperties)
                 ->log('login failed - no e-mail or person id');
+
+            abort(403);
         }
 
         switch ($role) {

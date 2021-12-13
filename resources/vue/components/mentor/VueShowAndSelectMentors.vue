@@ -132,7 +132,11 @@ export default class VueShowAndSelectMentors extends BaseComponent {
     }
 
     public getMentorByMentorStudent(mentorStudent: IMentorStudent): IMentor {
-        return this.allMentors.find(mentor => mentor.id === mentorStudent.mentor_id)
+        console.log(this.allMentors);
+        console.log(mentorStudent);
+        const mentor = this.allMentors.find(mentor => mentor.id === mentorStudent.mentor_id)
+        console.log(mentor);
+        return mentor;
     }
 
 

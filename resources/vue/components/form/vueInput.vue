@@ -33,11 +33,11 @@
 
 <script lang="ts">
 import {Component, Emit, Model, Prop} from "vue-property-decorator";
-import BaseComponent from "./base";
-import {FieldControl} from "../helpers/validation/fieldControl";
-import {ValidationRule} from "../helpers/validation/rules/validationRule";
-import {parseValidationRules} from "../helpers/validation/rules/parseValidationRules";
+import BaseComponent from "../base/baseComponent";
+import {FieldControl} from "../../helpers/validation/fieldControl";
+import {parseValidationRules} from "../../helpers/validation/rules/parseValidationRules";
 import tippy, {Instance as TippyInstance} from "tippy.js";
+import {ValidationRule} from "../../helpers/validation/rules/validationRule";
 
 @Component
 export default class VueInput extends BaseComponent {

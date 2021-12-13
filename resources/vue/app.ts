@@ -33,11 +33,15 @@ import VueAdminMentorStudyFields from "./components/admin/vueAdminMentorStudyFie
 import VueLockPlanning from "./components/planning/vueLockPlanning.vue";
 import VueAdminMentorStudents from "./components/admin/vueAdminMentorStudents.vue";
 
+//@ts-ignore
+import VueMask from 'v-mask'
+
 library.add(faUserSecret);
 library.add(faCheck);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.use(Vuex);
+Vue.use(VueMask);
 
 const store = new Vuex.Store({
     strict: true,

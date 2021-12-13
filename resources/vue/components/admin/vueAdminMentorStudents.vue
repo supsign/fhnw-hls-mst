@@ -1,25 +1,37 @@
 <template>
-    <div class="p-2 rounded  bg-white flex flex-col shadow-xl">
-        <div class="content-center p-2 border-b rounded-t text-base md:text-lg" v>
-            <div>Studierende</div>
-        </div>
-
-        <div class="p-3 text-sm md:text-base flex-grow">
-            <div v-for="mentorStudent in mentorStudents">
-                {{ mentorStudent.firstname }} {{ mentorStudent.lastname }}
+    <div class="space-y-4">
+        <div class="p-2 rounded  bg-white flex flex-col shadow-xl">
+            <div class="content-center p-2 border-b rounded-t text-base md:text-lg" v>
+                <div>Studierende</div>
             </div>
-            <div class="flex flex-row space-x-2 mt-4">
-                <vue-input v-model="eventoId" :disabled="inputIsDisabled" :label="'Evento-ID'" required></vue-input>
-                <vue-input v-model="firstname" :disabled="inputIsDisabled" :label="'Vorname'" required></vue-input>
-                <vue-input v-model="lastname" :disabled="inputIsDisabled" :label="'Nachname'" required></vue-input>
+
+            <div class="p-3 text-sm md:text-base flex-grow">
+                <div v-for="mentorStudent in mentorStudents">
+                    {{ mentorStudent.firstname }} {{ mentorStudent.lastname }}
+                </div>
+            </div>
+
+        </div>
+        <div class="p-2 rounded  bg-white flex flex-col shadow-xl">
+            <div class="content-center p-2 border-b rounded-t text-base md:text-lg flex flex-row justify-between">
+                <div>Studierende Hinzufügen</div>
                 <div class="flex flex-col justify-end">
                     <button class="button-primary" @click="addStudent">Hinzufügen</button>
                 </div>
             </div>
 
-        </div>
+            <div class="p-3 text-sm md:text-base flex-grow">
+                <div class="flex flex-row space-x-2 mt-4" @keyup.enter="addStudent">
+                    <vue-input v-model="eventoId" :disabled="inputIsDisabled" :label="'Evento-ID'" required></vue-input>
+                    <vue-input v-model="firstname" :disabled="inputIsDisabled" :label="'Vorname'" required></vue-input>
+                    <vue-input v-model="lastname" :disabled="inputIsDisabled" :label="'Nachname'" required></vue-input>
+                </div>
 
+            </div>
+
+        </div>
     </div>
+
 </template>
 
 <script lang="ts">
@@ -63,12 +75,15 @@ export default class VueAdminMentorStudents extends BaseComponent {
             lastname: this.lastname
         })
             .then((res) => {
-                Toast.fire({title: 'Mentor hinzugefügt', icon: 'success'})
+                if (this.mentorStudents.find(mentorStudent => mentorStudent.id === res.data?.id)) {
+                    Toast.fire({title: 'Student:in bereits vorhanden', icon: 'success'})
+                }
+                Toast.fire({title: 'Student:in hinzugefügt', icon: 'success'})
                 this.mentorStudents.push(res.data);
                 this.resetInput()
             })
             .catch((reason) => {
-                Toast.fire({title: 'Error', icon: 'success', text: reason.text});
+                Toast.fire({title: 'Error', icon: 'error', text: reason.text});
                 console.log(reason);
                 this.eventoId = null;
             })

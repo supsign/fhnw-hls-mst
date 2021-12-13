@@ -13,7 +13,7 @@ use Illuminate\View\Component;
 class Mentors extends Component
 {
     public Collection $allMentors;
-    public Collection $myMentors;
+    public Collection $mentorStudents;
     public ?StudyField $studyField;
 
     /**
@@ -25,7 +25,7 @@ class Mentors extends Component
     {
         $this->allMentors = Mentor::all();
 
-        $this->myMentors = $student->mentors;
+        $this->mentorStudents = $student->mentorStudent;
 
         $this->studyField = $this->student->studyFieldYear?->studyField;
     }

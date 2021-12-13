@@ -46,7 +46,12 @@ class WebApiMentorController extends Controller
             abort(404, 'student not found');
         }
 
-        return $attacheStudentToMentorService->attach($mentor, $user->student);
+        return $attacheStudentToMentorService->attach(
+            $mentor,
+            $user->student,
+            $findAttachMentorStudentRequest->firstname,
+            $findAttachMentorStudentRequest->lastname
+        );
     }
 
 

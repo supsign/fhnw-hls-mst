@@ -92,6 +92,7 @@ namespace App\Models{
  * @property-read \App\Models\CompletionType $completionType
  * @property-read \App\Models\CourseYear $courseYear
  * @property-read mixed $course_id
+ * @property-read \App\Models\BaseCollection $study_field_years
  * @property-read \App\Models\Student $student
  * @method static \App\Models\BaseCollection|static[] all($columns = ['*'])
  * @method static \App\Models\BaseCollection|static[] get($columns = ['*'])
@@ -715,6 +716,7 @@ namespace App\Models{
 /**
  * App\Models\MentorStudyField
  *
+ * @mixin IdeHelperMentorStudyField
  * @property int $id
  * @property int $mentor_id
  * @property int $study_field_id
@@ -732,7 +734,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|MentorStudyField whereMentorId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MentorStudyField whereStudyFieldId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MentorStudyField whereUpdatedAt($value)
- * @mixin \Eloquent
  */
 	class IdeHelperMentorStudyField extends \Eloquent {}
 }
@@ -751,7 +752,6 @@ namespace App\Models{
  * @property string|null $name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property bool $is_locked
  * @property-read \App\Models\BaseCollection|\App\Models\Semester[] $coursePlanningSemester
  * @property-read int|null $course_planning_semester_count
  * @property-read \App\Models\BaseCollection|\App\Models\CoursePlanning[] $coursePlannings
@@ -773,7 +773,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Planning whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Planning whereCrossQualificationYearId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Planning whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Planning whereIsLocked($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Planning whereMentorId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Planning whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Planning whereSpecializationYearId($value)

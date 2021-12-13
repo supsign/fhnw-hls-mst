@@ -7,6 +7,9 @@
 
             <div class="p-3 text-sm md:text-base flex-grow">
                 <div v-for="mentorStudent in mentorStudents">
+                    <span @click="()=>remove(mentorStudent)">
+                            <i aria-hidden="true" class="far fa-trash alt mr-2 cursor-pointer"> </i>
+                        </span>
                     {{ mentorStudent.firstname }} {{ mentorStudent.lastname }}
                 </div>
             </div>
@@ -86,6 +89,19 @@ export default class VueAdminMentorStudents extends BaseComponent {
                 Toast.fire({title: 'Error', icon: 'error', text: reason.text});
                 console.log(reason);
                 this.eventoId = null;
+            })
+    }
+
+    public remove(mentorStudent: IMentorStudent) {
+        const index = this.mentorStudents.findIndex(mentorStudentAttached => mentorStudentAttached.id === mentorStudent.id);
+        if (index === -1) {
+            return;
+        }
+        this.mentorStudents.splice(index, 1);
+        axios.delete(`/webapi/mentor/${mentorStudent.mentor_id}/students/${mentorStudent.student_id}`)
+            .then(() => Toast.fire({title: 'Student:in entfernt', icon: 'success'}))
+            .catch(() => {
+                this.mentorStudents.push(mentorStudent);
             })
     }
 

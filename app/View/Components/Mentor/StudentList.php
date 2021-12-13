@@ -16,7 +16,8 @@ class StudentList extends Component
      * @return void
      */
     public function __construct(public Mentor $mentor)
-    {}
+    {
+    }
 
     /**
      * Get the view / contents that represent the component.

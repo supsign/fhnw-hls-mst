@@ -10,17 +10,13 @@ use Illuminate\View\Component;
 
 class StudentList extends Component
 {
-    public Collection $mentorStudents;
-
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(Mentor $mentor)
-    {
-        $this->mentorStudents = $mentor->mentorStudent;
-    }
+    public function __construct(public Mentor $mentor)
+    {}
 
     /**
      * Get the view / contents that represent the component.

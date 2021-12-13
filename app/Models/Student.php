@@ -7,6 +7,8 @@ namespace App\Models;
  */
 class Student extends BaseModel
 {
+    protected $hidden = ['evento_person_id_hash'];
+
     public function completions()
     {
         return $this->hasMany(Completion::class);

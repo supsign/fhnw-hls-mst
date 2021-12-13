@@ -1,6 +1,8 @@
 <?php
 
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AdminMentorController;
+use App\Http\Controllers\Admin\AdminRolesController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MentorPlanningController;
@@ -66,8 +68,11 @@ Route::middleware(['web', 'auth', 'backend'])->group(
     function () {
         Route::get('admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
         Route::get('admin/courses', [AdminController::class, 'courses'])->name('admin.course.list');
-        Route::get('admin/userManagement/assignRoleToUser', [AdminController::class, 'assignRoles'])->name('admin.userManagement.assign');
-        Route::post('admin/userManagement/assignRoleToUser', [AdminController::class, 'assignRoleToUser'])->name('admin.userManagement.assign.post');
-        Route::post('admin/userManagement/removeRoleFromUser', [AdminController::class, 'removeRoleFromUser'])->name('admin.userManagement.remove.post');
+        Route::get('admin/userManagement/assignRoleToUser', [AdminRolesController::class, 'assignRoles'])->name('admin.userManagement.assign');
+        Route::post('admin/userManagement/assignRoleToUser', [AdminRolesController::class, 'assignRoleToUser'])->name('admin.userManagement.assign.post');
+        Route::post('admin/userManagement/removeRoleFromUser', [AdminRolesController::class, 'removeRoleFromUser'])->name('admin.userManagement.remove.post');
+
+        Route::get('admin/mentors', [AdminMentorController::class, 'mentors'])->name('admin.mentors');
+        Route::get('admin/mentors/{mentor}', [AdminMentorController::class, 'showOne'])->name('admin.mentor');
     }
 );

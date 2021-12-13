@@ -1,8 +1,5 @@
-// ToDo fertigstellen
-/*
-import { TransLation } from "../../translation";
 import * as EmailValidator from "email-validator";
-import { ICreateValidationRuleOption } from "../../../store/createValidationRuleOption.interface";
+import {ICreateValidationRuleOption} from "../../../store/createValidationRuleOption.interface";
 
 export class ValidationRule {
     private errorString = "l.error";
@@ -44,7 +41,7 @@ export class ValidationRule {
             return !!String(value).length;
         };
 
-        const errorString = TransLation.get("validation.below.required");
+        const errorString = 'Pflichtfeld';
 
         return new ValidationRule(rule, errorString);
     }
@@ -54,7 +51,7 @@ export class ValidationRule {
             return EmailValidator.validate(value);
         };
 
-        const errorString = TransLation.get("validation.below.email");
+        const errorString = 'Falsches Email Format';
 
         return new ValidationRule(rule, errorString);
     }
@@ -66,9 +63,7 @@ export class ValidationRule {
             );
         };
 
-        const errorString = TransLation.get("validation.below.min.string", {
-            min: minLength.toString()
-        });
+        const errorString = 'Mindestlänge: ' + minLength.toString();
 
         return new ValidationRule(rule, errorString);
     }
@@ -78,9 +73,7 @@ export class ValidationRule {
             return String(value).length <= maxLength;
         };
 
-        const errorString = TransLation.get("validation.below.max.string", {
-            max: maxLength.toString()
-        });
+        const errorString = 'Maximallänge: ' + maxLength.toString();
 
         return new ValidationRule(rule, errorString);
     }
@@ -135,4 +128,3 @@ export class ValidationRule {
         return this.rule(value);
     }
 }
-*/

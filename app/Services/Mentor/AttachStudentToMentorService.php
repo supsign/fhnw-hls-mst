@@ -20,7 +20,7 @@ class AttachStudentToMentorService
         return $this->mentorStudentModel::updateOrCreate(
             [
                 'mentor_id' => $mentor->id,
-                'student_id' => $student->id
+                'student_id' => $student->id,
             ], [
                 'firstname' => $firstname ?: $user?->firstname,
                 'lastname' => $lastname ?: $user?->lastname,

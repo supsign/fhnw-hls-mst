@@ -1,7 +1,7 @@
 <template>
     <div class="space-y-4">
         <div class="p-2 rounded  bg-white flex flex-col shadow-xl">
-            <div class="content-center p-2 border-b rounded-t text-base md:text-lg" v>
+            <div class="content-center p-2 border-b rounded-t text-base md:text-lg">
                 <div>Studierende</div>
             </div>
 

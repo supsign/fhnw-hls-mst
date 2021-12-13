@@ -3,7 +3,7 @@
         <div v-if="!coursePlanning && !planningIsLocked" class="flex text-center justify-center"
              @click.stop="openPicker">
             <img :src="'/img/calendarIcon.svg'" alt="module_icon"
-                 class="w-7 h-7 my-auto">
+                 class="w-7 h-7 my-auto cursor-pointer">
         </div>
         <div v-else-if="coursePlanningSemester" :class="{'cursor-pointer': !planningIsLocked}" class="text-sm"
              @click.stop="openPicker">

@@ -3,7 +3,7 @@
     <div>{{ $student->studyFieldYear->studyField->name ?? __("l.studyProgram") .  ': -' }}</div>
     <div>{{ $student->studyFieldYear->beginSemester->year ?? __("l.term") .  ': -' }}</div>
     <div>@lang('l.credits'): {{ $studentCredits}}</div>
-    @if(isset($student->studyFieldYear))
+    @if($student->studyFieldYear)
         <div class="mt-4 flex md:flex-none text-center">
             <a href="{{route('standing.index')}}" class="button-primary md:w-auto">@lang('l.currentStatus')</a>
         </div>

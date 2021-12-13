@@ -30,5 +30,5 @@ return [
     'fs' => 'FS',
     'termPlanned' => 'geplante Semester',
     'students' => 'Studierende',
-    'mentorNoStudents' => 'Kein Student:inn hat bisher eine Planung für Sie freigegeben.',
+    'mentorNoStudents' => 'Kein Student:in hat bisher eine Planung für Sie freigegeben.',
 ];

@@ -38,6 +38,7 @@ class Role extends Component
                 $role->name = 'Mentor';
             }
         }
+
         return view('components.user.role', [
             'roles' => $roles,
         ]);

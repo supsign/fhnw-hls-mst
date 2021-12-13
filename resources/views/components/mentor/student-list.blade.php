@@ -6,7 +6,8 @@
             </div>
         </div>
     </x-slot>
-    @if(!empty($mentorStudents))
+
+    @if($mentorStudents->count())
         <div class="grid grid-cols-1 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 mb-4">
             @foreach($mentorStudents  as $mentorStudent)
                 <a href="{{ route('mentor.planning.list', $mentorStudent->student) }}">

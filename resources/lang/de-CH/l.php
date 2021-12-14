@@ -5,7 +5,6 @@ return [
     'landingPage' => 'Startseite',
     'userData' => 'Benutzerdaten',
     'mentor' => 'Mentor',
-    'student' => 'Student',
     'name' => 'Name',
     'role' => 'Rolle',
     'roles' => 'Rollen',
@@ -31,4 +30,6 @@ return [
     'hs' => 'HS',
     'fs' => 'FS',
     'termPlanned' => 'geplante Semester',
+    'students' => 'Studierende',
+    'mentorNoStudents' => 'Kein Student:in hat bisher eine Planung für Sie freigegeben.',
 ];

@@ -22,7 +22,7 @@ class RoleAndPermissionSeeder extends Seeder
         $student = Role::create(['name' => 'student']);
         $mentor = Role::create(['name' => 'mentor']);
         $appAdmin = Role::create(['name' => 'app-admin']);
-        $serverAdmin = Role::create(['name' => 'server-admin']);
+        Role::create(['name' => 'server-admin']);
 
         // Create Permissions
         Permission::create(['name' => 'show app']);
@@ -35,6 +35,5 @@ class RoleAndPermissionSeeder extends Seeder
         $appAdmin->givePermissionTo('show app', 'show backend', 'manage backend');
         $mentor->givePermissionTo('show app', 'plan schedule', 'plan students schedules');
         $student->givePermissionTo('show app', 'plan schedule', 'plan my schedules');
-        $serverAdmin->givePermissionTo(Permission::all());
     }
 }

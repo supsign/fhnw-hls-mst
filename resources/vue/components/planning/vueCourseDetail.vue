@@ -3,7 +3,8 @@
         <div class="w-8">
             <slot name="icon"></slot>
         </div>
-        <div class="my-auto break-words flex-grow">
+        <div class="my-auto break-words flex-grow"
+             :class="{ 'cursor-pointer': courseYear }">
             {{ course.name }}
         </div>
         <vue-plan-course
@@ -90,8 +91,8 @@ export default class VueCourseDetail extends BaseComponent {
     }
 
     public get notPlannedNotCompletedCourseSkillIds(): number[] {
-        return this.notCompletedSkillIds.filter(notCompletetedSkillId => {
-            return !this.plannedSkillIdsBefore.includes(notCompletetedSkillId)
+        return this.notCompletedSkillIds.filter(notCompletedSkillId => {
+            return !this.plannedSkillIdsBefore.includes(notCompletedSkillId)
         })
     }
 

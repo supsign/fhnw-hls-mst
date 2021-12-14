@@ -31,18 +31,23 @@ class Role extends Component
 
         foreach ($roles as $role) {
             if ($role->name === 'app-admin') {
-                $customizedRoles[1] = 'App-Admin';
+                $customizedRoles[] = 'App-Admin';
             }
             if ($role->name === 'server-admin') {
-                $customizedRoles[2] = 'Super-Admin';
+                $customizedRoles[] = 'Super-Admin';
             }
             if ($role->name === 'mentor') {
-                $customizedRoles[3] = 'Mentor';
+                $customizedRoles[] = 'Mentor';
             }
         }
 
-        return view('components.user.role', [
-            'roles' => $customizedRoles,
-        ]);
+        if($customizedRoles) {
+            return view('components.user.role', [
+                'roles' => $customizedRoles,
+            ]);
+        }
+        else {
+            return null;
+        }
     }
 }

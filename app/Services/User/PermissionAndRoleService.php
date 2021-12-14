@@ -59,7 +59,7 @@ class PermissionAndRoleService
 
     public function canShowAppOrAbort(): self
     {
-        if (!Auth::user()->hasPermissionTo('show app')) {
+        if (!Auth::user()->can('show app')) {
             abort(403, __('l.noAccess'));
         }
 
@@ -68,7 +68,7 @@ class PermissionAndRoleService
 
     public function canManageBackendOrAbort(): self
     {
-        if (!Auth::user()->hasPermissionTo('manage backend')) {
+        if (!Auth::user()->can('manage backend')) {
             abort(403, __('l.noAccess'));
         }
 
@@ -92,7 +92,7 @@ class PermissionAndRoleService
 
         $user = Auth::user();
 
-        if (!$user->hasPermissionTo('plan my schedules')) {
+        if (!$user->can('plan my schedules')) {
             return false;
         }
 
@@ -121,14 +121,11 @@ class PermissionAndRoleService
         if (!$student) {
             return false;
         }
+
         $user = Auth::user();
-
-        $hasPermisson = $user->hasPermissionTo('plan students schedules');
-
+        $hasPermisson = $user->can('plan students schedules');
         $mentor = $user->mentor;
-
         $stuentsOfMentor = $mentor?->students ?? collect();
-
         $isMentorOfStudent = $stuentsOfMentor->contains($student);
 
         if (!$hasPermisson || !$mentor || !$isMentorOfStudent) {

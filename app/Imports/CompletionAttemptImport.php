@@ -39,7 +39,7 @@ class CompletionAttemptImport extends BaseExcelImport implements ToModel, WithHe
             activity('info')
                 ->withProperties($row)
                 ->log('courseYear nicht gefunden');
-                
+
             return;
         }
 

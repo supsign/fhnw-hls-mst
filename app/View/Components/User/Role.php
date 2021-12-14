@@ -37,7 +37,7 @@ class Role extends Component
                 $customizedRoles[] = 'Super-Admin';
             }
             if ($role->name === 'mentor') {
-                $customizedRoles[] = 'Mentor';
+                $customizedRoles[] = 'STGL';
             }
         }
 

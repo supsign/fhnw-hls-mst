@@ -4,14 +4,11 @@ namespace App\Imports;
 
 use App;
 use App\Models\CourseCrossQualificationYear;
-use App\Models\StudyField;
 use App\Services\Course\CourseService;
 use App\Services\CrossQualification\CrossQualificationService;
-use Illuminate\Database\Eloquent\Collection;
 
 class CourseCrossQualificationYearImport extends BaseCsvImport
 {
-    protected Collection $chemistryCourses;
     protected CourseService $courseService;
     protected CrossQualificationService $crossQualificationService;
     protected $fileNames = ['modul_zu_querschnittsqualifikation.csv'];

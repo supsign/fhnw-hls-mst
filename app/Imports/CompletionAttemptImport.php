@@ -30,13 +30,16 @@ class CompletionAttemptImport extends BaseExcelImport implements ToModel, WithHe
     public function model(array $row)
     {
         if (!$this->hasRequiredFields($row) || $this->isEmptyRow($row)) {
-            //  Throw error? Write log?
             return;
         }
 
         $courseYear = $this->courseYearService->getByEventoId($row['id_anlass']);
 
         if (!$courseYear) {
+            activity('info')
+                ->withProperties($row)
+                ->log('courseYear nicht gefunden');
+
             return;
         }
 

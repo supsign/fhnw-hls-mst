@@ -1,10 +1,13 @@
 <x-app.card>
-    <!-- ToDo mehr Angaben zum Standartuser hinzufügen -->
     <div class="divide-y">
         <div class="pb-2">
             <div>{{ $user->firstname }} {{ $user->lastname }}</div>
-            @if($user->hasRole('mentor'))
-                <div>@lang('l.role'): @lang('l.mentor')</div>
+            <x-user.role :user="$user"></x-user.role>
+
+            @if($user->can('show backend'))
+                <div class="mb-2 mt-4 mt-4 text-center flex md:flex-none">
+                    <a class="button-primary md:w-auto" href="{{ route('admin.dashboard') }}">@lang('l.dashboard')</a>
+                </div>
             @endif
         </div>
 

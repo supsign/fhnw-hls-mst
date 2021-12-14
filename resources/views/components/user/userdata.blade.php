@@ -6,7 +6,7 @@
 
             @if($user->can('show backend'))
                 <div class="mb-2 mt-4 mt-4 text-center flex md:flex-none">
-                    <a class="button-primary md:w-auto" href="{{ route('admin.dashboard') }}">Dashboard</a>
+                    <a class="button-primary md:w-auto" href="{{ route('admin.dashboard') }}">@lang('l.dashboard')</a>
                 </div>
             @endif
         </div>

@@ -1,14 +1,35 @@
 <template>
-    <div>
-        <vue-select v-model="selectedMentor" :name="'Mentor:in'" :options="availableMentors"
-                    :search-keys="['firstname', 'lastname']"
-                    :show-option="showOption" class="mt-4" searchable @input="selectMentor"></vue-select>
-        <div class="mt-4 space-y-2">
-            <div v-for="mentor in myMentors">
-                <span @click="()=>remove(mentor)">
-                    <i aria-hidden="true" class="far fa-trash alt mr-2 cursor-pointer"> </i>
-                </span>
-                {{ mentor.firstname }} {{ mentor.lastname }}
+    <div class="p-2 rounded  bg-white flex flex-col shadow-xl">
+        <div class="divide-y p-3 text-sm md:text-base flex-grow">
+            <div class="pb-2 flex flex-row justify-between">
+                <div>Freigegebene Stgl</div>
+                <div>
+                    <button v-if="studyField" class="button-primary"
+                            @click="approve">freigeben
+                    </button>
+                </div>
+            </div>
+            <div>
+                <!--        <vue-select v-model="selectedMentor" :name="'Mentor:in'" :options="availableMentors"-->
+                <!--                    :search-keys="['firstname', 'lastname']"-->
+                <!--                    :show-option="showOption" class="mt-4" searchable @input="selectMentor"></vue-select>-->
+
+                <div v-if="!studyField">Bitte wenden sie sich an die Administration, um Planungen für Stgl
+                    freizugeben.
+                </div>
+                <div class="mt-4 space-y-2">
+                    <div v-if="!mentorStudents.length">Keine Freigaben erteilt</div>
+                    <div v-for="mentorStudent in mentorStudents">
+                        <span @click="()=>remove(mentorStudent)">
+                            <i aria-hidden="true" class="far fa-trash alt mr-2 cursor-pointer"> </i>
+                        </span>
+                        <span v-if="getMentorByMentorStudent(mentorStudent)">
+                            {{ getMentorByMentorStudent(mentorStudent).firstname }}
+                            {{ getMentorByMentorStudent(mentorStudent).lastname }}
+                        </span>
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -21,6 +42,8 @@ import {IMentor} from "../../interfaces/mentor.interface";
 import VueSelect from "../form/vueSelect.vue";
 import axios from "axios";
 import {Toast} from "../../helpers/toast";
+import {IStudyField} from "../../interfaces/studyField.interface";
+import {IMentorStudent} from "../../interfaces/mentorStudent.interface";
 
 @Component({
     components: {VueSelect}
@@ -28,26 +51,38 @@ import {Toast} from "../../helpers/toast";
 export default class VueShowAndSelectMentors extends BaseComponent {
 
     @Prop({type: Array})
-    public allMentors: IMentor[]
+    public allMentors: IMentor[];
 
     @Prop({type: Array})
-    public initMyMentors: IMentor[]
+    public initMentorStudents: IMentorStudent[];
 
-    public myMentors: IMentor[] = [];
+    @Prop({type: Object})
+    public studyField: IStudyField;
+
+    @Prop({type: Number})
+    public studentId: number;
+
+    public mentorStudents: IMentorStudent[] = [];
 
     public selectedMentor: IMentor = null;
 
     public get availableMentors() {
-        return this.allMentors.filter(mentor => !this.myMentors.find(myMentor => mentor.id === myMentor.id))
+        return this.allMentors.filter(mentor => !this.mentorStudents.find(mentorStudent => mentor.id === mentorStudent.mentor_id))
     }
 
     public created() {
-        this.myMentors = this.initMyMentors;
+        this.mentorStudents = this.initMentorStudents;
     }
 
     public selectMentor(mentor: IMentor): void {
         this.saveSelectedMentor(mentor);
-        this.myMentors.push(mentor);
+        this.mentorStudents.push({
+            mentor_id: mentor.id,
+            id: 0,
+            student_id: this.studentId,
+            firstname: 'temp',
+            lastname: 'temp'
+        });
         this.selectedMentor = null;
     }
 
@@ -56,28 +91,52 @@ export default class VueShowAndSelectMentors extends BaseComponent {
     }
 
     public saveSelectedMentor(mentor: IMentor) {
-        axios.post<IMentor>(`/webapi/mentor/${mentor.id}/attache`)
-            .then(() => Toast.fire({title: 'Mentor hinzugefügt', icon: 'success'}))
-            .catch(() => {
-                const index = this.myMentors.findIndex((myMentor) => myMentor.id === mentor.id);
+        axios.post<IMentorStudent>(`/webapi/mentor/${mentor.id}/students/${this.studentId}`)
+            .then((res) => {
+                Toast.fire({title: 'Mentor hinzugefügt', icon: 'success'})
+                this.mentorStudents.push(res.data)
+            })
+            .finally(() => {
+                const index = this.mentorStudents.findIndex((mentorStudentAttached) => mentorStudentAttached.id === 0);
                 if (index === -1) {
                     return;
                 }
-                this.myMentors.splice(index, 1);
+                this.mentorStudents.splice(index, 1);
             })
     }
 
-    public remove(mentor: IMentor) {
-        const index = this.myMentors.findIndex((myMentor) => myMentor.id === mentor.id);
+    public approve() {
+        if (!this.studyField) {
+            return;
+        }
+        const mentors = this.availableMentors
+            .filter(mentor => {
+                return mentor.mentor_study_fields?.find(mentorStudyField => {
+                    return mentorStudyField.study_field_id === this.studyField.id
+                })
+            });
+        mentors.forEach(mentor => this.selectMentor(mentor));
+    }
+
+    public remove(mentorStudent: IMentorStudent) {
+        const index = this.mentorStudents.findIndex(mentorStudentAttached => mentorStudentAttached.id === mentorStudent.id);
         if (index === -1) {
             return;
         }
-        this.myMentors.splice(index, 1);
-        axios.delete(`/webapi/mentor/${mentor.id}/attache`)
+        this.mentorStudents.splice(index, 1);
+        axios.delete(`/webapi/mentor/${mentorStudent.mentor_id}/students/${mentorStudent.student_id}`)
             .then(() => Toast.fire({title: 'Mentor enfernt', icon: 'success'}))
             .catch(() => {
-                this.myMentors.push(mentor);
+                this.mentorStudents.push(mentorStudent);
             })
+    }
+
+    public getMentorByMentorStudent(mentorStudent: IMentorStudent): IMentor {
+        console.log(this.allMentors);
+        console.log(mentorStudent);
+        const mentor = this.allMentors.find(mentor => mentor.id === mentorStudent.mentor_id)
+        console.log(mentor);
+        return mentor;
     }
 
 

@@ -17,7 +17,7 @@ class ManageBackend
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check() && !Auth::user()->hasPermissionTo('manage backend')) {
+        if (Auth::check() && !Auth::user()->can('manage backend')) {
             abort(403);
         }
 

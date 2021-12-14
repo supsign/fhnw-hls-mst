@@ -6,6 +6,7 @@ use App;
 use App\Models\CourseRecommendation;
 use App\Models\CrossQualification;
 use App\Models\Specialization;
+use App\Models\StudyField;
 use App\Services\Course\CourseService;
 use App\Services\Recommendation\RecommendationService;
 use Maatwebsite\Excel\Concerns\ToModel;
@@ -74,8 +75,14 @@ class RecommendationImport extends BaseExcelImport implements ToModel, WithHeadi
             }
         }
 
-        foreach ($course->courseGroupYears AS $courseGroupYear) {
-            $courseGroupYear->studyFieldYear->update(['recommendation_id' => $recommendation->id]);
+        if (empty($specialisation) && empty($crossqualification)) {
+            $studyField = StudyField::where('evento_number', 'like', '2-L-B-LS'.$recommendationName.'%')->first();
+
+            if ($studyField) {
+                foreach ($studyField->studyFieldYears AS $studyFieldYear) {
+                    $studyFieldYear->update(['recommendation_id' => $recommendation->id]);
+                }
+            }
         }
 
         CourseRecommendation::firstOrCreate([

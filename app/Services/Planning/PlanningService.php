@@ -52,6 +52,10 @@ class PlanningService extends BaseModelService
     protected function copyCoursePlannings(Planning $from, Planning $to): self
     {
         foreach ($from->coursePlannings AS $coursePlanning) {
+            if (!$to->studyFieldYear->courses->pluck('id')->contains($coursePlanning->course_id)) {
+                continue;
+            }
+
             $to->coursePlannings()->create([
                 'course_id' => $coursePlanning->course_id,
                 'planning_id' => $to->id,

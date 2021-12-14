@@ -31,6 +31,9 @@
                 Keine Einträge gefunden
             </template>
         </v-select>
+        <div v-if="showError" class="text-xs vs__error" role="alert">
+            {{ initialError || fieldControl.errors[0] }}
+        </div>
         <select :name="name" hidden>
             <option
                 v-if="internalValue"
@@ -56,6 +59,8 @@ import BaseComponent from "../base/baseComponent";
 import vSelect from "vue-select";
 import {IModel} from "../../store/model.interface";
 import Fuse from "fuse.js";
+import {FieldControl} from "../../helpers/validation/fieldControl";
+import {ValidationRule} from "../../helpers/validation/rules/validationRule";
 
 @Component({
     components: {
@@ -137,8 +142,21 @@ export default class VueSelect extends BaseComponent {
     initError: string;
     public internalValue: IModel | string = null;
     public isDirty = false;
+    private fieldControl: FieldControl;
     private initialError: string = null;
     private isTouched = false;
+
+
+    public get isValid() {
+        return this.fieldControl.isValid;
+    }
+
+    get showError() {
+        return (
+            !!this.initialError ||
+            (!this.fieldControl.isValid && this.isTouched)
+        );
+    }
 
     get calcValue() {
         return this.value;
@@ -160,6 +178,12 @@ export default class VueSelect extends BaseComponent {
         } else {
             this.internalValue = this.value;
         }
+
+        this.fieldControl = new FieldControl(this.name);
+        if (this.required) {
+            this.fieldControl.addValidationRule(ValidationRule.required);
+        }
+        this.validate();
     }
 
     public beforeUpdate() {
@@ -167,6 +191,7 @@ export default class VueSelect extends BaseComponent {
             return;
         }
         this.internalValue = this.calcValue;
+        this.validate();
     }
 
     @Emit()
@@ -177,6 +202,7 @@ export default class VueSelect extends BaseComponent {
     @Emit()
     blur(ev: any) {
         this.isTouched = true;
+        this.validate();
         return ev;
     }
 
@@ -193,6 +219,10 @@ export default class VueSelect extends BaseComponent {
 
             return fuse.search(search).map(({item}): { item: any } => item);
         };
+    }
+
+    private validate() {
+        this.fieldControl.validate(this.internalValue);
     }
 }
 </script>

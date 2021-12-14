@@ -7,6 +7,7 @@ return [
     'mentor' => 'Mentor',
     'name' => 'Name',
     'role' => 'Rolle',
+    'roles' => 'Rollen',
     'roleAdd' => 'Rolle hinzufügen',
     'roleRemove' => 'Rolle entfernen',
     'studyField' => 'Studiengang',

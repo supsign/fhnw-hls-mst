@@ -26,7 +26,7 @@ class Role extends Component
      */
     public function render()
     {
-        $roles =$this->user->roles->where('id', '!==', 1);
+        $roles = $this->user->roles->where('id', '!==', 1);
         $customizedRoles = [];
 
         foreach ($roles as $role) {

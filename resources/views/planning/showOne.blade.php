@@ -10,10 +10,12 @@
                     <div class="flex flex-row justify-between">
                         <div class="my-auto">@lang('l.planning')</div>
                         <div class="space-x-4 flex">
-                            <x-base.link href="{{ route('planning.create.copy', $planning) }}">
+                            <x-base.link
+                                href="{{ $mentorStudent ? route('mentor.planning.create.copy', [$mentorStudent->student, $planning]) :route('planning.create.copy', $planning) }}">
                                 <i
                                     class="fas fa-copy text-blue-600 text-xl" aria-hidden="true"></i></x-base.link>
-                            <x-base.link href="{{ route('planning.print', $planning) }}">
+                            <x-base.link
+                                href="{{ $mentorStudent ? route('mentor.planning.print', [$mentorStudent->student, $planning]) :route('planning.print', $planning) }}">
                                 <i
                                     class="fas fa-print text-blue-600 text-xl" aria-hidden="true"></i></x-base.link>
 
@@ -26,7 +28,7 @@
                                             class="fas fa-trash text-red-600 text-xl" aria-hidden="true"></i></button>
                                 </vue-form>
                             @endif
-                    </div>
+                        </div>
 
 
                     </div>

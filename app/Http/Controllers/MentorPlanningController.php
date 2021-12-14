@@ -199,4 +199,25 @@ class MentorPlanningController extends Controller
 
         return redirect()->route('mentor.planning.showOne', [$mentorStudent->student, $planning]);
     }
+
+    public function print(Student $student, Planning $planning, MentorStudentService $mentorStudentService)
+    {
+        $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student, $planning);
+
+        $mentorStudent = $mentorStudentService->getByMentorAndStudent(Auth::user()?->mentor, $student);
+
+        if (!$mentorStudent) {
+            return redirect()->route('home');
+        }
+
+        $firstname = $mentorStudent->firstname;
+        $lastname = $mentorStudent->lastname;
+
+        $pdf = app('dompdf.wrapper');
+        $pdf->setPaper('A4', 'portrait');
+        $pdf->getDomPDF()->set_option('enable_php', true);
+        $pdf->loadView('planning.print', ['planning' => $planning, 'firstname' => $firstname, 'lastname' => $lastname]);
+
+        return $pdf->stream();
+    }
 }

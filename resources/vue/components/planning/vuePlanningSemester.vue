@@ -65,9 +65,6 @@ export default class VuePlanningSemester extends BaseComponent {
     @Prop({type: Array})
     public completions: ICompletion[]
 
-    @Prop({type: Array})
-    public courses: ICourse[]
-
     @Prop({type: Boolean, default: false})
     planningIsLocked: boolean
 
@@ -83,8 +80,12 @@ export default class VuePlanningSemester extends BaseComponent {
         return this.models.coursePlanning.byPlanningId(this.planningId);
     }
 
+    public get coursePlanningsInStudyField() {
+        return this.coursePlannings.filter(coursePlanning => this.getCourse(coursePlanning));
+    }
+
     public get allCoursePlanningsInSemester(): ICoursePlanning[] {
-        return this.coursePlannings.filter((coursePlanning) => coursePlanning.semester_id === this.semester.id);
+        return this.coursePlanningsInStudyField.filter((coursePlanning) => coursePlanning.semester_id === this.semester.id);
     }
 
     public get allCoursePlanningsInSemesterNotSuccessfullyCompleted() {
@@ -127,24 +128,23 @@ export default class VuePlanningSemester extends BaseComponent {
     }
 
     public getCourse(coursePlanning: ICoursePlanning): ICourse {
-        return this.courses.find(course => course.id === coursePlanning.course_id);
+        return this.models.course.getById(coursePlanning.course_id);
     }
 
     public getAllPointsInSemester(semester: ISemester) {
         let credits = 0;
 
-        for (const course of this.courses) {
-            for (const coursePlanning of this.coursePlannings) {
-                if (coursePlanning.course_id === course.id && coursePlanning.semester_id === semester.id) {
-                    credits += course.credits;
-                }
+        for(const coursePlanning of this.coursePlanningsInStudyField) {
+            if(coursePlanning.semester_id === semester.id) {
+                const course = this.getCourse(coursePlanning);
+                credits += course.credits;
             }
         }
         return credits;
     }
 
     public courseIsPlanned(course: ICourse): boolean {
-        return !!this.coursePlannings.find(coursePlanning => coursePlanning.course_id === course.id)
+        return !!this.coursePlanningsInStudyField.find(coursePlanning => coursePlanning.course_id === course.id)
     }
 
     public completion(course: ICourse) {

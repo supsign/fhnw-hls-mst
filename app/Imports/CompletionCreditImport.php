@@ -38,6 +38,10 @@ class CompletionCreditImport extends BaseExcelImport implements ToModel, WithHea
         $course = $this->courseService->getByEventoId($row['id_anlass']);
 
         if (!$course || !$course->courseYears()->count()) {
+            activity('info')
+                ->withProperties($row)
+                ->log(!$course ? 'Course not found' : 'No courseYears on course');
+
             return;
         }
 

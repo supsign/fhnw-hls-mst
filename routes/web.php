@@ -54,6 +54,7 @@ Route::middleware(['web', 'auth'])->group(
         Route::post('students/{student}/plannings', [MentorPlanningController::class, 'store'])->name('mentor.planning.store');
         Route::post('students/{student}/plannings/{planning}', [MentorPlanningController::class, 'storeCopy'])->name('mentor.planning.store.copy');
         Route::get('students/{student}/plannings/{planning}', [MentorPlanningController::class, 'showOne'])->name('mentor.planning.showOne');
+        Route::get('students/{student}/plannings/{planning}/print', [MentorPlanningController::class, 'print'])->name('mentor.planning.print');
         Route::delete('students/{student}/plannings/{planning}', [MentorPlanningController::class, 'delete'])->name('mentor.planning.delete');
         Route::post('students/{student}/plannings/{planning}/setrecommendations', [MentorPlanningController::class, 'setRecommendations'])->name('mentor.planning.setRecommendations');
 

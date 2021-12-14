@@ -29,13 +29,19 @@ import {skillStore} from "./store/skill/skill.store";
 import {skillStudentStore} from "./store/skillStudent/skillStudent.store";
 import {courseSkillStore} from "./store/courseSkill/courseSkill.store";
 import VueSessionSweetalert from "./components/base/vueSessionSweetalert.vue";
+import VueAdminMentorStudyFields from "./components/admin/vueAdminMentorStudyFields.vue";
 import VueLockPlanning from "./components/planning/vueLockPlanning.vue";
+import VueAdminMentorStudents from "./components/admin/vueAdminMentorStudents.vue";
+
+//@ts-ignore
+import VueMask from 'v-mask'
 
 library.add(faUserSecret);
 library.add(faCheck);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.use(Vuex);
+Vue.use(VueMask);
 
 const store = new Vuex.Store({
     strict: true,
@@ -68,7 +74,9 @@ const app = new Vue({
         VueCourseDetail,
         VuePlanningSemester,
         VueSessionSweetalert,
-        VueLockPlanning
+        VueAdminMentorStudyFields,
+        VueLockPlanning,
+        VueAdminMentorStudents
     },
     store
 });

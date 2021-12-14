@@ -24,10 +24,6 @@ class CourseCrossQualificationYearImport extends BaseCsvImport
 
     public function importLine()
     {
-        // if ($this->line['pflicht'] !== 't') {
-        //     return $this;
-        // }
-
         $crossQualification = $this
             ->crossQualificationService
             ->getByJanisId($this->line['id_querschnittsqualifikation']);
@@ -41,6 +37,10 @@ class CourseCrossQualificationYearImport extends BaseCsvImport
         if (!$course) {
             return $this;
         }
+
+        // if ($crossQualification->study_field_id === 13 && $this->line['pflicht'] === 'f') {
+        //     return $this;
+        // }
 
         foreach ($crossQualification->crossQualificationYears AS $crossQualificationYear) {
             CourseCrossQualificationYear::updateOrCreate([

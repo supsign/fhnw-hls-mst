@@ -4,7 +4,7 @@
             <slot name="icon"></slot>
         </div>
         <div class="my-auto break-words flex-grow"
-             :class="{ 'cursor-pointer': courseYear && courseYear.contents }">
+             :class="{ 'cursor-pointer': courseYear }">
             {{ course.name }}
         </div>
         <vue-plan-course

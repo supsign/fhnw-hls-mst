@@ -5,6 +5,7 @@ use App\Http\Controllers\WebApi\CoursePlanningController;
 use App\Http\Controllers\WebApi\StudentController;
 use App\Http\Controllers\WebApi\UserController;
 use App\Http\Controllers\WebApi\WebApiMentorController;
+use App\Http\Controllers\WebApi\WebApiMentorStudyFieldController;
 use App\Http\Controllers\WebApi\WebApiPlanningController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,11 +22,15 @@ Route::middleware('auth')->group(
         Route::post('plannings/{planning}/unlock', [WebApiPlanningController::class, 'unLock'])->name('webapi.plannings.unLock');
 
         Route::get('mentor/getByEventoId', [WebApiMentorController::class, 'getByEventoId'])->name('webapi.mentor.getByEventoId');
-        Route::post('mentor/{mentor}/attache', [WebApiMentorController::class, 'attachToStudent'])->name('webapi.mentor.attacheToStudent');
-        Route::delete('mentor/{mentor}/attache', [WebApiMentorController::class, 'detachStudent'])->name('webapi.mentor.detacheStudent');
+        Route::post('mentor/{mentor}/students/{student}', [WebApiMentorController::class, 'attachToStudent'])->name('webapi.mentor.attacheToStudent');
+        Route::post('mentor/{mentor}/students', [WebApiMentorController::class, 'findAndAttach'])->name('webapi.mentor.attacheToStudent');
+        Route::delete('mentor/{mentor}/students/{student}', [WebApiMentorController::class, 'detachStudent'])->name('webapi.mentor.detacheStudent');
 
         Route::get('student/getByEventoId', [StudentController::class, 'getByEventoId'])->name('webapi.student.getByEventoId');
 
         Route::get('user/getByEmail', [UserController::class, 'getByEmail'])->name('webapi.user.getByEmail');
+
+        Route::post('mentorStudyFields', [WebApiMentorStudyFieldController::class, 'postMentorStudyField'])->name('webapi.mentorStudyField.post');
+        Route::delete('mentorStudyFields/{mentorStudyField}', [WebApiMentorStudyFieldController::class, 'deleteMentorStudyField'])->name('webapi.mentorStudyField. delete');
     }
 );

@@ -8,8 +8,14 @@
                     <i v-if="!isCollapsed" aria-hidden="true" class="fas fa-arrow-down"></i>
                 </div>
                 <div class="flex justify-between w-full">
-                    <div class="sm:text-sm lg:text-base flex-grow">{{ semester.is_hs ? 'HS' : 'FS' }} {{ semester.year }}</div>
-                    <div class="border-l py-1 px-2 text-center mx-auto w-16 h-full">{{ getAllPointsInSemester(semester) }}</div>
+                    <div class="sm:text-sm lg:text-base flex-grow">{{ semester.is_hs ? 'HS' : 'FS' }} {{
+                            semester.year
+                        }}
+                    </div>
+                    <div class="border-l py-1 px-2 text-center mx-auto w-16 h-full">{{
+                            getAllPointsInSemester(semester)
+                        }}
+                    </div>
                 </div>
             </div>
 
@@ -128,8 +134,8 @@ export default class VuePlanningSemester extends BaseComponent {
         let credits = 0;
 
         for (const course of this.courses) {
-            for(const coursePlanning of this.coursePlannings) {
-                if(coursePlanning.course_id === course.id && coursePlanning.semester_id === semester.id) {
+            for (const coursePlanning of this.coursePlannings) {
+                if (coursePlanning.course_id === course.id && coursePlanning.semester_id === semester.id) {
                     credits += course.credits;
                 }
             }
@@ -144,19 +150,17 @@ export default class VuePlanningSemester extends BaseComponent {
     public completion(course: ICourse) {
         let icon: number;
 
-        if(!!this.completions.find((completion) => {
+        if (!!this.completions.find((completion) => {
             return completion.course_id === course.id && (completion.completion_type_id === 2 || completion.completion_type_id === 4)
         })) {
             icon = 1
         }
 
-        if(!!this.completions.find((completion) => {
+        if (!!this.completions.find((completion) => {
             return completion.course_id === course.id && (completion.completion_type_id === 3)
         })) {
             icon = 2
-        }
-
-        else {
+        } else {
             icon = 3
         }
 

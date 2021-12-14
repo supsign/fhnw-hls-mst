@@ -13,16 +13,17 @@ class AttachStudentToMentorService
     {
     }
 
-    public function attach(Mentor $mentor, Student $student): MentorStudent
+    public function attach(Mentor $mentor, Student $student, string $firstname = null, string $lastname = null): MentorStudent
     {
         $user = Auth::user();
 
-        return $this->mentorStudentModel::firstOrCreate(
+        return $this->mentorStudentModel::updateOrCreate(
             [
                 'mentor_id' => $mentor->id,
                 'student_id' => $student->id,
-                'firstname' => $user?->firstname,
-                'lastname' => $user?->lastname,
+            ], [
+                'firstname' => $firstname ?: $user?->firstname,
+                'lastname' => $lastname ?: $user?->lastname,
             ]
         );
     }

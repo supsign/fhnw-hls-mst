@@ -50,18 +50,15 @@
                  class="text-center border-l border-hls text-sm hover:bg-hls hover:border-gray-200 my-auto cursor-pointer lg:h-full lg:flex lg:justify-center lg:items-center lg:space-x-2" @click="toggleShowCrossQualification">
                 <div>{{ crossQualificationAmount }}&nbsp;|&nbsp;{{ crossQualificationYear.amount_to_pass }}</div>
                 <div>CrossQual.</div>
-                <div class="hidden lg:block">Punkte</div>
             </div>
             <div v-if="!!specialization"
                  class="text-center border-l border-hls text-sm hover:bg-hls hover:border-gray-200 my-auto cursor-pointer lg:h-full lg:flex lg:justify-center lg:items-center lg:space-x-2" @click="toggleShowSpecialization">
                 <div>{{ specializationAmount }}&nbsp;|&nbsp;{{ specializationYear.amount_to_pass }}</div>
                 <div>Specialization</div>
-                <div class="hidden lg:block">Punkte</div>
             </div>
             <div class="text-center border-l border-hls text-sm hover:bg-hls hover:border-gray-200 my-auto cursor-pointer lg:h-full lg:flex lg:justify-center lg:items-center lg:space-x-2" @click="toggleShowAssessment">
                 <div>{{ assessmentAmount }}&nbsp;|&nbsp;{{ assessment.amount_to_pass }}</div>
                 <div>Assessment</div>
-                <div class="hidden lg:block">Punkte</div>
             </div>
         </div>
     </div>

@@ -12,7 +12,7 @@ class MentorStudentTestSeeder extends Seeder
     private $data = [
         ['mentor_evento_id' => 453149,
             'student_evento_id' => 10059625,
-            'firstname' => 'Brabara',
+            'firstname' => 'Barbara',
             'lastname' => 'Grossenbacher', ],
         ['mentor_evento_id' => 928678,
             'student_evento_id' => 10072421,

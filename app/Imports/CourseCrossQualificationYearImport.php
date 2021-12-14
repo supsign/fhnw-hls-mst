@@ -4,11 +4,14 @@ namespace App\Imports;
 
 use App;
 use App\Models\CourseCrossQualificationYear;
+use App\Models\StudyField;
 use App\Services\Course\CourseService;
 use App\Services\CrossQualification\CrossQualificationService;
+use Illuminate\Database\Eloquent\Collection;
 
 class CourseCrossQualificationYearImport extends BaseCsvImport
 {
+    protected Collection $chemistryCourses;
     protected CourseService $courseService;
     protected CrossQualificationService $crossQualificationService;
     protected $fileNames = ['modul_zu_querschnittsqualifikation.csv'];
@@ -24,10 +27,6 @@ class CourseCrossQualificationYearImport extends BaseCsvImport
 
     public function importLine()
     {
-        // if ($this->line['pflicht'] !== 't') {
-        //     return $this;
-        // }
-
         $crossQualification = $this
             ->crossQualificationService
             ->getByJanisId($this->line['id_querschnittsqualifikation']);
@@ -41,6 +40,10 @@ class CourseCrossQualificationYearImport extends BaseCsvImport
         if (!$course) {
             return $this;
         }
+
+        // if ($crossQualification->study_field_id === 13 && $this->line['pflicht'] === 'f') {
+        //     return $this;
+        // }
 
         foreach ($crossQualification->crossQualificationYears AS $crossQualificationYear) {
             CourseCrossQualificationYear::updateOrCreate([

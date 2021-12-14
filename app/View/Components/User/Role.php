@@ -2,9 +2,9 @@
 
 namespace App\View\Components\User;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Component;
 
 class Role extends Component
@@ -14,7 +14,7 @@ class Role extends Component
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(public User $user)
     {
         //
     }
@@ -26,21 +26,23 @@ class Role extends Component
      */
     public function render()
     {
-        $roles = Auth::user()->roles->where('id', '!==', 1);
+        $roles =$this->user->roles->where('id', '!==', 1);
+        $customizedRoles = [];
+
         foreach ($roles as $role) {
             if ($role->name === 'app-admin') {
-                $role->name = 'App-Admin';
+                $customizedRoles[1] = 'App-Admin';
             }
             if ($role->name === 'server-admin') {
-                $role->name = 'Super-Admin';
+                $customizedRoles[2] = 'Super-Admin';
             }
             if ($role->name === 'mentor') {
-                $role->name = 'Mentor';
+                $customizedRoles[3] = 'Mentor';
             }
         }
 
         return view('components.user.role', [
-            'roles' => $roles,
+            'roles' => $customizedRoles,
         ]);
     }
 }

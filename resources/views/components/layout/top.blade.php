@@ -6,13 +6,6 @@
             </a>
             <div class="my-auto text-lg">@lang('l.mst')</div>
         </div>
-        <div class="flex divide-x divide-black text-lg mb-2 md:mb-0">
-{{--            @if($user->hasRole('mentor') || $user->hasRole('app-admin') || $user->hasRole('server-admin'))--}}
-{{--                <a class="my-auto px-2 md:px-6" href="{{ route('admin.dashboard') }}">@lang('l.dashboard')</a>--}}
-{{--            @endif--}}
-{{--            <a class="my-auto px-6" href="{{ route('user.index') }}">About me</a> --}}
-
-        </div>
     </div>
 </div>
 

@@ -47,6 +47,14 @@ class AuthService
             abort(403, $th->getMessage());
         }
 
+        if (!$this->isAuthorizedForLogin($shibbolethProperties)) {
+            activity('error')
+                ->withProperties($shibbolethProperties)
+                ->log('login failed - no e-mail or person id');
+
+            abort(403);
+        }
+
         switch ($role) {
             case 'student':
                 $user = $this->userService->updateOrCreateUserAsStudent(
@@ -96,7 +104,7 @@ class AuthService
         return $user;
     }
 
-    protected function isAuthorizedForLogin(ShibbolethProperties $shibbolethProperties): bool   //  never used anywhere.
+    protected function isAuthorizedForLogin(ShibbolethProperties $shibbolethProperties): bool   //  it is now!
     {
         if (!$shibbolethProperties->mail) {
             return false;

@@ -41,12 +41,11 @@ class Role extends Component
             }
         }
 
-        if($customizedRoles) {
+        if ($customizedRoles) {
             return view('components.user.role', [
                 'roles' => $customizedRoles,
             ]);
-        }
-        else {
+        } else {
             return null;
         }
     }

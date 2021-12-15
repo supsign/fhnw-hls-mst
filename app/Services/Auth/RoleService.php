@@ -11,14 +11,14 @@ class RoleService
         'beat.zehnder@fhnw.ch',
         'lilian.gilgen@fhnw.ch',
         'andreas.seelig@fhnw.ch',
-        'frank.pude@fhnw.ch'
+        'frank.pude@fhnw.ch',
 
     ];
     private $mentors = [
         'miriam.langer@fhnw.ch',
         'markus.degen@fhnw.ch',
         'goetz.schlotterbeck@fhnw.ch',
-        'oliver.germershaus@fhnw.ch'
+        'oliver.germershaus@fhnw.ch',
     ];
     private $students = [
         'britta.brugger@students.fhnw.ch',
@@ -41,7 +41,7 @@ class RoleService
         'keanu.werder@students.fhnw.ch',
         'sebastian.stalder@students.fhnw.ch',
         'studenthls.iamtest@students.fhnw.ch',
-        'andreas.seelig@students.fhnw.ch'
+        'andreas.seelig@students.fhnw.ch',
     ];
 
     public function evaluate(ShibbolethProperties $shibbolethProperties): string
@@ -63,6 +63,5 @@ class RoleService
         }
 
         throw new Exception('no authorized role identified');
-
     }
 }

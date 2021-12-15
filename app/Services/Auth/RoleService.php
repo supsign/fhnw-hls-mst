@@ -10,15 +10,17 @@ class RoleService
     private $admins = [
         'beat.zehnder@fhnw.ch',
         'lilian.gilgen@fhnw.ch',
-        'andreas.seelig@fhnw.ch',
-        'frank.pude@fhnw.ch'
+        'andreas.seelig@fhnw.ch'
 
     ];
     private $mentors = [
         'miriam.langer@fhnw.ch',
         'markus.degen@fhnw.ch',
         'goetz.schlotterbeck@fhnw.ch',
-        'oliver.germershaus@fhnw.ch'
+        'oliver.germershaus@fhnw.ch',
+        'frank.pude@fhnw.ch',
+        'laura.suterdick@fhnw.ch',
+        'simone.hemm@fhnw.ch'
     ];
     private $students = [
         'britta.brugger@students.fhnw.ch',

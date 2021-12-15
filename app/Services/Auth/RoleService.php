@@ -43,7 +43,7 @@ class RoleService
         'keanu.werder@students.fhnw.ch',
         'sebastian.stalder@students.fhnw.ch',
         'studenthls.iamtest@students.fhnw.ch',
-        'andreas.seelig@students.fhnw.ch'
+        'andreas.seelig@students.fhnw.ch',
     ];
 
     public function evaluate(ShibbolethProperties $shibbolethProperties): string
@@ -65,6 +65,5 @@ class RoleService
         }
 
         throw new Exception('no authorized role identified');
-
     }
 }

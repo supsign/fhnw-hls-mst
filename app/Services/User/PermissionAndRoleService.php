@@ -24,7 +24,9 @@ class PermissionAndRoleService
 
     public function removeStudent(User $user): User
     {
-        $user->removeRole('student');
+        if ($user->hasRole('student')) {
+            $user->removeRole('student');
+        }
 
         return $user;
     }
@@ -38,7 +40,9 @@ class PermissionAndRoleService
 
     public function removeMentor(User $user): User
     {
-        $user->removeRole('mentor');
+        if ($user->hasRole('mentor')) {
+            $user->removeRole('mentor');
+        }
 
         return $user;
     }
@@ -52,7 +56,9 @@ class PermissionAndRoleService
 
     public function removeAppAdmin(User $user): User
     {
-        $user->removeRole('app-admin');
+        if ($user->hasRole('app-admin')) {
+            $user->removeRole('app-admin');
+        }
 
         return $user;
     }

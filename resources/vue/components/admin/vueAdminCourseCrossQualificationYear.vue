@@ -1,38 +1,34 @@
 <template>
-    <div class="space-y-2">
-        <div class="p-2 rounded  bg-white flex flex-col shadow-xl">
-            <div class="p-3 text-sm md:text-base flex-grow">
-                <div class="flex flex-col space-y-4">
-                    <vue-backend-select
-                        v-model="selectedCourse"
-                        :backend-search-url="'/webapi/courses'"
-                        :get-backend-search-params="getCourseSearchParams"
-                        :label="'Modul'"
-                        :selectable="courseIsSelectable"
-                        :show-option="getFullCourseName"
-                        class="w-full"
-                    ></vue-backend-select>
-                    <div class="w-full text-center">
-                        <button class="button-primary" @click="addCourse">Hinzufügen</button>
-                    </div>
-                </div>
+    <div>
+        <div v-for="course in courses" class="flex flex-row space-x-4">
+
+            <span class="w-8" @click="()=>remove(course)">
+                  <i aria-hidden="true" class="far fa-trash alt mr-2 cursor-pointer text-red-500"> </i>
+            </span>
+            <div class="w-28">
+                {{ course.number_unformated }}
+            </div>
+            <div>
+                {{ course.name }}
+
             </div>
         </div>
-        <div v-for="course in courses" class="p-2 rounded  bg-white flex flex-col shadow-xl">
-            <div class="p-3 text-sm md:text-base flex-grow">
-
-                <div>
-                    {{ course.number_unformated }}
-                </div>
-                <div>
-                    {{ course.name }}
-                </div>
-
-
+        <div class="flex flex-row space-x-4 mt-8">
+            <vue-backend-select
+                v-model="selectedCourse"
+                :backend-search-url="'/webapi/courses'"
+                :get-backend-search-params="getCourseSearchParams"
+                :label="'Modul'"
+                :selectable="courseIsSelectable"
+                :show-option="getFullCourseName"
+                class="w-full"
+            ></vue-backend-select>
+            <div class="w-full text-center">
+                <button class="button-primary" @click="addCourse">Hinzufügen</button>
             </div>
-
         </div>
     </div>
+
 </template>
 
 <script lang="ts">
@@ -67,6 +63,7 @@ export default class VueAdminCourseCrossQualificationYear extends BaseComponent 
 
     public addCourse() {
         this.courses.push(this.selectedCourse)
+        // todo axios call
     }
 
     public getFullCourseName(course: ICourse) {
@@ -79,6 +76,15 @@ export default class VueAdminCourseCrossQualificationYear extends BaseComponent 
         }
 
         return true;
+    }
+
+    public remove(course: ICourse) {
+        const index = this.courses.findIndex((attachedCourse) => attachedCourse.id === course.id);
+        if (index === -1) {
+            return;
+        }
+        this.courses.splice(index, 1);
+        // todo axios call
     }
 
 }

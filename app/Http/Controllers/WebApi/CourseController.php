@@ -13,9 +13,8 @@ class CourseController extends Controller
 {
     public function __construct(
         protected PermissionAndRoleService $permissionAndRoleService,
-        protected CourseService            $courseService,
-    )
-    {
+        protected CourseService $courseService,
+    ) {
     }
 
     public function patch(Course $course, PatchCourseRequest $request)
@@ -28,6 +27,7 @@ class CourseController extends Controller
     public function search(SearchCourseRequest $searchCourseRequest)
     {
         $this->permissionAndRoleService->canManageBackendOrAbort();
+
         return $this->courseService->search($searchCourseRequest->search);
     }
 }

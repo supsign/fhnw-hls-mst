@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth')->group(
     function () {
         Route::patch('courses/{course}', [CourseController::class, 'patch'])->name('webapi.course.patch');
+        Route::get('courses', [CourseController::class, 'search'])->name('webapi.course.search');
 
         Route::get('courseplannings/{coursePlanning}', [CoursePlanningController::class, 'getById'])->name('webapi.courseplannings.getById');
         Route::patch('courseplannings/{coursePlanning}', [CoursePlanningController::class, 'patch'])->name('webapi.courseplannings.patch');

@@ -78,4 +78,12 @@ class CourseService extends BaseModelService
 
         return $course;
     }
+
+    public function search(string $search)
+    {
+        $likeString = '%' . $search . '%';
+        return $this->model::where('name', 'like', $likeString)
+            ->orWhere('number_unformated', 'like', $likeString)
+            ->get();
+    }
 }

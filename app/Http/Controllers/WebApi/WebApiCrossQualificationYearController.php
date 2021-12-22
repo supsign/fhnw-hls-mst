@@ -12,26 +12,20 @@ class WebApiCrossQualificationYearController extends Controller
 {
     public function __construct(
         protected PermissionAndRoleService $permissionAndRoleService,
-    )
-    {
+    ) {
     }
 
     public function patch(
         PatchCrossQualificationYearRequest $patchCrossQualificationYearRequest,
-        CrossQualificationYear             $crossQualificationYear,
-        CrossQualificationYearService      $crossQualificationYearService
-    ): CrossQualificationYear
-    {
+        CrossQualificationYear $crossQualificationYear,
+        CrossQualificationYearService $crossQualificationYearService
+    ): CrossQualificationYear {
         $this->permissionAndRoleService->canManageBackendOrAbort();
-
 
         return $crossQualificationYearService
             ->patchAmountToPass(
                 $crossQualificationYear,
                 $patchCrossQualificationYearRequest->input('amount_to_pass')
             );
-
     }
-
-
 }

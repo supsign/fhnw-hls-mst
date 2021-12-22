@@ -24,7 +24,7 @@ class PatchCrossQualificationYearRequest extends FormRequest
     public function rules()
     {
         return [
-            'amount_to_pass' => 'int|nullable'
+            'amount_to_pass' => 'int|nullable',
         ];
     }
 }

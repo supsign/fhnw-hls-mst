@@ -50,6 +50,7 @@ class CrossQualificationYearService extends BaseModelService
     {
         $crossQualificationYear->amount_to_pass = $amountToPass;
         $crossQualificationYear->save();
+
         return $crossQualificationYear;
     }
 }

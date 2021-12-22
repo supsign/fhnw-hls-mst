@@ -25,7 +25,7 @@ class PostCourseCrossQualificationYearController extends FormRequest
     {
         return [
             'course_id' => 'int|required',
-            'cross_qualification_year_id' => 'int|required'
+            'cross_qualification_year_id' => 'int|required',
         ];
     }
 }

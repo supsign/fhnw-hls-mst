@@ -13,15 +13,15 @@
 
 
         <div>
-            <div>
-                Studienrichtung: {{$crossQualificationYear->StudyFieldYear->StudyField->name}}
-            </div>
-            <div>
-                Start: {{$crossQualificationYear->StudyFieldYear->BeginSemester->year}}
-            </div>
-            <div>
-                Anzahl zum Bestehen: {{$crossQualificationYear->amount_to_pass}}
-            </div>
+            {{--            <div>--}}
+            {{--                Studienrichtung: {{$crossQualificationYear->StudyFieldYear->StudyField->name}}--}}
+            {{--            </div>--}}
+            {{--            <div>--}}
+            {{--                Start: {{$crossQualificationYear->StudyFieldYear->BeginSemester->year}}--}}
+            {{--            </div>--}}
+            {{--            <div>--}}
+            {{--                Anzahl zum Bestehen: {{$crossQualificationYear->amount_to_pass}}--}}
+            {{--            </div>--}}
         </div>
 
 
@@ -32,9 +32,10 @@
         <x-slot name="title">
             Module
         </x-slot>
-
-        <vue-admin-course-cross-qualification-year :init-courses="{{$crossQualificationYear->courses}}"
-                                                   :cross-qualification-year="{{$crossQualificationYear}}"></vue-admin-course-cross-qualification-year>
+        <vue-store-fill :model="'course'" :entities="{{$crossQualificationYear->courses}}"></vue-store-fill>
+        <vue-admin-course-cross-qualification-year
+            :init-course-cross-qualification-years="{{$crossQualificationYear->courseCrossQualificationYears}}"
+            :cross-qualification-year="{{$crossQualificationYear}}"></vue-admin-course-cross-qualification-year>
     </x-app.card>
 
 

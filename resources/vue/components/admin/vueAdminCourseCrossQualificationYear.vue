@@ -1,35 +1,40 @@
 <template>
-    <div>
-        <div v-for="{id, course_id} in courseCrossQualificationYears">
-            <div v-if="getCourse(course_id)" class="flex flex-row space-x-4">
+    <div class="p-2 rounded  bg-white flex flex-col shadow-xl">
+        <div class="content-center p-2 border-b rounded-t text-base md:text-lg">
+            Module
+        </div>
+        <div class="p-3 text-sm md:text-base flex-grow">
+            <div v-for="{id, course_id} in courseCrossQualificationYears">
+                <div v-if="getCourse(course_id)" class="flex flex-row space-x-4">
                 <span class="w-8" @click="()=>remove(id)">
                   <i aria-hidden="true" class="far fa-trash alt mr-2 cursor-pointer text-red-500"> </i>
                 </span>
-                <div class="w-28">
-                    {{ getCourse(course_id).number_unformated }}
-                </div>
-                <div>
-                    {{ getCourse(course_id).name }}
+                    <div class="w-28">
+                        {{ getCourse(course_id).number_unformated }}
+                    </div>
+                    <div>
+                        {{ getCourse(course_id).name }}
 
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="flex flex-row space-x-4 mt-8">
-            <vue-backend-select
-                v-model="selectedCourse"
-                :backend-search-url="'/webapi/courses'"
-                :disabled="isAdding"
-                :get-backend-search-params="getCourseSearchParams"
-                :label="'Modul'"
-                :selectable="courseIsSelectable"
-                :show-option="getFullCourseName"
-                class="w-full"
-            ></vue-backend-select>
-            <div class="w-full text-center">
-                <button :class="{'cursor-not-allowed': isAdding}" :disabled="isAdding" class="button-primary"
-                        @click="addCourse">
-                    Hinzufügen
-                </button>
+            <div class="flex flex-row space-x-4 mt-8">
+                <vue-backend-select
+                    v-model="selectedCourse"
+                    :backend-search-url="'/webapi/courses'"
+                    :disabled="isAdding"
+                    :get-backend-search-params="getCourseSearchParams"
+                    :label="'Modul'"
+                    :selectable="courseIsSelectable"
+                    :show-option="getFullCourseName"
+                    class="w-full"
+                ></vue-backend-select>
+                <div class="w-full text-center">
+                    <button :class="{'cursor-not-allowed': isAdding}" :disabled="isAdding" class="button-primary"
+                            @click="addCourse">
+                        Hinzufügen
+                    </button>
+                </div>
             </div>
         </div>
     </div>

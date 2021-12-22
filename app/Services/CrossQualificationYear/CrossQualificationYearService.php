@@ -45,4 +45,11 @@ class CrossQualificationYearService extends BaseModelService
 
         return $amount;
     }
+
+    public function patchAmountToPass(CrossQualificationYear $crossQualificationYear, int $amountToPass = null)
+    {
+        $crossQualificationYear->amount_to_pass = $amountToPass;
+        $crossQualificationYear->save();
+        return $crossQualificationYear;
+    }
 }

@@ -5,6 +5,7 @@ use App\Http\Controllers\WebApi\CoursePlanningController;
 use App\Http\Controllers\WebApi\StudentController;
 use App\Http\Controllers\WebApi\UserController;
 use App\Http\Controllers\WebApi\WebApiCourseCrossQualificationYearController;
+use App\Http\Controllers\WebApi\WebApiCrossQualificationYearController;
 use App\Http\Controllers\WebApi\WebApiMentorController;
 use App\Http\Controllers\WebApi\WebApiMentorStudyFieldController;
 use App\Http\Controllers\WebApi\WebApiPlanningController;
@@ -34,6 +35,8 @@ Route::middleware('auth')->group(
 
         Route::post('mentorStudyFields', [WebApiMentorStudyFieldController::class, 'postMentorStudyField'])->name('webapi.mentorStudyField.post');
         Route::delete('mentorStudyFields/{mentorStudyField}', [WebApiMentorStudyFieldController::class, 'deleteMentorStudyField'])->name('webapi.mentorStudyField.delete');
+
+        Route::patch('crossqualificationyears/{crossQualificationYear}', [WebApiCrossQualificationYearController::class, 'patch'])->name('webapi.crossQualificationYear.patch');
 
         Route::post('coursecrossqualificationyears', [WebApiCourseCrossQualificationYearController::class, 'post'])->name('webapi.courseCrossQualificationYear.post');
         Route::delete('coursecrossqualificationyears/{courseCrossQualificationYear}', [WebApiCourseCrossQualificationYearController::class, 'delete'])->name('webapi.courseCrossQualificationYear.delete');

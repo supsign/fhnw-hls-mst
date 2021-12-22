@@ -16,17 +16,15 @@ class WebApiCourseCrossQualificationYearController extends Controller
 {
     public function __construct(
         protected PermissionAndRoleService $permissionAndRoleService,
-    )
-    {
+    ) {
     }
 
     public function post(
         PostCourseCrossQualificationYearController $postCourseCrossQualificationYearController,
-        CourseCrossQualificationYearService        $courseCrossQualificationYearService,
-        CourseService                              $courseService,
-        CrossQualificationYearService              $crossQualificationYearService
-    ): CourseCrossQualificationYear
-    {
+        CourseCrossQualificationYearService $courseCrossQualificationYearService,
+        CourseService $courseService,
+        CrossQualificationYearService $crossQualificationYearService
+    ): CourseCrossQualificationYear {
         $this->permissionAndRoleService->canManageBackendOrAbort();
 
         /* @var $course Course */
@@ -42,7 +40,6 @@ class WebApiCourseCrossQualificationYearController extends Controller
         }
 
         return $courseCrossQualificationYearService->add($crossQualificationYear, $course);
-
     }
 
     public function delete(CourseCrossQualificationYear $courseCrossQualificationYear, CourseCrossQualificationYearService $courseCrossQualificationYearService): void
@@ -50,6 +47,4 @@ class WebApiCourseCrossQualificationYearController extends Controller
         $this->permissionAndRoleService->canManageBackendOrAbort();
         $courseCrossQualificationYearService->remove($courseCrossQualificationYear);
     }
-
-
 }

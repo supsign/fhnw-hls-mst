@@ -29,7 +29,7 @@
                     :show-option="getFullCourseName"
                     class="w-full"
                 ></vue-backend-select>
-                <div class="w-full text-center">
+                <div class="flex flex-col justify-around">
                     <button :class="{'cursor-not-allowed': isAdding}" :disabled="isAdding" class="button-primary"
                             @click="addCourse">
                         Hinzufügen

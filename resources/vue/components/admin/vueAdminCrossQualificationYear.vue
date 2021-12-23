@@ -48,6 +48,7 @@ import {ICrossQualification} from "../../interfaces/crossQualification.interface
 import {IStudyField} from "../../interfaces/studyField.interface";
 import VueInput from "../form/vueInput.vue";
 import axios from "axios";
+import {Toast} from "../../helpers/toast";
 
 @Component({
     components: {VueToggleMentorStudyField, VueBackendSelect, VueInput}
@@ -87,6 +88,10 @@ export default class VueAdminCrossQualificationYear extends BaseComponent {
         axios.patch<ICrossQualificationYear>(`/webapi/crossqualificationyears/${this.crossQualificationYear.id}`, this.crossQualificationYear)
             .then((res) => {
                 this.crossQualificationYear = res.data
+                Toast.fire({
+                    title: 'gespeichert',
+                    icon: 'success'
+                })
             })
     }
 

@@ -17,7 +17,7 @@
                             <x-base.link
                                 href="{{ $mentorStudent ? route('mentor.planning.print', [$mentorStudent->student, $planning]) :route('planning.print', $planning) }}">
                                 <i
-                                    class="fas fa-print text-blue-600 text-xl" aria-hidden="true"></i></x-base.link>
+                                    class="fas fa-file-pdf text-blue-600 text-xl" aria-hidden="true"></i></x-base.link>
 
                             @if(!(!$mentorStudent && $planning->is_locked))
                                 <vue-form method="POST"

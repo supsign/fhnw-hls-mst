@@ -1,6 +1,6 @@
 <x-layout.app>
     <x-slot name="title">
-        neuer Stundenplan
+        neue Planung
     </x-slot>
 
     <div class="container p-3 mx-auto">

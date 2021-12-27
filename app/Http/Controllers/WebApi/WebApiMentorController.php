@@ -17,9 +17,10 @@ use Illuminate\Support\Facades\Request;
 class WebApiMentorController extends Controller
 {
     public function __construct(
-        protected MentorService $mentorService,
+        protected MentorService            $mentorService,
         protected PermissionAndRoleService $permissionAndRoleService,
-    ) {
+    )
+    {
     }
 
     public function attachToStudent(Mentor $mentor, Student $student, AttachStudentToMentorService $attacheStudentToMentorService): MentorStudent
@@ -36,9 +37,9 @@ class WebApiMentorController extends Controller
 
     public function findAndAttach(Mentor $mentor, FindAttachMentorStudentRequest $findAttachMentorStudentRequest, AttachStudentToMentorService $attacheStudentToMentorService, StudentService $studentService): MentorStudent
     {
-        $user = Auth::user();
         $this->permissionAndRoleService->canManageBackendOrAbort();
 
+        /* @var $student Student */
         $student = $studentService->getByEventoPersonId($findAttachMentorStudentRequest->evento_id);
 
         if (!$student) {
@@ -47,7 +48,7 @@ class WebApiMentorController extends Controller
 
         return $attacheStudentToMentorService->attach(
             $mentor,
-            $user->student,
+            $student,
             $findAttachMentorStudentRequest->firstname,
             $findAttachMentorStudentRequest->lastname
         );

@@ -17,10 +17,9 @@ use Illuminate\Support\Facades\Request;
 class WebApiMentorController extends Controller
 {
     public function __construct(
-        protected MentorService            $mentorService,
+        protected MentorService $mentorService,
         protected PermissionAndRoleService $permissionAndRoleService,
-    )
-    {
+    ) {
     }
 
     public function attachToStudent(Mentor $mentor, Student $student, AttachStudentToMentorService $attacheStudentToMentorService): MentorStudent

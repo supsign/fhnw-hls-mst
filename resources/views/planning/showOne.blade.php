@@ -103,7 +103,7 @@
                         <div>
                             <vue-plan-wrapper>
                                 <template v-slot:header>
-                                    <div class="my-auto w-2/3 text-sm">
+                                    <div class="my-auto w-2/3 hyphens-auto text-sm">
                                         {{$courseGroupYear->courseGroup->name}}
                                     </div>
                                     <vue-course-group-state :course-group-year="{{$courseGroupYear}}"

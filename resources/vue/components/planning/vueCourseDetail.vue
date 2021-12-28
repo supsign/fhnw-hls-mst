@@ -1,10 +1,10 @@
 <template>
     <div v-if="course" class="flex border-t p-1 text-left text-xs lg:text-sm" @click="openModal">
-        <div class="w-8">
+        <div class="w-8 flex-none">
             <slot name="icon"></slot>
         </div>
-        <div class="my-auto break-words flex-grow"
-             :class="{ 'cursor-pointer': courseYear }">
+        <div :class="{ 'cursor-pointer': courseYear }"
+             class="my-auto hyphens-auto flex-grow overflow-auto">
             {{ course.name }}
         </div>
         <vue-plan-course

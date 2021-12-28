@@ -31,10 +31,11 @@ import {courseSkillStore} from "./store/courseSkill/courseSkill.store";
 import VueSessionSweetalert from "./components/base/vueSessionSweetalert.vue";
 import VueAdminMentorStudyFields from "./components/admin/vueAdminMentorStudyFields.vue";
 import VueLockPlanning from "./components/planning/vueLockPlanning.vue";
+import VueAdminSpecializationYear from "./components/admin/vueAdminSpecializationYear.vue";
 import VueAdminMentorStudents from "./components/admin/vueAdminMentorStudents.vue";
 
 //@ts-ignore
-import VueMask from 'v-mask'
+import VueMask from 'v-mask';
 
 library.add(faUserSecret);
 library.add(faCheck);
@@ -76,7 +77,8 @@ const app = new Vue({
         VueSessionSweetalert,
         VueAdminMentorStudyFields,
         VueLockPlanning,
-        VueAdminMentorStudents
+        VueAdminMentorStudents,
+        VueAdminSpecializationYear,
     },
     store
 });

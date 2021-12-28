@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminMentorController;
 use App\Http\Controllers\Admin\AdminRolesController;
+use App\Http\Controllers\Admin\AdminStudyFieldYearController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MentorPlanningController;
@@ -75,5 +76,7 @@ Route::middleware(['web', 'auth', 'backend'])->group(
 
         Route::get('admin/mentors', [AdminMentorController::class, 'mentors'])->name('admin.mentors');
         Route::get('admin/mentors/{mentor}', [AdminMentorController::class, 'showOne'])->name('admin.mentor');
+
+        Route::get('admin/studyFieldYears/{studyFieldYear}', [AdminStudyFieldYearController::class, 'show'])->name('admin.studyFieldYears.show');
     }
 );

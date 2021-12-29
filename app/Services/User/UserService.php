@@ -73,6 +73,7 @@ class UserService
         $user = $this->updateOrCrateUserOnMail($email);
         $this->attachStudent($user, $eventoPersonId);
         $this->attachMentor($user, $eventoPersonId, $firstname, $lastname);
+        $this->permissionAndRoleService->removeStudent($user);
         $this->permissionAndRoleService->assignMentor($user);
         $this->permissionAndRoleService->assignAppAdmin($user);
 
@@ -84,7 +85,9 @@ class UserService
         $user = $this->updateOrCrateUserOnMail($email);
         $this->attachStudent($user, $eventoPersonId);
         $this->attachMentor($user, $eventoPersonId, $firstname, $lastname);
+        $this->permissionAndRoleService->removeStudent($user);
         $this->permissionAndRoleService->assignMentor($user);
+        $this->permissionAndRoleService->removeAppAdmin($user);
 
         return $user;
     }
@@ -94,6 +97,8 @@ class UserService
         $user = $this->updateOrCrateUserOnMail($email);
         $this->attachStudent($user, $eventoPersonId);
         $this->permissionAndRoleService->assignStudent($user);
+        $this->permissionAndRoleService->removeMentor($user);
+        $this->permissionAndRoleService->removeAppAdmin($user);
 
         return $user;
     }

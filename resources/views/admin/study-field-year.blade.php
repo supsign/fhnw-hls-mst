@@ -3,14 +3,15 @@
         Studienrichtung - Start
     </x-slot>
 
+    <vue-store-fill :model="'specializationYear'" :entities="{{$studyFieldYear->specializationYears}}"></vue-store-fill>
+    <vue-store-fill :model="'specialization'"
+                    :entities="{{$studyFieldYear->studyField->specializations}}"></vue-store-fill>
+    <vue-store-fill :model="'assessment'"
+                    :entities="{{\App\Models\Assessment::all()}}"></vue-store-fill>
+
     <div class="space-y-4">
         <div class="text-2xl text-gray-500 mb-4">{{$studyFieldYear->studyField->name}}
             - {{$studyFieldYear->beginSemester->year}}</div>
-
-        <vue-admin-specialization-year
-            :specialization-years="{{$studyFieldYear->specializationYears}}"
-            :specializations="{{$studyFieldYear->studyField->specializations}}"
-        ></vue-admin-specialization-year>
 
         <x-app.card>
             <x-slot name="title">
@@ -24,19 +25,9 @@
 
         </x-app.card>
 
-        <x-app.card>
-            <x-slot name="title">
-                Spezialisierungen
-            </x-slot>
-
-            @foreach($studyFieldYear->specializationYears as $specializationYear)
-                <div>{{$specializationYear->specialization->name}}</div>
-                <div>{{$specializationYear->recommendation?->name}}</div>
-                <div>{{$specializationYear->assessment?->name}}</div>
-            @endforeach
-
-
-        </x-app.card>
+        <vue-admin-specialization-years
+            :study-field-year="{{$studyFieldYear}}"
+        ></vue-admin-specialization-years>
 
         <x-app.card>
             <x-slot name="title">

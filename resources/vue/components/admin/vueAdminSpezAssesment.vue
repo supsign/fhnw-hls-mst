@@ -1,5 +1,5 @@
 <template>
-    <vue-select v-model="assessment" :options="assessments" label="Assessment"/>
+    <vue-select v-model="assessment" :options="assessments" label="Assessment" option-key="name"/>
 </template>
 
 <script lang="ts">
@@ -8,6 +8,7 @@ import BaseComponent from "../base/baseComponent";
 import VueCard from "../base/vueCard.vue";
 import {IAssessment} from "../../interfaces/assessment.interface";
 import VueSelect from "../form/vueSelect.vue";
+import {ISpecializationYear} from "../../interfaces/specialzationYear.interface";
 
 @Component({
     components: {
@@ -16,21 +17,22 @@ import VueSelect from "../form/vueSelect.vue";
     }
 })
 export default class VueAdminSpezAssesment extends BaseComponent {
-    @Prop({type: Number})
-    assessmentId: number
-
-    @Prop({type: Array})
-    assessments: IAssessment[]
+    @Prop({type: Object})
+    specializationYear: ISpecializationYear
 
     assessment: IAssessment = null
 
-    public created() {
-        this.assessment = this.assessments.find(ass => ass.id === this.assessmentId);
+    public get assessments() {
+        return this.models.assessment.all;
     }
 
-    @Watch('assessmentId')
-    public setAssessment(id: number) {
-        this.assessment = this.assessments.find(ass => ass.id === id);
+    public created() {
+        this.assessment = this.models.assessment.getById(this.specializationYear.assessment_id);
+    }
+
+    @Watch('specializationYear')
+    public setAssessment(specializationYear: ISpecializationYear) {
+        this.assessment = this.models.assessment.getById(specializationYear.assessment_id);
     }
 
 

@@ -1,55 +1,43 @@
 <template>
-    <div class="mb-2">
-
-        Spezialisierungen
-
-        <div class="grid grid-cols-3 gap-4">
-            <div v-for="specializationYear in specializationYears">
-                <vue-card v-if="getSpecialization(specializationYear.specialization_id)">
-                    <template v-slot:title>
-                        <div class="flex flex-row justify-between">
-                            <div>{{ getSpecialization(specializationYear.specialization_id).name }}</div>
-                            <div class="cursor-pointer" @click="()=>editSpez(specializationYear)">
-                                <i aria-hidden="true" class="far fa-edit"></i>
-                            </div>
-                        </div>
-                    </template>
-                    <vue-admin-spez-assesment :assessments=""/>
-                </vue-card>
+    <vue-card>
+        <template v-slot:title>
+            <div class="flex flex-row justify-between">
+                <div>{{ specialization.name }}</div>
+                <div class="cursor-pointer" @click="()=>editSpez(specializationYear)">
+                    <i aria-hidden="true" class="far fa-edit"></i>
+                </div>
             </div>
+        </template>
+        <div>
+            <div>Assessment</div>
+            <div v-if="assessemnt">{{ assessemnt.name }}</div>
+            <div v-else>Kein abweichendes Assessment</div>
         </div>
-    </div>
+    </vue-card>
 </template>
 
 <script lang="ts">
-import {Component, Prop} from "vue-property-decorator";
+import {Component, Prop,} from "vue-property-decorator";
 import BaseComponent from "../base/baseComponent";
-import VueCard from "../base/vueCard.vue";
 import {ISpecializationYear} from "../../interfaces/specialzationYear.interface";
-import {ISpecialization} from "../../interfaces/specialization.interface";
-import VueInput from "../form/vueInput.vue";
-import VueAdminSpezAssesment from "./vueAdminSpezAssesment.vue";
+import VueCard from "../base/vueCard.vue";
+
 
 @Component({
     components: {
-        VueAdminSpezAssesment,
-        VueCard,
-        VueInput
+        VueCard
     }
 })
 export default class VueAdminSpecializationYear extends BaseComponent {
+    @Prop({type: Object})
+    specializationYear: ISpecializationYear
 
-    @Prop({type: Array})
-    specializationYears: ISpecializationYear[]
+    public get assessemnt() {
+        return this.models.assessment.getById(this.specializationYear.assessment_id)
+    }
 
-    @Prop({type: Array})
-    specializations: ISpecialization[]
-
-    @Prop({type: Array})
-
-
-    public getSpecialization(id: Number): ISpecialization {
-        return this.specializations.find((spez) => spez.id === id);
+    public get specialization() {
+        return this.models.specialization.getById(this.specializationYear.specialization_id)
     }
 
     public editSpez(specializationYear: ISpecializationYear) {

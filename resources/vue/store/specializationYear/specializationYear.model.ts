@@ -9,6 +9,6 @@ export class SpecializationYearModel extends EntityModel<IBaseState<ISpecializat
     typeof SpecializationYearRequestModel,
     ISpecializationYear> {
     constructor(store: Store<IBaseState<ISpecializationYear>>) {
-        super("specialization", store, SpecializationYearRequestModel);
+        super("specializationYear", store, SpecializationYearRequestModel);
     }
 }

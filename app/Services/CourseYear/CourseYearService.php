@@ -29,15 +29,20 @@ class CourseYearService extends BaseModelService
             return null;
         }
 
-        // ToDO - attribute vom lastCourseYear kopieren
-        // $latestCourseYear = $course->courseYears->load('semester')->sortByDesc('semester.start_date')->first();
+        $latestCourseYear = $course->courseYears->load('semester')->sortByDesc('semester.start_date')->first();
+
+        if ($latestCourseYear) {
+            $contents = $latestCourseYear->contents;
+        } else {
+            $contents = $course->contents;
+        }
 
         return $this->createOrUpdateOnEventoIdTrait($eventoId, [
             'course_id' => $course->id,
             'semester_id' => $semester->id,
             'name' => $name,
             'number' => $number,
-            'contents' => strip_tags($course->contents, '<ul><li><p><div><blockquote>'),
+            'contents' => strip_tags($contents, '<ul><li><p><div><blockquote>'),
             'is_audit' => str_contains($name, '(Prüfung)'),
         ]);
     }

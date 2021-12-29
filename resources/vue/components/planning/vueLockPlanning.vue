@@ -1,5 +1,5 @@
 <template>
-    <vue-checkbox v-model="isLocked" :label="'fixieren'" @input="toggle"></vue-checkbox>
+    <vue-checkbox v-model="isLocked" :label="'für Student:in schreibgeschützt'" @input="toggle"></vue-checkbox>
 </template>
 
 <script lang="ts">
@@ -36,20 +36,20 @@ export default class VueLockPlanning extends BaseComponent {
     public lock() {
         axios.post<IPlanning>(`/webapi/plannings/${this.planning.id}/lock`).then(res => {
             this.isLocked = res.data.is_locked
-            Toast.fire({icon: 'success', title: 'fixiert'})
+            Toast.fire({icon: 'success', title: 'Schreibschutz für Stundent:in aktiviert'})
         }).catch(() => {
             this.isLocked = false;
-            Toast.fire({icon: 'error', title: 'nicht fixiert'})
+            Toast.fire({icon: 'error', title: 'Schreibschutz für Stundent:in nicht aktiviert'})
         })
     }
 
     public unLock() {
         axios.post<IPlanning>(`/webapi/plannings/${this.planning.id}/unlock`).then(res => {
             this.isLocked = res.data.is_locked
-            Toast.fire({icon: 'success', title: 'freigegeben'})
+            Toast.fire({icon: 'success', title: 'Schreibschutz für Stundent:in aufgehoben'})
         }).catch(() => {
             this.isLocked = true;
-            Toast.fire({icon: 'error', title: 'nicht freigegeben'})
+            Toast.fire({icon: 'error', title: 'Schreibschutz für Stundent:in nicht aufgehoben'})
         })
     }
 

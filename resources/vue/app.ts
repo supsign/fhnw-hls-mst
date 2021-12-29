@@ -33,9 +33,12 @@ import VueAdminMentorStudyFields from "./components/admin/vueAdminMentorStudyFie
 import VueLockPlanning from "./components/planning/vueLockPlanning.vue";
 import VueAdminSpecializationYear from "./components/admin/vueAdminSpecializationYear.vue";
 import VueAdminMentorStudents from "./components/admin/vueAdminMentorStudents.vue";
+import {specializationStore} from "./store/specialization/specialization.store";
 
 //@ts-ignore
 import VueMask from 'v-mask';
+import {specializationYearStore} from "./store/specializationYear/specializationYear.store";
+import {assessmentStore} from "./store/assessment/assessment.store";
 
 library.add(faUserSecret);
 library.add(faCheck);
@@ -52,7 +55,10 @@ const store = new Vuex.Store({
         semester: semesterStore,
         skill: skillStore,
         skillStudent: skillStudentStore,
-        courseSkill: courseSkillStore
+        courseSkill: courseSkillStore,
+        specialization: specializationStore,
+        specializationYear: specializationYearStore,
+        assessment: assessmentStore,
     },
 });
 

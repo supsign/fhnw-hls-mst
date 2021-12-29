@@ -1,18 +1,18 @@
 <template>
-    <vue-input v-model="assessment" label="Assessment"/>
+    <vue-select v-model="assessment" :options="assessments" label="Assessment"/>
 </template>
 
 <script lang="ts">
 import {Component, Prop, Watch} from "vue-property-decorator";
 import BaseComponent from "../base/baseComponent";
 import VueCard from "../base/vueCard.vue";
-import VueInput from "../form/vueInput.vue";
 import {IAssessment} from "../../interfaces/assessment.interface";
+import VueSelect from "../form/vueSelect.vue";
 
 @Component({
     components: {
         VueCard,
-        VueInput
+        VueSelect
     }
 })
 export default class VueAdminSpezAssesment extends BaseComponent {

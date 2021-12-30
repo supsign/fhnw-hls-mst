@@ -11,4 +11,5 @@ export interface ICourse extends IModel {
     is_hs: boolean
     is_fs: boolean
     course_skills: ICourseSkill[]
+    number_unformated: string
 }

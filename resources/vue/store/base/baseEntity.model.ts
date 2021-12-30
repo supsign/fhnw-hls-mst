@@ -35,6 +35,10 @@ export class EntityModel<S, T, U extends IModel> {
         return this._store.dispatch(`${this._modelName}/patch`, payload);
     }
 
+    public add(payload: Partial<U>): Promise<void> {
+        return this._store.dispatch(`${this._modelName}/add`, payload);
+    }
+
     public patchById(id: number, payload: Partial<U>): Promise<void> {
         return this._store.dispatch(`${this._modelName}/patch`, {
             id,

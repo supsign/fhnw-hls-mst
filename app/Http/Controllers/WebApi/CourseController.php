@@ -4,6 +4,7 @@ namespace App\Http\Controllers\WebApi;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Course\PatchCourseRequest;
+use App\Http\Requests\Course\SearchCourseRequest;
 use App\Models\Course;
 use App\Services\Course\CourseService;
 use App\Services\User\PermissionAndRoleService;
@@ -21,5 +22,12 @@ class CourseController extends Controller
         $this->permissionAndRoleService->canManageBackendOrAbort();
 
         return $this->courseService->setSemesterType($course, $request->is_hs, $request->is_fs);
+    }
+
+    public function search(SearchCourseRequest $searchCourseRequest)
+    {
+        $this->permissionAndRoleService->canManageBackendOrAbort();
+
+        return $this->courseService->search($searchCourseRequest->search);
     }
 }

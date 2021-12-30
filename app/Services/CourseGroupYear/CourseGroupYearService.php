@@ -39,6 +39,10 @@ class CourseGroupYearService extends BaseModelService
             if ($this->courseCompletionService->courseIsSuccessfullyCompleted($course, $student)) {
                 return true;
             }
+
+            if ($this->courseCompletionService->courseHasFailedCompletions($course, $student)) {
+                return true;
+            }
         }
 
         return false;

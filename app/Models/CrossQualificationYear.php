@@ -17,6 +17,11 @@ class CrossQualificationYear extends BaseModel
         return $this->belongsToMany(Course::class);
     }
 
+    public function courseCrossQualificationYears()
+    {
+        return $this->hasMany(CourseCrossQualificationYear::class);
+    }
+
     public function crossQualification()
     {
         return $this->belongsTo(CrossQualification::class);

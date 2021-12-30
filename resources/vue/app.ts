@@ -34,11 +34,13 @@ import VueLockPlanning from "./components/planning/vueLockPlanning.vue";
 import VueAdminSpecializationYears from "./components/admin/vueAdminSpecializationYears.vue";
 import VueAdminMentorStudents from "./components/admin/vueAdminMentorStudents.vue";
 import {specializationStore} from "./store/specialization/specialization.store";
+import VueAdminCourseCrossQualificationYear from "./components/admin/vueAdminCourseCrossQualificationYear.vue"
 
 //@ts-ignore
 import VueMask from 'v-mask';
 import {specializationYearStore} from "./store/specializationYear/specializationYear.store";
 import {assessmentStore} from "./store/assessment/assessment.store";
+import VueAdminCrossQualificationYear from "./components/admin/vueAdminCrossQualificationYear.vue";
 
 library.add(faUserSecret);
 library.add(faCheck);
@@ -84,6 +86,8 @@ const app = new Vue({
         VueAdminMentorStudyFields,
         VueLockPlanning,
         VueAdminMentorStudents,
+        VueAdminCourseCrossQualificationYear,
+        VueAdminCrossQualificationYear,
         VueAdminSpecializationYears,
     },
     store

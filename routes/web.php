@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AdminCrossQualificationController;
 use App\Http\Controllers\Admin\AdminMentorController;
 use App\Http\Controllers\Admin\AdminRolesController;
 use App\Http\Controllers\Admin\AdminStudyFieldYearController;
@@ -78,5 +79,6 @@ Route::middleware(['web', 'auth', 'backend'])->group(
         Route::get('admin/mentors/{mentor}', [AdminMentorController::class, 'showOne'])->name('admin.mentor');
 
         Route::get('admin/studyFieldYears/{studyFieldYear}', [AdminStudyFieldYearController::class, 'show'])->name('admin.studyFieldYears.show');
+        Route::get('admin/crossQualificationYears/{crossQualificationYear}', [AdminCrossQualificationController::class, 'showCrossQualificationYaer'])->name('admin.crossQualificationYear');
     }
 );

@@ -35,6 +35,7 @@ class StudyFieldYear extends BaseModel
     public function getCourseSpecializationYearsAttribute()
     {
         $blub = $this->specializationYears()->with('courseSpecializationYears')->get()->pluck('courseSpecializationYears')->flatten(1)->unique();
+
         return $blub;
     }
 

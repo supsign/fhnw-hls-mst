@@ -32,6 +32,12 @@ class StudyFieldYear extends BaseModel
         return $this->belongsTo(Recommendation::class);
     }
 
+    public function getCourseSpecializationYearsAttribute()
+    {
+        $blub = $this->specializationYears()->with('courseSpecializationYears')->get()->pluck('courseSpecializationYears')->flatten(1)->unique();
+        return $blub;
+    }
+
     public function specializationYears()
     {
         return $this->hasMany(SpecializationYear::class);

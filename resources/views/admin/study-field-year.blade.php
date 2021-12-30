@@ -8,6 +8,10 @@
                     :entities="{{$studyFieldYear->studyField->specializations}}"></vue-store-fill>
     <vue-store-fill :model="'assessment'"
                     :entities="{{\App\Models\Assessment::all()}}"></vue-store-fill>
+    <vue-store-fill :model="'courseSpecializationYear'"
+                    :entities="{{$studyFieldYear->courseSpecializationYears}}"></vue-store-fill>
+    <vue-store-fill :model="'course'"
+                    :entities="{{$studyFieldYear->courses}}"></vue-store-fill>
 
     <div class="space-y-4">
         <div class="text-2xl text-gray-500 mb-4">{{$studyFieldYear->studyField->name}}

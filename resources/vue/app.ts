@@ -16,9 +16,9 @@ import {coursePlanningStore} from "./store/coursePlanning/coursePlanning.store";
 import VueStoreFill from "./components/store/vueStoreFill.vue"
 import VueCourseGroupState from "./components/planning/vueCourseGroupState.vue";
 import VuePlanWrapper from "./components/planning/vuePlanWrapper.vue";
-import VueStateWrapper from "./components/Assessment/VueStateWrapper.vue";
+import VueStateWrapper from "./components/assessment/VueStateWrapper.vue";
 import VueShowAndSelectMentors from "./components/mentor/VueShowAndSelectMentors.vue";
-import VueAssessmentState from "./components/Assessment/VueAssessmentState.vue";
+import VueAssessmentState from "./components/assessment/VueAssessmentState.vue";
 import VueCreatePlanningForm from "./components/planning/vueCreatePlanningForm.vue";
 import VueAdminCourseEdit from "./components/admin/vueAdminCourseEdit.vue";
 import VuePlanningSemester from "./components/planning/vuePlanningSemester.vue";
@@ -41,6 +41,7 @@ import VueMask from 'v-mask';
 import {specializationYearStore} from "./store/specializationYear/specializationYear.store";
 import {assessmentStore} from "./store/assessment/assessment.store";
 import VueAdminCrossQualificationYear from "./components/admin/vueAdminCrossQualificationYear.vue";
+import {courseSpecializationYearStore} from "./store/courseSpecializationYear/courseSpecializationYear.store";
 
 library.add(faUserSecret);
 library.add(faCheck);
@@ -61,6 +62,7 @@ const store = new Vuex.Store({
         specialization: specializationStore,
         specializationYear: specializationYearStore,
         assessment: assessmentStore,
+        courseSpecializationYear: courseSpecializationYearStore
     },
 });
 

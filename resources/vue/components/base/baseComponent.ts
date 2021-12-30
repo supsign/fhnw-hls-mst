@@ -9,6 +9,7 @@ import {courseSkillModel} from "../../store/courseSkill/courseSkill.model";
 import {SpecializationModel} from "../../store/specialization/specialization.model";
 import {SpecializationYearModel} from "../../store/specializationYear/specializationYear.model";
 import {AssessmentModel} from "../../store/assessment/assessment.model";
+import {CourseSpecializationYearModel} from "../../store/courseSpecializationYear/courseSpecializationYear.model";
 
 // Define a super class component
 @Component
@@ -23,6 +24,7 @@ export default class BaseComponent extends Vue {
         specialization: new SpecializationModel(this.$store),
         specializationYear: new SpecializationYearModel(this.$store),
         assessment: new AssessmentModel(this.$store),
+        courseSpecializationYear: new CourseSpecializationYearModel(this.$store)
     }
 
 }

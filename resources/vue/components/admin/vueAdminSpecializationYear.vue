@@ -8,10 +8,26 @@
                 </div>
             </div>
         </template>
-        <div>
-            <div>Assessment</div>
-            <div v-if="assessemnt">{{ assessemnt.name }}</div>
-            <div v-else>Kein abweichendes Assessment</div>
+        <div class="space-y-2">
+            <div>
+                <div class="text-xs text-gray-600">Assessment</div>
+                <div class="ml-2">
+                    <div v-if="assessemnt">{{ assessemnt.name }}</div>
+                    <div v-else>Kein abweichendes Assessment</div>
+                </div>
+            </div>
+            <div>
+                <div class="text-xs text-gray-600">Anzahl Kurse um zu bestehen</div>
+                <div class="ml-2">
+                    <div>{{ specializationYear.amount_to_pass }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="text-xs text-gray-600">Kurse</div>
+                <div class="ml-2">
+                    <div>{{ specializationYear.amount_to_pass }}</div>
+                </div>
+            </div>
         </div>
     </vue-card>
 </template>

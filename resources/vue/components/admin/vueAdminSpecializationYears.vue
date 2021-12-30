@@ -22,6 +22,7 @@ import VueInput from "../form/vueInput.vue";
 import VueAdminSpezAssesment from "./vueAdminSpezAssesment.vue";
 import {IStudyFieldYear} from "../../interfaces/studyFieldYear.interface";
 import VueAdminSpecializationYear from "./vueAdminSpecializationYear.vue";
+import {ISpecializationYear} from "../../interfaces/specialzationYear.interface";
 
 @Component({
     components: {

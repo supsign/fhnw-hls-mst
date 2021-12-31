@@ -59,6 +59,11 @@ class Course extends BaseModel
         return $this->belongsToMany(Recommendation::class);
     }
 
+    public function requiredSkills()
+    {
+        return $this->skills()->wherePivot('is_acquisition', false);
+    }
+
     public function skillsAcquisition()
     {
         return $this->skills()->wherePivot('is_acquisition', true);
@@ -69,14 +74,14 @@ class Course extends BaseModel
         return $this->belongsToMany(Skill::class);
     }
 
-    public function requiredSkills()
-    {
-        return $this->skills()->wherePivot('is_acquisition', false);
-    }
-
     public function specializationYears()
     {
         return $this->belongsToMany(SpecializationYear::class);
+    }
+
+    public function superCourse()
+    {
+        return $this->belongsTo(SuperCourse::class);
     }
 
     public function studyField()
@@ -92,5 +97,19 @@ class Course extends BaseModel
     public function getCourseYearBySemesterOrLatest(Semester $semester = null): ?CourseYear
     {
         return $this->getService()->getCourseYearBySemesterOrLatest($this, $semester);
+    }
+
+    public function getEventoIdAttribute()
+    {
+        return $this->superCourse?->evento_id;
+    }
+
+    public function setEventoIdAttribute(int $value): self
+    {
+        $this->superCourse()->associate(
+            SuperCourse::firstOrCreate(['evento_id' => $value])
+        );
+
+        return $this;
     }
 }

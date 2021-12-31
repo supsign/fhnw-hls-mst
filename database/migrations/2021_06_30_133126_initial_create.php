@@ -193,12 +193,18 @@ class InitialCreate extends Migration
             }
         }
 
+        Schema::create('super_courses', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('evento_id')->nullable()->unique();
+            $table->timestampsTz();
+        });
+
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('course_type_id')->constrained();
+            $table->foreignId('super_course_id')->nullable()->constrained();
             $table->foreignId('language_id')->default(1)->constrained();
             $table->foreignId('study_field_id')->nullable()->constrained();
-            $table->unsignedBigInteger('evento_id')->nullable()->unique();
             $table->string('number')->unique();
             $table->string('number_unformated')->nullable()->unique();
             $table->string('name')->nullable();
@@ -497,6 +503,7 @@ class InitialCreate extends Migration
         Schema::dropIfExists('course_group_years');
         Schema::dropIfExists('course_groups');
         Schema::dropIfExists('courses');
+        Schema::dropIfExists('super_courses');
         Schema::dropIfExists('cross_qualification_years');
         Schema::dropIfExists('specialization_years');
         Schema::dropIfExists('study_field_years');

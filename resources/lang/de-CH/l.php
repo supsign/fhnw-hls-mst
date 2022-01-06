@@ -32,4 +32,5 @@ return [
     'termPlanned' => 'geplante Semester',
     'students' => 'Studierende',
     'mentorNoStudents' => 'Kein Student:in hat bisher eine Planung für Sie freigegeben.',
+    'faq' => 'FAQ',
 ];

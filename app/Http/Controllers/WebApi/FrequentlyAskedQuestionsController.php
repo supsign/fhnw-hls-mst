@@ -8,8 +8,7 @@ use Illuminate\Http\Request;
 
 class FrequentlyAskedQuestionsController extends Controller
 {
-    public function update(FrequentlyAskedQuestion $faq) 
+    public function update(FrequentlyAskedQuestion $faq)
     {
-        
     }
 }

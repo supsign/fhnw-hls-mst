@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class FrequentlyAskedQuestion extends BaseModel
 {
-	use SoftDeletes;
+    use SoftDeletes;
 }

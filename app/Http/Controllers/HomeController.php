@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\Faq\FrequentlyAskedQuestionsService;
+use App\Services\Faq\FrequentlyAskedQuestionService;
 use App\Services\User\PermissionAndRoleService;
 
 class HomeController extends Controller
@@ -18,7 +18,7 @@ class HomeController extends Controller
         return view('pages.home');
     }
 
-    public function faq(FrequentlyAskedQuestionsService $faqService)
+    public function faq(FrequentlyAskedQuestionService $faqService)
     {
         $this->permissionAndRoleService->canShowAppOrAbort();
 

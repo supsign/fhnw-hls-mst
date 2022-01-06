@@ -6,7 +6,7 @@ use App\Models\FrequentlyAskedQuestion;
 use App\Services\Base\BaseModelService;
 use App\Services\Base\Traits\UpdateTrait;
 
-class FrequentlyAskedQuestionsService extends BaseModelService
+class FrequentlyAskedQuestionService extends BaseModelService
 {
     use UpdateTrait{
         update AS protected baseUpdate;

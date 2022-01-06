@@ -10,13 +10,13 @@ use App\Services\User\PermissionAndRoleService;
 
 class FrequentlyAskedQuestionsController extends Controller
 {
-
     public function __construct(protected PermissionAndRoleService $permissionAndRoleService)
-    {}
+    {
+    }
 
     public function update(
-        FrequentlyAskedQuestion $faq, 
-        PatchFrequentlyAskedQuestionRequest $request, 
+        FrequentlyAskedQuestion $faq,
+        PatchFrequentlyAskedQuestionRequest $request,
         FrequentlyAskedQuestionService $faqService
     ) {
         $this->permissionAndRoleService->canManageBackendOrAbort();

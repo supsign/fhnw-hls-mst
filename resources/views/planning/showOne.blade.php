@@ -113,7 +113,7 @@
                                     </vue-course-group-state>
 
                                 </template>
-                                @foreach($courseGroupYear->courseCourseGroupYears()->with('course')->get() as $courseCourseGroupYear)
+                                @foreach($courseGroupYear->courseCourseGroupYears()->with('course')->get()->sortBy('course.name') as $courseCourseGroupYear)
                                     @inject('courseCompletionService', 'App\Services\Completion\CourseCompletionService')
                                     <vue-course-detail
                                         :course-id="{{$courseCourseGroupYear->course_id}}"

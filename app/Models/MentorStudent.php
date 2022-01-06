@@ -25,7 +25,6 @@ class MentorStudent extends BaseModel
     public function getFirstnameAttribute(string $value = null)
     {
         return $this->getDecrypted($value);
-
     }
 
     public function setFirstnameAttribute(string $value = null)
@@ -36,7 +35,6 @@ class MentorStudent extends BaseModel
     public function getLastnameAttribute(string $value = null)
     {
         return $this->getDecrypted($value);
-
     }
 
     public function setLastnameAttribute(string $value = null)
@@ -44,7 +42,8 @@ class MentorStudent extends BaseModel
         $this->attributes['lastname'] = $this->getEncrypted($value);
     }
 
-    private function getDecrypted(string $value = null){
+    private function getDecrypted(string $value = null)
+    {
         if (!$value) {
             return $value;
         }
@@ -56,7 +55,8 @@ class MentorStudent extends BaseModel
         }
     }
 
-    private function getEncrypted(string $value = null){
+    private function getEncrypted(string $value = null)
+    {
         if (!$value) {
             return $value;
         }

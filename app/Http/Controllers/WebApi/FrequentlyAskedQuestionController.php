@@ -14,13 +14,15 @@ class FrequentlyAskedQuestionsController extends Controller
     {
     }
 
-    public function update(
+    public function patch(
         FrequentlyAskedQuestion $faq,
         PatchFrequentlyAskedQuestionRequest $request,
         FrequentlyAskedQuestionService $faqService
     ) {
         $this->permissionAndRoleService->canManageBackendOrAbort();
 
-        // $faqService
+        $faqService->updateFromPatchRequest($faq, $request);
+
+        return $faq;
     }
 }

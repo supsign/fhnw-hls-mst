@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\WebApi\CourseController;
 use App\Http\Controllers\WebApi\CoursePlanningController;
+use App\Http\Controllers\WebApi\FrequentlyAskedQuestionController;
 use App\Http\Controllers\WebApi\StudentController;
 use App\Http\Controllers\WebApi\UserController;
 use App\Http\Controllers\WebApi\WebApiCourseCrossQualificationYearController;
@@ -40,5 +41,7 @@ Route::middleware('auth')->group(
 
         Route::post('coursecrossqualificationyears', [WebApiCourseCrossQualificationYearController::class, 'post'])->name('webapi.courseCrossQualificationYear.post');
         Route::delete('coursecrossqualificationyears/{courseCrossQualificationYear}', [WebApiCourseCrossQualificationYearController::class, 'delete'])->name('webapi.courseCrossQualificationYear.delete');
+
+        Route::patch('faq/{frequentlyAskedQuestion}', [FrequentlyAskedQuestionController::class, 'patch'])->name('webapi.faq.patch');
     }
 );

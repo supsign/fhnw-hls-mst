@@ -2,9 +2,11 @@
 
 namespace App\Services\Faq;
 
+use App\Http\Requests\Faq\PatchFrequentlyAskedQuestionRequest;
 use App\Models\FrequentlyAskedQuestion;
 use App\Services\Base\BaseModelService;
 use App\Services\Base\Traits\UpdateTrait;
+use Illuminate\Database\Eloquent\Collection;
 
 class FrequentlyAskedQuestionService extends BaseModelService
 {
@@ -17,13 +19,20 @@ class FrequentlyAskedQuestionService extends BaseModelService
         parent::__construct($model);
     }
 
-    public function getAll()
+    public function getAll(): Collection
     {
         return $this->model::orderBy('sort_order')->get();
     }
 
-    public function getAllWithTrashed()
+    public function getAllWithTrashed(): Collection
     {
         return $this->model::withTrashed()->orderBy('sort_order')->get();
+    }
+
+    public function updateFromPatchRequest(FrequentlyAskedQuestion $faq, PatchFrequentlyAskedQuestionRequest $request): self
+    {
+        $faq->update($request->validated());
+
+        return $this;
     }
 }

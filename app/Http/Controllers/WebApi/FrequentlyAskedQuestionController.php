@@ -8,7 +8,7 @@ use App\Models\FrequentlyAskedQuestion;
 use App\Services\Faq\FrequentlyAskedQuestionService;
 use App\Services\User\PermissionAndRoleService;
 
-class FrequentlyAskedQuestionsController extends Controller
+class FrequentlyAskedQuestionController extends Controller
 {
     public function __construct(protected PermissionAndRoleService $permissionAndRoleService)
     {

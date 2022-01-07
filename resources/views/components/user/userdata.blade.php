@@ -12,8 +12,9 @@
         </div>
 
         <x-user.studentdata :student="$user->student"></x-user.studentdata>
+
         <div class="py-2">
-            <x-base.link href="#" class="flex space-x-2">
+            <x-base.link href="https://welcome.inside.fhnw.ch/organisation/hochschule/HLS/Studierende/Seiten/Bachelor.aspx" target="_blank" rel="noopener noreferrer" class="flex space-x-2">
                 <i class="fas fa-external-link text-blue-600 text-xl" aria-hidden="true"></i>
                 <div class="my-auto">
                     @lang('l.linkInside')

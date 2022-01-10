@@ -19,7 +19,7 @@ class FrequentlyAskedQuestionController extends Controller
         PostFrequentlyAskedQuestionRequest $request,
         FrequentlyAskedQuestionService $faqService,
     ) {
-        return $faqService->createFromPostRequest();
+        return $faqService->createFromPostRequest($request);
     }
 
     public function delete(FrequentlyAskedQuestion $faq)
@@ -36,8 +36,6 @@ class FrequentlyAskedQuestionController extends Controller
     ) {
         $this->permissionAndRoleService->canManageBackendOrAbort();
 
-        $faqService->updateFromPatchRequest($faq, $request);
-
-        return $faq;
+        return $faqService->updateFromPatchRequest($faq, $request);
     }
 }

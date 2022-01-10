@@ -39,10 +39,10 @@ class FrequentlyAskedQuestionService extends BaseModelService
         return $this->model::withTrashed()->orderBy('sort_order')->get();
     }
 
-    public function updateFromPatchRequest(FrequentlyAskedQuestion $faq, PatchFrequentlyAskedQuestionRequest $request): self
+    public function updateFromPatchRequest(FrequentlyAskedQuestion $faq, PatchFrequentlyAskedQuestionRequest $request): FrequentlyAskedQuestion
     {
         $this->baseUpdate($faq, $request->validated());
 
-        return $this;
+        return $faq;
     }
 }

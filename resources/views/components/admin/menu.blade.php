@@ -16,7 +16,7 @@
          <span>Studiengangleitende</span>
    </a>
    <a class="block px-4 py-2 my-1 hover:bg-hls-700 text-gray-700 transition duration-300 easy-in-out"
-      href="{{route('admin.faq')}}">
+      href="{{ route('admin.faq') }}">
          <span>@lang('l.faq')</span>
    </a>
 </div>

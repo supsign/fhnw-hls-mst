@@ -12,20 +12,21 @@
                         <div class="space-x-4 flex">
                             <x-base.link
                                 href="{{ $mentorStudent ? route('mentor.planning.create.copy', [$mentorStudent->student, $planning]) :route('planning.create.copy', $planning) }}">
-                                <i
-                                    class="fas fa-copy text-blue-600 text-xl" aria-hidden="true"></i></x-base.link>
+                                <i class="fas fa-copy text-blue-600 text-xl" aria-hidden="true"></i>
+                            </x-base.link>
                             <x-base.link
-                                href="{{ $mentorStudent ? route('mentor.planning.print', [$mentorStudent->student, $planning]) :route('planning.print', $planning) }}">
-                                <i
-                                    class="fas fa-file-pdf text-blue-600 text-xl" aria-hidden="true"></i></x-base.link>
+                                href="{{ $mentorStudent ? route('mentor.planning.print', [$mentorStudent->student, $planning]) :route('planning.print', $planning) }}" target="_blank" rel="noopener noreferrer">
+                                <i class="fas fa-file-pdf text-blue-600 text-xl" aria-hidden="true"></i>
+                            </x-base.link>
 
                             @if(!(!$mentorStudent && $planning->is_locked))
                                 <vue-form method="POST"
                                           action="{{ $mentorStudent ? route('mentor.planning.delete', [$mentorStudent->student, $planning]) : route('planning.delete', $planning) }}">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" name="delete_planning"><i
-                                            class="fas fa-trash text-red-600 text-xl" aria-hidden="true"></i></button>
+                                    <button type="submit" name="delete_planning">
+                                        <i class="fas fa-trash text-red-600 text-xl" aria-hidden="true"></i>
+                                    </button>
                                 </vue-form>
                             @endif
                         </div>

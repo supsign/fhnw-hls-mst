@@ -39,10 +39,60 @@ class FrequentlyAskedQuestionService extends BaseModelService
         return $this->model::withTrashed()->orderBy('sort_order')->get();
     }
 
+    protected function getNextEntry(FrequentlyAskedQuestion $faq): ?FrequentlyAskedQuestion
+    {
+        return $this->model::where('sort_order', '>', $faq->sort_order)
+            ->orderBy('sort_order')
+                ->first();
+    }
+
+    protected function getPreviousEntry(FrequentlyAskedQuestion $faq): ?FrequentlyAskedQuestion
+    {
+        return $this->model::where('sort_order', '<', $faq->sort_order)
+            ->orderBy('sort_order', 'desc')
+                ->first();
+    }
+
     public function updateFromPatchRequest(FrequentlyAskedQuestion $faq, PatchFrequentlyAskedQuestionRequest $request): FrequentlyAskedQuestion
     {
         $this->baseUpdate($faq, $request->validated());
 
         return $faq;
+    }
+
+    public function sortOrderDown(FrequentlyAskedQuestion $faq): self
+    {
+        $nextEntry = $this->getNextEntry($faq);
+
+        if (!$nextEntry) {
+            return $this;
+        }
+
+        $currentPosition = $faq->sort_order;
+        $faq->sort_order = $nextEntry->sort_order;
+        $nextEntry->sort_order = $currentPosition;
+
+        $faq->save();
+        $nextEntry->save();
+
+        return $this;
+    }
+
+    public function sortOrderUp(FrequentlyAskedQuestion $faq): self
+    {
+        $previousEntry = $this->getPreviousEntry($faq);
+
+        if (!$previousEntry) {
+            return $this;
+        }
+
+        $currentPosition = $faq->sort_order;
+        $faq->sort_order = $previousEntry->sort_order;
+        $previousEntry->sort_order = $currentPosition;
+
+        $faq->save();
+        $previousEntry->save();
+
+        return $this;
     }
 }

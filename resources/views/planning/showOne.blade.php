@@ -134,6 +134,10 @@
                             </vue-plan-wrapper>
                         </div>
                     @endforeach
+                    <div>
+                        <x-planning.uncounted-completions :student="$planning->student"
+                                                          :study-field-year="$planning->studyFieldYear"></x-planning.uncounted-completions>
+                    </div>
                 </div>
             </div>
             <div class="hidden md:block md:w-2/4 lg:w-1/4 md:pl-4">

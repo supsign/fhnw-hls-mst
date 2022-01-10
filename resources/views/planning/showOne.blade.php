@@ -43,6 +43,14 @@
                     <div>{{ $planning->crossQualificationYear?->crossQualification->name }}</div>
                     <div>{{ $planning->specializationYear?->specialization->name }}</div>
                     <div>@lang('l.startDate'): {{ $planning->studyFieldYear->beginSemester->year }}</div>
+
+                    @if($planning->studyFieldYear->studyField->url_study_guide)
+                        <x-base.link href="{{ $planning->studyFieldYear->studyField->url_study_guide }}" target="_blank" rel="noopener noreferrer" class="flex space-x-2 mt-1">
+                            <i class="fas fa-external-link text-blue-600 my-auto" aria-hidden="true"></i>
+                            <div>@lang('l.studyGuideLink')</div>
+                        </x-base.link>
+                    @endif
+
                     @if($mentorStudent)
                         <vue-lock-planning :planning="{{$planning}}"></vue-lock-planning>
                     @endif

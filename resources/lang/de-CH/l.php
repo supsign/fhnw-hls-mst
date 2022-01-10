@@ -33,4 +33,5 @@ return [
     'students' => 'Studierende',
     'mentorNoStudents' => 'Kein Student:in hat bisher eine Planung für Sie freigegeben.',
     'linkInside' => 'Link zu Inside',
+    'studyGuideLink' => 'Link zum Studienführer',
 ];

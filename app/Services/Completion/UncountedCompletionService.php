@@ -7,7 +7,6 @@ use App\Models\Student;
 use App\Models\StudyFieldYear;
 use Illuminate\Support\Collection;
 
-
 class UncountedCompletionService
 {
     public function __construct(protected CourseCompletionService $courseCompletionService)
@@ -28,4 +27,3 @@ class UncountedCompletionService
         });
     }
 }
-

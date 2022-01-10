@@ -33,6 +33,7 @@ class UncountedCompletions extends Component
         if (!$this->completions->count()) {
             return;
         }
+
         return view('components.standing.uncounted-completions', ['completions' => $this->completions]);
     }
 }

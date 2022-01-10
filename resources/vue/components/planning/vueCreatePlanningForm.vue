@@ -1,5 +1,10 @@
 <template>
     <div class="space-y-8 mt-4">
+        <vue-input
+            v-model="studyName" 
+            label="Planungsname"
+        >
+        </vue-input>
         <vue-select
             v-model="selectedStudyProgram"
             :options="studyPrograms"
@@ -64,6 +69,7 @@
 import {Component, Prop} from "vue-property-decorator";
 import BaseComponent from "../base/baseComponent";
 import VueSelect from "../form/vueSelect.vue";
+import VueInput from "../form/vueInput.vue";
 import {ISemester} from "../../interfaces/semester.interface";
 import {IStudent} from "../../interfaces/student.interface";
 import {IStudyProgram} from "../../interfaces/studyProgram.interface";
@@ -74,7 +80,8 @@ import {ICrossQualification} from "../../interfaces/crossQualification.interface
 
 @Component({
     components: {
-        VueSelect
+        VueSelect,
+        VueInput
     }
 })
 export default class VueCreatePlanningForm extends BaseComponent {
@@ -98,6 +105,8 @@ export default class VueCreatePlanningForm extends BaseComponent {
 
     @Prop({type: Array})
     crossQualifications: ICrossQualification[]
+
+    studyName: string = null;
 
     selectedStudyProgram: any = null;
 

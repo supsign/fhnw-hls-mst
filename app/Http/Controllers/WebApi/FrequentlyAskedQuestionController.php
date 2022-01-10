@@ -19,7 +19,7 @@ class FrequentlyAskedQuestionController extends Controller
 
     public function create(
         PostFrequentlyAskedQuestionRequest $request,
-        
+
     ) {
         return $this->faqService->createFromPostRequest($request);
     }

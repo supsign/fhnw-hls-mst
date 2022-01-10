@@ -47,15 +47,11 @@
                                 <div class="text-center my-auto w-full">
                                     {{ semester.year }} {{ getShortHS(semester) }}
                                 </div>
-                                <span v-if="semesterIsSelected(semester)"
-                                      class="my-auto"
-                                      @click.stop="remove(semester)"
-                                >
-                                        <i
-                                            aria-hidden="true" class="fas fa-trash text-red-600 my-auto"></i>
-                                    </span>
                             </div>
                         </div>
+                      <button class="button-error mb-4 col-span-2 mt-2" @click="selectedSemester ? remove(selectedSemester) : ''" :class="!selectedSemester ? 'bg-red-300 cursor-not-allowed hover:shadow-none': ''">
+                        <i class="fas fa-trash mx-2"></i>Modulplanung löschen
+                    </button>
                     </div>
                 </div>
             </div>

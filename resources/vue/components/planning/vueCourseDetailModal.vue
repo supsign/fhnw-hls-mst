@@ -9,7 +9,7 @@
 
             <div
                 class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all w-full sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                <div class="p-4">
+                    <div class="p-4">
                     <div class="text-gray-500 text-xl mb-4">
                         {{ courseYear.name }}
                     </div>

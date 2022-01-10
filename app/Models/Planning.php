@@ -86,6 +86,7 @@ class Planning extends BaseModel
         /* @var $recommendationService RecommendationService */
         $recommendationService = App::make(RecommendationService::class);
         $recommendation = $recommendationService->getApplicableRecommendation($this);
+
         return $recommendation->courseRecommendations;
     }
 
@@ -94,28 +95,29 @@ class Planning extends BaseModel
         /* @var $assessmentService AssessmentService */
         $assessmentService = App::make(AssessmentService::class);
         $assessment = $assessmentService->getApplicableAssessment($this);
+
         return $assessment->assessmentCourses;
     }
 
     public function getCourseSpecializationYearsAttribute(): Collection
     {
-
         $specializationYear = $this->specializationYear;
 
         if (!$specializationYear) {
             return collect();
         }
+
         return $specializationYear->courseSpecializationYear;
     }
 
     public function getCourseCrossQualificationYearsAttribute(): Collection
     {
-
         $crossQualificationYear = $this->crossQualificationYear;
 
         if (!$crossQualificationYear) {
             return collect();
         }
+
         return $crossQualificationYear->courseCrossQualificationYears;
     }
 }

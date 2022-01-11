@@ -62,103 +62,117 @@
                         <vue-lock-planning :planning="{{ $planning }}"></vue-lock-planning>
                     @endif
                 </div>
-            </x-app.card>
+                <div class="text-sm">@lang('l.lastChange'): {{ $planning->updated_at }}</div>
 
-            <x-app.card class="mb-4 md:w-1/2">
-                <x-slot name="title">
-                    <div class="my-auto">@lang('l.legend')</div>
-                </x-slot>
-                <div class="flex flex-col space-y-2">
-                    <div class="my-auto flex flex-row space-x-3">
-                        <i class="far fa-check-circle my-auto" aria-hidden="true"></i>
-                        <div class="my-auto">@lang('l.completionPassed')</div>
-                    </div>
+                @if ($planning->studyFieldYear->studyField->url_study_guide)
+                    <x-base.link href="{{ $planning->studyFieldYear->studyField->url_study_guide }}" target="_blank"
+                        rel="noopener noreferrer" class="flex space-x-2 mt-1">
+                        <i class="fas fa-external-link text-blue-600 my-auto" aria-hidden="true"></i>
+                        <div>@lang('l.studyGuideLink')</div>
+                    </x-base.link>
+                @endif
 
-                    <div class="my-auto flex flex-row space-x-3">
-                        <i class="far fa-times-circle my-auto" aria-hidden="true"></i>
-                        <div class="my-auto">@lang('l.completionFailed')</div>
-                    </div>
-                    <div class="flex flex-row space-x-3">
-                        <i class="far fa-circle my-auto" aria-hidden="true"></i>
-                        <div class="my-auto">@lang('l.completionNone')</div>
-                    </div>
-                </div>
-
-            </x-app.card>
+                @if ($mentorStudent)
+                    <vue-lock-planning :planning="{{ $planning }}"></vue-lock-planning>
+                @endif
         </div>
+        </x-app.card>
 
-        <vue-store-fill model="coursePlanning" :entities="{{ $planning->coursePlannings }}"></vue-store-fill>
-        <vue-store-fill model="semester" :entities="{{ \App\Models\Semester::all() }}"></vue-store-fill>
-        @php
-            $courses = $planning->studyFieldYear->courses;
-            $courseSkills = App\Models\CourseSkill::whereIn('course_id', $courses->pluck('id'))
-                ->where(['is_acquisition' => true])
-                ->get();
-        @endphp
-        <vue-store-fill model="course" :entities="{{ $courses }}"></vue-store-fill>
-        <vue-store-fill model="skillStudent" :entities="{{ $planning->student->skillStudent }}"></vue-store-fill>
-        <vue-store-fill model="courseSkill" :entities="{{ $courseSkills }}"></vue-store-fill>
-
-        <div class="space-y-8 md:flex md:space-y-0">
-            <div class="md:w-3/4 md:border-r md:border-gray-300 md:pr-4">
-                <div class="flex flex-col-reverse md:flex-row md:justify-between">
-                    <div class="text-xl lg:text-2xl text-gray-500 mb-4">Modulgruppen</div>
-                    <div>
-                        @if (!(!$mentorStudent && $planning->is_locked))
-                            <vue-form method="POST"
-                                action="{{ $mentorStudent ? route('mentor.planning.setRecommendations', [$mentorStudent->student, $planning]) : route('planning.setRecommendations', $planning) }}">
-                                @csrf
-                                <button class="button-primary mb-4" type="submit">gem. Musterstudienplan planen</button>
-                            </vue-form>
-                        @endif
-                    </div>
+        <x-app.card class="mb-4 md:w-1/2">
+            <x-slot name="title">
+                <div class="my-auto">@lang('l.legend')</div>
+            </x-slot>
+            <div class="flex flex-col space-y-2">
+                <div class="my-auto flex flex-row space-x-3">
+                    <i class="far fa-check-circle my-auto" aria-hidden="true"></i>
+                    <div class="my-auto">@lang('l.completionPassed')</div>
                 </div>
-                <div class="md:grid md:grid-cols-1 lg:grid-cols-2 lg:gap-4">
-                    @foreach ($courseGroupYears as $courseGroupYear)
-                        <div>
-                            <vue-plan-wrapper>
-                                <template v-slot:header>
-                                    <div class="my-auto w-2/3 hyphens-auto text-sm">
-                                        {{ $courseGroupYear->courseGroup->name }}
-                                    </div>
-                                    <vue-course-group-state :course-group-year="{{ $courseGroupYear }}"
-                                        :courses="{{ $courseGroupYear->courses }}"
-                                        :completions="{{ $planning->student->completions }}">
 
-                                    </vue-course-group-state>
-
-                                </template>
-                                @foreach ($courseGroupYear->courseCourseGroupYears()->with('course')->get()->sortBy('course.name')
-    as $courseCourseGroupYear)
-                                    @inject('courseCompletionService',
-                                    'App\Services\Completion\CourseCompletionService')
-                                    <vue-course-detail :course-id="{{ $courseCourseGroupYear->course_id }}"
-                                        :course-year="{{ $courseCourseGroupYear->course->getCourseYearBySemesterOrLatest() ?? json_encode(null) }}"
-                                        :planning-id="{{ $planning->id }}"
-                                        {{ $courseCompletionService->courseIsSuccessfullyCompleted($courseCourseGroupYear->course, $planning->student) ? 'course-is-successfully-completed' : '' }}
-                                        @if (!$mentorStudent && $planning->is_locked)
-                                        planning-is-locked
-                                @endif
-                                >
-                                <template v-slot:icon>
-                                    <x-planning.completion :student="$planning->student"
-                                        :course="$courseCourseGroupYear->course"></x-planning.completion>
-                                </template>
-                                </vue-course-detail>
-                    @endforeach
-                    </vue-plan-wrapper>
+                <div class="my-auto flex flex-row space-x-3">
+                    <i class="far fa-times-circle my-auto" aria-hidden="true"></i>
+                    <div class="my-auto">@lang('l.completionFailed')</div>
                 </div>
-                @endforeach
-                <div>
-                    <x-planning.uncounted-completions :student="$planning->student"
-                        :study-field-year="$planning->studyFieldYear"></x-planning.uncounted-completions>
+                <div class="flex flex-row space-x-3">
+                    <i class="far fa-circle my-auto" aria-hidden="true"></i>
+                    <div class="my-auto">@lang('l.completionNone')</div>
                 </div>
             </div>
+
+        </x-app.card>
+    </div>
+
+    <vue-store-fill model="coursePlanning" :entities="{{ $planning->coursePlannings }}"></vue-store-fill>
+    <vue-store-fill model="semester" :entities="{{ \App\Models\Semester::all() }}"></vue-store-fill>
+    @php
+        $courses = $planning->studyFieldYear->courses;
+        $courseSkills = App\Models\CourseSkill::whereIn('course_id', $courses->pluck('id'))
+            ->where(['is_acquisition' => true])
+            ->get();
+    @endphp
+    <vue-store-fill model="course" :entities="{{ $courses }}"></vue-store-fill>
+    <vue-store-fill model="skillStudent" :entities="{{ $planning->student->skillStudent }}"></vue-store-fill>
+    <vue-store-fill model="courseSkill" :entities="{{ $courseSkills }}"></vue-store-fill>
+
+    <div class="space-y-8 md:flex md:space-y-0">
+        <div class="md:w-3/4 md:border-r md:border-gray-300 md:pr-4">
+            <div class="flex flex-col-reverse md:flex-row md:justify-between">
+                <div class="text-xl lg:text-2xl text-gray-500 mb-4">Modulgruppen</div>
+                <div>
+                    @if (!(!$mentorStudent && $planning->is_locked))
+                        <vue-form method="POST"
+                            action="{{ $mentorStudent ? route('mentor.planning.setRecommendations', [$mentorStudent->student, $planning]) : route('planning.setRecommendations', $planning) }}">
+                            @csrf
+                            <button class="button-primary mb-4" type="submit">gem. Musterstudienplan planen</button>
+                        </vue-form>
+                    @endif
+                </div>
+            </div>
+            <div class="md:grid md:grid-cols-1 lg:grid-cols-2 lg:gap-4">
+                @foreach ($courseGroupYears as $courseGroupYear)
+                    <div>
+                        <vue-plan-wrapper>
+                            <template v-slot:header>
+                                <div class="my-auto w-2/3 hyphens-auto text-sm">
+                                    {{ $courseGroupYear->courseGroup->name }}
+                                </div>
+                                <vue-course-group-state :course-group-year="{{ $courseGroupYear }}"
+                                    :courses="{{ $courseGroupYear->courses }}"
+                                    :completions="{{ $planning->student->completions }}">
+
+                                </vue-course-group-state>
+
+                            </template>
+                            @foreach ($courseGroupYear->courseCourseGroupYears()->with('course')->get()->sortBy('course.name')
+    as $courseCourseGroupYear)
+                                @inject('courseCompletionService',
+                                'App\Services\Completion\CourseCompletionService')
+                                <vue-course-detail :course-id="{{ $courseCourseGroupYear->course_id }}"
+                                    :course-year="{{ $courseCourseGroupYear->course->getCourseYearBySemesterOrLatest() ?? json_encode(null) }}"
+                                    :planning-id="{{ $planning->id }}"
+                                    {{ $courseCompletionService->courseIsSuccessfullyCompleted($courseCourseGroupYear->course, $planning->student) ? 'course-is-successfully-completed' : '' }}
+                                    @if (!$mentorStudent && $planning->is_locked)
+                                    planning-is-locked
+                            @endif
+                            >
+                            <template v-slot:icon>
+                                <x-planning.completion :student="$planning->student"
+                                    :course="$courseCourseGroupYear->course"></x-planning.completion>
+                            </template>
+                            </vue-course-detail>
+                @endforeach
+                </vue-plan-wrapper>
+            </div>
+            @endforeach
+            <div>
+                <x-planning.uncounted-completions :student="$planning->student"
+                    :study-field-year="$planning->studyFieldYear"></x-planning.uncounted-completions>
+            </div>
         </div>
-        <div class="hidden md:block md:w-2/4 lg:w-1/4 md:pl-4">
-            <div class="text-xl lg:text-2xl text-gray-500 mb-4">Semesterübersicht</div>
-            <x-planning.planning-semester :planning="$planning" :mentorStudent="$mentorStudent" />
-        </div>
+    </div>
+    <div class="hidden md:block md:w-2/4 lg:w-1/4 md:pl-4">
+        <div class="text-xl lg:text-2xl text-gray-500 mb-4">Semesterübersicht</div>
+        <x-planning.planning-semester :planning="$planning" :mentorStudent="$mentorStudent" />
+    </div>
     </div>
     <x-assessment.assessment-state :planning="$planning"></x-assessment.assessment-state>
     </div>

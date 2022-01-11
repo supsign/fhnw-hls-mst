@@ -40,7 +40,7 @@ class FrequentlyAskedQuestionController extends Controller
         return $this->faqService->updateFromPatchRequest($faq, $request);
     }
 
-    public function sortDown(FrequentlyAskedQuestion $faq)
+    public function moveDown(FrequentlyAskedQuestion $faq)
     {
         $this->permissionAndRoleService->canManageBackendOrAbort();
         $this->faqService->moveDown($faq);
@@ -48,7 +48,7 @@ class FrequentlyAskedQuestionController extends Controller
         return response();
     }
 
-    public function sortUp(FrequentlyAskedQuestion $faq)
+    public function moveUp(FrequentlyAskedQuestion $faq)
     {
         $this->permissionAndRoleService->canManageBackendOrAbort();
         $this->faqService->moveUp($faq);

@@ -32,9 +32,13 @@ import Swal from "sweetalert2";
 })
 export default class VueAdminFaqWrapper extends BaseComponent {
     @Prop({type: Array})
-    public faqs: IFaq[]
+    public initFaqs: IFaq[]
 
+    public faqs: IFaq[] = [];
 
+    public created() {
+        this.faqs = this.initFaqs;
+    }
 
     public emptyFaq: IFaq = {
         id: null,

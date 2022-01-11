@@ -30,7 +30,7 @@
             <div
                 class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all w-full sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                 <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <div class="grid grid-cols-2 gap-4 flex lg:flex-none sm:items-start">
+                    <div class="grid grid-cols-2 gap-4 lg:flex-none sm:items-start">
                         <div class="col-start-1 col-end-1 text-center font-bold">Frühlinssemester</div>
                         <div class="col-start-2 col-end-2 text-center font-bold">Herbstsemester</div>
                         <div v-for="semester in pickableSemsters"
@@ -49,7 +49,7 @@
                                 </div>
                             </div>
                         </div>
-                      <button class="button-error mb-4 col-span-2 mt-2" @click="selectedSemester ? remove(selectedSemester) : ''" :class="!selectedSemester ? 'bg-red-300 cursor-not-allowed hover:shadow-none': ''">
+                      <button class="button-error mb-4 col-span-2 mt-2"  aria-hidden="true" @click.stop="remove(selectedSemester)" :class="{'bg-red-300 cursor-not-allowed hover:shadow-none': !selectedSemester}">
                         <i class="fas fa-trash mx-2"></i>Modulplanung löschen
                     </button>
                     </div>
@@ -107,6 +107,10 @@ export default class VueSemesterPicker extends BaseComponent {
 
     public remove(semester: ISemester) {
         if (this.isSaving) {
+            return;
+        }
+
+        if (!semester){
             return;
         }
 

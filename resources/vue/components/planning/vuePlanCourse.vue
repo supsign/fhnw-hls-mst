@@ -86,9 +86,11 @@ export default class VuePlanCourse extends BaseComponent {
     }
 
     public async remove() {
-        await this.models.coursePlanning.delete(this.coursePlanning.id);
-        this.pickerIsOpen = false;
-        this.isSaving = false;
+        if (this.coursePlanning) {
+            await this.models.coursePlanning.delete(this.coursePlanning.id);
+            this.pickerIsOpen = false;
+            this.isSaving = false;
+        }
     }
 
     public patchCourse(semester: ISemester) {

@@ -2,11 +2,18 @@
 
 namespace App\Models;
 
+use App\Services\Assessment\AssessmentService;
+use App\Services\Recommendation\RecommendationService;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\App;
+
 /**
  * @mixin IdeHelperPlanning
  */
 class Planning extends BaseModel
 {
+    protected $appends = ['course_recommendations', 'course_specialization_years', 'course_cross_qualification_years', 'assessment_courses'];
+
     public function crossQualificationYear()
     {
         return $this->belongsTo(CrossQualificationYear::class);
@@ -72,5 +79,45 @@ class Planning extends BaseModel
     public function getTotalCredits(): int
     {
         return $this->getService()->getTotalCredits($this);
+    }
+
+    public function getCourseRecommendationsAttribute(): Collection
+    {
+        /* @var $recommendationService RecommendationService */
+        $recommendationService = App::make(RecommendationService::class);
+        $recommendation = $recommendationService->getApplicableRecommendation($this);
+
+        return $recommendation->courseRecommendations;
+    }
+
+    public function getAssessmentCoursesAttribute(): Collection
+    {
+        /* @var $assessmentService AssessmentService */
+        $assessmentService = App::make(AssessmentService::class);
+        $assessment = $assessmentService->getApplicableAssessment($this);
+
+        return $assessment->assessmentCourses;
+    }
+
+    public function getCourseSpecializationYearsAttribute(): Collection
+    {
+        $specializationYear = $this->specializationYear;
+
+        if (!$specializationYear) {
+            return collect();
+        }
+
+        return $specializationYear->courseSpecializationYear;
+    }
+
+    public function getCourseCrossQualificationYearsAttribute(): Collection
+    {
+        $crossQualificationYear = $this->crossQualificationYear;
+
+        if (!$crossQualificationYear) {
+            return collect();
+        }
+
+        return $crossQualificationYear->courseCrossQualificationYears;
     }
 }

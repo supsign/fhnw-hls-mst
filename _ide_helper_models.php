@@ -20,6 +20,8 @@ namespace App\Models{
  * @property int|null $amount_to_pass
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\BaseCollection|\App\Models\AssessmentCourse[] $assessmentCourses
+ * @property-read int|null $assessment_courses_count
  * @property-read \App\Models\BaseCollection|\App\Models\Course[] $courses
  * @property-read int|null $courses_count
  * @method static \App\Models\BaseCollection|static[] all($columns = ['*'])
@@ -548,6 +550,8 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Assessment|null $assessment
+ * @property-read \App\Models\BaseCollection|\App\Models\CourseCrossQualificationYear[] $courseCrossQualificationYears
+ * @property-read int|null $course_cross_qualification_years_count
  * @property-read \App\Models\BaseCollection|\App\Models\Course[] $courses
  * @property-read int|null $courses_count
  * @property-read \App\Models\CrossQualification $crossQualification
@@ -660,6 +664,8 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\BaseCollection|\App\Models\MentorStudent[] $mentorStudent
  * @property-read int|null $mentor_student_count
+ * @property-read \App\Models\BaseCollection|\App\Models\MentorStudyField[] $mentorStudyFields
+ * @property-read int|null $mentor_study_fields_count
  * @property-read \App\Models\BaseCollection|\App\Models\Planning[] $plannings
  * @property-read int|null $plannings_count
  * @property-read \App\Models\BaseCollection|\App\Models\Student[] $students
@@ -752,6 +758,7 @@ namespace App\Models{
  * @property string|null $name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property bool $is_locked
  * @property-read \App\Models\BaseCollection|\App\Models\Semester[] $coursePlanningSemester
  * @property-read int|null $course_planning_semester_count
  * @property-read \App\Models\BaseCollection|\App\Models\CoursePlanning[] $coursePlannings
@@ -759,6 +766,10 @@ namespace App\Models{
  * @property-read \App\Models\BaseCollection|\App\Models\Course[] $courses
  * @property-read int|null $courses_count
  * @property-read \App\Models\CrossQualificationYear|null $crossQualificationYear
+ * @property-read Collection $assessment_courses
+ * @property-read Collection $course_cross_qualification_years
+ * @property-read Collection $course_recommendations
+ * @property-read Collection $course_specialization_years
  * @property-read \App\Models\Mentor|null $mentor
  * @property-read \App\Models\BaseCollection|\App\Models\Semester[] $semesters
  * @property-read int|null $semesters_count
@@ -773,6 +784,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Planning whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Planning whereCrossQualificationYearId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Planning whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Planning whereIsLocked($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Planning whereMentorId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Planning whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Planning whereSpecializationYearId($value)

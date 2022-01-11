@@ -2,10 +2,16 @@
 
 namespace App\Http\Requests\Faq;
 
+use App\Services\Faq\FrequentlyAskedQuestionService;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PatchFrequentlyAskedQuestionRequest extends FormRequest
 {
+    public function __construct(protected FrequentlyAskedQuestionService $faqService)
+    {
+        
+    }
+
     /**
      * Determine if the user is authorized to make this request.
      *

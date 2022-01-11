@@ -46,7 +46,8 @@
                     <div>@lang('l.startDate'): {{ $planning->studyFieldYear->beginSemester->year }}</div>
 
                     @if($planning->studyFieldYear->studyField->url_study_guide)
-                        <x-base.link href="{{ $planning->studyFieldYear->studyField->url_study_guide }}" target="_blank" rel="noopener noreferrer" class="flex space-x-2 mt-1">
+                        <x-base.link href="{{ $planning->studyFieldYear->studyField->url_study_guide }}" target="_blank"
+                                     rel="noopener noreferrer" class="flex space-x-2 mt-1">
                             <i class="fas fa-external-link text-blue-600 my-auto" aria-hidden="true"></i>
                             <div>@lang('l.studyGuideLink')</div>
                         </x-base.link>
@@ -81,7 +82,7 @@
                     </div>
                     <div class="flex flex-col space-y-2 flex-grow">
                         <div class="flex flex-row space-x-3">
-                            <i class="far fa-calendar-check my-auto w-8" aria-hidden="true"></i>
+                            <i class="far fa-calendar-exclamation my-auto w-8" aria-hidden="true"></i>
                             <div class="my-auto">Musterstudienplan</div>
                         </div>
                         <div class="flex flex-row space-x-3">
@@ -131,14 +132,18 @@
                         <div>
                             <vue-plan-wrapper>
                                 <template v-slot:header>
-                                    <div class="my-auto w-2/3 hyphens-auto text-sm">
-                                        {{$courseGroupYear->courseGroup->name}}
-                                    </div>
-                                    <vue-course-group-state :course-group-year="{{$courseGroupYear}}"
-                                                            :courses="{{$courseGroupYear->courses}}"
-                                                            :completions="{{$planning->student->completions}}">
+                                    <div class="flex flex-row">
+                                        <div class="my-auto flex-grow hyphens-auto text-sm">
+                                            {{$courseGroupYear->courseGroup->name}}
+                                        </div>
+                                        <vue-course-group-state
+                                            class="flex-grow-0 flex-shrink-0"
+                                            :course-group-year="{{$courseGroupYear}}"
+                                            :courses="{{$courseGroupYear->courses}}"
+                                            :completions="{{$planning->student->completions}}">
 
-                                    </vue-course-group-state>
+                                        </vue-course-group-state>
+                                    </div>
 
                                 </template>
                                 @foreach($courseGroupYear->courseCourseGroupYears()->with('course')->get()->sortBy('course.name') as $courseCourseGroupYear)

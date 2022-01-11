@@ -3,6 +3,7 @@
         <vue-input
             v-model="studyName" 
             label="Planungsname"
+            name="name"
         >
         </vue-input>
         <vue-select

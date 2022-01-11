@@ -56,6 +56,16 @@ class FrequentlyAskedQuestionService extends BaseModelService
         return $this->model::withTrashed()->orderBy('sort_order')->get();
     }
 
+    public function getLastPosition(): ?int
+    {
+        return $this->model::orderBy('sort_order', 'desc')->limit(1)->first()?->sort_order;
+    }
+
+    public function getNextAvailiblePosition()
+    {
+        return $this->getLastPosition() + 1;
+    }
+
     protected function getNextEntry(FrequentlyAskedQuestion $faq): ?FrequentlyAskedQuestion
     {
         return $this->model::where('sort_order', '>', $faq->sort_order)

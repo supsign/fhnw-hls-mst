@@ -26,7 +26,24 @@ class FrequentlyAskedQuestionService extends BaseModelService
 
     public function createFromPostRequest(PostFrequentlyAskedQuestionRequest $request): FrequentlyAskedQuestion
     {
-        return $this->baseFirstOrCreate($request->validated());
+        return $this
+            ->makePositionAvailible($request->sort_order)
+            ->baseFirstOrCreate($request->validated());
+    }
+
+    public function makePositionAvailible(int $position): self
+    {
+        $faq = $this->model::where('sort_order', $position)->first();
+
+        if (!$faq) {
+            return $this;
+        }
+
+        $this->makePositionAvailible($position + 1);
+        $faq->sort_order = $position + 1;
+        $faq->save();
+
+        return $this;
     }
 
     public function getAll(): Collection
@@ -55,12 +72,14 @@ class FrequentlyAskedQuestionService extends BaseModelService
 
     public function updateFromPatchRequest(FrequentlyAskedQuestion $faq, PatchFrequentlyAskedQuestionRequest $request): FrequentlyAskedQuestion
     {
-        $this->baseUpdate($faq, $request->validated());
+        $this
+            ->makePositionAvailible($request->sort_order)
+            ->baseUpdate($faq, $request->validated());
 
         return $faq;
     }
 
-    public function sortOrderDown(FrequentlyAskedQuestion $faq): self
+    public function moveDown(FrequentlyAskedQuestion $faq): self
     {
         $nextEntry = $this->getNextEntry($faq);
 
@@ -78,7 +97,7 @@ class FrequentlyAskedQuestionService extends BaseModelService
         return $this;
     }
 
-    public function sortOrderUp(FrequentlyAskedQuestion $faq): self
+    public function moveUp(FrequentlyAskedQuestion $faq): self
     {
         $previousEntry = $this->getPreviousEntry($faq);
 

@@ -43,7 +43,7 @@ class FrequentlyAskedQuestionController extends Controller
     public function sortDown(FrequentlyAskedQuestion $faq)
     {
         $this->permissionAndRoleService->canManageBackendOrAbort();
-        $this->faqService->sortOrderDown($faq);
+        $this->faqService->moveDown($faq);
 
         return response();
     }
@@ -51,7 +51,7 @@ class FrequentlyAskedQuestionController extends Controller
     public function sortUp(FrequentlyAskedQuestion $faq)
     {
         $this->permissionAndRoleService->canManageBackendOrAbort();
-        $this->faqService->sortOrderUp($faq);
+        $this->faqService->moveUp($faq);
 
         return response();
     }

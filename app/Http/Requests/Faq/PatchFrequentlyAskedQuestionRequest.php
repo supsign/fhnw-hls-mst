@@ -26,7 +26,7 @@ class PatchFrequentlyAskedQuestionRequest extends FormRequest
     {
         if (!$this->sort_order) {
             $this->merge([
-                'sort_order' => $this->faqService->getNextAvailiblePosition()
+                'sort_order' => $this->faqService->getNextAvailiblePosition(),
             ]);
         }
     }

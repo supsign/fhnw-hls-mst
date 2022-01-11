@@ -1,19 +1,16 @@
 <x-layout.app>
     <x-slot name="title">
-        Studienplanung
-    </x-slot>
-    <x-slot name="title">
-        {{ $planning->name }}
-    </x-slot>
-    <x-slot name="title">
-        {{ $planning->updatedAt }}
+        @lang('l.planning')
     </x-slot>
     <div class="container p-3 mx-auto">
         <div class="md:flex md:justify-between md:space-x-4">
             <x-app.card class="mb-4 md:w-1/2">
                 <x-slot name="title">
                     <div class="flex flex-row justify-between">
-                        <div class="my-auto">@lang('l.planning')</div>
+                        <div class="my-auto flex divide-x divide-gray-300 gap-2">
+                            <div>@lang('l.planning')</div>
+                            <div class="pl-2"> {{ $planning->name }}</div>
+                        </div>
                         <div class="space-x-4 flex">
                             <x-base.link
                                 href="{{ $mentorStudent ? route('mentor.planning.create.copy', [$mentorStudent->student, $planning]) : route('planning.create.copy', $planning) }}">
@@ -43,22 +40,26 @@
                         <div>{{ $mentorStudent->firstname }} {{ $mentorStudent->lastname }}</div>
                     @endif
                 </x-slot>
-                <div class="mt-2">
+                <div class="mt-2 mb-5">
                     <div>{{ $planning->studyFieldYear->studyField->studyProgram->name }}</div>
                     <div>{{ $planning->studyFieldYear->studyField->name }}</div>
                     <div>{{ $planning->crossQualificationYear?->crossQualification->name }}</div>
                     <div>{{ $planning->specializationYear?->specialization->name }}</div>
-                    <div>@lang('l.startDate'): {{ $planning->studyFieldYear->beginSemester->year }}</div>
+                    <div>@lang('l.startDate'):
+                        {{ $planning->studyFieldYear->beginSemester->year }}</div>
+                    <div class="text-left text-sm text-gray-500 mt-1">@lang('l.lastChange'):
+                        {{ $planning->updated_at }}</div>
 
-                    @if($planning->studyFieldYear->studyField->url_study_guide)
-                        <x-base.link href="{{ $planning->studyFieldYear->studyField->url_study_guide }}" target="_blank" rel="noopener noreferrer" class="flex space-x-2 mt-1">
+                    @if ($planning->studyFieldYear->studyField->url_study_guide)
+                        <x-base.link href="{{ $planning->studyFieldYear->studyField->url_study_guide }}"
+                            target="_blank" rel="noopener noreferrer" class="flex space-x-2 mt-1">
                             <i class="fas fa-external-link text-blue-600 my-auto" aria-hidden="true"></i>
                             <div>@lang('l.studyGuideLink')</div>
                         </x-base.link>
                     @endif
 
-                    @if($mentorStudent)
-                        <vue-lock-planning :planning="{{$planning}}"></vue-lock-planning>
+                    @if ($mentorStudent)
+                        <vue-lock-planning :planning="{{ $planning }}"></vue-lock-planning>
                     @endif
                 </div>
             </x-app.card>

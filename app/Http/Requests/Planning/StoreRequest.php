@@ -24,6 +24,7 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
+            'name' => 'string|nullable',
             'studyField' => 'required|int',
             'semester' => 'required|int',
             'crossQualification' => 'int|nullable',

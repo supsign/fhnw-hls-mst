@@ -101,6 +101,7 @@ class MentorPlanningController extends Controller
         $planning = $this->planningService->createEmptyPlanning(
             $student,
             $studyFieldYear,
+            $request->name,
             $crossQualificationService->getById($request->crossQualification),
             $specializationService->getById($request->specialization),
         );
@@ -131,6 +132,7 @@ class MentorPlanningController extends Controller
 
         $newPlanning = $this->planningService->copy(
             $planning,
+            $request->name,
             $studyFieldYear,
             $crossQualificationService->getById($request->crossQualification),
             $specializationService->getById($request->specialization),

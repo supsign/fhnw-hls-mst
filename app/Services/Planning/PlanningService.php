@@ -33,6 +33,7 @@ class PlanningService extends BaseModelService
 
     public function copy(
         Planning $oldPlanning,
+        string $name = null,
         StudyFieldYear $studyFieldYear = null,
         CrossQualification $crossQualification = null,
         Specialization $specialization = null,
@@ -40,6 +41,7 @@ class PlanningService extends BaseModelService
         $newPlanning = $this->createEmptyPlanning(
             $oldPlanning->student,
             $studyFieldYear ?? $oldPlanning->studyFieldYear,
+            $name,
             $crossQualification,
             $specialization,
         );
@@ -69,6 +71,7 @@ class PlanningService extends BaseModelService
     public function createEmptyPlanning(
         Student $student,
         StudyFieldYear $studyFieldYear,
+        string $name = null,
         CrossQualification $crossQualification = null,
         Specialization $specialization = null,
     ): Planning {
@@ -95,6 +98,7 @@ class PlanningService extends BaseModelService
         }
 
         $attributes = [
+            'name' => $name,
             'student_id' => $student->id,
             'study_field_year_id' => $studyFieldYear->id,
             'cross_qualification_year_id' => $crossQualificationYear?->id,

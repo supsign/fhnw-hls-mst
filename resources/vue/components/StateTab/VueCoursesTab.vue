@@ -1,14 +1,19 @@
 <template>
-    <div>
-        <div v-for="course in assessmentCourses" class="mb-1 flex flex-row justify-between">
-            <div>{{ course.name }}</div>
-            <div v-if="coursesIsCompletedSusscessfully(course)" class="my-auto"><i class="far fa-check-circle" aria-hidden="true"></i></div>
-            <div class="flex flex-row space-x-1"
-                 v-else-if="courseIsPlanned(course)">
-                <div>{{ coursePlanningSemester(course) }}</div>
-                <div>{{ coursePlanningSemesterHsFs(course) }}</div>
+    <div class="space-y-1">
+        <div v-for="course in courses" class="mb-1 flex flex-row">
+            <div class="w-16 text-center flex-grow-0 flex-shrink-0 my-auto">
+                <div v-if="coursesIsCompletedSusscessfully(course)"><i aria-hidden="true"
+                                                                       class="far fa-check-circle"></i>
+                </div>
+                <div v-else-if="courseIsPlanned(course)"
+                     class="flex flex-row space-x-1 justify-center font-bold">
+                    <div>{{ coursePlanningSemester(course) }}</div>
+                    <div>{{ coursePlanningSemesterHsFs(course) }}</div>
+                </div>
+                <div v-else><i aria-hidden="true" class="far fa-circle "></i></div>
             </div>
-            <div v-else class="my-auto"><i class="far fa-circle " aria-hidden="true"></i></div>
+
+            <div class="flex-grow flex-shrink">{{ course.name }}</div>
         </div>
     </div>
 </template>
@@ -17,21 +22,17 @@
 import {Component, Prop} from "vue-property-decorator";
 import BaseComponent from "../base/baseComponent";
 import {ICompletion} from "../../interfaces/completion.interface";
-import {IAssessment} from "../../interfaces/assessment.interface";
 import {ICourse} from "../../interfaces/course.interface"
 import {ICoursePlanning} from "../../store/coursePlanning/coursePlanning.interface";
 import {ISemester} from "../../interfaces/semester.interface";
 
 @Component
-export default class VueAssessmentState extends BaseComponent {
+export default class VueCoursesTab extends BaseComponent {
     @Prop({type: Number})
     public planningId: number
 
-    @Prop({type: Object})
-    public assessment: IAssessment
-
     @Prop({type: Array})
-    public assessmentCourses: ICourse[]
+    public courses: ICourse[]
 
     @Prop({type: Array})
     public completions: ICompletion[]
@@ -39,26 +40,9 @@ export default class VueAssessmentState extends BaseComponent {
     @Prop({type: Array})
     public semesters: ISemester[]
 
-    public showAssessment = false;
 
     public get coursePlannings(): ICoursePlanning[] {
         return this.models.coursePlanning.byPlanningId(this.planningId)
-    }
-
-    public get courseAmounts(): number {
-        let courseAmounts = 0;
-        for (const course of this.assessmentCourses) {
-            if (this.coursesIsCompletedSusscessfully(course)) {
-                courseAmounts++;
-                continue;
-            }
-
-            if (this.courseIsPlanned(course)) {
-                courseAmounts++;
-            }
-        }
-
-        return courseAmounts;
     }
 
     public coursesIsCompletedSusscessfully(course: ICourse): boolean {
@@ -73,12 +57,12 @@ export default class VueAssessmentState extends BaseComponent {
 
     public coursePlanningSemester(course: ICourse) {
         const semesterId = this.coursePlannings.find(semesterId => semesterId.course_id === course.id).semester_id;
-        return this.semesters.find(semester => semester.id === semesterId).year -2000;
+        return this.semesters.find(semester => semester.id === semesterId).year - 2000;
     }
 
     public coursePlanningSemesterHsFs(course: ICourse) {
         const semesterId = this.coursePlannings.find(semesterId => semesterId.course_id === course.id).semester_id;
-        return this.semesters.find(semester => semester.id === semesterId).is_hs  ? 'HS' : 'FS';
+        return this.semesters.find(semester => semester.id === semesterId).is_hs ? 'HS' : 'FS';
     }
 }
 </script>

@@ -136,8 +136,8 @@ class PlanningController extends Controller
 
         $newPlanning = $this->planningService->copy(
             $planning,
-            $request->name,
             $studyFieldYear,
+            $request->name,
             $crossQualificationService->getById($request->crossQualification),
             $specializationService->getById($request->specialization),
         );

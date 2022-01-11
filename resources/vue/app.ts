@@ -37,6 +37,7 @@ import VueAdminCourseCrossQualificationYear from "./components/admin/vueAdminCou
 //@ts-ignore
 import VueMask from 'v-mask'
 import VueAdminCrossQualificationYear from "./components/admin/vueAdminCrossQualificationYear.vue";
+import VueAdminFaqWrapper from "./components/admin/vueAdminFaqWrapper.vue";
 
 library.add(faUserSecret);
 library.add(faCheck);
@@ -80,7 +81,8 @@ const app = new Vue({
         VueLockPlanning,
         VueAdminMentorStudents,
         VueAdminCourseCrossQualificationYear,
-        VueAdminCrossQualificationYear
+        VueAdminCrossQualificationYear,
+        VueAdminFaqWrapper
     },
     store
 });

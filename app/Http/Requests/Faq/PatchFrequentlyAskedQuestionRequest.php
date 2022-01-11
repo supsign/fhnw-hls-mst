@@ -9,7 +9,6 @@ class PatchFrequentlyAskedQuestionRequest extends FormRequest
 {
     public function __construct(protected FrequentlyAskedQuestionService $faqService)
     {
-        
     }
 
     /**

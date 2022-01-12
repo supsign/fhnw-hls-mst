@@ -82,7 +82,7 @@ class FrequentlyAskedQuestionService extends BaseModelService
 
     public function updateFromPatchRequest(FrequentlyAskedQuestion $faq, PatchFrequentlyAskedQuestionRequest $request): FrequentlyAskedQuestion
     {
-        if ($faq->sort_order !== $request->sort_order) {
+        if ($faq->sort_order != $request->sort_order) {
             $this->makePositionAvailible($request->sort_order);
         }
 

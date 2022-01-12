@@ -1,58 +1,61 @@
 <template>
     <div class="flex space-x-4">
-        <div class="p-4 border bg-gray-100 rounded flex-grow">
-            <div class="flex justify-between border-b">
-                <div v-if="!editMode"
-                    class="font-bold pb-3 flex space-x-4">
-                    <div>
-                        {{ question }}
+        <div class="p-4 border bg-gray-100 rounded flex flex-grow justify-between space-x-4">
+            <div class="flex-grow">
+                <div class="flex justify-between border-b">
+                    <div v-if="!editMode"
+                         class="font-bold pb-3 flex space-x-4">
+                        <div>
+                            {{ question }}
+                        </div>
+                        <div v-if="deletedAt"
+                             class="text-red-500 text-sm my-auto"
+                        >
+                            Gelöscht
+                        </div>
                     </div>
-                    <div v-if="deletedAt"
-                         class="text-red-500 text-sm my-auto"
-                    >
-                        Gelöscht
-                    </div>
+                    <vue-input v-else
+                               v-model="question"
+                               class="pb-4 flex-grow"
+                               type="text"
+                               name="name"
+                               label="Frage"
+                    />
                 </div>
+                <div v-if="!editMode"
+                     class="pt-3">{{ answer }}</div>
                 <vue-input v-else
-                           v-model="question"
-                           class="w-3/4 pb-4"
+                           v-model="answer"
+                           class="w-94 pt-2"
                            type="text"
                            name="name"
-                           label="Frage"
+                           label="Antwort"
                 />
-                <div class="flex space-x-2">
+            </div>
+            <div class="my-auto w-8">
+                <div class="flex flex flex-col md:flex-row md:space-x-2">
                     <div v-if="editMode && !deletedAt"
-                        class="hover:font-bold"
-                        :class="{ 'text-gray-400 cursor-not-allowed':  !editMode, 'cursor-pointer text-blue-600' : editMode}"
-                        @click="save()">
-                        <i class="far fa-save" aria-hidden="true"></i>
+                         class="mx-auto"
+                         @click="save()">
+                        <i class="far fa-save text-blue-600 cursor-pointer" aria-hidden="true"></i>
                     </div>
                     <div v-if="!editMode && !deletedAt"
-                        class=" hover:font-bold"
-                        :class="{ 'text-gray-400 cursor-not-allowed':  editMode , 'cursor-pointer text-blue-600' : !editMode}"
-                        @click="edit()">
-                        <i class="far fa-edit" aria-hidden="true"></i>
+                         class="mx-auto"
+                         @click="edit()">
+                        <i class="far fa-edit text-blue-600 cursor-pointer" aria-hidden="true"></i>
                     </div>
                     <div v-if="!deletedAt"
-                        class="cursor-pointer text-red-500 hover:font-bold"
+                         class="mx-auto"
                          @click="remove()">
-                        <i class="far fa-trash" aria-hidden="true"></i>
+                        <i class="far fa-trash text-red-500 cursor-pointer" aria-hidden="true"></i>
                     </div>
                     <div v-if="deletedAt"
-                        class="cursor-pointer hover:font-bold">
-                        <i class="far fa-trash-undo text-green-500" aria-hidden="true"></i>
+                         class="mx-auto"
+                         @click="restore()">
+                        <i class="far fa-trash-undo text-green-500 cursor-pointer text-lg" aria-hidden="true"></i>
                     </div>
                 </div>
             </div>
-            <div v-if="!editMode"
-                class="pt-3">{{ answer }}</div>
-            <vue-input v-else
-                       v-model="answer"
-                       class="w-94 pt-2"
-                       type="text"
-                       name="name"
-                       label="Antwort"
-            />
         </div>
         <div class="text-xl h-auto my-auto w-8">
             <div  v-if="!deletedAt">
@@ -90,7 +93,7 @@ export default class VueAdminFaq extends BaseComponent {
     question: string = null;
     answer: string = null;
     sortOrder: number = null;
-    deletedAt: string = null;
+    deletedAt: string | boolean = null;
 
     public created() {
         this.question = this.faq.question;
@@ -136,6 +139,7 @@ export default class VueAdminFaq extends BaseComponent {
                         `/webapi/faq/${this.faq.id}`
                     )
                     .then(() => {
+                        this.deletedAt = true;
                         Toast.fire({icon: "success", title: 'Die FAQ wurde gelöscht.'});
                     })
                     .catch((reason) => {
@@ -184,6 +188,18 @@ export default class VueAdminFaq extends BaseComponent {
     @Emit()
     public moveDown(faq: IFaq) {
         return faq;
+    }
+
+    public restore() {
+        // faq/{faqId}/restore
+        axios.post<IFaq>(`/webapi/faq/${this.faq.id}/restore`)
+            .then(() => {
+                this.deletedAt = null;
+                Toast.fire({
+                    icon: "success",
+                    title: "FAQ wurde wiederhergestellt."
+                });
+            })
     }
 
 }

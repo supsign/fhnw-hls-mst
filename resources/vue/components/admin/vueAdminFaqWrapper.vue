@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import {Component, Prop, Watch} from "vue-property-decorator";
+import {Component, Prop} from "vue-property-decorator";
 import BaseComponent from "../base/baseComponent";
 import VueAdminFaq from "./vueAdminFaq.vue";
 import {IFaq} from "../../interfaces/faq.interface";
@@ -84,6 +84,10 @@ export default class VueAdminFaqWrapper extends BaseComponent {
     public moveDown(faq: IFaq) {
         axios.post<IFaq>(`/webapi/faq/${faq.id}/down`)
             .then(() => {
+                axios.get(`/webapi/faq`).then((res => {
+                        this.getSortedFaqs(res.data);
+                    })
+                )
                 Toast.fire({
                     icon: "success",
                     title: "FAQ has been moved!"

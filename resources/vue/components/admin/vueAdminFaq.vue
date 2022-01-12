@@ -71,7 +71,7 @@
 </template>
 
 <script lang="ts">
-import {Component, Emit, Prop, Watch} from "vue-property-decorator";
+import {Component, Emit, Prop} from "vue-property-decorator";
 import BaseComponent from "../base/baseComponent";
 import {IFaq} from "../../interfaces/faq.interface";
 import Swal from "sweetalert2";

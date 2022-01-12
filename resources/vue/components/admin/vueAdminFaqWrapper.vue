@@ -12,7 +12,7 @@
                            @move-up="moveUp"
                            @move-down="moveDown"
             />
-            <button class="button-primary" @click="createEmptyFaq">neue FAQ hinzufügen</button>
+            <button class="button-primary w-full lg:w-60" @click="createEmptyFaq">neue FAQ hinzufügen</button>
         </div>
     </div>
 </template>

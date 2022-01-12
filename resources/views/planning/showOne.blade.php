@@ -73,21 +73,39 @@
                 <x-slot name="title">
                     <div class="my-auto">@lang('l.legend')</div>
                 </x-slot>
-                <div class="flex flex-col space-y-2">
-                    <div class="my-auto flex flex-row space-x-3">
-                        <i class="far fa-check-circle my-auto" aria-hidden="true"></i>
-                        <div class="my-auto">@lang('l.completionPassed')</div>
-                    </div>
 
-                    <div class="my-auto flex flex-row space-x-3">
-                        <i class="far fa-times-circle my-auto" aria-hidden="true"></i>
-                        <div class="my-auto">@lang('l.completionFailed')</div>
+                <div class="flex flex-col space-y-2 md:flex-row md:space-x-2">
+                    <div class="flex flex-col space-y-2 flex-grow">
+                        <div class="my-auto flex flex-row space-x-3">
+                            <i class="far fa-check-circle my-auto w-8" aria-hidden="true"></i>
+                            <div class="my-auto">@lang('l.completionPassed')</div>
+                        </div>
+
+                        <div class="my-auto flex flex-row space-x-3">
+                            <i class="far fa-times-circle my-auto w-8" aria-hidden="true"></i>
+                            <div class="my-auto">@lang('l.completionFailed')</div>
+                        </div>
+                        <div class="flex flex-row space-x-3">
+                            <i class="far fa-circle my-auto w-8" aria-hidden="true"></i>
+                            <div class="my-auto">@lang('l.completionNone')</div>
+                        </div>
                     </div>
-                    <div class="flex flex-row space-x-3">
-                        <i class="far fa-circle my-auto" aria-hidden="true"></i>
-                        <div class="my-auto">@lang('l.completionNone')</div>
+                    <div class="flex flex-col space-y-2 flex-grow">
+                        <div class="flex flex-row space-x-3">
+                            <i class="far fa-calendar-check my-auto w-8" aria-hidden="true"></i>
+                            <div class="my-auto">Musterstudienplan</div>
+                        </div>
+                        <div class="flex flex-row space-x-3">
+                            <i class="fas fa-sitemap my-auto w-8" aria-hidden="true"></i>
+                            <div class="my-auto">Assessment</div>
+                        </div>
+                        <div class="flex flex-row space-x-3">
+                            <i class="fas fa-sparkles my-auto w-8" aria-hidden="true"></i>
+                            <div class="my-auto">Spezialisierung / Querschnittqualifikation</div>
+                        </div>
                     </div>
                 </div>
+
 
             </x-app.card>
         </div>
@@ -133,17 +151,19 @@
                                     </vue-course-group-state>
 
                                 </template>
-                                @foreach ($courseGroupYear->courseCourseGroupYears()->with('course')->get()->sortBy('course.name')
-    as $courseCourseGroupYear)
-                                    @inject('courseCompletionService',
-                                    'App\Services\Completion\CourseCompletionService')
-                                    <vue-course-detail :course-id="{{ $courseCourseGroupYear->course_id }}"
-                                        :course-year="{{ $courseCourseGroupYear->course->getCourseYearBySemesterOrLatest() ?? json_encode(null) }}"
-                                        :planning-id="{{ $planning->id }}"
-                                        {{ $courseCompletionService->courseIsSuccessfullyCompleted($courseCourseGroupYear->course, $planning->student) ? 'course-is-successfully-completed' : '' }}
-                                        @if (!$mentorStudent && $planning->is_locked)
-                                        planning-is-locked
-                                @endif
+
+                                @foreach($courseGroupYear->courseCourseGroupYears()->with('course')->get()->sortBy('course.name') as $courseCourseGroupYear)
+                                    @inject('courseCompletionService', 'App\Services\Completion\CourseCompletionService')
+                                    <vue-course-detail
+                                        :course-id="{{$courseCourseGroupYear->course_id}}"
+                                        :course-year="{{$courseCourseGroupYear->course->getCourseYearBySemesterOrLatest() ?? json_encode(null)}}"
+                                        :planning-id="{{$planning->id}}"
+                                        :planning="{{$planning}}"
+
+                                        {{$courseCompletionService->courseIsSuccessfullyCompleted($courseCourseGroupYear->course, $planning->student) ?'course-is-successfully-completed' : ''}}
+                                        @if(!$mentorStudent && $planning->is_locked)
+                                            planning-is-locked
+                                        @endif
                                 >
                                 <template v-slot:icon>
                                     <x-planning.completion :student="$planning->student"

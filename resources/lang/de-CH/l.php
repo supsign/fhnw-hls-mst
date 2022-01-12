@@ -35,5 +35,5 @@ return [
     'linkInside' => 'Link zu Inside',
     'studyGuideLink' => 'Link zum Studienführer',
     'lastChange' => 'Letzte Änderung',
-
+    'noAccess' => 'Kein Zugriff',
 ];

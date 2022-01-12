@@ -2,7 +2,7 @@
     <div class="space-y-8 mt-4">
         <vue-input
             v-model="studyName" 
-            label="Planungsname"
+            label="Name der Planung"
             name="name"
         >
         </vue-input>

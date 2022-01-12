@@ -23,7 +23,7 @@
                 <vue-course-detail v-for="coursePlanning in allCoursePlanningsInSemesterNotSuccessfullyCompleted"
                                    :key="coursePlanning.id"
                                    :courseId="coursePlanning.course_id"
-                                   :planningId="planningId"
+                                   :planning="planning"
                                    :planningIsLocked="planningIsLocked"
                 >
 
@@ -48,6 +48,7 @@ import {ICoursePlanning} from "../../store/coursePlanning/coursePlanning.interfa
 import {ICompletion} from "../../interfaces/completion.interface";
 import {ICourse} from "../../interfaces/course.interface";
 import VueCompletion from "./vueCompletion.vue";
+import {IPlanning} from "../../interfaces/planning.interface";
 
 @Component({
     components: {
@@ -59,8 +60,8 @@ export default class VuePlanningSemester extends BaseComponent {
     @Prop({type: Object})
     public semester: ISemester
 
-    @Prop({type: Number})
-    public planningId: number
+    @Prop({type: Object})
+    public planning: IPlanning
 
     @Prop({type: Array})
     public completions: ICompletion[]
@@ -77,7 +78,7 @@ export default class VuePlanningSemester extends BaseComponent {
     public course: ICourse;
 
     public get coursePlannings(): ICoursePlanning[] {
-        return this.models.coursePlanning.byPlanningId(this.planningId);
+        return this.models.coursePlanning.byPlanningId(this.planning.id);
     }
 
     public get coursePlanningsInStudyField() {
@@ -134,8 +135,8 @@ export default class VuePlanningSemester extends BaseComponent {
     public getAllPointsInSemester(semester: ISemester) {
         let credits = 0;
 
-        for(const coursePlanning of this.coursePlanningsInStudyField) {
-            if(coursePlanning.semester_id === semester.id) {
+        for (const coursePlanning of this.coursePlanningsInStudyField) {
+            if (coursePlanning.semester_id === semester.id) {
                 const course = this.getCourse(coursePlanning);
                 credits += course.credits;
             }

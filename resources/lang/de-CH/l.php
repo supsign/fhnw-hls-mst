@@ -36,4 +36,5 @@ return [
     'faqEdit' => 'FAQ bearbeiten',
     'linkInside' => 'Link zu Inside',
     'studyGuideLink' => 'Link zum Studienführer',
+    'noAccess' => 'Kein Zugriff',
 ];

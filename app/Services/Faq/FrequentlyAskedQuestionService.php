@@ -58,7 +58,7 @@ class FrequentlyAskedQuestionService extends BaseModelService
 
     public function getLastPosition(): ?int
     {
-        return $this->model::orderBy('sort_order', 'desc')->limit(1)->first()?->sort_order;
+        return $this->model::withTrashed()->orderBy('sort_order', 'desc')->limit(1)->first()?->sort_order;
     }
 
     public function getNextAvailiblePosition()
@@ -68,14 +68,14 @@ class FrequentlyAskedQuestionService extends BaseModelService
 
     protected function getNextEntry(FrequentlyAskedQuestion $faq): ?FrequentlyAskedQuestion
     {
-        return $this->model::where('sort_order', '>', $faq->sort_order)
+        return $this->model::withTrashed()->where('sort_order', '>', $faq->sort_order)
             ->orderBy('sort_order')
                 ->first();
     }
 
     protected function getPreviousEntry(FrequentlyAskedQuestion $faq): ?FrequentlyAskedQuestion
     {
-        return $this->model::where('sort_order', '<', $faq->sort_order)
+        return $this->model::withTrashed()->where('sort_order', '<', $faq->sort_order)
             ->orderBy('sort_order', 'desc')
                 ->first();
     }

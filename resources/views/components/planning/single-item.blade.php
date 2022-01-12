@@ -1,16 +1,17 @@
-<div class="p-2 md:p-3 bg-gray-100 mb-3 rounded text-sm md:text-base h-full">
+<div class=" p-2 md:p-3 bg-gray-100 mb-3 rounded text-sm md:text-base h-full flex flex-col justify-between">
     @if ($planning->name)
-        <div>{{ $planning->name }}</div>
+        <div class="mb-5">{{ $planning->name }}</div>
     @endif
-    <div class="py-5">
+    <div>
         <div>{{ $planning->studyFieldYear->studyField->studyProgram->name }}</div>
         <div>{{ $planning->studyFieldYear->studyField->name }}</div>
         <div>{{ $planning->crossQualificationYear?->crossQualification->name }}</div>
         <div>{{ $planning->specializationYear?->specialization->name }}</div>
         <div>@lang('l.startDate'): {{ $planning->studyFieldYear->beginSemester->year }}</div>
     </div>
-    <div class="flex justify-betweenalign-bottom">
-        <div class="text-left text-sm text-gray-500 mt-1">@lang('l.lastChange'): {{ $planning->updated_at }}</div>
+    <div class="flex justify-between mt-5">
+        <div class="text-left text-sm text-gray-500 mt-1">@lang('l.lastChange'):
+            {{ $planning->updated_at->format('d.m.Y') }}</div>
         @if ($planning->is_locked)
             <div class="w-100 text-right text-sm text-gray-500 mt-1">schreibgeschützt</div>
         @endif

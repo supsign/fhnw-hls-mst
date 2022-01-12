@@ -8,7 +8,7 @@
                         <div>
                             {{ question }}
                         </div>
-                        <div v-if="deletedAt"
+                        <div v-if="isDeleted"
                              class="text-red-500 text-sm my-auto"
                         >
                             Gelöscht
@@ -34,22 +34,22 @@
             </div>
             <div class="my-auto w-8">
                 <div class="flex flex flex-col md:flex-row md:space-x-2">
-                    <div v-if="editMode && !deletedAt"
+                    <div v-if="editMode && !isDeleted"
                          class="mx-auto"
                          @click="save()">
                         <i class="far fa-save text-blue-600 cursor-pointer" aria-hidden="true"></i>
                     </div>
-                    <div v-if="!editMode && !deletedAt"
+                    <div v-if="!editMode && !isDeleted"
                          class="mx-auto"
                          @click="edit()">
                         <i class="far fa-edit text-blue-600 cursor-pointer" aria-hidden="true"></i>
                     </div>
-                    <div v-if="!deletedAt"
+                    <div v-if="!isDeleted"
                          class="mx-auto"
                          @click="remove()">
                         <i class="far fa-trash text-red-500 cursor-pointer" aria-hidden="true"></i>
                     </div>
-                    <div v-if="deletedAt"
+                    <div v-if="isDeleted"
                          class="mx-auto"
                          @click="restore()">
                         <i class="far fa-trash-undo text-green-500 cursor-pointer text-lg" aria-hidden="true"></i>
@@ -58,12 +58,12 @@
             </div>
         </div>
         <div class="text-xl h-auto my-auto w-8">
-            <div  v-if="!deletedAt">
+            <div  v-if="!isDeleted">
                 <div v-if="minSortOrder !== faq.sort_order" @click="()=>moveUp(faq)">
-                    <i class="fas fa-arrow-circle-up cursor-pointer" aria-label="hidden"></i>
+                    <i class="fas fa-arrow-circle-up cursor-pointer" aria-hidden="true"></i>
                 </div>
                 <div v-if="maxSortOrder !== faq.sort_order" @click="()=>moveDown(faq)">
-                    <i class="fas fa-arrow-circle-down cursor-pointer" aria-label="hidden"></i>
+                    <i class="fas fa-arrow-circle-down cursor-pointer" aria-hidden="true"></i>
                 </div>
             </div>
         </div>
@@ -93,13 +93,13 @@ export default class VueAdminFaq extends BaseComponent {
     question: string = null;
     answer: string = null;
     sortOrder: number = null;
-    deletedAt: string | boolean = null;
+    isDeleted: string | boolean = null;
 
     public created() {
         this.question = this.faq.question;
         this.answer = this.faq.answer;
         this.sortOrder = this.faq.sort_order;
-        this.deletedAt = this.faq.deleted_at;
+        this.isDeleted = this.faq.deleted_at;
     }
 
     public get minSortOrder() {
@@ -139,7 +139,7 @@ export default class VueAdminFaq extends BaseComponent {
                         `/webapi/faq/${this.faq.id}`
                     )
                     .then(() => {
-                        this.deletedAt = true;
+                        this.isDeleted = true;
                         Toast.fire({icon: "success", title: 'Die FAQ wurde gelöscht.'});
                     })
                     .catch((reason) => {
@@ -194,7 +194,7 @@ export default class VueAdminFaq extends BaseComponent {
         // faq/{faqId}/restore
         axios.post<IFaq>(`/webapi/faq/${this.faq.id}/restore`)
             .then(() => {
-                this.deletedAt = null;
+                this.isDeleted = null;
                 Toast.fire({
                     icon: "success",
                     title: "FAQ wurde wiederhergestellt."

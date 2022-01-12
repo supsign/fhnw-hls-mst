@@ -1,6 +1,6 @@
 <template>
     <div class="flex space-x-4">
-        <div class="p-4 border bg-gray-100 rounded w-full">
+        <div class="p-4 border bg-gray-100 rounded flex-grow">
             <div class="flex justify-between border-b">
                 <div v-if="!editMode"
                     class="font-bold pb-3 flex space-x-4">
@@ -21,13 +21,13 @@
                            label="Frage"
                 />
                 <div class="flex space-x-2">
-                    <div v-if="editMode"
+                    <div v-if="editMode && !deletedAt"
                         class="hover:font-bold"
                         :class="{ 'text-gray-400 cursor-not-allowed':  !editMode, 'cursor-pointer text-blue-600' : editMode}"
                         @click="save()">
                         <i class="far fa-save" aria-hidden="true"></i>
                     </div>
-                    <div v-if="!editMode"
+                    <div v-if="!editMode && !deletedAt"
                         class=" hover:font-bold"
                         :class="{ 'text-gray-400 cursor-not-allowed':  editMode , 'cursor-pointer text-blue-600' : !editMode}"
                         @click="edit()">
@@ -54,19 +54,21 @@
                        label="Antwort"
             />
         </div>
-        <div class="text-xl h-auto my-auto">
-            <div v-if="minSortOrder !== faq.sort_order" @click="()=>moveUp(faq)">
-                <i class="fas fa-arrow-circle-up cursor-pointer" aria-label="hidden"></i>
-            </div>
-            <div v-if="maxSortOrder !== faq.sort_order" @click="()=>moveDown(faq)">
-                <i class="fas fa-arrow-circle-down cursor-pointer" aria-label="hidden"></i>
+        <div class="text-xl h-auto my-auto w-8">
+            <div  v-if="!deletedAt">
+                <div v-if="minSortOrder !== faq.sort_order" @click="()=>moveUp(faq)">
+                    <i class="fas fa-arrow-circle-up cursor-pointer" aria-label="hidden"></i>
+                </div>
+                <div v-if="maxSortOrder !== faq.sort_order" @click="()=>moveDown(faq)">
+                    <i class="fas fa-arrow-circle-down cursor-pointer" aria-label="hidden"></i>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import {Component, Emit, Prop} from "vue-property-decorator";
+import {Component, Emit, Prop, Watch} from "vue-property-decorator";
 import BaseComponent from "../base/baseComponent";
 import {IFaq} from "../../interfaces/faq.interface";
 import Swal from "sweetalert2";

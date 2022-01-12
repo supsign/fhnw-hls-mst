@@ -18,13 +18,12 @@
 </template>
 
 <script lang="ts">
-import {Component, Prop} from "vue-property-decorator";
+import {Component, Prop, Watch} from "vue-property-decorator";
 import BaseComponent from "../base/baseComponent";
 import VueAdminFaq from "./vueAdminFaq.vue";
 import {IFaq} from "../../interfaces/faq.interface";
 import axios from "axios";
 import {Toast} from "../../helpers/toast";
-import Swal from "sweetalert2";
 
 @Component({
     components: {VueAdminFaq}
@@ -36,7 +35,11 @@ export default class VueAdminFaqWrapper extends BaseComponent {
     public faqs: IFaq[] = [];
 
     public created() {
-        this.faqs = this.initFaqs;
+        this.getSortedFaqs(this.initFaqs);
+    }
+
+    public getSortedFaqs(faqs: IFaq[]) {
+        this.faqs = faqs.sort((a, b) => a.sort_order - b.sort_order);
     }
 
     public emptyFaq: IFaq = {
@@ -61,40 +64,34 @@ export default class VueAdminFaqWrapper extends BaseComponent {
     }
 
     public moveUp(faq: IFaq) {
-        console.log('up', faq);
-        axios.post<IFaq>(`/webapi/faq/${faq.id}/up`, {
-
-        })
+        axios.post<IFaq>(`/webapi/faq/${faq.id}/up`)
             .then(() => {
+                axios.get(`/webapi/faq`).then((res => {
+                    this.getSortedFaqs(res.data);
+                    })
+                )
                 Toast.fire({
                     icon: "success",
                     title: "FAQ has been moved!"
                 });
             })
-            .catch(() => {
-                Toast.fire({
-                    icon: "success",
-                    title: "FAQ has been moved!"
-                });
+            .catch((reason) => {
+                Toast.fire({title: 'Error', icon: 'error', text: reason.text});
+                console.log(reason);
             });
     }
 
     public moveDown(faq: IFaq) {
-        console.log('down', faq);
-        axios.post<IFaq>(`/webapi/faq/${faq.id}/down`, {
-
-        })
+        axios.post<IFaq>(`/webapi/faq/${faq.id}/down`)
             .then(() => {
                 Toast.fire({
                     icon: "success",
                     title: "FAQ has been moved!"
                 });
             })
-            .catch(() => {
-                Swal.fire({
-                    text: "Error! FAQ hasn't been moved.",
-                    icon: "error"
-                });
+            .catch((reason) => {
+                Toast.fire({title: 'Error', icon: 'error', text: reason.text});
+                console.log(reason);
             });
     }
 }

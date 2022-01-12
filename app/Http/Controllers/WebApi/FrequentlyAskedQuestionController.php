@@ -24,6 +24,13 @@ class FrequentlyAskedQuestionController extends Controller
         return $this->faqService->createFromPostRequest($request);
     }
 
+    public function getAllWithTrashed()
+    {
+        $this->permissionAndRoleService->canManageBackendOrAbort();
+
+        return $this->faqService->getAllWithTrashed();
+    }
+
     public function delete(FrequentlyAskedQuestion $faq)
     {
         $this->permissionAndRoleService->canManageBackendOrAbort();
@@ -43,7 +50,7 @@ class FrequentlyAskedQuestionController extends Controller
     public function restore(int $faqId)
     {
         $this->permissionAndRoleService->canManageBackendOrAbort();
-        $this->faqService->restore();
+        $this->faqService->restore($faqId);
 
         return 1;
     }

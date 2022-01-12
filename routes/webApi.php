@@ -42,6 +42,7 @@ Route::middleware('auth')->group(
         Route::post('coursecrossqualificationyears', [WebApiCourseCrossQualificationYearController::class, 'post'])->name('webapi.courseCrossQualificationYear.post');
         Route::delete('coursecrossqualificationyears/{courseCrossQualificationYear}', [WebApiCourseCrossQualificationYearController::class, 'delete'])->name('webapi.courseCrossQualificationYear.delete');
 
+        Route::get('faq', [FrequentlyAskedQuestionController::class, 'getAllWithTrashed'])->name('webapi.faq.getAllWithTrashed');
         Route::post('faq', [FrequentlyAskedQuestionController::class, 'create'])->name('webapi.faq.create');
         Route::patch('faq/{faq}', [FrequentlyAskedQuestionController::class, 'patch'])->name('webapi.faq.patch');
         Route::delete('faq/{faq}', [FrequentlyAskedQuestionController::class, 'delete'])->name('webapi.faq.delete');

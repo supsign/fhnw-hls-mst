@@ -3,7 +3,16 @@
         <div class="p-4 border bg-gray-100 rounded w-full">
             <div class="flex justify-between border-b">
                 <div v-if="!editMode"
-                    class="font-bold pb-3">{{ faq.question }}</div>
+                    class="font-bold pb-3 flex space-x-4">
+                    <div>
+                        {{ question }}
+                    </div>
+                    <div v-if="deletedAt"
+                         class="text-red-500 text-sm my-auto"
+                    >
+                        Gelöscht
+                    </div>
+                </div>
                 <vue-input v-else
                            v-model="question"
                            class="w-3/4 pb-4"
@@ -12,26 +21,31 @@
                            label="Frage"
                 />
                 <div class="flex space-x-2">
-                    <div
+                    <div v-if="editMode"
                         class="hover:font-bold"
                         :class="{ 'text-gray-400 cursor-not-allowed':  !editMode, 'cursor-pointer text-blue-600' : editMode}"
                         @click="save()">
                         <i class="far fa-save" aria-hidden="true"></i>
                     </div>
-                    <div
+                    <div v-if="!editMode"
                         class=" hover:font-bold"
                         :class="{ 'text-gray-400 cursor-not-allowed':  editMode , 'cursor-pointer text-blue-600' : !editMode}"
                         @click="edit()">
                         <i class="far fa-edit" aria-hidden="true"></i>
                     </div>
-                    <div class="cursor-pointer text-red-500 hover:font-bold"
+                    <div v-if="!deletedAt"
+                        class="cursor-pointer text-red-500 hover:font-bold"
                          @click="remove()">
                         <i class="far fa-trash" aria-hidden="true"></i>
+                    </div>
+                    <div v-if="deletedAt"
+                        class="cursor-pointer hover:font-bold">
+                        <i class="far fa-trash-undo text-green-500" aria-hidden="true"></i>
                     </div>
                 </div>
             </div>
             <div v-if="!editMode"
-                class="pt-3">{{ faq.answer }}</div>
+                class="pt-3">{{ answer }}</div>
             <vue-input v-else
                        v-model="answer"
                        class="w-94 pt-2"
@@ -73,10 +87,14 @@ export default class VueAdminFaq extends BaseComponent {
     editMode = false;
     question: string = null;
     answer: string = null;
+    sortOrder: number = null;
+    deletedAt: string = null;
 
     public created() {
         this.question = this.faq.question;
         this.answer = this.faq.answer;
+        this.sortOrder = this.faq.sort_order;
+        this.deletedAt = this.faq.deleted_at;
     }
 
     public get minSortOrder() {

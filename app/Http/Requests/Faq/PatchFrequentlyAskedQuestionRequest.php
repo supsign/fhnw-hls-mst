@@ -25,7 +25,7 @@ class PatchFrequentlyAskedQuestionRequest extends FormRequest
     {
         if (!$this->sort_order) {
             $this->merge([
-                'sort_order' => $this->route('faq')->sort_order
+                'sort_order' => $this->route('faq')->sort_order,
             ]);
         }
     }

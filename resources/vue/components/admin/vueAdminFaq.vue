@@ -2,27 +2,43 @@
     <div class="flex space-x-4">
         <div class="p-4 border bg-gray-100 rounded w-full">
             <div class="flex justify-between border-b">
-                <div class="font-bold pb-3">{{ faq.question }}</div>
+                <div v-if="!editMode"
+                    class="font-bold pb-3">{{ faq.question }}</div>
+                <vue-input v-else
+                           v-model="question"
+                           class="w-3/4 pb-4"
+                           type="text"
+                           name="name"
+                           label="Frage"
+                />
                 <div class="flex space-x-2">
                     <div
-                        class="text-blue-600 hover:font-bold"
-                        :class="{ 'text-gray-100 cursor-not-allowed':  !editMode, 'cursor-pointer' : editMode}"
+                        class="hover:font-bold"
+                        :class="{ 'text-gray-400 cursor-not-allowed':  !editMode, 'cursor-pointer text-blue-600' : editMode}"
                         @click="save()">
                         <i class="far fa-save" aria-hidden="true"></i>
                     </div>
                     <div
-                        class="text-blue-600 hover:font-bold"
-                        :class="{ 'text-gray-100 cursor-not-allowed':  editMode , 'cursor-pointer' : !editMode}"
+                        class=" hover:font-bold"
+                        :class="{ 'text-gray-400 cursor-not-allowed':  editMode , 'cursor-pointer text-blue-600' : !editMode}"
                         @click="edit()">
                         <i class="far fa-edit" aria-hidden="true"></i>
                     </div>
                     <div class="cursor-pointer text-red-500 hover:font-bold"
-                         @click="()=>remove(faq)">
+                         @click="remove()">
                         <i class="far fa-trash" aria-hidden="true"></i>
                     </div>
                 </div>
             </div>
-            <div class="pt-3">{{ faq.answer }}</div>
+            <div v-if="!editMode"
+                class="pt-3">{{ faq.answer }}</div>
+            <vue-input v-else
+                       v-model="answer"
+                       class="w-94 pt-2"
+                       type="text"
+                       name="name"
+                       label="Antwort"
+            />
         </div>
         <div class="text-xl h-auto my-auto">
             <div v-if="minSortOrder !== faq.sort_order" @click="()=>moveUp(faq)">
@@ -42,8 +58,11 @@ import {IFaq} from "../../interfaces/faq.interface";
 import Swal from "sweetalert2";
 import axios from "axios";
 import {Toast} from "../../helpers/toast";
+import VueInput from "../form/vueInput.vue";
 
-@Component
+@Component({
+    components: {VueInput}
+})
 export default class VueAdminFaq extends BaseComponent {
     @Prop({type: Object})
     public faq: IFaq
@@ -54,6 +73,11 @@ export default class VueAdminFaq extends BaseComponent {
     editMode = false;
     question: string = null;
     answer: string = null;
+
+    public created() {
+        this.question = this.faq.question;
+        this.answer = this.faq.answer;
+    }
 
     public get minSortOrder() {
         return Math.min.apply(Math, this.faqs.map(function(faq) {
@@ -93,7 +117,6 @@ export default class VueAdminFaq extends BaseComponent {
                     )
                     .then(() => {
                         Toast.fire({icon: "success", title: 'Die FAQ wurde gelöscht.'});
-                        this.$emit('remove', this.faq);
                     })
                     .catch((reason) => {
                         Toast.fire({title: 'Error', icon: 'error', text: reason.text});
@@ -119,7 +142,7 @@ export default class VueAdminFaq extends BaseComponent {
         }
         return axios
             .patch(
-                `/webapi/faq/${this.faq}`, {
+                `/webapi/faq/${this.faq.id}`, {
                     question: this.question,
                     answer: this.answer,
                 }

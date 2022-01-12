@@ -21,15 +21,6 @@ class PatchFrequentlyAskedQuestionRequest extends FormRequest
         return true;
     }
 
-    public function prepareForValidation()
-    {
-        if (!$this->sort_order) {
-            $this->merge([
-                'sort_order' => $this->faqService->getNextAvailiblePosition(),
-            ]);
-        }
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *

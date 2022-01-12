@@ -72,7 +72,7 @@ export default class VueAdminFaqWrapper extends BaseComponent {
                 )
                 Toast.fire({
                     icon: "success",
-                    title: "FAQ has been moved!"
+                    title: "FAQ wurde bewegt"
                 });
             })
             .catch((reason) => {
@@ -90,7 +90,7 @@ export default class VueAdminFaqWrapper extends BaseComponent {
                 )
                 Toast.fire({
                     icon: "success",
-                    title: "FAQ has been moved!"
+                    title: "FAQ wurde bewegt"
                 });
             })
             .catch((reason) => {

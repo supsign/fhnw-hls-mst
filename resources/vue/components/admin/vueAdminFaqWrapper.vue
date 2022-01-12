@@ -9,7 +9,6 @@
                            :key="faq.id"
                            :faq="faq"
                            :faqs="faqs"
-                           @remove="remove"
                            @move-up="moveUp"
                            @move-down="moveDown"
             />
@@ -59,14 +58,6 @@ export default class VueAdminFaqWrapper extends BaseComponent {
                 Toast.fire({title: 'Error', icon: 'error', text: reason.text});
                 console.log(reason);
             });
-    }
-
-    public remove(faq: IFaq) {
-        console.log('blub');
-        console.log(faq);
-        console.log(this.faqs);
-        this.faqs.splice(this.faqs.indexOf(faq), 1);
-        console.log(this.faqs);
     }
 
     public moveUp(faq: IFaq) {

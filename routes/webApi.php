@@ -45,6 +45,7 @@ Route::middleware('auth')->group(
         Route::post('faq', [FrequentlyAskedQuestionController::class, 'create'])->name('webapi.faq.create');
         Route::patch('faq/{faq}', [FrequentlyAskedQuestionController::class, 'patch'])->name('webapi.faq.patch');
         Route::delete('faq/{faq}', [FrequentlyAskedQuestionController::class, 'delete'])->name('webapi.faq.delete');
+        Route::post('faq/{faqId}/restore', [FrequentlyAskedQuestionController::class, 'restore'])->name('webapi.faq.restore');
         Route::post('faq/{faq}/down', [FrequentlyAskedQuestionController::class, 'moveDown'])->name('webapi.faq.down');
         Route::post('faq/{faq}/up', [FrequentlyAskedQuestionController::class, 'moveUp'])->name('webapi.faq.up');
     }

@@ -80,17 +80,6 @@ class FrequentlyAskedQuestionService extends BaseModelService
                 ->first();
     }
 
-    public function updateFromPatchRequest(FrequentlyAskedQuestion $faq, PatchFrequentlyAskedQuestionRequest $request): FrequentlyAskedQuestion
-    {
-        if ($faq->sort_order !== $request->sort_order) {
-            $this->makePositionAvailible($request->sort_order);
-        }
-
-        $this->baseUpdate($faq, $request->validated());
-
-        return $faq;
-    }
-
     public function moveDown(FrequentlyAskedQuestion $faq): self
     {
         $nextEntry = $this->getNextEntry($faq);
@@ -125,5 +114,23 @@ class FrequentlyAskedQuestionService extends BaseModelService
         $previousEntry->save();
 
         return $this;
+    }
+
+    public function restore(int $faqId): self
+    {
+        $this->model::withTrashed()->find($faqId)?->restore();
+
+        return $this;
+    }
+
+    public function updateFromPatchRequest(FrequentlyAskedQuestion $faq, PatchFrequentlyAskedQuestionRequest $request): FrequentlyAskedQuestion
+    {
+        if ($faq->sort_order !== $request->sort_order) {
+            $this->makePositionAvailible($request->sort_order);
+        }
+
+        $this->baseUpdate($faq, $request->validated());
+
+        return $faq;
     }
 }

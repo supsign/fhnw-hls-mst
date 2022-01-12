@@ -40,12 +40,20 @@ class FrequentlyAskedQuestionController extends Controller
         return $this->faqService->updateFromPatchRequest($faq, $request);
     }
 
+    public function restore(int $faqId)
+    {
+        $this->permissionAndRoleService->canManageBackendOrAbort();
+        $this->faqService->restore();
+
+        return 1;
+    }
+
     public function moveDown(FrequentlyAskedQuestion $faq)
     {
         $this->permissionAndRoleService->canManageBackendOrAbort();
         $this->faqService->moveDown($faq);
 
-        return response();
+        return 1;
     }
 
     public function moveUp(FrequentlyAskedQuestion $faq)
@@ -53,6 +61,6 @@ class FrequentlyAskedQuestionController extends Controller
         $this->permissionAndRoleService->canManageBackendOrAbort();
         $this->faqService->moveUp($faq);
 
-        return response();
+        return 1;
     }
 }

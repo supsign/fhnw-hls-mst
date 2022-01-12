@@ -8,7 +8,7 @@
             </div>
         </a>
         <a href="{{ route('faq') }}" class="my-auto">
-            <div class="flex space-x-4">
+            <div class="flex space-x-4 justify-center lg:justify-start">
                 <div class="my-auto text-lg">@lang('l.faq')</div>
             </div>
         </a>

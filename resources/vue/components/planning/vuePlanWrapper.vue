@@ -2,8 +2,8 @@
     <div class="p-2 bg-white rounded shadow mb-4">
         <div class="content-center text-base" @click="toggleCollapse">
 
-            <div class="flex flex-row space-x-3 p-2">
-                <div class="my-auto w-6 flex-shrink-0 flex-grow-0">
+            <div class="flex flex-row p-2">
+                <div class="my-auto w-8 flex-shrink-0 flex-grow-0">
                     <i v-if="isCollapsed" aria-hidden="true" class="fas fa-arrow-right"></i>
                     <i v-if="!isCollapsed" aria-hidden="true" class="fas fa-arrow-down"></i>
                 </div>

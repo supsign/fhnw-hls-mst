@@ -22,7 +22,7 @@
         />
         <span class="input__label" ref="tooltipp">
             {{ label }}{{ required ? " *" : "" }}
-            <i v-if="tooltipp" class="fas fa-info-circle"></i>
+            <i v-if="tooltipp" class="fas fa-info-circle" aria-hidden="true"></i>
         </span>
 
         <span class="text-xs input__error" role="alert" v-if="showError">

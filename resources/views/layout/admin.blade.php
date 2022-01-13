@@ -11,10 +11,10 @@
     <meta name="theme-color" content="#ffffff">
 
     @include('3rd-parties.smartlook')
+    @include('3rd-parties.tinyMCE')
 
     <title>{{ str_replace('<br>', ',', $title) }} | HLS MST Backend</title>
 
-    <script src="https://cdn.tiny.cloud/1/6shd46sowki9fg98un4sdjuru2amdjuj1u8xpwlqc9jmlggq/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     <link rel="alternate" hreflang="x-default" href="@php echo url()->full() @endphp"/>

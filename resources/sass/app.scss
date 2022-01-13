@@ -80,20 +80,6 @@
     }
 }
 
-.sourceHtml {
-    ul {
-        @apply list-disc list-outside ml-4;
-
-        ul {
-            @apply ml-8 mb-2;
-        }
-    }
-
-    div {
-        @apply my-2;
-    }
-}
-
 /* tinyMCE */
 .tinymce {
     > h6 {
@@ -114,5 +100,19 @@
 
     a {
         @apply mb-4 text-blue-600 hover:text-blue-800;
+    }
+}
+
+.sourceHtml {
+    ul {
+        @apply list-disc list-outside ml-4;
+
+        ul {
+            @apply ml-8 mb-2;
+        }
+    }
+
+    div {
+        @apply my-2;
     }
 }

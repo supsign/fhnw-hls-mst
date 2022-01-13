@@ -26,13 +26,6 @@
                      class="pt-3 tinymce"
                      v-html="answer">
                 </div>
-<!--                <vue-input v-else-->
-<!--                           v-model="answer"-->
-<!--                           class="w-94 pt-2"-->
-<!--                           type="text"-->
-<!--                           name="name"-->
-<!--                           label="Antwort"-->
-<!--                />-->
                 <vue-editor v-else
                             v-model="answer"
                             name="answer"

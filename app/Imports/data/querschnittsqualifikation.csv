@@ -1,6 +1,8 @@
-"id_querschnittsqualifikation","bezeichnung","id_studienrichtung"
-"22","CB - Digitalisierung","15"
-"33","CH - Materialien","13"
-"42","PT - Digitalisierung","8"
-"53","PT - Materialien","8"
-"12","BZ - Digitalisierung","14"
+id_querschnittsqualifikation,bezeichnung,id_studienrichtung
+22,CB - Digitalisierung,15
+33,CH - Materialien,13
+42,PT - Digitalisierung,8
+53,PT - Materialien,8
+12,BZ - Digitalisierung,14
+32,CH - Digitalisierung,13
+62,UT - Digitalisierung,9

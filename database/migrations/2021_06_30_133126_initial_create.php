@@ -211,6 +211,16 @@ class InitialCreate extends Migration
 
         (new CourseCsvImport)->import();
 
+        if (App::environment('testing')) {
+            if (Storage::exists('Testingdata\Tab3_Modul.xlsx')) {
+                $excel->import(new CourseExcelImport, 'Testingdata\Tab3_Modul.xlsx');
+            }
+        } else {
+            if (Storage::exists('Tab3_Modul.xlsx')) {
+                $excel->import(new CourseExcelImport, 'Tab3_Modul.xlsx');
+            }
+        }
+
         Schema::create('specialization_years', function (Blueprint $table) {
             $table->id();
             $table->foreignId('assessment_id')->nullable()->constrained();
@@ -438,10 +448,6 @@ class InitialCreate extends Migration
                 $excel->import(new RecommendationImport, 'Testingdata\Update studienplan-und-studienkatalog 29Jun2021.xlsx');
             }
         } else {
-            if (Storage::exists('Tab3_Modul.xlsx')) {
-                $excel->import(new CourseExcelImport, 'Tab3_Modul.xlsx');
-            }
-
             if (Storage::exists('Tab4_Modulanlass.xlsx')) {
                 $excel->import(new CourseYearImport, 'Tab4_Modulanlass.xlsx');
             }

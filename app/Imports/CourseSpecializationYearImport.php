@@ -36,7 +36,7 @@ class CourseSpecializationYearImport extends BaseCsvImport
             return $this;
         }
 
-        $course = $this->courseService->getByNumber($this->line['laufnummer']);
+        $course = $this->courseService->getByNumberUnformated($this->line['laufnummer']);
 
         if (!$course) {
             return $this;

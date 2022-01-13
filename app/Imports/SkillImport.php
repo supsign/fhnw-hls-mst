@@ -30,7 +30,7 @@ class SkillImport extends BaseCsvImport
 
         CourseSkill::create([
             'skill_id' => $skill->id,
-            'course_id' => $this->courseService->getByNumber($this->line['laufnummer'])->id,
+            'course_id' => $this->courseService->getByNumberUnformated($this->line['laufnummer'])->id,
             'from_semester_id' => Semester::whereNull('previous_semester_id')->first()->id,
             'goal_number' => $this->line['nummer'],
             'is_acquisition' => true,

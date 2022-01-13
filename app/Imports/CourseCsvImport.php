@@ -15,7 +15,7 @@ class CourseCsvImport extends BaseCsvImport
             'number' => $this->line['laufnummer'],
             'number_unformated' => $this->line['laufnummer'],
             'name' => $this->line['modulbezeichnung'],
-            'course_type_id' => $this->line['id_modultyp'],
+            'course_type_id' => empty($this->line['id_modultyp']) ? 1 : $this->line['id_modultyp'],
         ];
 
         if ($this->line['id_sprache']) {

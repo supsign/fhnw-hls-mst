@@ -13,7 +13,7 @@
                 @foreach ($faqs AS $faq)
                     <div class="p-4 border bg-gray-100 rounded">
                         <div class="font-bold pb-3 border-b">{{ $faq->question }}</div>
-                        <div class="pt-3">{{ $faq->answer }}</div>
+                        <div class="pt-3 tinymce">{!! $faq->answer !!}</div>
                     </div>
                 @endforeach
             </div>

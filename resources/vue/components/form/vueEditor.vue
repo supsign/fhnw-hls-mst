@@ -1,8 +1,9 @@
 <template>
     <div class="relative mt-2 text-left text-gray-700 min-h-16">
         <editor
+            @input="input"
             :name="name"
-            v-model="internValue"
+            :value="internValue"
             api-key="6shd46sowki9fg98un4sdjuru2amdjuj1u8xpwlqc9jmlggq"
             :disabled="disabled"
             :id="id + '_editor'"
@@ -102,10 +103,10 @@ export default class VueEditor extends BaseComponent {
     internValue = "";
 
     input(ev: any) {
-        this.internValue = ev.target.value;
+        this.internValue = ev;
         this.initialError = null;
         this.validate();
-        this.$emit("input", ev.target.value);
+        this.$emit("input", ev);
     }
 
     @Emit()

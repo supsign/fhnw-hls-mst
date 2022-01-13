@@ -1,6 +1,6 @@
 <template>
     <div class="flex space-x-4">
-        <div class="p-4 border bg-gray-100 rounded flex flex-grow justify-between space-x-4">
+        <div class="p-4 border rounded shadow-xl flex flex-grow justify-between space-x-4">
             <div class="flex-grow">
                 <div class="flex justify-between border-b">
                     <div v-if="!editMode"
@@ -18,19 +18,27 @@
                                v-model="question"
                                class="pb-4 flex-grow"
                                type="text"
-                               name="name"
+                               name="question"
                                label="Frage"
                     />
                 </div>
                 <div v-if="!editMode"
                      class="pt-3">{{ answer }}</div>
-                <vue-input v-else
-                           v-model="answer"
-                           class="w-94 pt-2"
-                           type="text"
-                           name="name"
-                           label="Antwort"
-                />
+<!--                <vue-input v-else-->
+<!--                           v-model="answer"-->
+<!--                           class="w-94 pt-2"-->
+<!--                           type="text"-->
+<!--                           name="name"-->
+<!--                           label="Antwort"-->
+<!--                />-->
+                <vue-editor v-else
+                            v-model="answer"
+                            name="answer"
+                            id="answer"
+                            label="Antwort"
+                >
+
+                </vue-editor>
             </div>
             <div class="my-auto w-8">
                 <div class="flex flex flex-col md:flex-row md:space-x-2">
@@ -78,9 +86,10 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import {Toast} from "../../helpers/toast";
 import VueInput from "../form/vueInput.vue";
+import VueEditor from "../form/vueEditor.vue";
 
 @Component({
-    components: {VueInput}
+    components: {VueEditor, VueInput}
 })
 export default class VueAdminFaq extends BaseComponent {
     @Prop({type: Object})

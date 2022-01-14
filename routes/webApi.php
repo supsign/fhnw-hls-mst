@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\WebApi\CourseController;
 use App\Http\Controllers\WebApi\CoursePlanningController;
+use App\Http\Controllers\WebApi\FrequentlyAskedQuestionController;
 use App\Http\Controllers\WebApi\StudentController;
 use App\Http\Controllers\WebApi\UserController;
 use App\Http\Controllers\WebApi\WebApiCourseCrossQualificationYearController;
@@ -40,5 +41,13 @@ Route::middleware('auth')->group(
 
         Route::post('coursecrossqualificationyears', [WebApiCourseCrossQualificationYearController::class, 'post'])->name('webapi.courseCrossQualificationYear.post');
         Route::delete('coursecrossqualificationyears/{courseCrossQualificationYear}', [WebApiCourseCrossQualificationYearController::class, 'delete'])->name('webapi.courseCrossQualificationYear.delete');
+
+        Route::get('faq', [FrequentlyAskedQuestionController::class, 'getAllWithTrashed'])->name('webapi.faq.getAllWithTrashed');
+        Route::post('faq', [FrequentlyAskedQuestionController::class, 'create'])->name('webapi.faq.create');
+        Route::patch('faq/{faq}', [FrequentlyAskedQuestionController::class, 'patch'])->name('webapi.faq.patch');
+        Route::delete('faq/{faq}', [FrequentlyAskedQuestionController::class, 'delete'])->name('webapi.faq.delete');
+        Route::post('faq/{faqId}/restore', [FrequentlyAskedQuestionController::class, 'restore'])->name('webapi.faq.restore');
+        Route::post('faq/{faq}/down', [FrequentlyAskedQuestionController::class, 'moveDown'])->name('webapi.faq.down');
+        Route::post('faq/{faq}/up', [FrequentlyAskedQuestionController::class, 'moveUp'])->name('webapi.faq.up');
     }
 );

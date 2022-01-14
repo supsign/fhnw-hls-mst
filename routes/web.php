@@ -62,6 +62,9 @@ Route::middleware(['web', 'auth'])->group(
         // Standings
         Route::get('standing', [StandingController::class, 'index'])->name('standing.index');
 
+        //  FAQ
+        Route::get('faq', [HomeController::class, 'faq'])->name('faq');
+
         // Route::get('user', [UserController::class, 'index'])->name('user.index');
     }
 );
@@ -70,6 +73,7 @@ Route::middleware(['web', 'auth', 'backend'])->group(
     function () {
         Route::get('admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
         Route::get('admin/courses', [AdminController::class, 'courses'])->name('admin.course.list');
+        Route::get('admin/faq', [AdminController::class, 'faq'])->name('admin.faq');
         Route::get('admin/userManagement/assignRoleToUser', [AdminRolesController::class, 'assignRoles'])->name('admin.userManagement.assign');
         Route::post('admin/userManagement/assignRoleToUser', [AdminRolesController::class, 'assignRoleToUser'])->name('admin.userManagement.assign.post');
         Route::post('admin/userManagement/removeRoleFromUser', [AdminRolesController::class, 'removeRoleFromUser'])->name('admin.userManagement.remove.post');

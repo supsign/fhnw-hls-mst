@@ -80,6 +80,29 @@
     }
 }
 
+/* tinyMCE */
+.tinymce {
+    > h6 {
+        @apply mb-2 font-bold text-xl;
+    }
+
+    > p {
+        @apply mb-4;
+    }
+
+    ul {
+        @apply ml-10 mb-4 list-disc;
+    }
+
+    ol {
+        @apply ml-10 mb-4 list-decimal;
+    }
+
+    a {
+        @apply mb-4 text-blue-600 hover:text-blue-800;
+    }
+}
+
 .sourceHtml {
     ul {
         @apply list-disc list-outside ml-4;

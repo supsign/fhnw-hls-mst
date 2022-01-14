@@ -5,12 +5,12 @@
         </div>
         <div :class="{ 'cursor-pointer': courseYear }"
              class="my-auto hyphens-auto flex-grow overflow-auto flex flex-row my-auto">
-            <div class="w-8 my-auto">
+            <div class="w-8 my-auto flex-shrink-0">
                 <div v-if="courseIsRecommended">
-                    <i aria-hidden="true" class="far fa-calendar-check"></i>
+                    <i aria-hidden="true" class="far fa-calendar-exclamation"></i>
                 </div>
             </div>
-            <div class="w-8 my-auto">
+            <div class="w-8 my-auto flex-shrink-0">
                 <div v-if="courseIsAssessment">
                     <i aria-hidden="true" class="fas fa-sitemap"></i>
                 </div>
@@ -22,7 +22,7 @@
                 </div>
             </div>
 
-            <div>
+            <div class="flex-shrink flex-grow">
                 {{ course.name }}
             </div>
 

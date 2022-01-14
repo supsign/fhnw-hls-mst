@@ -43,6 +43,7 @@
                         <div>{{ $mentorStudent->firstname }} {{ $mentorStudent->lastname }}</div>
                     @endif
                 </x-slot>
+
                 <div class="my-2">
                     <div>
                         <div>{{ $planning->studyFieldYear->studyField->studyProgram->name }}</div>
@@ -92,7 +93,7 @@
                     </div>
                     <div class="flex flex-col space-y-2 flex-grow">
                         <div class="flex flex-row space-x-3">
-                            <i class="far fa-calendar-check my-auto w-8" aria-hidden="true"></i>
+                            <i class="far fa-calendar-exclamation my-auto w-8" aria-hidden="true"></i>
                             <div class="my-auto">Musterstudienplan</div>
                         </div>
                         <div class="flex flex-row space-x-3">
@@ -141,14 +142,19 @@
                         <div>
                             <vue-plan-wrapper>
                                 <template v-slot:header>
-                                    <div class="my-auto w-2/3 hyphens-auto text-sm">
-                                        {{ $courseGroupYear->courseGroup->name }}
-                                    </div>
-                                    <vue-course-group-state :course-group-year="{{ $courseGroupYear }}"
-                                        :courses="{{ $courseGroupYear->courses }}"
-                                        :completions="{{ $planning->student->completions }}">
+                                    <div class="flex flex-row">
+                                        <div class="my-auto flex-grow hyphens-auto text-sm">
+                                            {{$courseGroupYear->courseGroup->name}}
+                                        </div>
+                                        <vue-course-group-state
+                                            class="flex-grow-0 flex-shrink-0"
+                                            :course-group-year="{{$courseGroupYear}}"
+                                            :courses="{{$courseGroupYear->courses}}"
+                                            :completions="{{$planning->student->completions}}">
 
-                                    </vue-course-group-state>
+                                        </vue-course-group-state>
+                                    </div>
+
 
                                 </template>
 

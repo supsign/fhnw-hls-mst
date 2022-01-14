@@ -16,9 +16,8 @@ import {coursePlanningStore} from "./store/coursePlanning/coursePlanning.store";
 import VueStoreFill from "./components/store/vueStoreFill.vue"
 import VueCourseGroupState from "./components/planning/vueCourseGroupState.vue";
 import VuePlanWrapper from "./components/planning/vuePlanWrapper.vue";
-import VueStateWrapper from "./components/assessment/VueStateWrapper.vue";
+import VueStateWrapper from "./components/StateTab/VueStateWrapper.vue";
 import VueShowAndSelectMentors from "./components/mentor/VueShowAndSelectMentors.vue";
-import VueAssessmentState from "./components/assessment/VueAssessmentState.vue";
 import VueCreatePlanningForm from "./components/planning/vueCreatePlanningForm.vue";
 import VueAdminCourseEdit from "./components/admin/vueAdminCourseEdit.vue";
 import VuePlanningSemester from "./components/planning/vuePlanningSemester.vue";
@@ -35,18 +34,23 @@ import VueAdminSpecializationYears from "./components/admin/vueAdminSpecializati
 import VueAdminMentorStudents from "./components/admin/vueAdminMentorStudents.vue";
 import {specializationStore} from "./store/specialization/specialization.store";
 import VueAdminCourseCrossQualificationYear from "./components/admin/vueAdminCourseCrossQualificationYear.vue"
-
-//@ts-ignore
-import VueMask from 'v-mask';
 import {specializationYearStore} from "./store/specializationYear/specializationYear.store";
 import {assessmentStore} from "./store/assessment/assessment.store";
 import VueAdminCrossQualificationYear from "./components/admin/vueAdminCrossQualificationYear.vue";
+import VueAdminFaqWrapper from "./components/admin/vueAdminFaqWrapper.vue";
+import VueEditor from "./components/form/vueEditor.vue";
 import {courseSpecializationYearStore} from "./store/courseSpecializationYear/courseSpecializationYear.store";
+
+//@ts-ignore
+import VueMask from 'v-mask';
+// @ts-ignore
+import Editor from "@tinymce/tinymce-vue";
 
 library.add(faUserSecret);
 library.add(faCheck);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
+Vue.component( "editor", Editor );
 Vue.use(Vuex);
 Vue.use(VueMask);
 
@@ -78,7 +82,6 @@ const app = new Vue({
         VueCourseGroupState,
         VuePlanWrapper,
         VueStateWrapper,
-        VueAssessmentState,
         VueCreatePlanningForm,
         VueShowAndSelectMentors,
         VueAdminCourseEdit,
@@ -91,6 +94,8 @@ const app = new Vue({
         VueAdminCourseCrossQualificationYear,
         VueAdminCrossQualificationYear,
         VueAdminSpecializationYears,
+        VueAdminFaqWrapper,
+        VueEditor
     },
     store
 });

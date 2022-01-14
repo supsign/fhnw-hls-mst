@@ -11,4 +11,9 @@ class Assessment extends BaseModel
     {
         return $this->belongsToMany(Course::class);
     }
+
+    public function assessmentCourses()
+    {
+        return $this->hasMany(AssessmentCourse::class);
+    }
 }

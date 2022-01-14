@@ -18,7 +18,9 @@ class AdminStudyFieldController extends Controller
         $this->permissionAndRoleService->canManageBackendOrAbort();
 
         $allStudyFields = StudyField::all();
-        $studyFields = $allStudyFields->filter(function (StudyField $studyField) {return $studyField->studyFieldYears()->count();});
+        $studyFields = $allStudyFields->filter(function (StudyField $studyField) {
+            return $studyField->studyFieldYears()->count();
+        });
 
         return view('admin.study-fields', ['studyFields' => $studyFields]);
     }

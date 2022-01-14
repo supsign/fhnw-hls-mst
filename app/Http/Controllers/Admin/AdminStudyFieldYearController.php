@@ -32,7 +32,7 @@ class AdminStudyFieldYearController extends Controller
             'studyFieldYear' => $studyFieldYear,
             'courseGroupYears' => $courseGroupYears,
             'courseCourseGroupYears' => $courseCourseGroupYears,
-            'courses' => $courses
+            'courses' => $courses,
         ]);
     }
 }

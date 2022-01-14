@@ -49,46 +49,46 @@ class RecommendationImport extends BaseExcelImport implements ToModel, WithHeadi
             return;
         }
 
-        $course = $this->courseService->getByNumberUnformated($row['modulnummer']);
+        foreach ($this->courseService->getByNumberUnformated($row['modulnummer']) AS $course) {
+            $recommendationName = $row['studienrichtung'];
 
-        $recommendationName = $row['studienrichtung'];
-
-        if ($row['spezialisierung'] !== 'keine') {
-            $recommendationName .= ' - '.$row['spezialisierung'];
-            $specialisation = Specialization::where('name', $recommendationName)->first();
-        } elseif ($row['querschnittsqualifikation'] !== 'keine') {
-            $recommendationName .= ' - '.$row['querschnittsqualifikation'];
-            $crossqualification = CrossQualification::where('name', $recommendationName)->first();
-        }
-
-        $recommendation = $this->recommendationService->getFirstOrCreateByName($recommendationName);
-
-        if (!empty($specialisation)) {
-            foreach ($specialisation->specializationYears AS $specializationYear) {
-                $specializationYear->update(['recommendation_id' => $recommendation->id]);
+            if ($row['spezialisierung'] !== 'keine') {
+                $recommendationName .= ' - '.$row['spezialisierung'];
+                $specialisation = Specialization::where('name', $recommendationName)->first();
+            } elseif ($row['querschnittsqualifikation'] !== 'keine') {
+                $recommendationName .= ' - '.$row['querschnittsqualifikation'];
+                $crossqualification = CrossQualification::where('name', $recommendationName)->first();
             }
-        }
 
-        if (!empty($crossqualification)) {
-            foreach ($crossqualification->crossQualificationYears AS $crossQualificationYear) {
-                $crossQualificationYear->update(['recommendation_id' => $recommendation->id]);
-            }
-        }
+            $recommendation = $this->recommendationService->getFirstOrCreateByName($recommendationName);
 
-        if (empty($specialisation) && empty($crossqualification)) {
-            $studyField = StudyField::where('evento_number', 'like', '2-L-B-LS'.$recommendationName.'%')->first();
-
-            if ($studyField) {
-                foreach ($studyField->studyFieldYears AS $studyFieldYear) {
-                    $studyFieldYear->update(['recommendation_id' => $recommendation->id]);
+            if (!empty($specialisation)) {
+                foreach ($specialisation->specializationYears AS $specializationYear) {
+                    $specializationYear->update(['recommendation_id' => $recommendation->id]);
                 }
             }
-        }
 
-        CourseRecommendation::firstOrCreate([
-            'course_id' => $course->id,
-            'recommendation_id' => $recommendation->id,
-            'planned_semester' => $row['sem_in_dem_modul_v_sr_bestellt'],
-        ]);
+            if (!empty($crossqualification)) {
+                foreach ($crossqualification->crossQualificationYears AS $crossQualificationYear) {
+                    $crossQualificationYear->update(['recommendation_id' => $recommendation->id]);
+                }
+            }
+
+            if (empty($specialisation) && empty($crossqualification)) {
+                $studyField = StudyField::where('evento_number', 'like', '2-L-B-LS'.$recommendationName.'%')->first();
+
+                if ($studyField) {
+                    foreach ($studyField->studyFieldYears AS $studyFieldYear) {
+                        $studyFieldYear->update(['recommendation_id' => $recommendation->id]);
+                    }
+                }
+            }
+
+            CourseRecommendation::firstOrCreate([
+                'course_id' => $course->id,
+                'recommendation_id' => $recommendation->id,
+                'planned_semester' => $row['sem_in_dem_modul_v_sr_bestellt'],
+            ]);
+        }
     }
 }

@@ -421,10 +421,6 @@ class InitialCreate extends Migration
         (new SpecializationImport)->countAmountToPass();
 
         if (App::environment('testing')) {
-            if (Storage::exists('Testingdata\Tab3_Modul.xlsx')) {
-                $excel->import(new CourseExcelImport, 'Testingdata\Tab3_Modul.xlsx');
-            }
-
             if (Storage::exists('Testingdata\Tab4_Modulanlass.xlsx')) {
                 $excel->import(new CourseYearImport, 'Testingdata\Tab4_Modulanlass.xlsx');
             }

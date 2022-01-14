@@ -4,6 +4,7 @@ namespace App\Imports;
 
 use App;
 use App\Services\Completion\CompletionService;
+use App\Services\Course\CourseService;
 use App\Services\CourseYear\CourseYearService;
 use App\Services\Student\StudentService;
 use Maatwebsite\Excel\Concerns\ToModel;
@@ -12,12 +13,14 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 class CompletionAttemptImport extends BaseExcelImport implements ToModel, WithHeadingRow
 {
     protected array $requiredFields = ['id_anmeldung', 'id_person', 'id_anlass', 'anlassnummer', 'note', 'credits_anmeldung', 'status_anmeldung'];
+    protected CourseService $courseService;
     protected CourseYearService $courseYearService;
     protected CompletionService $completionService;
     protected StudentService $studentService;
 
     public function __construct()
     {
+        $this->courseService = App::make(CourseService::class);
         $this->courseYearService = App::make(CourseYearService::class);
         $this->completionService = App::make(CompletionService::class);
         $this->studentService = App::make(StudentService::class);
@@ -36,11 +39,20 @@ class CompletionAttemptImport extends BaseExcelImport implements ToModel, WithHe
         $courseYear = $this->courseYearService->getByEventoId($row['id_anlass']);
 
         if (!$courseYear) {
-            activity('info')
-                ->withProperties($row)
-                ->log('courseYear nicht gefunden');
+            $course = $this->courseService->createOrUpdateOnEventoId($row['id_anlass_modul'], [
+                'course_type_id' => 1,
+                'language_id' => 1,
+                'number' => $row['anlassnummer_modul'],
+                'name' => $row['anlassbezeichnung_modul'],
+                // 'credits' => (int)$row['credits_anmeldung'],
+            ]);
 
-            return;
+            $courseYear = $this->courseYearService->createOrUpdateOnEventoId(
+                $row['id_anlass'],
+                $course,
+                $row['anlassnummer'],
+                $row['anlassbezeichnung'],
+            );
         }
 
         $this->completionService->createUpdateOrDeleteOnEventoIdAsAttempt(

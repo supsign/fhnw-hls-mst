@@ -41,7 +41,7 @@ class CompletionCreditImport extends BaseExcelImport implements ToModel, WithHea
             $course = $this->courseService->firstOrCreateByNumber(
                 $row['id_anlass'],
                 1,
-                1, 
+                1,
                 $row['anlassbezeichnung'],
                 // $row['credits'],
             );

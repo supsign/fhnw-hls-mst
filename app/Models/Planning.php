@@ -107,7 +107,7 @@ class Planning extends BaseModel
             return collect();
         }
 
-        return $specializationYear->courseSpecializationYear;
+        return $specializationYear->courseSpecializationYears;
     }
 
     public function getCourseCrossQualificationYearsAttribute(): Collection

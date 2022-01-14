@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Mentor;
 use App\Models\StudyFieldYear;
 use App\Services\User\PermissionAndRoleService;
 use Illuminate\Contracts\View\View;
@@ -17,8 +16,23 @@ class AdminStudyFieldYearController extends Controller
     public function show(StudyFieldYear $studyFieldYear): View
     {
         $this->permissionAndRoleService->canManageBackendOrAbort();
-        $mentors = Mentor::orderBy('lastname')->get();
 
         return view('admin.study-field-year', ['studyFieldYear' => $studyFieldYear]);
+    }
+
+    public function courseGroups(StudyFieldYear $studyFieldYear): View
+    {
+        $this->permissionAndRoleService->canManageBackendOrAbort();
+
+        $courseGroupYears = $studyFieldYear->courseGroupYears;
+        $courseCourseGroupYears = $courseGroupYears->pluck('courseCourseGroupYear')->flatten(1)->unique;
+        $courses = $courseCourseGroupYears->pluck('course')->unique();
+
+        return view('admin.course-groups', [
+            'studyFieldYear' => $studyFieldYear,
+            'courseGroupYears' => $courseGroupYears,
+            'courseCourseGroupYears' => $courseCourseGroupYears,
+            'courses' => $courses
+        ]);
     }
 }

@@ -1,5 +1,5 @@
 <template>
-    <vue-card>
+    <vue-card v-if="specialization">
         <template v-slot:title>
             <div class="flex flex-row justify-between">
                 <div>{{ specialization.name }}</div>
@@ -25,9 +25,16 @@
             <div>
                 <div class="text-xs text-gray-600">Module</div>
                 <div class="ml-2 text-sm space-y-1">
-                    <div v-for="coursePivot in courseSpecializationYears">{{
+                    <div v-for="coursePivot in courseSpecializationYears">
+                        <div v-if="getCourse(coursePivot.course_id)">
+
+                            {{
                             getCourse(coursePivot.course_id).name
-                        }}
+                            }}
+                        </div>
+                        <div v-else>
+                            Kurs nicht in Studienrichtung (id: {{coursePivot.course_id}})
+                        </div>
                     </div>
                 </div>
             </div>

@@ -15,4 +15,8 @@
        href="{{route('admin.mentors')}}">
         <span>Studiengangleitende</span>
     </a>
+    <a class="block px-4 py-2 my-1 hover:bg-hls-700 text-gray-700 transition duration-300 easy-in-out"
+       href="{{route('admin.studyFields.all')}}">
+        <span>Studienrichtungen</span>
+    </a>
 </div>

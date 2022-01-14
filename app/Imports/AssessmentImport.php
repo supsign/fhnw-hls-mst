@@ -44,8 +44,6 @@ class AssessmentImport extends BaseCsvImport
             }
         }
 
-
-
         return $this;
     }
 }

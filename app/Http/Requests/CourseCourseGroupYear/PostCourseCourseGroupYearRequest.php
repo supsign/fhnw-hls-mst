@@ -25,7 +25,7 @@ class PostCourseCourseGroupYearRequest extends FormRequest
     {
         return [
             'course_group_year_id' => 'int|required',
-            'course_id' =>  'int|required'
+            'course_id' =>  'int|required',
         ];
     }
 }

@@ -22,11 +22,12 @@ class CourseCourseGroupYearService extends BaseModelService
     {
         return $this->model::firstOrCreate([
             'course_group_year_id' => $courseGroupYear->id,
-            'course_id' => $course->id
+            'course_id' => $course->id,
         ]);
     }
 
-    public function remove(CourseCourseGroupYear $courseCourseGroupYear) {
+    public function remove(CourseCourseGroupYear $courseCourseGroupYear)
+    {
         return $courseCourseGroupYear->delete();
     }
 }

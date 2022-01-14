@@ -21,9 +21,9 @@ class WebApiCourseCourseGroupYearController extends Controller
 
     public function post(
         PostCourseCourseGroupYearRequest $postCourseCourseGroupYearRequest,
-        CourseService                    $courseService,
-        CourseGroupYearService           $courseGroupYearService,
-        CourseCourseGroupYearService     $courseCourseGroupYearService
+        CourseService $courseService,
+        CourseGroupYearService $courseGroupYearService,
+        CourseCourseGroupYearService $courseCourseGroupYearService
     ): CourseCourseGroupYear {
         $this->permissionAndRoleService->canManageBackendOrAbort();
 

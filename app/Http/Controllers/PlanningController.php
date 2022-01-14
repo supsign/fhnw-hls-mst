@@ -104,6 +104,7 @@ class PlanningController extends Controller
         $planning = $this->planningService->createEmptyPlanning(
             $user->student,
             $studyFieldYear,
+            $request->name,
             $crossQualificationService->getById($request->crossQualification),
             $specializationService->getById($request->specialization),
         );
@@ -136,6 +137,7 @@ class PlanningController extends Controller
         $newPlanning = $this->planningService->copy(
             $planning,
             $studyFieldYear,
+            $request->name,
             $crossQualificationService->getById($request->crossQualification),
             $specializationService->getById($request->specialization),
         );

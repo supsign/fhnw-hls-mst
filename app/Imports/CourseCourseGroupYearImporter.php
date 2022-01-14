@@ -26,17 +26,18 @@ class CourseCourseGroupYearImporter extends BaseCsvImport
 
     public function importLine()
     {
-        $course = $this->courseService->getByNumberUnformated($this->line['laufnummer']);
-        $courseGroup = $this->courseGroupService->getByImportId($this->line['id_modulgruppe']);
+        foreach ($this->courseService->getByNumberUnformated($this->line['laufnummer']) AS $course) {
+            $courseGroup = $this->courseGroupService->getByImportId($this->line['id_modulgruppe']);
 
-        foreach ($courseGroup->courseGroupYears as $courseGroupYear) {
-            $this->courseCourseGroupYearService->firstOrCreate([
-                'course_id' => $course->id,
-                'course_group_year_id' => $courseGroupYear->id,
-            ]);
+            foreach ($courseGroup->courseGroupYears as $courseGroupYear) {
+                $this->courseCourseGroupYearService->firstOrCreate([
+                    'course_id' => $course->id,
+                    'course_group_year_id' => $courseGroupYear->id,
+                ]);
 
-            if (empty($this->line['semester'])) {
-                continue;
+                if (empty($this->line['semester'])) {
+                    continue;
+                }
             }
         }
 

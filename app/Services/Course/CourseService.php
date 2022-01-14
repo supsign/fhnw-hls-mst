@@ -9,6 +9,7 @@ use App\Services\Base\BaseModelService;
 use App\Services\Base\Traits\UpdateOrCreateTrait;
 use App\Services\Evento\Traits\CreateOrUpdateOnEventoId;
 use App\Services\Evento\Traits\GetByEventoId;
+use Illuminate\Database\Eloquent\Collection;
 
 class CourseService extends BaseModelService
 {
@@ -26,9 +27,9 @@ class CourseService extends BaseModelService
         return $this->model->where('number', $number)->first();
     }
 
-    public function getByNumberUnformated(string $number): ?Course
+    public function getByNumberUnformated(string $number): Collection
     {
-        return $this->model->where('number_unformated', $number)->first();
+        return $this->model->where('number_unformated', $number)->get();
     }
 
     public function getCourseYearBySemesterOrLatest(Course $course, Semester $semester = null): ?CourseYear

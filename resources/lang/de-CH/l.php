@@ -34,5 +34,6 @@ return [
     'mentorNoStudents' => 'Kein Student:in hat bisher eine Planung für Sie freigegeben.',
     'linkInside' => 'Link zu Inside',
     'studyGuideLink' => 'Link zum Studienführer',
+    'lastChange' => 'Letzte Änderung',
     'noAccess' => 'Kein Zugriff',
 ];

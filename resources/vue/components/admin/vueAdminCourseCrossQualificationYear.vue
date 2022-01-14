@@ -117,8 +117,6 @@ export default class VueAdminCourseCrossQualificationYear extends BaseComponent 
 
     public courseIsSelectable(course: ICourse): boolean {
         return !this.courseCrossQualificationYears.find(pivotCourse => pivotCourse.id === course.id);
-
-
     }
 
     public remove(courseCrossQualificationYearId: number) {

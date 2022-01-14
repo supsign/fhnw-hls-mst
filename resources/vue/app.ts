@@ -40,11 +40,15 @@ import VueAdminCrossQualificationYear from "./components/admin/vueAdminCrossQual
 import VueAdminFaqWrapper from "./components/admin/vueAdminFaqWrapper.vue";
 import VueEditor from "./components/form/vueEditor.vue";
 import {courseSpecializationYearStore} from "./store/courseSpecializationYear/courseSpecializationYear.store";
+import {courseGroupYearStore} from "./store/courseGroupYear/courseGroupYear.store";
 
 //@ts-ignore
 import VueMask from 'v-mask';
 // @ts-ignore
 import Editor from "@tinymce/tinymce-vue";
+import {courseCourseGroupYearStore} from "./store/courseCourseGroupYear/courseCourseGroupYear.store";
+import VueAdminCourseGroups from "./components/admin/vueAdminCourseGroups.vue";
+import {courseGroupStore} from "./store/courseGroup/courseGroup.store";
 
 library.add(faUserSecret);
 library.add(faCheck);
@@ -66,7 +70,10 @@ const store = new Vuex.Store({
         specialization: specializationStore,
         specializationYear: specializationYearStore,
         assessment: assessmentStore,
-        courseSpecializationYear: courseSpecializationYearStore
+        courseSpecializationYear: courseSpecializationYearStore,
+        courseGroupYear: courseGroupYearStore,
+        courseCourseGroupYear: courseCourseGroupYearStore,
+        courseGroup: courseGroupStore
     },
 });
 
@@ -95,7 +102,8 @@ const app = new Vue({
         VueAdminCrossQualificationYear,
         VueAdminSpecializationYears,
         VueAdminFaqWrapper,
-        VueEditor
+        VueEditor,
+        VueAdminCourseGroups
     },
     store
 });

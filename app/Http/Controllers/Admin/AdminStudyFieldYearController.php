@@ -25,11 +25,13 @@ class AdminStudyFieldYearController extends Controller
         $this->permissionAndRoleService->canManageBackendOrAbort();
 
         $courseGroupYears = $studyFieldYear->courseGroupYears;
-        $courseCourseGroupYears = $courseGroupYears->pluck('courseCourseGroupYear')->flatten(1)->unique;
+        $courseGroups = $courseGroupYears->pluck('courseGroup')->unique();
+        $courseCourseGroupYears = $courseGroupYears->pluck('courseCourseGroupYears')->flatten(1)->unique();
         $courses = $courseCourseGroupYears->pluck('course')->unique();
 
         return view('admin.course-groups', [
             'studyFieldYear' => $studyFieldYear,
+            'courseGroups' => $courseGroups,
             'courseGroupYears' => $courseGroupYears,
             'courseCourseGroupYears' => $courseCourseGroupYears,
             'courses' => $courses,

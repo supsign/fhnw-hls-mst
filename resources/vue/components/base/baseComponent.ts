@@ -10,6 +10,9 @@ import {SpecializationModel} from "../../store/specialization/specialization.mod
 import {SpecializationYearModel} from "../../store/specializationYear/specializationYear.model";
 import {AssessmentModel} from "../../store/assessment/assessment.model";
 import {CourseSpecializationYearModel} from "../../store/courseSpecializationYear/courseSpecializationYear.model";
+import {CourseGroupYearModel} from "../../store/courseGroupYear/courseGroupYear.model";
+import {CourseCourseGroupYearModel} from "../../store/courseCourseGroupYear/courseCourseGroupYear.model";
+import {CourseGroupModel} from "../../store/courseGroup/courseGroup.model";
 
 // Define a super class component
 @Component
@@ -24,7 +27,10 @@ export default class BaseComponent extends Vue {
         specialization: new SpecializationModel(this.$store),
         specializationYear: new SpecializationYearModel(this.$store),
         assessment: new AssessmentModel(this.$store),
-        courseSpecializationYear: new CourseSpecializationYearModel(this.$store)
+        courseSpecializationYear: new CourseSpecializationYearModel(this.$store),
+        courseGroupYear: new CourseGroupYearModel(this.$store),
+        courseCourseGroupYear: new CourseCourseGroupYearModel(this.$store),
+        courseGroup: new CourseGroupModel(this.$store),
     }
 
 }

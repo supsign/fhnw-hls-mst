@@ -19,7 +19,14 @@
 
         <x-app.card>
             <x-slot name="title">
-                Modulgruppen
+                <div class="flex flex-row justify-between">
+                    <div>
+                        Modulgruppen
+                    </div>
+                    <a href="{{route('admin.studyFieldYears.courseGroups', [$studyFieldYear])}}">
+                        <i class="far fa-edit" aria-hidden="true"></i>
+                    </a>
+                </div>
             </x-slot>
 
             @foreach($studyFieldYear->courseGroupYears as $courseGroupYear)

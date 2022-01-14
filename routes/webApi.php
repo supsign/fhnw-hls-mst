@@ -5,6 +5,7 @@ use App\Http\Controllers\WebApi\CoursePlanningController;
 use App\Http\Controllers\WebApi\FrequentlyAskedQuestionController;
 use App\Http\Controllers\WebApi\StudentController;
 use App\Http\Controllers\WebApi\UserController;
+use App\Http\Controllers\WebApi\WebApiCourseCourseGroupYearController;
 use App\Http\Controllers\WebApi\WebApiCourseCrossQualificationYearController;
 use App\Http\Controllers\WebApi\WebApiCrossQualificationYearController;
 use App\Http\Controllers\WebApi\WebApiMentorController;
@@ -13,7 +14,7 @@ use App\Http\Controllers\WebApi\WebApiPlanningController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(
-    function () {
+    callback: function () {
         Route::patch('courses/{course}', [CourseController::class, 'patch'])->name('webapi.course.patch');
         Route::get('courses', [CourseController::class, 'search'])->name('webapi.course.search');
 
@@ -49,5 +50,8 @@ Route::middleware('auth')->group(
         Route::post('faq/{faqId}/restore', [FrequentlyAskedQuestionController::class, 'restore'])->name('webapi.faq.restore');
         Route::post('faq/{faq}/down', [FrequentlyAskedQuestionController::class, 'moveDown'])->name('webapi.faq.down');
         Route::post('faq/{faq}/up', [FrequentlyAskedQuestionController::class, 'moveUp'])->name('webapi.faq.up');
+
+        Route::post('courseCourseGroupYears', [WebApiCourseCourseGroupYearController::class, 'post'])->name('webapi.courseCourseGroupYears.post');
+        Route::delete('courseCourseGroupYears/{courseCourseGroupYear}', [WebApiCourseCourseGroupYearController::class, 'delete'])->name('webapi.courseCourseGroupYears.delete');
     }
 );

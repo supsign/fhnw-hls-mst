@@ -42,6 +42,7 @@ class CompletionCreditImport extends Command
     {
         if (!Storage::exists($this->option('filename'))) {
             echo 'file "'.$this->option('filename').'" not found!'.PHP_EOL;
+
             return Command::INVALID;
         }
 

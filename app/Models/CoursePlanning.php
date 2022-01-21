@@ -8,6 +8,7 @@ namespace App\Models;
 class CoursePlanning extends BaseModel
 {
     protected $table = 'course_planning';
+    protected $touches = ['planning'];
 
     public function course()
     {

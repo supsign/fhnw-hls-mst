@@ -1,16 +1,36 @@
 <template>
     <div v-if="course" class="flex border-t p-1 text-left text-xs lg:text-sm" @click="openModal">
-        <div class="w-8">
+        <div class="w-8 flex-none my-auto">
             <slot name="icon"></slot>
         </div>
-        <div class="my-auto break-words flex-grow"
-             :class="{ 'cursor-pointer': courseYear }">
-            {{ course.name }}
+        <div :class="{ 'cursor-pointer': courseYear }"
+             class="my-auto hyphens-auto flex-grow overflow-auto flex flex-row my-auto">
+            <div class="w-8 my-auto flex-shrink-0">
+                <div v-if="courseIsRecommended">
+                    <i aria-hidden="true" class="far fa-calendar-exclamation"></i>
+                </div>
+            </div>
+            <div class="w-8 my-auto flex-shrink-0">
+                <div v-if="courseIsAssessment">
+                    <i aria-hidden="true" class="fas fa-sitemap"></i>
+                </div>
+                <div v-else-if="courseIsSpecialization">
+                    <i aria-hidden="true" class="fas fa-sparkles"></i>
+                </div>
+                <div v-else-if="courseIsCrossQualification">
+                    <i aria-hidden="true" class="fas fa-sparkles"></i>
+                </div>
+            </div>
+
+            <div class="flex-shrink flex-grow">
+                {{ course.name }}
+            </div>
+
         </div>
         <vue-plan-course
             v-if="!courseIsSuccessfullyCompleted"
             :course="course"
-            :planningId="planningId"
+            :planningId="planning.id"
             :planningIsLocked="planningIsLocked"
             :semesters="semesters"
             class="flex-none my-auto"
@@ -38,6 +58,7 @@ import VueCourseDetailModal from "./vueCourseDetailModal.vue";
 import {ISkill} from "../../interfaces/skill.interface";
 import {ICourseSkill} from "../../interfaces/courseSkill.interface";
 import {ICoursePlanning} from "../../store/coursePlanning/coursePlanning.interface";
+import {IPlanning} from "../../interfaces/planning.interface";
 
 @Component({
     components: {
@@ -53,8 +74,8 @@ export default class VueCourseDetail extends BaseComponent {
     @Prop({type: Object})
     courseYear: ICourse
 
-    @Prop({type: Number})
-    planningId: number
+    @Prop({type: Object})
+    planning: IPlanning
 
     @Prop({type: Array})
     skills: ISkill[]
@@ -64,16 +85,61 @@ export default class VueCourseDetail extends BaseComponent {
 
     @Prop({type: Boolean})
     courseIsSuccessfullyCompleted: boolean;
+
     public detailModalIsOpen = false;
 
+    public get courseIsRecommended(): boolean {
+        if (!this.planning || !this.planning.course_recommendations) {
+            return false;
+        }
+
+        const courseRecommendation = this.planning.course_recommendations.find(courseRecommendation => {
+            return courseRecommendation.course_id === this.courseId
+        })
+        return !!courseRecommendation
+    }
+
+    public get courseIsSpecialization(): boolean {
+        if (!this.planning || !this.planning.course_specialization_years) {
+            return false;
+        }
+
+        const courseSpecialization = this.planning.course_specialization_years.find(courseSpecialization => {
+            return courseSpecialization.course_id === this.courseId
+        })
+        return !!courseSpecialization
+    }
+
+    public get courseIsCrossQualification(): boolean {
+        if (!this.planning || !this.planning.course_cross_qualification_years) {
+            return false;
+        }
+
+        const courseCrossQualificationYear = this.planning.course_cross_qualification_years.find(courseCrossQualificationYear => {
+            return courseCrossQualificationYear.course_id === this.courseId
+        })
+        return !!courseCrossQualificationYear
+    }
+
+    public get courseIsAssessment(): boolean {
+        if (!this.planning || !this.planning.assessment_courses) {
+            return false;
+        }
+
+        const courseAssessment = this.planning.assessment_courses.find(courseAssessment => {
+            return courseAssessment.course_id === this.courseId
+        })
+        return !!courseAssessment
+    }
+
     public get coursePlanning(): ICoursePlanning | null {
-        if (!this.planningId) {
+        if (!this.planning.id) {
             return;
         }
         if (!this.course.id) {
             return;
         }
-        return this.models.coursePlanning.getCoursePlanning(this.planningId, this.course.id);
+        return this.models.coursePlanning.getCoursePlanning(this.planning.id, this.course.id);
     }
 
     public get requiredSkills(): ICourseSkill[] {
@@ -116,7 +182,6 @@ export default class VueCourseDetail extends BaseComponent {
             }
         );
     }
-
 
     public get missingCourses() {
         return this.models.course.getByAcquisitionSkillIds(this.notPlannedNotCompletedCourseSkillIds);

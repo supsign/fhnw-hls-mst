@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AdminCrossQualificationController;
 use App\Http\Controllers\Admin\AdminMentorController;
 use App\Http\Controllers\Admin\AdminRolesController;
 use App\Http\Controllers\Auth\LoginController;
@@ -61,6 +62,9 @@ Route::middleware(['web', 'auth'])->group(
         // Standings
         Route::get('standing', [StandingController::class, 'index'])->name('standing.index');
 
+        //  FAQ
+        Route::get('faq', [HomeController::class, 'faq'])->name('faq');
+
         // Route::get('user', [UserController::class, 'index'])->name('user.index');
     }
 );
@@ -69,11 +73,14 @@ Route::middleware(['web', 'auth', 'backend'])->group(
     function () {
         Route::get('admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
         Route::get('admin/courses', [AdminController::class, 'courses'])->name('admin.course.list');
+        Route::get('admin/faq', [AdminController::class, 'faq'])->name('admin.faq');
         Route::get('admin/userManagement/assignRoleToUser', [AdminRolesController::class, 'assignRoles'])->name('admin.userManagement.assign');
         Route::post('admin/userManagement/assignRoleToUser', [AdminRolesController::class, 'assignRoleToUser'])->name('admin.userManagement.assign.post');
         Route::post('admin/userManagement/removeRoleFromUser', [AdminRolesController::class, 'removeRoleFromUser'])->name('admin.userManagement.remove.post');
 
         Route::get('admin/mentors', [AdminMentorController::class, 'mentors'])->name('admin.mentors');
         Route::get('admin/mentors/{mentor}', [AdminMentorController::class, 'showOne'])->name('admin.mentor');
+
+        Route::get('admin/crossQualificationYears/{crossQualificationYear}', [AdminCrossQualificationController::class, 'showCrossQualificationYaer'])->name('admin.crossQualificationYear');
     }
 );

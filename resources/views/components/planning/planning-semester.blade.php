@@ -2,10 +2,10 @@
     <div class="mb-4">
         <vue-planning-semester
             :semester="{{ $semester }}"
-            :planning-id="{{ $planning->id }}"
+            :planning="{{$planning}}"
             :completions="{{ $planning->student->completions }}"
             @if(!$mentorStudent && $planning->is_locked)
-                planning-is-locked
+            planning-is-locked
             @endif
         ></vue-planning-semester>
     </div>

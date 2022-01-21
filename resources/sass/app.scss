@@ -5,6 +5,9 @@
 .button-primary {
     @apply transition transform duration-300 ease-in-out text-white py-1 px-4 rounded-md shadow-sm w-full bg-blue-700 hover:bg-blue-800 hover:shadow-xl;
 }
+.button-error {
+    @apply transition transform duration-300 ease-in-out text-white py-1 px-4 rounded-md shadow-sm w-full bg-red-600 hover:bg-red-700 hover:shadow-xl;
+}
 
 .input {
     @apply relative;
@@ -74,6 +77,29 @@
 
     &__error {
         @apply whitespace-nowrap block w-full pr-2 text-right font-light text-gray-800;
+    }
+}
+
+/* tinyMCE */
+.tinymce {
+    > h6 {
+        @apply mb-2 font-bold text-xl;
+    }
+
+    > p {
+        @apply mb-4;
+    }
+
+    ul {
+        @apply ml-10 mb-4 list-disc;
+    }
+
+    ol {
+        @apply ml-10 mb-4 list-decimal;
+    }
+
+    a {
+        @apply mb-4 text-blue-600 hover:text-blue-800;
     }
 }
 

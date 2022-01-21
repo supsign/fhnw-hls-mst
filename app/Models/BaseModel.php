@@ -16,6 +16,7 @@ class BaseModel extends Model
     use HasFactory;
 
     protected $guarded = [];
+    protected $hidden = ['janis_id'];
 
     public function newCollection(array $models = [])
     {

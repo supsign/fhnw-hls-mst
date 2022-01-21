@@ -1,12 +1,7 @@
 <template>
     <div v-if="allCoursePlanningsInSemesterNotSuccessfullyCompleted.length">
-        <div class="p-2 bg-white rounded shadow mb-4">
-            <div
-                class="flex flex-row space-x-3 p-1" @click="toggleCollapse">
-                <div class="my-auto">
-                    <i v-if="isCollapsed" aria-hidden="true" class="fas fa-arrow-right"></i>
-                    <i v-if="!isCollapsed" aria-hidden="true" class="fas fa-arrow-down"></i>
-                </div>
+        <vue-plan-wrapper>
+            <template v-slot:header>
                 <div class="flex justify-between w-full">
                     <div class="sm:text-sm lg:text-base flex-grow">{{ semester.is_hs ? 'HS' : 'FS' }} {{
                             semester.year
@@ -17,25 +12,21 @@
                         }}
                     </div>
                 </div>
-            </div>
+            </template>
+            <vue-course-detail v-for="coursePlanning in allCoursePlanningsInSemesterNotSuccessfullyCompleted"
+                               :key="coursePlanning.id"
+                               :courseId="coursePlanning.course_id"
+                               :planning="planning"
+                               :planningIsLocked="planningIsLocked"
+            >
+                <template v-slot:icon>
+                    <vue-completion :icon="completion(getCourse(coursePlanning))"
+                    >
 
-            <div v-if="!isCollapsed">
-                <vue-course-detail v-for="coursePlanning in allCoursePlanningsInSemesterNotSuccessfullyCompleted"
-                                   :key="coursePlanning.id"
-                                   :courseId="coursePlanning.course_id"
-                                   :planningId="planningId"
-                                   :planningIsLocked="planningIsLocked"
-                >
-
-                    <template v-slot:icon>
-                        <vue-completion :icon="completion(getCourse(coursePlanning))"
-                        >
-
-                        </vue-completion>
-                    </template>
-                </vue-course-detail>
-            </div>
-        </div>
+                    </vue-completion>
+                </template>
+            </vue-course-detail>
+        </vue-plan-wrapper>
     </div>
 </template>
 
@@ -48,9 +39,12 @@ import {ICoursePlanning} from "../../store/coursePlanning/coursePlanning.interfa
 import {ICompletion} from "../../interfaces/completion.interface";
 import {ICourse} from "../../interfaces/course.interface";
 import VueCompletion from "./vueCompletion.vue";
+import {IPlanning} from "../../interfaces/planning.interface";
+import VuePlanWrapper from "./vuePlanWrapper.vue";
 
 @Component({
     components: {
+        VuePlanWrapper,
         VueCompletion,
         VueCourseDetail
     }
@@ -59,8 +53,8 @@ export default class VuePlanningSemester extends BaseComponent {
     @Prop({type: Object})
     public semester: ISemester
 
-    @Prop({type: Number})
-    public planningId: number
+    @Prop({type: Object})
+    public planning: IPlanning
 
     @Prop({type: Array})
     public completions: ICompletion[]
@@ -68,16 +62,13 @@ export default class VuePlanningSemester extends BaseComponent {
     @Prop({type: Boolean, default: false})
     planningIsLocked: boolean
 
-    public isCollapsed = true;
-
-    public break = 1024;
 
     public icon = 0;
 
     public course: ICourse;
 
     public get coursePlannings(): ICoursePlanning[] {
-        return this.models.coursePlanning.byPlanningId(this.planningId);
+        return this.models.coursePlanning.byPlanningId(this.planning.id);
     }
 
     public get coursePlanningsInStudyField() {
@@ -98,28 +89,6 @@ export default class VuePlanningSemester extends BaseComponent {
         return new Date().getFullYear();
     }
 
-    public toggleCollapse() {
-        this.isCollapsed = !this.isCollapsed;
-    }
-
-    public expand() {
-        this.isCollapsed = false;
-    }
-
-    public handlerResize() {
-        if (window.innerWidth > this.break) {
-            this.expand();
-        }
-    }
-
-    public mounted() {
-        window.addEventListener('resize', this.handlerResize);
-        this.handlerResize()
-    }
-
-    public destroyed() {
-        window.removeEventListener('resize', this.handlerResize);
-    }
 
     public coursesIsCompletedSuccessfully(course: ICourse): boolean {
         return !!this.completions.find((completion) => {
@@ -134,8 +103,8 @@ export default class VuePlanningSemester extends BaseComponent {
     public getAllPointsInSemester(semester: ISemester) {
         let credits = 0;
 
-        for(const coursePlanning of this.coursePlanningsInStudyField) {
-            if(coursePlanning.semester_id === semester.id) {
+        for (const coursePlanning of this.coursePlanningsInStudyField) {
+            if (coursePlanning.semester_id === semester.id) {
                 const course = this.getCourse(coursePlanning);
                 credits += course.credits;
             }

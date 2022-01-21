@@ -1,0 +1,22 @@
+<vue-plan-wrapper>
+    <template v-slot:header>
+        <div class="flex flex-row">
+            <div class="my-auto flex-grow hyphens-auto text-sm">
+                Weitere abgeschlossene Module
+            </div>
+        </div>
+    </template>
+    @foreach($completions as $completion)
+        <div class="flex border-t p-1 text-left text-xs lg:text-sm">
+            <div class="w-8 flex-none">
+                <div class="my-auto text-lg flex-none">
+                    <i class="far fa-check-circle" aria-hidden="true"></i>
+                </div>
+            </div>
+            <div
+                class="my-auto hyphens-auto flex-grow overflow-auto">
+                {{$completion->courseYear->course->name}}
+            </div>
+        </div>
+    @endforeach
+</vue-plan-wrapper>

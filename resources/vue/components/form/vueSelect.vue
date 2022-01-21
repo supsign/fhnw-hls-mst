@@ -8,10 +8,14 @@
         </div>
 
         <v-select
+            :class="{
+                'is-invalid': showError
+            }"
             :clearable="clearable"
             :disabled="disabled"
             :filter="getFilter()"
-            :label="optionKey"
+            :filterable="filterable"
+            :label="getOptionKey()"
             :options="options"
             :searchable="searchable"
             :selectable="selectable"
@@ -128,6 +132,13 @@ export default class VueSelect extends BaseComponent {
         default: false
     })
     required: boolean;
+
+    @Prop({
+        type: Boolean,
+        default: true
+    })
+    filterable: boolean;
+
     @Prop({
         type: Function
     })
@@ -219,6 +230,18 @@ export default class VueSelect extends BaseComponent {
 
             return fuse.search(search).map(({item}): { item: any } => item);
         };
+    }
+
+    public getOptionKey() {
+        if (this.options && this.options[0]) {
+            if (typeof this.options[0] === 'object') {
+                return this.optionKey;
+            }
+
+            return 'label';
+        }
+
+        return this.optionKey;
     }
 
     private validate() {

@@ -28,13 +28,15 @@ class SkillImport extends BaseCsvImport
             'definition' => $this->line['lernziel'],
         ]);
 
-        CourseSkill::create([
-            'skill_id' => $skill->id,
-            'course_id' => $this->courseService->getByNumber($this->line['laufnummer'])->id,
-            'from_semester_id' => Semester::whereNull('previous_semester_id')->first()->id,
-            'goal_number' => $this->line['nummer'],
-            'is_acquisition' => true,
-        ]);
+        foreach ($this->courseService->getByNumberUnformated($this->line['laufnummer']) AS $course) {
+            CourseSkill::create([
+                'skill_id' => $skill->id,
+                'course_id' => $course->id,
+                'from_semester_id' => Semester::whereNull('previous_semester_id')->first()->id,
+                'goal_number' => $this->line['nummer'],
+                'is_acquisition' => true,
+            ]);
+        }
 
         return $this;
     }

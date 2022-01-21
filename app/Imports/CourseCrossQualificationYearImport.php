@@ -32,21 +32,17 @@ class CourseCrossQualificationYearImport extends BaseCsvImport
             return $this;
         }
 
-        $course = $this->courseService->getByNumberUnformated($this->line['laufnummer']);
+        foreach ($this->courseService->getByNumberUnformated($this->line['laufnummer']) AS $course) {
+            // if ($crossQualification->study_field_id === 13 && $this->line['pflicht'] === 'f') {
+            //     continue;
+            // }
 
-        if (!$course) {
-            return $this;
-        }
-
-        // if ($crossQualification->study_field_id === 13 && $this->line['pflicht'] === 'f') {
-        //     return $this;
-        // }
-
-        foreach ($crossQualification->crossQualificationYears AS $crossQualificationYear) {
-            CourseCrossQualificationYear::updateOrCreate([
-                'course_id' => $course->id,
-                'cross_qualification_year_id' => $crossQualificationYear->id,
-            ]);
+            foreach ($crossQualification->crossQualificationYears AS $crossQualificationYear) {
+                CourseCrossQualificationYear::updateOrCreate([
+                    'course_id' => $course->id,
+                    'cross_qualification_year_id' => $crossQualificationYear->id,
+                ]);
+            }
         }
 
         return $this;

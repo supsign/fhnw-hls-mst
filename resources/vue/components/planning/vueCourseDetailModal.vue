@@ -18,7 +18,7 @@
                     </div>
 
                     <div v-if="!courseIsSuccessfullyCompleted">
-                        <div class="font-bold">Fehlende Kurse</div>
+                        <div class="font-bold">Module für fehlende Kompetenzen</div>
                         <div v-if="!isPlaned"> Bitte planen Sie zuerst das Modul ein.</div>
                         <div v-else>
                             <div v-if="missingCourses.length === 0">Alle Eintrittskompetenzen erlangt oder eingeplant

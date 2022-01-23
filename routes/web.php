@@ -73,7 +73,7 @@ Route::middleware(['web', 'auth'])->group(
 );
 
 Route::middleware(['web', 'auth', 'backend'])->group(
-    callback: function () {
+    function () {
         Route::get('admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
         Route::get('admin/courses', [AdminController::class, 'courses'])->name('admin.course.list');
         Route::get('admin/faq', [AdminController::class, 'faq'])->name('admin.faq');

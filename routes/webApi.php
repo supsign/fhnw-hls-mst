@@ -21,7 +21,7 @@ use App\Http\Controllers\WebApi\WebApiSpecializationYearController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(
-    callback: function () {
+    function () {
         Route::patch('courses/{course}', [CourseController::class, 'patch'])->name('webapi.course.patch');
         Route::get('courses', [CourseController::class, 'search'])->name('webapi.course.search');
 
@@ -44,8 +44,6 @@ Route::middleware('auth')->group(
 
         Route::post('mentorStudyFields', [WebApiMentorStudyFieldController::class, 'postMentorStudyField'])->name('webapi.mentorStudyField.post');
         Route::delete('mentorStudyFields/{mentorStudyField}', [WebApiMentorStudyFieldController::class, 'deleteMentorStudyField'])->name('webapi.mentorStudyField.delete');
-
-        Route::patch('crossqualificationyears/{crossQualificationYear}', [WebApiCrossQualificationYearController::class, 'patch'])->name('webapi.crossQualificationYear.patch');
 
         Route::get('faq', [FrequentlyAskedQuestionController::class, 'getAllWithTrashed'])->name('webapi.faq.getAllWithTrashed');
         Route::post('faq', [FrequentlyAskedQuestionController::class, 'create'])->name('webapi.faq.create');

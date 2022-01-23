@@ -42,6 +42,7 @@ class RecommendationService extends BaseModelService
     {
         $recommendation->name = $name;
         $recommendation->save();
+
         return $recommendation;
     }
 }

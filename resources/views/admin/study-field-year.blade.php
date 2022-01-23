@@ -3,13 +3,21 @@
         Studienrichtung - Start
     </x-slot>
 
-    <vue-store-fill :model="'specializationYear'" :entities="{{$studyFieldYear->specializationYears}}"></vue-store-fill>
     <vue-store-fill :model="'specialization'"
                     :entities="{{$studyFieldYear->studyField->specializations}}"></vue-store-fill>
-    <vue-store-fill :model="'assessment'"
-                    :entities="{{\App\Models\Assessment::all()}}"></vue-store-fill>
+    <vue-store-fill :model="'specializationYear'" :entities="{{$studyFieldYear->specializationYears}}"></vue-store-fill>
     <vue-store-fill :model="'courseSpecializationYear'"
                     :entities="{{$studyFieldYear->courseSpecializationYears}}"></vue-store-fill>
+    <vue-store-fill :model="'crossQualification'"
+                    :entities="{{$studyFieldYear->studyField->crossQualifications}}"></vue-store-fill>
+    <vue-store-fill :model="'crossQualificationYear'"
+                    :entities="{{$studyFieldYear->crossQualificationYears}}"></vue-store-fill>
+    <vue-store-fill :model="'courseCrossQualificationYear'"
+                    :entities="{{$studyFieldYear->courseCrossQualificationYears}}"></vue-store-fill>
+    <vue-store-fill :model="'assessment'"
+                    :entities="{{\App\Models\Assessment::all()}}"></vue-store-fill>
+    <vue-store-fill :model="'recommendation'"
+                    :entities="{{\App\Models\Recommendation::all()}}"></vue-store-fill>
     <vue-store-fill :model="'course'"
                     :entities="{{$studyFieldYear->courses}}"></vue-store-fill>
 
@@ -40,16 +48,9 @@
             :study-field-year="{{$studyFieldYear}}"
         ></vue-admin-specialization-years>
 
-        <x-app.card>
-            <x-slot name="title">
-                Querschnittqualifikationen
-            </x-slot>
+        <vue-admin-cross-qualification-years
+            :study-field-year="{{$studyFieldYear}}"
+        ></vue-admin-cross-qualification-years>
 
-            @foreach($studyFieldYear->crossQualificationYears as $crossQualificationYear)
-                <div>{{$crossQualificationYear->crossQualification->name}}</div>
-            @endforeach
-
-
-        </x-app.card>
     </div>
 </x-layout.admin>

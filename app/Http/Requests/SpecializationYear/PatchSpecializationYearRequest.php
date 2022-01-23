@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\CrossQualificationYear;
+namespace App\Http\Requests\SpecializationYear;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PatchCrossQualificationYearRequest extends FormRequest
+class PatchSpecializationYearRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

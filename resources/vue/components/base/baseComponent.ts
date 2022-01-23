@@ -13,6 +13,10 @@ import {CourseSpecializationYearModel} from "../../store/courseSpecializationYea
 import {CourseGroupYearModel} from "../../store/courseGroupYear/courseGroupYear.model";
 import {CourseCourseGroupYearModel} from "../../store/courseCourseGroupYear/courseCourseGroupYear.model";
 import {CourseGroupModel} from "../../store/courseGroup/courseGroup.model";
+import {RecommendationModel} from "../../store/recommendation/recommendation.model";
+import {CrossQualificationYearModel} from "../../store/crossQualificationYear/crossQualificationYear.model";
+import {CourseCrossQualificationYearModel} from "../../store/courseCrossQualificationYear/courseCrossQualificationYear.model";
+import {CrossQualificationModel} from "../../store/crossQualification/crossQualification.model";
 
 // Define a super class component
 @Component
@@ -31,6 +35,10 @@ export default class BaseComponent extends Vue {
         courseGroupYear: new CourseGroupYearModel(this.$store),
         courseCourseGroupYear: new CourseCourseGroupYearModel(this.$store),
         courseGroup: new CourseGroupModel(this.$store),
+        recommendation: new RecommendationModel(this.$store),
+        crossQualificationYear: new CrossQualificationYearModel(this.$store),
+        courseCrossQualificationYear: new CourseCrossQualificationYearModel(this.$store),
+        crossQualification: new CrossQualificationModel(this.$store)
     }
 
 }

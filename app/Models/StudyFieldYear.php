@@ -34,7 +34,12 @@ class StudyFieldYear extends BaseModel
 
     public function getCourseSpecializationYearsAttribute()
     {
-        $blub = $this->specializationYears()->with('courseSpecializationYears')->get()->pluck('courseSpecializationYears')->flatten(1)->unique();
+        return $this->specializationYears()->with('courseSpecializationYears')->get()->pluck('courseSpecializationYears')->flatten(1)->unique();
+    }
+
+    public function getCourseCrossQualificationYearsAttribute()
+    {
+        $blub = $this->crossQualificationYears()->with('courseCrossQualificationYears')->get()->pluck('courseCrossQualificationYears')->flatten(1)->unique();
 
         return $blub;
     }

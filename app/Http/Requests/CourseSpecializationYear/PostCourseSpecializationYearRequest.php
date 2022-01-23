@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\CrossQualificationYear;
+namespace App\Http\Requests\CourseSpecializationYear;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PatchCrossQualificationYearRequest extends FormRequest
+class PostCourseSpecializationYearRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,8 @@ class PatchCrossQualificationYearRequest extends FormRequest
     public function rules()
     {
         return [
-            'amount_to_pass' => 'int|nullable',
-            'assessment_id' => 'int|nullable',
-            'recommendation_id' => 'int|nullable'
+            'specialization_year_id' => 'int|required',
+            'course_id' => 'int|required',
         ];
     }
 }

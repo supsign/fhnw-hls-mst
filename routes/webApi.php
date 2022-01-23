@@ -7,10 +7,13 @@ use App\Http\Controllers\WebApi\StudentController;
 use App\Http\Controllers\WebApi\UserController;
 use App\Http\Controllers\WebApi\WebApiCourseCourseGroupYearController;
 use App\Http\Controllers\WebApi\WebApiCourseCrossQualificationYearController;
+use App\Http\Controllers\WebApi\WebApiCourseGroupYearController;
+use App\Http\Controllers\WebApi\WebApiCourseSpecializationYearController;
 use App\Http\Controllers\WebApi\WebApiCrossQualificationYearController;
 use App\Http\Controllers\WebApi\WebApiMentorController;
 use App\Http\Controllers\WebApi\WebApiMentorStudyFieldController;
 use App\Http\Controllers\WebApi\WebApiPlanningController;
+use App\Http\Controllers\WebApi\WebApiSpecializationYearController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(
@@ -40,8 +43,6 @@ Route::middleware('auth')->group(
 
         Route::patch('crossqualificationyears/{crossQualificationYear}', [WebApiCrossQualificationYearController::class, 'patch'])->name('webapi.crossQualificationYear.patch');
 
-        Route::post('coursecrossqualificationyears', [WebApiCourseCrossQualificationYearController::class, 'post'])->name('webapi.courseCrossQualificationYear.post');
-        Route::delete('coursecrossqualificationyears/{courseCrossQualificationYear}', [WebApiCourseCrossQualificationYearController::class, 'delete'])->name('webapi.courseCrossQualificationYear.delete');
 
         Route::get('faq', [FrequentlyAskedQuestionController::class, 'getAllWithTrashed'])->name('webapi.faq.getAllWithTrashed');
         Route::post('faq', [FrequentlyAskedQuestionController::class, 'create'])->name('webapi.faq.create');
@@ -50,6 +51,21 @@ Route::middleware('auth')->group(
         Route::post('faq/{faqId}/restore', [FrequentlyAskedQuestionController::class, 'restore'])->name('webapi.faq.restore');
         Route::post('faq/{faq}/down', [FrequentlyAskedQuestionController::class, 'moveDown'])->name('webapi.faq.down');
         Route::post('faq/{faq}/up', [FrequentlyAskedQuestionController::class, 'moveUp'])->name('webapi.faq.up');
+
+        Route::get('courseGroupYears/{courseGroupYear}', [WebApiCourseGroupYearController::class, 'get'])->name('webapi.courseGroupYears.get');
+        Route::patch('courseGroupYears/{courseGroupYear}', [WebApiCourseGroupYearController::class, 'patch'])->name('webapi.courseGroupYears.get');
+
+        Route::get('specializationYears/{specializationYear}', [WebApiSpecializationYearController::class, 'get'])->name('webapi.courseGroupYears.get');
+        Route::patch('specializationYears/{specializationYear}', [WebApiSpecializationYearController::class, 'patch'])->name('webapi.courseGroupYears.get');
+
+        Route::get('crossQualificationYears/{crossQualificationYear}', [WebApiCrossQualificationYearController::class, 'get'])->name('webapi.courseGroupYears.get');
+        Route::patch('crossQualificationYears/{crossQualificationYear}', [WebApiCrossQualificationYearController::class, 'patch'])->name('webapi.courseGroupYears.get');
+
+        Route::post('courseSpecializationYears', [WebApiCourseSpecializationYearController::class, 'post'])->name('webapi.courseSpecializationYears.post');
+        Route::delete('courseSpecializationYears/{courseSpecializationYear}', [WebApiCourseSpecializationYearController::class, 'delete'])->name('webapi.courseSpecializationYears.delete');
+
+        Route::post('courseCrossQualificationYears', [WebApiCourseCrossQualificationYearController::class, 'post'])->name('webapi.courseCrossQualificationYear.post');
+        Route::delete('courseCrossQualificationYears/{courseCrossQualificationYear}', [WebApiCourseCrossQualificationYearController::class, 'delete'])->name('webapi.courseCrossQualificationYear.delete');
 
         Route::post('courseCourseGroupYears', [WebApiCourseCourseGroupYearController::class, 'post'])->name('webapi.courseCourseGroupYears.post');
         Route::delete('courseCourseGroupYears/{courseCourseGroupYear}', [WebApiCourseCourseGroupYearController::class, 'delete'])->name('webapi.courseCourseGroupYears.delete');

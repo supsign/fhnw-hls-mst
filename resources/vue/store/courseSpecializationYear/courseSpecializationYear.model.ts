@@ -2,7 +2,7 @@ import {Store} from "vuex";
 import {EntityModel} from "../base/baseEntity.model";
 import {IBaseState} from "../base/baseState.interface";
 import {CourseSpecializationYearRequestModel} from "./courseSpecializationYearRequestModel";
-import {ICourseSpecializationYear} from "./courseSpecializationYear.interface";
+import {ICourseSpecializationYear} from "../../interfaces/courseSpecializationYear.interface";
 
 
 export class CourseSpecializationYearModel extends EntityModel<IBaseState<ICourseSpecializationYear>,

@@ -16,17 +16,15 @@ class WebApiAssessmentCourseController extends Controller
 {
     public function __construct(
         protected PermissionAndRoleService $permissionAndRoleService,
-    )
-    {
+    ) {
     }
 
     public function post(
         PostAssessmentCourseRequest $postAssessmentCourseRequest,
-        CourseService               $courseService,
-        AssessmentService           $assessmentService,
-        AssessmentCourseService     $assessmentCourseService
-    ): AssessmentCourse
-    {
+        CourseService $courseService,
+        AssessmentService $assessmentService,
+        AssessmentCourseService $assessmentCourseService
+    ): AssessmentCourse {
         $this->permissionAndRoleService->canManageBackendOrAbort();
 
         /* @var $course Course */

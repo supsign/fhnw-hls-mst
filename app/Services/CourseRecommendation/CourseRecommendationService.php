@@ -19,7 +19,7 @@ class CourseRecommendationService extends BaseModelService
         $courseRecommendation = $this->model::firstOrCreate([
             'course_id' => $course->id,
             'recommendation_id' => $recommendation->id,
-            'planned_semester' => $semester
+            'planned_semester' => $semester,
         ]);
 
         $course->refresh();

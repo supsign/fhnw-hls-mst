@@ -29,7 +29,7 @@ class AdminStudyFieldController extends Controller
         return view('admin.study-fields', [
             'studyFields' => $studyFields,
             'assessments' => $assessments,
-            'recommendations' => $recommendations
+            'recommendations' => $recommendations,
         ]);
     }
 }

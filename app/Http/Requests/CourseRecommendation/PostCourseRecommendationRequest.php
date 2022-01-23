@@ -26,7 +26,7 @@ class PostCourseRecommendationRequest extends FormRequest
         return [
             'recommendation_id' => 'int|required',
             'course_id' => 'int|required',
-            'planned_semester' => 'int|required'
+            'planned_semester' => 'int|required',
         ];
     }
 }

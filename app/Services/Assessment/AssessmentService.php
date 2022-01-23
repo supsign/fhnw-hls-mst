@@ -12,7 +12,7 @@ use App\Services\Completion\CourseCompletionService;
 class AssessmentService extends BaseModelService
 {
     use UpdateOrCreateTrait {
-        updateOrCreate AS updateOrCreateTrait;
+        updateOrCreate as updateOrCreateTrait;
     }
 
     public function __construct(protected Assessment $model, protected CourseCompletionService $courseCompletionService)
@@ -50,12 +50,19 @@ class AssessmentService extends BaseModelService
     {
         $amount = 0;
 
-        foreach ($assessment->courses AS $course) {
+        foreach ($assessment->courses as $course) {
             if ($this->courseCompletionService->courseIsSuccessfullyCompleted($course, $student)) {
                 $amount++;
             }
         }
 
         return $amount;
+    }
+
+    public function setAmountToPass(Assessment $assessment, int $amount_to_pass = null): Assessment
+    {
+        $assessment->amount_to_pass = $amount_to_pass;
+        $assessment->save();
+        return $assessment;
     }
 }

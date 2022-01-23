@@ -21,20 +21,31 @@
             </div>
         </template>
         <div class="gap-2">
-            <div class="text-sm space-y-2">
-                <vue-admin-course-pivot v-for="coursePivot in assessmentCourses"
-                                        :course-pivot="coursePivot"
-                                        :key="coursePivot.id"
-                                        @remove="remove"
+            <div>
+                <div class="text-xs text-gray-600">Anzahl Kurse um zu bestehen</div>
+                <div class="ml-2 text-sm">
+                    <vue-store-input :edit-mode="editMode" :entity="assessment"
+                                     :model="models.assessment" name="amount_to_pass"/>
+                </div>
+            </div>
+            <div>
+                <div class="text-xs text-gray-600">Module</div>
+
+                <div class="text-sm space-y-2">
+                    <vue-admin-course-pivot v-for="coursePivot in assessmentCourses"
+                                            :course-pivot="coursePivot"
+                                            :key="coursePivot.id"
+                                            @remove="remove"
+                    />
+                </div>
+                <vue-admin-backend-course-select
+                    v-model="selectedCourse"
+                    :disabled="!!selectedCourse"
+                    @input="addCourse"
+                    :course-ids-in-use="courseIdsInUse"
+                    class="mt-4"
                 />
             </div>
-            <vue-admin-backend-course-select
-                v-model="selectedCourse"
-                :disabled="!!selectedCourse"
-                @input="addCourse"
-                :course-ids-in-use="courseIdsInUse"
-                class="mt-4"
-            />
         </div>
     </vue-card>
 </template>
@@ -47,12 +58,14 @@ import VueAdminCoursePivot from "../vueAdminCoursePivot.vue";
 import {IAssessmentCourse} from "../../../interfaces/assessmentCourse.interface";
 import {ICourse} from "../../../interfaces/course.interface";
 import VueAdminBackendCourseSelect from "../vueAdminBackendCourseSelect.vue";
+import VueStoreInput from "../../form/storeInput.vue";
 
 @Component({
     components: {
         VueCard,
         VueAdminCoursePivot,
-        VueAdminBackendCourseSelect
+        VueAdminBackendCourseSelect,
+        VueStoreInput
     }
 })
 export default class VueAdminAssessment extends BaseComponent {
@@ -76,10 +89,12 @@ export default class VueAdminAssessment extends BaseComponent {
     }
 
     public save() {
+        this.models.assessment.save(this.assessmentId);
         this.editMode = false;
     }
 
     public cancel() {
+        this.models.assessment.reset(this.assessmentId);
         this.editMode = false;
     }
 

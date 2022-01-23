@@ -5,6 +5,7 @@ use App\Http\Controllers\WebApi\CoursePlanningController;
 use App\Http\Controllers\WebApi\FrequentlyAskedQuestionController;
 use App\Http\Controllers\WebApi\StudentController;
 use App\Http\Controllers\WebApi\UserController;
+use App\Http\Controllers\WebApi\WebApiAssessmentController;
 use App\Http\Controllers\WebApi\WebApiAssessmentCourseController;
 use App\Http\Controllers\WebApi\WebApiCourseCourseGroupYearController;
 use App\Http\Controllers\WebApi\WebApiCourseCrossQualificationYearController;
@@ -53,13 +54,16 @@ Route::middleware('auth')->group(
         Route::post('faq/{faq}/up', [FrequentlyAskedQuestionController::class, 'moveUp'])->name('webapi.faq.up');
 
         Route::get('courseGroupYears/{courseGroupYear}', [WebApiCourseGroupYearController::class, 'get'])->name('webapi.courseGroupYears.get');
-        Route::patch('courseGroupYears/{courseGroupYear}', [WebApiCourseGroupYearController::class, 'patch'])->name('webapi.courseGroupYears.get');
+        Route::patch('courseGroupYears/{courseGroupYear}', [WebApiCourseGroupYearController::class, 'patch'])->name('webapi.courseGroupYears.patch');
 
         Route::get('specializationYears/{specializationYear}', [WebApiSpecializationYearController::class, 'get'])->name('webapi.courseGroupYears.get');
-        Route::patch('specializationYears/{specializationYear}', [WebApiSpecializationYearController::class, 'patch'])->name('webapi.courseGroupYears.get');
+        Route::patch('specializationYears/{specializationYear}', [WebApiSpecializationYearController::class, 'patch'])->name('webapi.courseGroupYears.patch');
 
         Route::get('crossQualificationYears/{crossQualificationYear}', [WebApiCrossQualificationYearController::class, 'get'])->name('webapi.courseGroupYears.get');
-        Route::patch('crossQualificationYears/{crossQualificationYear}', [WebApiCrossQualificationYearController::class, 'patch'])->name('webapi.courseGroupYears.get');
+        Route::patch('crossQualificationYears/{crossQualificationYear}', [WebApiCrossQualificationYearController::class, 'patch'])->name('webapi.courseGroupYears.patch');
+
+        Route::get('assessments/{assessment}', [WebApiAssessmentController::class, 'get'])->name('webapi.assessments.get');
+        Route::patch('assessments/{assessment}', [WebApiAssessmentController::class, 'patch'])->name('webapi.assessments.patch');
 
         Route::post('assessmentCourses', [WebApiAssessmentCourseController::class, 'post'])->name('webapi.assessmentCourses.post');
         Route::delete('assessmentCourses/{assessmentCourse}', [WebApiAssessmentCourseController::class, 'delete'])->name('webapi.assessmentCourses.delete');

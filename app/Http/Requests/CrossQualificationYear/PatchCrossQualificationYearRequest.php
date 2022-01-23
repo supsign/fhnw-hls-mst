@@ -26,7 +26,7 @@ class PatchCrossQualificationYearRequest extends FormRequest
         return [
             'amount_to_pass' => 'int|nullable',
             'assessment_id' => 'int|nullable',
-            'recommendation_id' => 'int|nullable'
+            'recommendation_id' => 'int|nullable',
         ];
     }
 }

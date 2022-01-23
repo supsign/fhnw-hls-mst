@@ -16,24 +16,23 @@ class WebApiSpecializationYearController extends Controller
 {
     public function __construct(
         protected PermissionAndRoleService $permissionAndRoleService,
-    )
-    {
+    ) {
     }
 
     public function get(SpecializationYear $specializationYear): SpecializationYear
     {
         $this->permissionAndRoleService->canManageBackendOrAbort();
+
         return $specializationYear;
     }
 
     public function patch(
         PatchSpecializationYearRequest $patchSpecializationYearRequest,
-        SpecializationYear             $specializationYear,
-        SpecializationYearService      $specializationYearService,
-        AssessmentService              $assessmentService,
-        RecommendationService          $recommendationService,
-    ): SpecializationYear
-    {
+        SpecializationYear $specializationYear,
+        SpecializationYearService $specializationYearService,
+        AssessmentService $assessmentService,
+        RecommendationService $recommendationService,
+    ): SpecializationYear {
         $this->permissionAndRoleService->canManageBackendOrAbort();
         $specializationYearService->setAmountToPass($specializationYear, $patchSpecializationYearRequest->amount_to_pass);
 
@@ -67,5 +66,4 @@ class WebApiSpecializationYearController extends Controller
 
         return $specializationYear;
     }
-
 }

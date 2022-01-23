@@ -16,17 +16,15 @@ class WebApiCourseSpecializationYearController extends Controller
 {
     public function __construct(
         protected PermissionAndRoleService $permissionAndRoleService,
-    )
-    {
+    ) {
     }
 
     public function post(
         PostCourseSpecializationYearRequest $postCourseSpecializationYearRequest,
-        CourseService                       $courseService,
-        SpecializationYearService           $specializationYearService,
-        CourseSpecializationYearSerivce     $courseSpecializationYearSerivce
-    ): CourseSpecializationYear
-    {
+        CourseService $courseService,
+        SpecializationYearService $specializationYearService,
+        CourseSpecializationYearSerivce $courseSpecializationYearSerivce
+    ): CourseSpecializationYear {
         $this->permissionAndRoleService->canManageBackendOrAbort();
 
         /* @var $course Course */

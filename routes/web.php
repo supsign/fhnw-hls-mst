@@ -86,6 +86,5 @@ Route::middleware(['web', 'auth', 'backend'])->group(
 
         Route::get('admin/studyFieldYears/{studyFieldYear}', [AdminStudyFieldYearController::class, 'show'])->name('admin.studyFieldYears.show');
         Route::get('admin/studyFieldYears/{studyFieldYear}/courseGroups', [AdminStudyFieldYearController::class, 'courseGroups'])->name('admin.studyFieldYears.courseGroups');
-
     }
 );

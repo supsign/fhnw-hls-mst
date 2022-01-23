@@ -52,12 +52,12 @@ class SpecializationYearService extends BaseModelService
     {
         $specializationYear->amount_to_pass = $amount_to_pass;
         $specializationYear->save();
+
         return $specializationYear;
     }
 
     public function setAssessment(SpecializationYear $specializationYear, Assessment $assessment = null): SpecializationYear
     {
-
         if (!$assessment) {
             $specializationYear->assessment_id = null;
         } else {
@@ -65,12 +65,12 @@ class SpecializationYearService extends BaseModelService
         }
 
         $specializationYear->save();
+
         return $specializationYear;
     }
 
     public function setRecommendation(SpecializationYear $specializationYear, Recommendation $recommendation = null): SpecializationYear
     {
-
         if (!$recommendation) {
             $specializationYear->recommendation_id = null;
         } else {
@@ -78,6 +78,7 @@ class SpecializationYearService extends BaseModelService
         }
 
         $specializationYear->save();
+
         return $specializationYear;
     }
 }

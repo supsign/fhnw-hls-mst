@@ -58,7 +58,6 @@ class CrossQualificationYearService extends BaseModelService
 
     public function setAssessment(CrossQualificationYear $crossQualificationYear, Assessment $assessment = null): CrossQualificationYear
     {
-
         if (!$assessment) {
             $crossQualificationYear->assessment_id = null;
         } else {
@@ -66,12 +65,12 @@ class CrossQualificationYearService extends BaseModelService
         }
 
         $crossQualificationYear->save();
+
         return $crossQualificationYear;
     }
 
     public function setRecommendation(CrossQualificationYear $crossQualificationYear, Recommendation $recommendation = null): CrossQualificationYear
     {
-
         if (!$recommendation) {
             $crossQualificationYear->recommendation_id = null;
         } else {
@@ -79,6 +78,7 @@ class CrossQualificationYearService extends BaseModelService
         }
 
         $crossQualificationYear->save();
+
         return $crossQualificationYear;
     }
 }

@@ -43,7 +43,6 @@ Route::middleware('auth')->group(
 
         Route::patch('crossqualificationyears/{crossQualificationYear}', [WebApiCrossQualificationYearController::class, 'patch'])->name('webapi.crossQualificationYear.patch');
 
-
         Route::get('faq', [FrequentlyAskedQuestionController::class, 'getAllWithTrashed'])->name('webapi.faq.getAllWithTrashed');
         Route::post('faq', [FrequentlyAskedQuestionController::class, 'create'])->name('webapi.faq.create');
         Route::patch('faq/{faq}', [FrequentlyAskedQuestionController::class, 'patch'])->name('webapi.faq.patch');

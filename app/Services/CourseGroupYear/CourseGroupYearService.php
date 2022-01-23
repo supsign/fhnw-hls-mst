@@ -52,6 +52,7 @@ class CourseGroupYearService extends BaseModelService
     {
         $courseGroupYear->credits_to_pass = $credits_to_pass;
         $courseGroupYear->save();
+
         return $courseGroupYear;
     }
 }

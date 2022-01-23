@@ -12,13 +12,13 @@ class WebApiCourseGroupYearController extends Controller
 {
     public function __construct(
         protected PermissionAndRoleService $permissionAndRoleService,
-    )
-    {
+    ) {
     }
 
     public function get(CourseGroupYear $courseGroupYear): CourseGroupYear
     {
         $this->permissionAndRoleService->canManageBackendOrAbort();
+
         return $courseGroupYear;
     }
 
@@ -26,6 +26,7 @@ class WebApiCourseGroupYearController extends Controller
     {
         $this->permissionAndRoleService->canManageBackendOrAbort();
         $courseGroupYearService->setCreditToPass($courseGroupYear, $patchCourseGroupYearRequest->credits_to_pass);
+
         return $courseGroupYear;
     }
 }

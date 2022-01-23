@@ -37,4 +37,11 @@ class RecommendationService extends BaseModelService
     {
         return $this->getFirstByName($name) ?? $this->create($name);
     }
+
+    public function setName(Recommendation $recommendation, string $name): Recommendation
+    {
+        $recommendation->name = $name;
+        $recommendation->save();
+        return $recommendation;
+    }
 }

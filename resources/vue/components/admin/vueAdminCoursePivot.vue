@@ -2,7 +2,7 @@
     <div v-if="course">
         <div class="flex flex-row gap-4 items-center" :class="{'text-gray-500': isRemoving}">
             <div class="cursor-pointer" @click="remove">
-                <i class="far fa-trash" aria-hidden></i>
+                <i class="far fa-trash" aria-hidden="true"></i>
             </div>
             <div class="w-40 flex-shrink-0">{{ course.number }}</div>
             <div>{{ course.name }}</div>

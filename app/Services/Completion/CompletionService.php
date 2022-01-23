@@ -82,6 +82,14 @@ class CompletionService extends BaseModelService
     {
         $courseYear = $course->courseYears()->first();
 
+        if (!$courseYear) {
+            $courseYear = $course->courseYears()->create([
+                'course_id' => $course->id,
+                'semester_id' => 1,
+                'number' => $course->number,
+            ]);
+        }
+
         $this->attachSkillsToStudent($student, $courseYear);
 
         /* @var $completion Completion */

@@ -12,7 +12,7 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class CompletionCreditImport extends BaseExcelImport implements ToModel, WithHeadingRow
 {
-    protected array $requiredFields = ['id_anmeldung', 'id_person', 'id_anlass', 'anlassnummer', 'credits_anmeldung'];
+    protected array $requiredFields = ['id_anmeldung', 'id_person', 'id_anlass', 'anlassnummer', 'anlassbezeichnung', 'credits'];
     protected CourseService $courseService;
     protected CompletionService $completionService;
     protected StudentService $studentService;
@@ -37,19 +37,21 @@ class CompletionCreditImport extends BaseExcelImport implements ToModel, WithHea
 
         $course = $this->courseService->getByEventoId($row['id_anlass']);
 
-        if (!$course || !$course->courseYears()->count()) {
-            activity('info')
-                ->withProperties($row)
-                ->log(!$course ? 'Course not found' : 'No courseYears on course');
-
-            return;
+        if (!$course) {
+            $course = $this->courseService->firstOrCreateByNumber(
+                $row['id_anlass'],
+                1,
+                1,
+                $row['anlassbezeichnung'],
+                // $row['credits'],
+            );
         }
 
         $this->completionService->createOrUpdateOnEventoIdAsCredit(
             $row['id_anmeldung'],
             $this->studentService->createOrUpdateOnEventoPersonId($row['id_person']),
             $course,
-            $row['credits_anmeldung'],
+            $row['credits'],
         );
     }
 }

@@ -27,11 +27,17 @@
                     </div>
 
                     <div v-if="!courseIsSuccessfullyCompleted">
-                        <div v-if="missingCourses.length > 0 || !isPlaned" class="font-bold">Fehlende Kurse</div>
+                        <div class="font-bold">Module für fehlende Kompetenzen</div>
                         <div v-if="!isPlaned"> Bitte planen Sie zuerst das Modul ein.</div>
-                        <ul v-else class="list-disc list-outside ml-4">
-                            <li v-for="missingCourse in missingCourses">{{ missingCourse.name }}</li>
-                        </ul>
+                        <div v-else>
+                            <div v-if="missingCourses.length === 0">Alle Eintrittskompetenzen erlangt oder eingeplant
+                            </div>
+                            <ul class="list-disc list-outside ml-4">
+
+                                <li v-for="missingCourse in missingCourses">{{ missingCourse.name }}</li>
+                            </ul>
+                        </div>
+
                     </div>
                 </div>
 

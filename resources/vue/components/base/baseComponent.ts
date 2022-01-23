@@ -17,6 +17,7 @@ import {RecommendationModel} from "../../store/recommendation/recommendation.mod
 import {CrossQualificationYearModel} from "../../store/crossQualificationYear/crossQualificationYear.model";
 import {CourseCrossQualificationYearModel} from "../../store/courseCrossQualificationYear/courseCrossQualificationYear.model";
 import {CrossQualificationModel} from "../../store/crossQualification/crossQualification.model";
+import {AssessmentCourseModel} from "../../store/assessmentCourse/assessmentCourse.model";
 
 // Define a super class component
 @Component
@@ -38,7 +39,8 @@ export default class BaseComponent extends Vue {
         recommendation: new RecommendationModel(this.$store),
         crossQualificationYear: new CrossQualificationYearModel(this.$store),
         courseCrossQualificationYear: new CourseCrossQualificationYearModel(this.$store),
-        crossQualification: new CrossQualificationModel(this.$store)
+        crossQualification: new CrossQualificationModel(this.$store),
+        assessmentCourse: new AssessmentCourseModel(this.$store)
     }
 
 }

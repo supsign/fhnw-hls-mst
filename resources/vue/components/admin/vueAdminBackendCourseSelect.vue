@@ -21,15 +21,15 @@ import VueBackendSelect from "../form/backendSelect.vue";
 @Component({
     components: {VueBackendSelect}
 })
-export default class VueAdminCourseCourseGroups extends BaseComponent {
+export default class VueAdminBackendCourseSelect extends BaseComponent {
 
     @Prop({type: Boolean, default: false})
-    public disabled:boolean;
+    public disabled: boolean;
 
-    @Prop({type:Array, default: ():number[] => []})
+    @Prop({type: Array, default: (): number[] => []})
     public courseIdsInUse: number[]
 
-    @Prop({type:Object})
+    @Prop({type: Object})
     public value: ICourse
 
     public getCourseSearchParams(search: string) {
@@ -37,7 +37,7 @@ export default class VueAdminCourseCourseGroups extends BaseComponent {
     }
 
     @Emit()
-    public input (course: ICourse) {
+    public input(course: ICourse) {
         return course
     }
 

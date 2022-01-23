@@ -40,11 +40,6 @@ import VueEditor from "./components/form/vueEditor.vue";
 import {courseSpecializationYearStore} from "./store/courseSpecializationYear/courseSpecializationYear.store";
 import {courseGroupYearStore} from "./store/courseGroupYear/courseGroupYear.store";
 import VueAdminCrossQualificationYears from "./components/admin/crossQualification/vueAdminCrossQualificationYears.vue"
-
-//@ts-ignore
-import VueMask from 'v-mask';
-// @ts-ignore
-import Editor from "@tinymce/tinymce-vue";
 import {courseCourseGroupYearStore} from "./store/courseCourseGroupYear/courseCourseGroupYear.store";
 import VueAdminCourseGroups from "./components/admin/courseGroup/vueAdminCourseGroups.vue";
 import {courseGroupStore} from "./store/courseGroup/courseGroup.store";
@@ -52,6 +47,13 @@ import {recommendationStore} from "./store/recommendation/recommendation.store";
 import {crossQualificationYearStore} from "./store/crossQualificationYear/crossQualificationYear.store";
 import {courseCrossQualificationYearStore} from "./store/courseCrossQualificationYear/courseCrossQualificationYear.store";
 import {crossQualificationStore} from "./store/crossQualification/crossQualification.store";
+import {assessmentCourseStore} from "./store/assessmentCourse/assessmentCourse.store";
+import VueAdminAssessment from "./components/admin/assessment/vueAdminAssessment.vue";
+
+//@ts-ignore
+import VueMask from 'v-mask';
+// @ts-ignore
+import Editor from "@tinymce/tinymce-vue";
 
 library.add(faUserSecret);
 library.add(faCheck);
@@ -80,7 +82,8 @@ const store = new Vuex.Store({
         recommendation: recommendationStore,
         crossQualificationYear: crossQualificationYearStore,
         courseCrossQualificationYear: courseCrossQualificationYearStore,
-        crossQualification: crossQualificationStore
+        crossQualification: crossQualificationStore,
+        assessmentCourse: assessmentCourseStore
     },
 });
 
@@ -109,7 +112,8 @@ const app = new Vue({
         VueAdminFaqWrapper,
         VueEditor,
         VueAdminCourseGroups,
-        VueAdminCrossQualificationYears
+        VueAdminCrossQualificationYears,
+        VueAdminAssessment
     },
     store
 });

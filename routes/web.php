@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminAssessmnetController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminMentorController;
 use App\Http\Controllers\Admin\AdminRolesController;
@@ -71,7 +72,7 @@ Route::middleware(['web', 'auth'])->group(
 );
 
 Route::middleware(['web', 'auth', 'backend'])->group(
-    function () {
+    callback: function () {
         Route::get('admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
         Route::get('admin/courses', [AdminController::class, 'courses'])->name('admin.course.list');
         Route::get('admin/faq', [AdminController::class, 'faq'])->name('admin.faq');
@@ -83,6 +84,8 @@ Route::middleware(['web', 'auth', 'backend'])->group(
         Route::get('admin/mentors/{mentor}', [AdminMentorController::class, 'showOne'])->name('admin.mentor');
 
         Route::get('admin/studyFields', [AdminStudyFieldController::class, 'showAll'])->name('admin.studyFields.all');
+
+        Route::get('admin/assessments/{assessment}', [AdminAssessmnetController::class, 'showOne'])->name('admin.assessments.showOne');
 
         Route::get('admin/studyFieldYears/{studyFieldYear}', [AdminStudyFieldYearController::class, 'show'])->name('admin.studyFieldYears.show');
         Route::get('admin/studyFieldYears/{studyFieldYear}/courseGroups', [AdminStudyFieldYearController::class, 'courseGroups'])->name('admin.studyFieldYears.courseGroups');

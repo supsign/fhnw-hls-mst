@@ -1,9 +1,10 @@
 <template>
     <vue-card v-if="assessment">
         <template v-slot:title>
-            <div class="flex flex-row justify-between">
-                <div>
-                    {{ assessment.name }}
+            <div class="flex flex-row gap-4">
+                <div class="flex-grow">
+                    <vue-store-input :edit-mode="editMode" :entity="assessment"
+                                     :model="models.assessment" name="name"/>
                 </div>
                 <div>
                     <div v-if="!editMode" class="cursor-pointer" @click="edit">
@@ -22,8 +23,8 @@
         </template>
         <div class="gap-2">
             <div>
-                <div class="text-xs text-gray-600">Anzahl Kurse um zu bestehen</div>
-                <div class="ml-2 text-sm">
+                <div class="text-xs text-gray-600">Anzahl Module um zu bestehen</div>
+                <div class="text-sm">
                     <vue-store-input :edit-mode="editMode" :entity="assessment"
                                      :model="models.assessment" name="amount_to_pass"/>
                 </div>

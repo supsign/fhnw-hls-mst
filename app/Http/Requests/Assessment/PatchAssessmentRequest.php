@@ -24,7 +24,8 @@ class PatchAssessmentRequest extends FormRequest
     public function rules()
     {
         return [
-            'amount_to_pass' => 'int|required',
+            'amount_to_pass' => 'int|nullable',
+            'name' => 'string'
         ];
     }
 }

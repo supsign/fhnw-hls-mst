@@ -12,7 +12,8 @@ class WebApiAssessmentController extends Controller
 {
     public function __construct(
         protected PermissionAndRoleService $permissionAndRoleService,
-    ) {
+    )
+    {
     }
 
     public function get(Assessment $assessment): Assessment
@@ -24,11 +25,19 @@ class WebApiAssessmentController extends Controller
 
     public function patch(
         PatchAssessmentRequest $patchAssessmentRequest,
-        Assessment $assessment,
-        AssessmentService $assessmentService,
-    ): Assessment {
+        Assessment             $assessment,
+        AssessmentService      $assessmentService,
+    ): Assessment
+    {
         $this->permissionAndRoleService->canManageBackendOrAbort();
-        $assessmentService->setAmountToPass($assessment, $patchAssessmentRequest->amount_to_pass);
+
+        if ($patchAssessmentRequest->has('amount_to_pass')) {
+            $assessmentService->setAmountToPass($assessment, $patchAssessmentRequest->amount_to_pass);
+        }
+
+        if ($patchAssessmentRequest->has('name')) {
+            $assessmentService->setName($assessment, $patchAssessmentRequest->name);
+        }
 
         return $assessment;
     }

@@ -66,4 +66,12 @@ class AssessmentService extends BaseModelService
 
         return $assessment;
     }
+
+    public function setName(Assessment $assessment, string $name): Assessment
+    {
+        $assessment->name = $name;
+        $assessment->save();
+
+        return $assessment;
+    }
 }

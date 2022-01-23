@@ -19,7 +19,7 @@
         <div class="space-y-2">
             <div>
                 <div class="text-xs text-gray-600">Musterstudienplan</div>
-                <div class="ml-2 text-sm">
+                <div class="text-sm">
                     <vue-store-select
                         name="recommendation_id"
                         :entity="crossQualificationYear"
@@ -33,7 +33,7 @@
             </div>
             <div>
                 <div class="text-xs text-gray-600">Assessment</div>
-                <div class="ml-2 text-sm">
+                <div class="text-sm">
                     <vue-store-select
                         name="assessment_id"
                         :entity="crossQualificationYear"
@@ -47,14 +47,14 @@
             </div>
             <div>
                 <div class="text-xs text-gray-600">Anzahl Kurse um zu bestehen</div>
-                <div class="ml-2 text-sm">
+                <div class="text-sm">
                     <vue-store-input :edit-mode="editMode" :entity="crossQualificationYear"
                                      :model="models.crossQualificationYear" name="amount_to_pass"/>
                 </div>
             </div>
             <div>
                 <div class="text-xs text-gray-600">Module</div>
-                <div class="ml-2 text-sm space-y-2">
+                <div class="text-sm space-y-2">
                     <vue-admin-course-pivot v-for="coursePivot in courseCrossQualificationYears"
                                             :course-pivot="coursePivot"
                                             @remove="remove"

@@ -25,7 +25,7 @@ class PatchAssessmentRequest extends FormRequest
     {
         return [
             'amount_to_pass' => 'int|nullable',
-            'name' => 'string'
+            'name' => 'string',
         ];
     }
 }

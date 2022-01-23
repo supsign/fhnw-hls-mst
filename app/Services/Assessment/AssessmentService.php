@@ -63,6 +63,7 @@ class AssessmentService extends BaseModelService
     {
         $assessment->amount_to_pass = $amount_to_pass;
         $assessment->save();
+
         return $assessment;
     }
 }

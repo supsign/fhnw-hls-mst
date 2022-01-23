@@ -10,6 +10,7 @@ use App\Http\Controllers\WebApi\WebApiAssessmentCourseController;
 use App\Http\Controllers\WebApi\WebApiCourseCourseGroupYearController;
 use App\Http\Controllers\WebApi\WebApiCourseCrossQualificationYearController;
 use App\Http\Controllers\WebApi\WebApiCourseGroupYearController;
+use App\Http\Controllers\WebApi\WebApiCourseRecommendationController;
 use App\Http\Controllers\WebApi\WebApiCourseSpecializationYearController;
 use App\Http\Controllers\WebApi\WebApiCrossQualificationYearController;
 use App\Http\Controllers\WebApi\WebApiMentorController;
@@ -67,6 +68,9 @@ Route::middleware('auth')->group(
 
         Route::post('assessmentCourses', [WebApiAssessmentCourseController::class, 'post'])->name('webapi.assessmentCourses.post');
         Route::delete('assessmentCourses/{assessmentCourse}', [WebApiAssessmentCourseController::class, 'delete'])->name('webapi.assessmentCourses.delete');
+
+        Route::post('courseRecommendations', [WebApiCourseRecommendationController::class, 'post'])->name('webapi.courseRecommendations.post');
+        Route::delete('courseRecommendations/{courseRecommendation}', [WebApiCourseRecommendationController::class, 'delete'])->name('webapi.courseRecommendations.delete');
 
         Route::post('courseSpecializationYears', [WebApiCourseSpecializationYearController::class, 'post'])->name('webapi.courseSpecializationYears.post');
         Route::delete('courseSpecializationYears/{courseSpecializationYear}', [WebApiCourseSpecializationYearController::class, 'delete'])->name('webapi.courseSpecializationYears.delete');

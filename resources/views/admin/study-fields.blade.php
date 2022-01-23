@@ -43,5 +43,23 @@
                 @endforeach
             </div>
         </x-app.card>
+        <x-app.card>
+            <x-slot name="title">
+                Musterstudienpläne
+            </x-slot>
+            <div class="space-y-2">
+                @foreach($recommendations as $recommendation)
+                    <div>
+                        <a href="{{route('admin.recommendation.showOne', [$recommendation])}}"
+                           class="text-blue-500"
+                        >
+
+                            <div>{{$recommendation->name}}</div>
+
+                        </a>
+                    </div>
+                @endforeach
+            </div>
+        </x-app.card>
     </div>
 </x-layout.admin>

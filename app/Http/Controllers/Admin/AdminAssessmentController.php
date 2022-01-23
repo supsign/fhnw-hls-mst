@@ -7,7 +7,7 @@ use App\Models\Assessment;
 use App\Services\User\PermissionAndRoleService;
 use Illuminate\Contracts\View\View;
 
-class AdminAssessmnetController extends Controller
+class AdminAssessmentController extends Controller
 {
     public function __construct(protected PermissionAndRoleService $permissionAndRoleService)
     {

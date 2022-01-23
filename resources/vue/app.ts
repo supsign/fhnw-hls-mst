@@ -54,6 +54,8 @@ import VueAdminAssessment from "./components/admin/assessment/vueAdminAssessment
 import VueMask from 'v-mask';
 // @ts-ignore
 import Editor from "@tinymce/tinymce-vue";
+import {courseRecommendationStore} from "./store/courseRecommendation/courseRecommendation.store";
+import VueAdminRecommendation from "./components/admin/recommendation/vueAdminRecommendation.vue";
 
 library.add(faUserSecret);
 library.add(faCheck);
@@ -83,7 +85,8 @@ const store = new Vuex.Store({
         crossQualificationYear: crossQualificationYearStore,
         courseCrossQualificationYear: courseCrossQualificationYearStore,
         crossQualification: crossQualificationStore,
-        assessmentCourse: assessmentCourseStore
+        assessmentCourse: assessmentCourseStore,
+        courseRecommendation: courseRecommendationStore
     },
 });
 
@@ -113,7 +116,8 @@ const app = new Vue({
         VueEditor,
         VueAdminCourseGroups,
         VueAdminCrossQualificationYears,
-        VueAdminAssessment
+        VueAdminAssessment,
+        VueAdminRecommendation
     },
     store
 });

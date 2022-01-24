@@ -26,7 +26,7 @@ class AssessmentService extends BaseModelService
         return $this->model::create([
             'name' => $name,
             'amount_to_pass' => $amountToPass,
-            'study_field_id' => $studyField->id
+            'study_field_id' => $studyField->id,
         ]);
     }
 

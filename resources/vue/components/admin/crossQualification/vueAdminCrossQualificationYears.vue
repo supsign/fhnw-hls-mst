@@ -1,7 +1,8 @@
 <template>
-    <div class="mb-2">
-
-        Querschnittqualifikationen
+    <div class="mb-2 space-y-4">
+        <div class="text-xl text-gray-600">
+            Querschnittqualifikationen
+        </div>
 
         <div class="grid grid-cols-2 gap-4">
             <vue-admin-cross-qualification-year

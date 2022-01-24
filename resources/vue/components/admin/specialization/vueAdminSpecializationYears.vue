@@ -1,7 +1,9 @@
 <template>
-    <div class="mb-2">
+    <div class="mb-2 space-y-4">
 
-        Spezialisierungen
+        <div class="text-xl text-gray-600">
+            Spezialisierungen
+        </div>
 
         <div class="grid grid-cols-2 gap-4">
             <vue-admin-specialization-year

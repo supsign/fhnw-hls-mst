@@ -4,6 +4,7 @@ namespace Tests\Feature\Services\Assessment;
 
 use App\Models\AssessmentCourse;
 use App\Models\Course;
+use App\Models\StudyField;
 use App\Services\Assessment\AssessmentCourseService;
 use App\Services\Assessment\AssessmentService;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -26,13 +27,14 @@ class AssessmentCourseServiceTest extends TestCase
 
     public function testAttache(): void
     {
-        $assessemnt = $this->assessmentService->create('blub');
+        $studyField = StudyField::first();
+        $assessment = $this->assessmentService->create('blub', $studyField);
         $course = Course::first();
 
-        $this->assessmentCourseService->attach($assessemnt, $course);
-        $this->assertDatabaseHas(AssessmentCourse::class, ['assessment_id' => $assessemnt->id, 'course_id' => $course->id]);
+        $this->assessmentCourseService->attach($assessment, $course);
+        $this->assertDatabaseHas(AssessmentCourse::class, ['assessment_id' => $assessment->id, 'course_id' => $course->id]);
 
-        $this->assessmentCourseService->attach($assessemnt, $course);
-        $this->assertEquals(1, $assessemnt->courses->count());
+        $this->assessmentCourseService->attach($assessment, $course);
+        $this->assertEquals(1, $assessment->courses->count());
     }
 }

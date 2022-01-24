@@ -16,4 +16,9 @@ class Assessment extends BaseModel
     {
         return $this->hasMany(AssessmentCourse::class);
     }
+
+    public function studyField()
+    {
+        return $this->belongsTo(StudyField::class);
+    }
 }

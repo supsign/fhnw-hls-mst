@@ -21,7 +21,7 @@
     <vue-store-fill :model="'course'"
                     :entities="{{$studyFieldYear->courses}}"></vue-store-fill>
 
-    <div class="space-y-4">
+    <div class="space-y-6">
         <div class="text-2xl text-gray-500 mb-4">{{$studyFieldYear->studyField->name}}
             - {{$studyFieldYear->beginSemester->year}}</div>
 

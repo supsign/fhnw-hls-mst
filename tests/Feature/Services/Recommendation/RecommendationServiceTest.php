@@ -29,16 +29,17 @@ class RecommendationServiceTest extends TestCase
 
     public function testCreateRecommendation()
     {
-        $recommendation = $this->recommendationService->create('test');
+        $studyFieldYear = StudyFieldYear::first();
+        $recommendation = $this->recommendationService->create('test', $studyFieldYear->studyField);
         $this->assertNotNull($recommendation->id);
         $this->assertDatabaseHas(Recommendation::class, ['id' => $recommendation->id]);
     }
 
     public function testGetApplicableRecommendation()
     {
-        $recommendation = $this->recommendationService->create('test');
-        $student = $this->studentService->createOrUpdateOnEventoPersonId('10');
         $studyFieldYear = StudyFieldYear::first();
+        $recommendation = $this->recommendationService->create('test', $studyFieldYear->studyField);
+        $student = $this->studentService->createOrUpdateOnEventoPersonId('10');
         $studyFieldYear->recommendation_id = $recommendation->id;
         $studyFieldYear->save();
 

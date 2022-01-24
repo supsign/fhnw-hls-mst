@@ -17,8 +17,8 @@ class ChemieAssessment extends Seeder
      */
     public function run(AssessmentService $assessmentService, CourseService $courseService, AssessmentCourseService $assessmentCourseService, StudyFieldYearService $studyFieldYearService)
     {
-        $assessment = $assessmentService->create('Chemie - Standard');
         $studyFieldYear = $studyFieldYearService->getByEventoId(9322953);
+        $assessment = $assessmentService->create('Chemie - Standard', $studyFieldYear->studyField);
         $studyFieldYearService->attacheAssessment($studyFieldYear, $assessment);
 
         $course = $courseService->getByEventoId(9301710);

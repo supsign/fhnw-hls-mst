@@ -21,13 +21,14 @@
                 <div class="text-xs text-gray-600">Musterstudienplan</div>
                 <div class="ml-2 text-sm">
                     <vue-store-select
-                        name="recommendation_id"
-                        :entity="specializationYear"
                         :edit-mode="editMode"
+                        :entity="specializationYear"
                         :model="models.specializationYear"
+                        :related-filter="(rec => rec.study_field_id === specialization.study_field_id)"
                         :related-model="models.recommendation"
-                        label="name"
                         clearable
+                        label="name"
+                        name="recommendation_id"
                     />
                 </div>
             </div>
@@ -35,13 +36,14 @@
                 <div class="text-xs text-gray-600">Assessment</div>
                 <div class="ml-2 text-sm">
                     <vue-store-select
-                        name="assessment_id"
-                        :entity="specializationYear"
                         :edit-mode="editMode"
+                        :entity="specializationYear"
                         :model="models.specializationYear"
+                        :related-filter="(ass => ass.study_field_id === specialization.study_field_id)"
                         :related-model="models.assessment"
-                        label="name"
                         clearable
+                        label="name"
+                        name="assessment_id"
                     />
                 </div>
             </div>
@@ -56,17 +58,17 @@
                 <div class="text-xs text-gray-600">Module</div>
                 <div class="ml-2 text-sm space-y-2">
                     <vue-admin-course-pivot v-for="coursePivot in courseSpecializationYears"
+                                            :key="coursePivot.id"
                                             :course-pivot="coursePivot"
                                             @remove="remove"
-                                            :key="coursePivot.id"
                     />
                     <div>
                         <vue-admin-backend-course-select
                             v-model="selectedCourse"
-                            :disabled="!!selectedCourse"
-                            @input="addCourse"
                             :course-ids-in-use="courseIdsInUse"
+                            :disabled="!!selectedCourse"
                             class="mt-4"
+                            @input="addCourse"
                         ></vue-admin-backend-course-select>
                     </div>
 
@@ -120,6 +122,10 @@ export default class VueAdminSpecializationYear extends BaseComponent {
         )
     }
 
+    public get courseIdsInUse() {
+        return this.courseSpecializationYears.map(courseSpecializationYear => courseSpecializationYear.course_id);
+    }
+
     public edit() {
         this.editMode = true;
     }
@@ -146,10 +152,6 @@ export default class VueAdminSpecializationYear extends BaseComponent {
             }).finally(() => {
             this.selectedCourse = null;
         });
-    }
-
-    public get courseIdsInUse() {
-        return this.courseSpecializationYears.map(courseSpecializationYear => courseSpecializationYear.course_id);
     }
 
     public remove(courseSpecializationYear: ICourseSpecializationYear) {

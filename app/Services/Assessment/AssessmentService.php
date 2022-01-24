@@ -5,6 +5,7 @@ namespace App\Services\Assessment;
 use App\Models\Assessment;
 use App\Models\Planning;
 use App\Models\Student;
+use App\Models\StudyField;
 use App\Services\Base\BaseModelService;
 use App\Services\Base\Traits\UpdateOrCreateTrait;
 use App\Services\Completion\CourseCompletionService;
@@ -20,17 +21,18 @@ class AssessmentService extends BaseModelService
         parent::__construct($model);
     }
 
-    public function create(string $name, int $amountToPass = 10): Assessment
+    public function create(string $name, StudyField $studyField, int $amountToPass = 10): Assessment
     {
         return $this->model::create([
             'name' => $name,
             'amount_to_pass' => $amountToPass,
+            'study_field_id' => $studyField->id
         ]);
     }
 
-    public function firstOrCreateByName(string $name, int $amountToPass = 10): Assessment
+    public function firstOrCreateByName(string $name, StudyField $studyField, int $amountToPass = 10): Assessment
     {
-        return $this->updateOrCreateTrait(['name' => $name], ['amount_to_pass' => $amountToPass]);
+        return $this->updateOrCreateTrait(['name' => $name], ['amount_to_pass' => $amountToPass, 'study_field_id' => $studyField->id]);
     }
 
     public function getApplicableAssessment(Planning $planning): ?Assessment

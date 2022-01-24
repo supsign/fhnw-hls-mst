@@ -37,7 +37,7 @@ class RecommendationImport extends BaseExcelImport implements ToModel, WithHeadi
     }
 
     /**
-     * @param array $row
+     * @param  array  $row
      * @return Model|null
      */
     public function model(array $row)
@@ -54,17 +54,17 @@ class RecommendationImport extends BaseExcelImport implements ToModel, WithHeadi
             $recommendationName = $row['studienrichtung'];
 
             if ($row['spezialisierung'] !== 'keine') {
-                $recommendationName .= ' - ' . $row['spezialisierung'];
+                $recommendationName .= ' - '.$row['spezialisierung'];
                 $specialisation = Specialization::where('name', $recommendationName)->first();
                 $studyField = $specialisation->studyField;
             } elseif ($row['querschnittsqualifikation'] !== 'keine') {
-                $recommendationName .= ' - ' . $row['querschnittsqualifikation'];
+                $recommendationName .= ' - '.$row['querschnittsqualifikation'];
                 $crossqualification = CrossQualification::where('name', $recommendationName)->first();
                 $studyField = $crossqualification->studyField;
             }
 
             if (!isset($studyField)) {
-                $studyField = StudyField::where('evento_number', 'like', '2-L-B-LS' . $recommendationName . '%')->first();
+                $studyField = StudyField::where('evento_number', 'like', '2-L-B-LS'.$recommendationName.'%')->first();
             }
 
             $recommendation = $this->recommendationService->getFirstOrCreateByName($recommendationName, $studyField);
@@ -82,7 +82,6 @@ class RecommendationImport extends BaseExcelImport implements ToModel, WithHeadi
             }
 
             if (empty($specialisation) && empty($crossqualification)) {
-
                 if ($studyField) {
                     foreach ($studyField->studyFieldYears as $studyFieldYear) {
                         $studyFieldYear->update(['recommendation_id' => $recommendation->id]);

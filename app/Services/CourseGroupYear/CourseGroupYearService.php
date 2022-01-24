@@ -47,4 +47,12 @@ class CourseGroupYearService extends BaseModelService
 
         return false;
     }
+
+    public function setCreditToPass(CourseGroupYear $courseGroupYear, int $credits_to_pass = null)
+    {
+        $courseGroupYear->credits_to_pass = $credits_to_pass;
+        $courseGroupYear->save();
+
+        return $courseGroupYear;
+    }
 }

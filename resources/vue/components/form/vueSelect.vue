@@ -1,5 +1,5 @@
 <template>
-    <div class="relative block">
+    <div class="relative block mt-2">
         <div
             class="absolute px-2 z-10 text-gray-400 bg-white whitespace-nowrap -top-3.5 left-2.5 font-semibold"
             style="transform: scale(0.9)"

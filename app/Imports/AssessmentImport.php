@@ -29,15 +29,15 @@ class AssessmentImport extends BaseCsvImport
 
     public function importLine()
     {
-        foreach ($this->courseService->getByNumberUnformated($this->line['laufnummer']) AS $course) {
+        foreach ($this->courseService->getByNumberUnformated($this->line['laufnummer']) as $course) {
             $studyField = $this->studyFieldService->getById($this->line['id_studienrichtung']);
 
             if (!$studyField) {
                 return $this;
             }
 
-            foreach ($studyField->studyFieldYears AS $studyFieldYear) {
-                $assessment = $this->assessmentService->firstOrCreateByName($studyFieldYear->studyField->name);
+            foreach ($studyField->studyFieldYears as $studyFieldYear) {
+                $assessment = $this->assessmentService->firstOrCreateByName($studyFieldYear->studyField->name, $studyField);
                 $this->assessmentCourseService->attach($assessment, $course);
 
                 $studyFieldYear->update(['assessment_id' => $assessment->id]);

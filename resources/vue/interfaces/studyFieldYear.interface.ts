@@ -1,7 +1,8 @@
 import {IModel} from "../store/model.interface"
 
 export interface IStudyFieldYear extends IModel {
-    assessment_id: number
+    assessment_id?: number
+    recommendation_id?: number
     begin_semester_id: number
     evento_id: number
     evento_number: string

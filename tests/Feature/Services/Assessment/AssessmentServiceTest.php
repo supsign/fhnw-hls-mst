@@ -3,6 +3,7 @@
 namespace Tests\Feature\Services\Assessment;
 
 use App\Models\Assessment;
+use App\Models\StudyField;
 use App\Models\StudyFieldYear;
 use App\Services\Assessment\AssessmentService;
 use App\Services\Planning\PlanningService;
@@ -29,7 +30,8 @@ class AssessmentServiceTest extends TestCase
 
     public function testCreateAssessment()
     {
-        $assessment = $this->assessmentService->create('test');
+        $studyField = StudyField::first();
+        $assessment = $this->assessmentService->create('test', $studyField);
         $this->assertEquals(10, $assessment->amount_to_pass);
         $this->assertNotNull($assessment->id);
         $this->assertDatabaseHas(Assessment::class, ['id' => $assessment->id]);
@@ -37,9 +39,9 @@ class AssessmentServiceTest extends TestCase
 
     public function testGetApplicableAssessment()
     {
-        $assessment = $this->assessmentService->create('test');
-        $student = $this->studentService->createOrUpdateOnEventoPersonId('10');
         $studyFieldYear = StudyFieldYear::first();
+        $assessment = $this->assessmentService->create('test', $studyFieldYear->studyField);
+        $student = $this->studentService->createOrUpdateOnEventoPersonId('10');
         $studyFieldYear->assessment_id = $assessment->id;
         $studyFieldYear->save();
 

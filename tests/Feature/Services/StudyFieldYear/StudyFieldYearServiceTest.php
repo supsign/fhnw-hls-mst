@@ -26,7 +26,7 @@ class StudyFieldYearServiceTest extends TestCase
     public function testAttachAssessment(): void
     {
         $studyFieldYear = $this->studyFieldYearService->getByEventoId(9311732);
-        $assessment = $this->assessmentService->create('blub');
+        $assessment = $this->assessmentService->create('blub', $studyFieldYear->studyField);
         $studyFieldYearAttached = $this->studyFieldYearService->attacheAssessment($studyFieldYear, $assessment);
 
         $this->assertEquals($studyFieldYear->id, $studyFieldYearAttached->id);

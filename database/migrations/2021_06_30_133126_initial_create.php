@@ -42,13 +42,6 @@ class InitialCreate extends Migration
      */
     public function up()
     {
-        Schema::create('assessments', function (Blueprint $table) {
-            $table->id();
-            $table->string('name')->nullable();
-            $table->integer('amount_to_pass')->nullable();
-            $table->timestampsTz();
-        });
-
         Schema::create('course_types', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
@@ -117,6 +110,14 @@ class InitialCreate extends Migration
             $table->timestampsTz();
         });
 
+        Schema::create('assessments', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->nullable();
+            $table->integer('amount_to_pass')->nullable();
+            $table->foreignId('study_field_id');
+            $table->timestampsTz();
+        });
+
         Artisan::call('db:seed', [
             '--class' => StudyFieldSeeder::class,
             '--force' => true,
@@ -167,6 +168,7 @@ class InitialCreate extends Migration
         Schema::create('recommendations', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
+            $table->foreignId('study_field_id');
             $table->timestampsTz();
         });
 
@@ -440,8 +442,8 @@ class InitialCreate extends Migration
                 $excel->import(new LessonImport, 'Testingdata\Tab8_Lektionen.xlsx');
             }
 
-            if (Storage::exists('Testingdata\Update studienplan-und-studienkatalog 29Jun2021.xlsx')) {
-                $excel->import(new RecommendationImport, 'Testingdata\Update studienplan-und-studienkatalog 29Jun2021.xlsx');
+            if (Storage::exists('Testingdata\Update studienplan-und-studienkatalog _Dez2021.xlsx')) {
+                $excel->import(new RecommendationImport, 'Testingdata\Update studienplan-und-studienkatalog _Dez2021.xlsx');
             }
         } else {
             if (Storage::exists('Tab4_Modulanlass.xlsx')) {
@@ -468,8 +470,8 @@ class InitialCreate extends Migration
                 $excel->import(new LessonImport, 'Tab8_Lektionen.xlsx');
             }
 
-            if (Storage::exists('Update studienplan-und-studienkatalog 29Jun2021.xlsx')) {
-                $excel->import(new RecommendationImport, 'Update studienplan-und-studienkatalog 29Jun2021.xlsx');
+            if (Storage::exists('Update studienplan-und-studienkatalog _Dez2021.xlsx')) {
+                $excel->import(new RecommendationImport, 'Update studienplan-und-studienkatalog _Dez2021.xlsx');
             }
         }
     }

@@ -17,7 +17,7 @@ class SpecializationYear extends BaseModel
         return $this->belongsToMany(Course::class);
     }
 
-    public function courseSpecializationYear()
+    public function courseSpecializationYears()
     {
         return $this->hasMany(CourseSpecializationYear::class);
     }

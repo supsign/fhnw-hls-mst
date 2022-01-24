@@ -23,7 +23,7 @@ export class EntityModel<S, T, U extends IModel> {
 
     public filter(
         predicate: (value: U, index: number, array: U[]) => unknown
-    ): U {
+    ): U[] {
         return this._store.getters[`${this._modelName}/filter`](predicate);
     }
 

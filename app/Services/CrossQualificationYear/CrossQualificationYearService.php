@@ -2,8 +2,10 @@
 
 namespace App\Services\CrossQualificationYear;
 
+use App\Models\Assessment;
 use App\Models\CrossQualification;
 use App\Models\CrossQualificationYear;
+use App\Models\Recommendation;
 use App\Models\Student;
 use App\Models\StudyFieldYear;
 use App\Services\Base\BaseModelService;
@@ -49,6 +51,32 @@ class CrossQualificationYearService extends BaseModelService
     public function patchAmountToPass(CrossQualificationYear $crossQualificationYear, int $amountToPass = null)
     {
         $crossQualificationYear->amount_to_pass = $amountToPass;
+        $crossQualificationYear->save();
+
+        return $crossQualificationYear;
+    }
+
+    public function setAssessment(CrossQualificationYear $crossQualificationYear, Assessment $assessment = null): CrossQualificationYear
+    {
+        if (!$assessment) {
+            $crossQualificationYear->assessment_id = null;
+        } else {
+            $crossQualificationYear->assessment_id = $assessment->id;
+        }
+
+        $crossQualificationYear->save();
+
+        return $crossQualificationYear;
+    }
+
+    public function setRecommendation(CrossQualificationYear $crossQualificationYear, Recommendation $recommendation = null): CrossQualificationYear
+    {
+        if (!$recommendation) {
+            $crossQualificationYear->recommendation_id = null;
+        } else {
+            $crossQualificationYear->recommendation_id = $recommendation->id;
+        }
+
         $crossQualificationYear->save();
 
         return $crossQualificationYear;

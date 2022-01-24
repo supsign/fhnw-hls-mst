@@ -22,6 +22,11 @@ class StudyField extends BaseModel
         return $this->hasMany(Specialization::class);
     }
 
+    public function crossQualifications()
+    {
+        return $this->hasMany(CrossQualification::class);
+    }
+
     public function studyProgram()
     {
         return $this->belongsTo(StudyProgram::class);
@@ -30,5 +35,15 @@ class StudyField extends BaseModel
     public function studyFieldYears()
     {
         return $this->hasMany(StudyFieldYear::class);
+    }
+
+    public function assessments()
+    {
+        return $this->hasMany(Assessment::class);
+    }
+
+    public function recommendations()
+    {
+        return $this->hasMany(Recommendation::class);
     }
 }

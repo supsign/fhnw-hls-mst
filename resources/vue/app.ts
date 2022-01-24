@@ -30,22 +30,40 @@ import {courseSkillStore} from "./store/courseSkill/courseSkill.store";
 import VueSessionSweetalert from "./components/base/vueSessionSweetalert.vue";
 import VueAdminMentorStudyFields from "./components/admin/vueAdminMentorStudyFields.vue";
 import VueLockPlanning from "./components/planning/vueLockPlanning.vue";
+import VueAdminSpecializationYears from "./components/admin/specialization/vueAdminSpecializationYears.vue";
 import VueAdminMentorStudents from "./components/admin/vueAdminMentorStudents.vue";
-import VueAdminCourseCrossQualificationYear from "./components/admin/vueAdminCourseCrossQualificationYear.vue"
-
-//@ts-ignore
-import VueMask from 'v-mask'
-import VueAdminCrossQualificationYear from "./components/admin/vueAdminCrossQualificationYear.vue";
+import {specializationStore} from "./store/specialization/specialization.store";
+import {specializationYearStore} from "./store/specializationYear/specializationYear.store";
+import {assessmentStore} from "./store/assessment/assessment.store";
 import VueAdminFaqWrapper from "./components/admin/vueAdminFaqWrapper.vue";
 import VueEditor from "./components/form/vueEditor.vue";
+import {courseSpecializationYearStore} from "./store/courseSpecializationYear/courseSpecializationYear.store";
+import {courseGroupYearStore} from "./store/courseGroupYear/courseGroupYear.store";
+import VueAdminCrossQualificationYears from "./components/admin/crossQualification/vueAdminCrossQualificationYears.vue"
+import {courseCourseGroupYearStore} from "./store/courseCourseGroupYear/courseCourseGroupYear.store";
+import VueAdminCourseGroups from "./components/admin/courseGroup/vueAdminCourseGroups.vue";
+import {courseGroupStore} from "./store/courseGroup/courseGroup.store";
+import {recommendationStore} from "./store/recommendation/recommendation.store";
+import {crossQualificationYearStore} from "./store/crossQualificationYear/crossQualificationYear.store";
+import {courseCrossQualificationYearStore} from "./store/courseCrossQualificationYear/courseCrossQualificationYear.store";
+import {crossQualificationStore} from "./store/crossQualification/crossQualification.store";
+import {assessmentCourseStore} from "./store/assessmentCourse/assessmentCourse.store";
+import VueAdminAssessment from "./components/admin/assessment/vueAdminAssessment.vue";
+
+//@ts-ignore
+import VueMask from 'v-mask';
 // @ts-ignore
 import Editor from "@tinymce/tinymce-vue";
+import {courseRecommendationStore} from "./store/courseRecommendation/courseRecommendation.store";
+import VueAdminRecommendation from "./components/admin/recommendation/vueAdminRecommendation.vue";
+import {studyFieldYearStore} from "./store/studyFieldYear/studyFieldYear.store";
+import VueAdminStudyFieldYear from "./components/admin/studyFieldYear/vueAdminStudyFieldYear.vue";
 
 library.add(faUserSecret);
 library.add(faCheck);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
-Vue.component( "editor", Editor );
+Vue.component("editor", Editor);
 Vue.use(Vuex);
 Vue.use(VueMask);
 
@@ -57,7 +75,21 @@ const store = new Vuex.Store({
         semester: semesterStore,
         skill: skillStore,
         skillStudent: skillStudentStore,
-        courseSkill: courseSkillStore
+        courseSkill: courseSkillStore,
+        specialization: specializationStore,
+        specializationYear: specializationYearStore,
+        assessment: assessmentStore,
+        courseSpecializationYear: courseSpecializationYearStore,
+        courseGroupYear: courseGroupYearStore,
+        courseCourseGroupYear: courseCourseGroupYearStore,
+        courseGroup: courseGroupStore,
+        recommendation: recommendationStore,
+        crossQualificationYear: crossQualificationYearStore,
+        courseCrossQualificationYear: courseCrossQualificationYearStore,
+        crossQualification: crossQualificationStore,
+        assessmentCourse: assessmentCourseStore,
+        courseRecommendation: courseRecommendationStore,
+        studyFieldYear: studyFieldYearStore
     },
 });
 
@@ -82,10 +114,14 @@ const app = new Vue({
         VueAdminMentorStudyFields,
         VueLockPlanning,
         VueAdminMentorStudents,
-        VueAdminCourseCrossQualificationYear,
-        VueAdminCrossQualificationYear,
+        VueAdminSpecializationYears,
         VueAdminFaqWrapper,
-        VueEditor
+        VueEditor,
+        VueAdminCourseGroups,
+        VueAdminCrossQualificationYears,
+        VueAdminAssessment,
+        VueAdminRecommendation,
+        VueAdminStudyFieldYear
     },
     store
 });

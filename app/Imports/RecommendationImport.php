@@ -9,6 +9,7 @@ use App\Models\Specialization;
 use App\Models\StudyField;
 use App\Services\Course\CourseService;
 use App\Services\Recommendation\RecommendationService;
+use Illuminate\Database\Eloquent\Model;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
@@ -37,7 +38,7 @@ class RecommendationImport extends BaseExcelImport implements ToModel, WithHeadi
 
     /**
      * @param  array  $row
-     * @return \Illuminate\Database\Eloquent\Model|null
+     * @return Model|null
      */
     public function model(array $row)
     {
@@ -49,36 +50,40 @@ class RecommendationImport extends BaseExcelImport implements ToModel, WithHeadi
             return;
         }
 
-        foreach ($this->courseService->getByNumberUnformated($row['modulnummer']) AS $course) {
+        foreach ($this->courseService->getByNumberUnformated($row['modulnummer']) as $course) {
             $recommendationName = $row['studienrichtung'];
 
             if ($row['spezialisierung'] !== 'keine') {
                 $recommendationName .= ' - '.$row['spezialisierung'];
                 $specialisation = Specialization::where('name', $recommendationName)->first();
+                $studyField = $specialisation->studyField;
             } elseif ($row['querschnittsqualifikation'] !== 'keine') {
                 $recommendationName .= ' - '.$row['querschnittsqualifikation'];
                 $crossqualification = CrossQualification::where('name', $recommendationName)->first();
+                $studyField = $crossqualification->studyField;
             }
 
-            $recommendation = $this->recommendationService->getFirstOrCreateByName($recommendationName);
+            if (!isset($studyField)) {
+                $studyField = StudyField::where('evento_number', 'like', '2-L-B-LS'.$recommendationName.'%')->first();
+            }
+
+            $recommendation = $this->recommendationService->getFirstOrCreateByName($recommendationName, $studyField);
 
             if (!empty($specialisation)) {
-                foreach ($specialisation->specializationYears AS $specializationYear) {
+                foreach ($specialisation->specializationYears as $specializationYear) {
                     $specializationYear->update(['recommendation_id' => $recommendation->id]);
                 }
             }
 
             if (!empty($crossqualification)) {
-                foreach ($crossqualification->crossQualificationYears AS $crossQualificationYear) {
+                foreach ($crossqualification->crossQualificationYears as $crossQualificationYear) {
                     $crossQualificationYear->update(['recommendation_id' => $recommendation->id]);
                 }
             }
 
             if (empty($specialisation) && empty($crossqualification)) {
-                $studyField = StudyField::where('evento_number', 'like', '2-L-B-LS'.$recommendationName.'%')->first();
-
                 if ($studyField) {
-                    foreach ($studyField->studyFieldYears AS $studyFieldYear) {
+                    foreach ($studyField->studyFieldYears as $studyFieldYear) {
                         $studyFieldYear->update(['recommendation_id' => $recommendation->id]);
                     }
                 }

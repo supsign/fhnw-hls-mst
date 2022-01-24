@@ -3,6 +3,7 @@
 namespace App\Services\StudyFieldYear;
 
 use App\Models\Assessment;
+use App\Models\Recommendation;
 use App\Models\StudyFieldYear;
 use App\Services\Base\BaseModelService;
 use App\Services\Evento\Traits\CreateOrUpdateOnEventoId;
@@ -56,11 +57,28 @@ class StudyFieldYearService extends BaseModelService
         ])->first();
     }
 
-    public function attacheAssessment(StudyFieldYear $studyFieldYear, Assessment $assessment): StudyFieldYear
+    public function attacheAssessment(StudyFieldYear $studyFieldYear, Assessment $assessment = null): StudyFieldYear
     {
-        $studyFieldYear->assessment_id = $assessment->id;
+        if (!$assessment) {
+            $studyFieldYear->assessment_id = null;
+        } else {
+            $studyFieldYear->assessment_id = $assessment->id;
+        }
         $studyFieldYear->save();
         $studyFieldYear->refresh();
+
+        return $studyFieldYear;
+    }
+
+    public function setRecommendation(StudyFieldYear $studyFieldYear, Recommendation $recommendation = null): StudyFieldYear
+    {
+        if (!$recommendation) {
+            $studyFieldYear->recommendation_id = null;
+        } else {
+            $studyFieldYear->recommendation_id = $recommendation->id;
+        }
+
+        $studyFieldYear->save();
 
         return $studyFieldYear;
     }

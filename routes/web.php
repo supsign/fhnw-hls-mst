@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminAssessmentController;
 use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\AdminCrossQualificationController;
 use App\Http\Controllers\Admin\AdminMentorController;
+use App\Http\Controllers\Admin\AdminRecommendationController;
 use App\Http\Controllers\Admin\AdminRolesController;
+use App\Http\Controllers\Admin\AdminStudyFieldController;
+use App\Http\Controllers\Admin\AdminStudyFieldYearController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MentorPlanningController;
@@ -81,6 +84,15 @@ Route::middleware(['web', 'auth', 'backend'])->group(
         Route::get('admin/mentors', [AdminMentorController::class, 'mentors'])->name('admin.mentors');
         Route::get('admin/mentors/{mentor}', [AdminMentorController::class, 'showOne'])->name('admin.mentor');
 
-        Route::get('admin/crossQualificationYears/{crossQualificationYear}', [AdminCrossQualificationController::class, 'showCrossQualificationYaer'])->name('admin.crossQualificationYear');
+        Route::get('admin/studyFields', [AdminStudyFieldController::class, 'showAll'])->name('admin.studyFields.all');
+
+        Route::get('admin/assessments/{assessment}', [AdminAssessmentController::class, 'showOne'])->name('admin.assessments.showOne');
+        Route::get('admin/assessments/{assessment}/copy', [AdminAssessmentController::class, 'copy'])->name('admin.assessments.copy');
+
+        Route::get('admin/recommendations/{recommendation}', [AdminRecommendationController::class, 'showOne'])->name('admin.recommendation.showOne');
+        Route::get('admin/recommendations/{recommendation}/copy', [AdminRecommendationController::class, 'copy'])->name('admin.recommendation.copy');
+
+        Route::get('admin/studyFieldYears/{studyFieldYear}', [AdminStudyFieldYearController::class, 'show'])->name('admin.studyFieldYears.show');
+        Route::get('admin/studyFieldYears/{studyFieldYear}/courseGroups', [AdminStudyFieldYearController::class, 'courseGroups'])->name('admin.studyFieldYears.courseGroups');
     }
 );

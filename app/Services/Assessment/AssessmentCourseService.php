@@ -26,4 +26,9 @@ class AssessmentCourseService extends BaseModelService
 
         return $courseAssessment;
     }
+
+    public function remove(AssessmentCourse $assessmentCourse)
+    {
+        $assessmentCourse->delete();
+    }
 }

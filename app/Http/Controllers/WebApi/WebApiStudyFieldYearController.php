@@ -16,8 +16,7 @@ class WebApiStudyFieldYearController extends Controller
 {
     public function __construct(
         protected PermissionAndRoleService $permissionAndRoleService,
-    )
-    {
+    ) {
     }
 
     public function get(StudyFieldYear $studyFieldYear): StudyFieldYear
@@ -29,14 +28,12 @@ class WebApiStudyFieldYearController extends Controller
 
     public function patch(
         PatchStudyFieldYearRequest $patchStudyFieldYearRequest,
-        StudyFieldYear             $studyFieldYear,
-        StudyFieldYearService      $studyFieldYearService,
-        AssessmentService          $assessmentService,
-        RecommendationService      $recommendationService,
-    ): StudyFieldYear
-    {
+        StudyFieldYear $studyFieldYear,
+        StudyFieldYearService $studyFieldYearService,
+        AssessmentService $assessmentService,
+        RecommendationService $recommendationService,
+    ): StudyFieldYear {
         $this->permissionAndRoleService->canManageBackendOrAbort();
-
 
         if ($patchStudyFieldYearRequest->has('assessment_id')) {
             $assessment_id = $patchStudyFieldYearRequest->assessment_id;

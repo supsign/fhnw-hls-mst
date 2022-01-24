@@ -27,7 +27,7 @@ class AdminStudyFieldYearController extends Controller
         $courseGroupYears = $studyFieldYear->courseGroupYears;
         $courseGroups = $courseGroupYears->pluck('courseGroup')->unique();
         $courseCourseGroupYears = $courseGroupYears->pluck('courseCourseGroupYears')->flatten(1)->unique();
-        $courses = $courseCourseGroupYears->pluck('course')->unique();
+        $courses = $courseCourseGroupYears->pluck('course')->unique()->values();
 
         return view('admin.course-groups', [
             'studyFieldYear' => $studyFieldYear,

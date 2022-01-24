@@ -55,14 +55,14 @@
                 </div>
             </div>
             <div>
-                <div class="text-xs text-gray-600">Module</div>
+                <div class="text-xs text-gray-600 mb-4">Module</div>
                 <div class="ml-2 text-sm space-y-2">
                     <vue-admin-course-pivot v-for="coursePivot in courseSpecializationYears"
                                             :key="coursePivot.id"
                                             :course-pivot="coursePivot"
                                             @remove="remove"
                     />
-                    <div>
+                    <div class="mt-8">
                         <vue-admin-backend-course-select
                             v-model="selectedCourse"
                             :course-ids-in-use="courseIdsInUse"

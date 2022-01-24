@@ -7,31 +7,42 @@
                 </div>
                 <div class="flex flex-row space-x-2 items-center text-">
                     <div>Benötigte&nbsp;Punkte:</div>
-                    <vue-store-input :model="models.courseGroupYear" :entity="courseGroupYear" name="credits_to_pass"
-                                     :edit-mode="editMode" type="number" class="w-24"/>
-                    <div v-if="!editMode" class="cursor-pointer" @click="editMode=true">
-                        <i class="far fa-edit" aria-hidden="true"></i>
+                    <vue-store-input :edit-mode="editMode" :entity="courseGroupYear" :model="models.courseGroupYear"
+                                     class="w-24" name="credits_to_pass" type="number"/>
+                    <div v-if="!editMode" class="cursor-pointer" @click="edit">
+                        <i aria-hidden="true" class="far fa-edit"></i>
                     </div>
-                    <div v-else class="cursor-pointer" @click="save">
-                        <i class="far fa-save" aria-hidden="true"></i>
+                    <div v-else class="flex felx-row space-x-2">
+                        <div class="cursor-pointer" @click="cancel">
+                            <i aria-hidden="true" class="far fa-times"></i>
+                        </div>
+                        <div class="cursor-pointer" @click="save">
+                            <i aria-hidden="true" class="far fa-save"></i>
+                        </div>
                     </div>
                 </div>
             </div>
         </template>
         <div class="text-sm space-y-2">
-            <vue-admin-course-pivot
-                v-for="courseCourseGroupYear in courseCourseGroupYears"
-                :key="courseCourseGroupYear.id"
-                :course-pivot="courseCourseGroupYear"
-                @remove="remove"
-            />
-            <vue-admin-backend-course-select
-                v-model="selectedCourse"
-                :disabled="!!selectedCourse"
-                @input="addCourse"
-                :course-ids-in-use="courseIdsInUse"
-                class="mt-4"
-            ></vue-admin-backend-course-select>
+            <div v-for="courseCourseGroupYear in courseCourseGroupYears" :key="courseCourseGroupYear.id"
+                 class="flex flex-row gap-4">
+                <vue-admin-course-pivot
+                    :course-pivot="courseCourseGroupYear"
+                    @remove="remove"
+                />
+                <div v-if="getCourse(courseCourseGroupYear)">
+                    ({{ getCourse(courseCourseGroupYear).credits }} ECTS)
+                </div>
+            </div>
+            <div class="mt-8">
+                <vue-admin-backend-course-select
+                    v-model="selectedCourse"
+                    :course-ids-in-use="courseIdsInUse"
+                    :disabled="!!selectedCourse"
+                    class="mt-4"
+                    @input="addCourse"
+                ></vue-admin-backend-course-select>
+            </div>
         </div>
     </vue-card>
 </template>
@@ -102,9 +113,22 @@ export default class VueAdminCourseCourseGroups extends BaseComponent {
         });
     }
 
+    public edit() {
+        this.editMode = true;
+    }
+
     public save() {
         this.editMode = false;
         this.models.courseGroupYear.save(this.courseGroupYear.id);
+    }
+
+    public cancel() {
+        this.editMode = false;
+        this.models.courseGroupYear.reset(this.courseGroupYear.id);
+    }
+
+    public getCourse(courseCourseGroupYear: ICourseCourseGroupYear): ICourse {
+        return this.models.course.getById(courseCourseGroupYear.course_id);
     }
 
 

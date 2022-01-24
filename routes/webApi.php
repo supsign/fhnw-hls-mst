@@ -18,6 +18,7 @@ use App\Http\Controllers\WebApi\WebApiMentorStudyFieldController;
 use App\Http\Controllers\WebApi\WebApiPlanningController;
 use App\Http\Controllers\WebApi\WebApiRecommendationController;
 use App\Http\Controllers\WebApi\WebApiSpecializationYearController;
+use App\Http\Controllers\WebApi\WebApiStudyFieldYearController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(
@@ -67,6 +68,9 @@ Route::middleware('auth')->group(
 
         Route::get('recommendations/{recommendation}', [WebApiRecommendationController::class, 'get'])->name('webapi.recommendations.get');
         Route::patch('recommendations/{recommendation}', [WebApiRecommendationController::class, 'patch'])->name('webapi.recommendations.patch');
+
+        Route::get('studyFieldYears/{studyFieldYear}', [WebApiStudyFieldYearController::class, 'get'])->name('webapi.studyFieldYears.get');
+        Route::patch('studyFieldYears/{studyFieldYear}', [WebApiStudyFieldYearController::class, 'patch'])->name('webapi.studyFieldYears.patch');
 
         Route::post('assessmentCourses', [WebApiAssessmentCourseController::class, 'post'])->name('webapi.assessmentCourses.post');
         Route::delete('assessmentCourses/{assessmentCourse}', [WebApiAssessmentCourseController::class, 'delete'])->name('webapi.assessmentCourses.delete');

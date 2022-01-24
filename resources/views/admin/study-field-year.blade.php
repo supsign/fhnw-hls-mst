@@ -20,29 +20,38 @@
                     :entities="{{\App\Models\Recommendation::all()}}"></vue-store-fill>
     <vue-store-fill :model="'course'"
                     :entities="{{$studyFieldYear->courses}}"></vue-store-fill>
+    <vue-store-fill :model="'studyFieldYear'"
+                    :entity="{{$studyFieldYear}}"></vue-store-fill>
 
     <div class="space-y-6">
         <div class="text-2xl text-gray-500 mb-4">{{$studyFieldYear->studyField->name}}
             - {{$studyFieldYear->beginSemester->year}}</div>
 
-        <x-app.card>
-            <x-slot name="title">
-                <div class="flex flex-row justify-between">
-                    <div>
-                        Modulgruppen
-                    </div>
-                    <a href="{{route('admin.studyFieldYears.courseGroups', [$studyFieldYear])}}">
-                        <i class="far fa-edit" aria-hidden="true"></i>
-                    </a>
-                </div>
-            </x-slot>
+        {{--        <x-app.card>--}}
+        {{--            <x-slot name="title">--}}
+        {{--                <div class="flex flex-row justify-between">--}}
+        {{--                    <div>--}}
+        {{--                        Modulgruppen--}}
+        {{--                    </div>--}}
+        {{--                    <a href="{{route('admin.studyFieldYears.courseGroups', [$studyFieldYear])}}">--}}
+        {{--                        <i class="far fa-edit" aria-hidden="true"></i>--}}
+        {{--                    </a>--}}
+        {{--                </div>--}}
+        {{--            </x-slot>--}}
 
-            @foreach($studyFieldYear->courseGroupYears as $courseGroupYear)
-                <div>{{$courseGroupYear->courseGroup->name}}</div>
-            @endforeach
+        {{--            @foreach($studyFieldYear->courseGroupYears as $courseGroupYear)--}}
+        {{--                <div>{{$courseGroupYear->courseGroup->name}}</div>--}}
+        {{--            @endforeach--}}
 
 
-        </x-app.card>
+        {{--        </x-app.card>--}}
+
+        <vue-admin-study-field-year
+            :study-field-year-id="{{$studyFieldYear->id}}"
+            :study-field="{{$studyFieldYear->studyField}}"
+            :semester="{{$studyFieldYear->beginSemester}}"
+            :course-groups="{{$studyFieldYear->courseGroupYears()->with('courseGroup')->get()->pluck('courseGroup')}}"
+        ></vue-admin-study-field-year>
 
         <vue-admin-specialization-years
             :study-field-year="{{$studyFieldYear}}"

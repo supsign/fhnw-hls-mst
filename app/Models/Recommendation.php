@@ -44,11 +44,6 @@ class Recommendation extends BaseModel
         );
     }
 
-    public function studyFieldYear()
-    {
-        return $this->belongsTo(StudyFieldYear::class);
-    }
-
     public function studyField()
     {
         return $this->belongsTo(StudyField::class);

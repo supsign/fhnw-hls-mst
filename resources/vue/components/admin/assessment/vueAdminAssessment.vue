@@ -7,8 +7,15 @@
                                      :model="models.assessment" name="name"/>
                 </div>
                 <div>
-                    <div v-if="!editMode" class="cursor-pointer" @click="edit">
-                        <i aria-hidden="true" class="far fa-edit"></i>
+                    <div v-if="!editMode" class="flex flex-row gap-2">
+                        <div class="cursor-pointer" @click="edit">
+                            <i aria-hidden="true" class="far fa-edit"></i>
+                        </div>
+                        <div class="cursor-pointer">
+                            <a :href="`/admin/assessments/${assessmentId}/copy`">
+                                <i aria-hidden="true" class="far fa-copy"></i>
+                            </a>
+                        </div>
                     </div>
                     <div v-else class="flex felx-row space-x-2">
                         <div class="cursor-pointer" @click="cancel">
@@ -34,17 +41,17 @@
 
                 <div class="text-sm space-y-2">
                     <vue-admin-course-pivot v-for="coursePivot in assessmentCourses"
-                                            :course-pivot="coursePivot"
                                             :key="coursePivot.id"
+                                            :course-pivot="coursePivot"
                                             @remove="remove"
                     />
                 </div>
                 <vue-admin-backend-course-select
                     v-model="selectedCourse"
-                    :disabled="!!selectedCourse"
-                    @input="addCourse"
                     :course-ids-in-use="courseIdsInUse"
+                    :disabled="!!selectedCourse"
                     class="mt-4"
+                    @input="addCourse"
                 />
             </div>
         </div>
@@ -85,6 +92,10 @@ export default class VueAdminAssessment extends BaseComponent {
         return this.models.assessmentCourse.filter((assessmentCourse) => assessmentCourse.assessment_id === this.assessmentId)
     }
 
+    public get courseIdsInUse() {
+        return this.assessmentCourses.map(assessmentCourse => assessmentCourse.course_id)
+    }
+
     public edit() {
         this.editMode = true;
     }
@@ -121,10 +132,6 @@ export default class VueAdminAssessment extends BaseComponent {
             }).finally(() => {
             this.selectedCourse = null;
         });
-    }
-
-    public get courseIdsInUse() {
-        return this.assessmentCourses.map(assessmentCourse => assessmentCourse.course_id)
     }
 
 }

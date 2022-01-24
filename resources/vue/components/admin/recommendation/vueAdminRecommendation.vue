@@ -11,8 +11,15 @@
                     />
                 </div>
                 <div>
-                    <div v-if="!editMode" class="cursor-pointer" @click="edit">
-                        <i aria-hidden="true" class="far fa-edit"></i>
+                    <div v-if="!editMode" class="flex flex-row gap-2">
+                        <div class="cursor-pointer" @click="edit">
+                            <i aria-hidden="true" class="far fa-edit"></i>
+                        </div>
+                        <div class="cursor-pointer">
+                            <a :href="`/admin/recommendations/${recommendationId}/copy`">
+                                <i aria-hidden="true" class="far fa-copy"></i>
+                            </a>
+                        </div>
                     </div>
                     <div v-else class="flex felx-row space-x-2">
                         <div class="cursor-pointer" @click="cancel">
@@ -28,9 +35,9 @@
         <div class="flex flex-col gap-6">
             <vue-admin-course-recommendations
                 v-for="semester in [1,2,3,4,5,6]"
-                :semester="semester"
+                :key="semester"
                 :recommendation-id="recommendationId"
-                :key="semester"/>
+                :semester="semester"/>
         </div>
     </vue-card>
 </template>

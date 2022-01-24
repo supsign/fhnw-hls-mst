@@ -1,6 +1,6 @@
 <x-layout.admin>
     <x-slot name="title">
-        Assessment
+        Musterstudienplan
     </x-slot>
 
     <vue-store-fill :model="'recommendation'"

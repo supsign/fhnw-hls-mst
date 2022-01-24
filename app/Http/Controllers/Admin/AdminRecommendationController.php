@@ -4,8 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Recommendation;
+use App\Services\Recommendation\CopyRecommendationService;
 use App\Services\User\PermissionAndRoleService;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
 
 class AdminRecommendationController extends Controller
 {
@@ -18,5 +22,14 @@ class AdminRecommendationController extends Controller
         $this->permissionAndRoleService->canManageBackendOrAbort();
 
         return view('admin.recommendation', ['recommendation' => $recommendation]);
+    }
+
+    public function copy(Recommendation $recommendation, CopyRecommendationService $copyRecommendationService): Application|RedirectResponse|Redirector
+    {
+        $this->permissionAndRoleService->canManageBackendOrAbort();
+
+        $newRecommendation = $copyRecommendationService->execute($recommendation);
+
+        return redirect(route('admin.recommendation.showOne', [$newRecommendation]));
     }
 }

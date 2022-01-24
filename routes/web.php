@@ -87,8 +87,10 @@ Route::middleware(['web', 'auth', 'backend'])->group(
         Route::get('admin/studyFields', [AdminStudyFieldController::class, 'showAll'])->name('admin.studyFields.all');
 
         Route::get('admin/assessments/{assessment}', [AdminAssessmentController::class, 'showOne'])->name('admin.assessments.showOne');
+        Route::get('admin/assessments/{assessment}/copy', [AdminAssessmentController::class, 'copy'])->name('admin.assessments.copy');
 
         Route::get('admin/recommendations/{recommendation}', [AdminRecommendationController::class, 'showOne'])->name('admin.recommendation.showOne');
+        Route::get('admin/recommendations/{recommendation}/copy', [AdminRecommendationController::class, 'copy'])->name('admin.recommendation.copy');
 
         Route::get('admin/studyFieldYears/{studyFieldYear}', [AdminStudyFieldYearController::class, 'show'])->name('admin.studyFieldYears.show');
         Route::get('admin/studyFieldYears/{studyFieldYear}/courseGroups', [AdminStudyFieldYearController::class, 'courseGroups'])->name('admin.studyFieldYears.courseGroups');

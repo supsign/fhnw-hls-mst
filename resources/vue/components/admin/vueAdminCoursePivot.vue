@@ -9,8 +9,18 @@
 
         </div>
     </div>
-    <div v-else>Kurs nicht geladen: ID{{ coursePivot.id }} CourseId:
-        {{ coursePivot.course_id }}
+    <div v-else>
+
+        <div :class="{'text-gray-500': isRemoving}" class="flex flex-row gap-4 items-center">
+            <div class="cursor-pointer" @click="remove">
+                <i aria-hidden="true" class="far fa-trash"></i>
+            </div>
+            <div class="w-40 flex-shrink-0"> ----</div>
+            <div>Kurs nicht geladen: ID{{ coursePivot.id }} CourseId:
+                {{ coursePivot.course_id }}
+            </div>
+
+        </div>
     </div>
 </template>
 

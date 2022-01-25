@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 class StudyFieldYearCollection extends Collection
 {
-    public function getStudyFields()
+    public function getStudyFields(): Collection
     {
         return $this->pluck('studyField')->unique();
     }

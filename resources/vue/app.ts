@@ -58,6 +58,7 @@ import {courseRecommendationStore} from "./store/courseRecommendation/courseReco
 import VueAdminRecommendation from "./components/admin/recommendation/vueAdminRecommendation.vue";
 import {studyFieldYearStore} from "./store/studyFieldYear/studyFieldYear.store";
 import VueAdminStudyFieldYear from "./components/admin/studyFieldYear/vueAdminStudyFieldYear.vue";
+import {studyFieldStore} from "./store/studyField/studyField.store";
 
 library.add(faUserSecret);
 library.add(faCheck);
@@ -89,7 +90,8 @@ const store = new Vuex.Store({
         crossQualification: crossQualificationStore,
         assessmentCourse: assessmentCourseStore,
         courseRecommendation: courseRecommendationStore,
-        studyFieldYear: studyFieldYearStore
+        studyFieldYear: studyFieldYearStore,
+        studyField: studyFieldStore
     },
 });
 

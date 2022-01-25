@@ -2,11 +2,17 @@
 
 namespace App\Models;
 
+
 /**
  * @mixin IdeHelperStudyFieldYear
  */
 class StudyFieldYear extends BaseModel
 {
+    public function newCollection(array $models = [])
+    {
+        return new StudyFieldYearCollection($models);
+    }
+
     public function assessment()
     {
         return $this->belongsTo(Assessment::class);
@@ -37,16 +43,16 @@ class StudyFieldYear extends BaseModel
         return $this->specializationYears()->with('courseSpecializationYears')->get()->pluck('courseSpecializationYears')->flatten(1)->unique();
     }
 
+    public function specializationYears()
+    {
+        return $this->hasMany(SpecializationYear::class);
+    }
+
     public function getCourseCrossQualificationYearsAttribute()
     {
         $blub = $this->crossQualificationYears()->with('courseCrossQualificationYears')->get()->pluck('courseCrossQualificationYears')->flatten(1)->unique();
 
         return $blub;
-    }
-
-    public function specializationYears()
-    {
-        return $this->hasMany(SpecializationYear::class);
     }
 
     public function crossQualificationYears()

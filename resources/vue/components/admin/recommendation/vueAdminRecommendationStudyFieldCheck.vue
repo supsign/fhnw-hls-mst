@@ -14,9 +14,9 @@
         </template>
         <div v-if="coursesNotInStudyFieldYear.length">
             <div class="text-xs text-gray-600">Module, welche in der Studienrichtung fehlen:</div>
-            <div v-for="assessmentCourse in coursesNotInStudyFieldYear">
+            <div v-for="courseRecommendation in coursesNotInStudyFieldYear">
                 <div class="flex flex-row ml-4 text-sm">
-                    <vue-admin-course :course-id="assessmentCourse.course_id"></vue-admin-course>
+                    <vue-admin-course :course-id="courseRecommendation.course_id"></vue-admin-course>
                 </div>
             </div>
         </div>
@@ -39,9 +39,9 @@ import VueAdminCourse from "../vueAdminCourse.vue";
         VueAdminCourse
     }
 })
-export default class VueAdminAssessment extends BaseComponent {
+export default class VueAdminRecommendationStudyFieldCheck extends BaseComponent {
     @Prop({type: Number})
-    public assessmentId: number
+    public recommendationId: number
 
     @Prop({type: Number})
     public studyFieldYearId: number
@@ -64,8 +64,8 @@ export default class VueAdminAssessment extends BaseComponent {
         return this.models.semester.getById(this.studyFieldYear.begin_semester_id);
     }
 
-    public get assessmentCourses() {
-        return this.models.assessmentCourse.filter(assessmentCourse => assessmentCourse.assessment_id === this.assessmentId);
+    public get courseRecommendations() {
+        return this.models.courseRecommendation.filter(courseRecommendation => courseRecommendation.recommendation_id === this.recommendationId);
     }
 
     public get courseGroupYears(): ICourseGroupYear[] {
@@ -85,7 +85,7 @@ export default class VueAdminAssessment extends BaseComponent {
     }
 
     public get coursesNotInStudyFieldYear() {
-        return this.assessmentCourses.filter(assessmentCourse => !this.courseCourseGroupYearCourseIds.includes(assessmentCourse.course_id))
+        return this.courseRecommendations.filter(courseRecommendation => !this.courseCourseGroupYearCourseIds.includes(courseRecommendation.course_id))
     }
 
 }

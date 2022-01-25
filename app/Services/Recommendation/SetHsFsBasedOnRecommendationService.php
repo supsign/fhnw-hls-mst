@@ -11,8 +11,7 @@ class SetHsFsBasedOnRecommendationService
     public function __construct(
         private SetCourseHsService $setCourseHsService,
         private SetCourseFsService $setCourseFsService
-    )
-    {
+    ) {
     }
 
     public function execute(Recommendation $recommendation): Recommendation

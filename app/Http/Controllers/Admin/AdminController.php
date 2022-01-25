@@ -20,6 +20,7 @@ class AdminController extends Controller
         $this->permissionAndRoleService->canManageBackendOrAbort();
 
         $courses = CourseCourseGroupYear::all()->pluck('course')->unique();
+
         return view('admin.courses', [
             'courses' => $courses,
         ]);

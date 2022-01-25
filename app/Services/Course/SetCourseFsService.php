@@ -6,7 +6,6 @@ use App\Models\Course;
 
 class SetCourseFsService
 {
-
     public function execute(Course $course, bool $isFs): Course
     {
         $course->is_fs = $isFs;

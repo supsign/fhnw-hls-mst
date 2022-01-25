@@ -35,9 +35,8 @@ class Assessment extends BaseModel
         $corssQualificationYears = $this->crossQualificationYears()->with('studyFieldYear')->get();
         $studyFieldYearsFromCQ = $corssQualificationYears->pluck('studyFieldYear')->unique();
         $allStudyfieldYears = $studyFieldYears->merge($studyFieldYearsFromSpec)->merge($studyFieldYearsFromCQ);
+
         return $allStudyfieldYears;
-
-
     }
 
     public function specializationYears()

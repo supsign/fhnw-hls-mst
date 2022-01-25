@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Collection as SupportCollection;
 
 class StudyFieldYearCollection extends Collection
 {
@@ -12,12 +11,12 @@ class StudyFieldYearCollection extends Collection
         return $this->pluck('studyField')->unique();
     }
 
-    public function getCourseCourseGroupYears(): SupportCollection
+    public function getCourseCourseGroupYears(): Collection
     {
         return $this->getCourseGroupYears()->pluck('courseCourseGroupYears')->flatten(1)->unique();
     }
 
-    public function getCourseGroupYears(): SupportCollection
+    public function getCourseGroupYears(): Collection
     {
         return $this->pluck('courseGroupYears')->flatten(1)->unique();
     }

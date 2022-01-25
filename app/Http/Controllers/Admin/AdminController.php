@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Course;
+use App\Models\CourseCourseGroupYear;
 use App\Services\Faq\FrequentlyAskedQuestionService;
 use App\Services\User\PermissionAndRoleService;
 use App\Services\User\UserService;
@@ -19,8 +19,9 @@ class AdminController extends Controller
     {
         $this->permissionAndRoleService->canManageBackendOrAbort();
 
+        $courses = CourseCourseGroupYear::all()->pluck('course')->unique();
         return view('admin.courses', [
-            'courses' => Course::all()->sortBy('name'),
+            'courses' => $courses,
         ]);
     }
 

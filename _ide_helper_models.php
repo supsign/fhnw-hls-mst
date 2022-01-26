@@ -25,7 +25,14 @@ namespace App\Models{
  * @property-read int|null $assessment_courses_count
  * @property-read \App\Models\BaseCollection|\App\Models\Course[] $courses
  * @property-read int|null $courses_count
+ * @property-read \App\Models\BaseCollection|\App\Models\CrossQualificationYear[] $crossQualificationYears
+ * @property-read int|null $cross_qualification_years_count
+ * @property-read mixed $all_study_field_years
+ * @property-read \App\Models\BaseCollection|\App\Models\SpecializationYear[] $specializationYears
+ * @property-read int|null $specialization_years_count
  * @property-read \App\Models\StudyField $studyField
+ * @property-read \App\Models\StudyFieldYearCollection|\App\Models\StudyFieldYear[] $studyFieldYears
+ * @property-read int|null $study_field_years_count
  * @method static \App\Models\BaseCollection|static[] all($columns = ['*'])
  * @method static \App\Models\BaseCollection|static[] get($columns = ['*'])
  * @method static \Illuminate\Database\Eloquent\Builder|Assessment newModelQuery()
@@ -607,6 +614,7 @@ namespace App\Models{
 /**
  * App\Models\FrequentlyAskedQuestion
  *
+ * @mixin IdeHelperFrequentlyAskedQuestion
  * @property int $id
  * @property string $question
  * @property string $answer
@@ -629,7 +637,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|FrequentlyAskedQuestion whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|FrequentlyAskedQuestion withTrashed()
  * @method static \Illuminate\Database\Query\Builder|FrequentlyAskedQuestion withoutTrashed()
- * @mixin \Eloquent
  */
 	class IdeHelperFrequentlyAskedQuestion extends \Eloquent {}
 }
@@ -844,11 +851,18 @@ namespace App\Models{
  * @property-read \App\Models\BaseCollection|\App\Models\Course[] $courses
  * @property-read int|null $courses_count
  * @property-read \App\Models\CrossQualificationYear $crossQualificationYear
+ * @property-read \App\Models\BaseCollection|\App\Models\CrossQualificationYear[] $crossQualificationYears
+ * @property-read int|null $cross_qualification_years_count
+ * @property-read mixed $all_study_field_years
  * @property-read Recommendation $originRecommendation
  * @property-read \App\Models\BaseCollection|\App\Models\Semester[] $semesters
  * @property-read int|null $semesters_count
  * @property-read \App\Models\SpecializationYear $specializationYear
+ * @property-read \App\Models\BaseCollection|\App\Models\SpecializationYear[] $specializationYears
+ * @property-read int|null $specialization_years_count
  * @property-read \App\Models\StudyField $studyField
+ * @property-read \App\Models\StudyFieldYearCollection|\App\Models\StudyFieldYear[] $studyFieldYears
+ * @property-read int|null $study_field_years_count
  * @method static \App\Models\BaseCollection|static[] all($columns = ['*'])
  * @method static \App\Models\BaseCollection|static[] get($columns = ['*'])
  * @method static \Illuminate\Database\Eloquent\Builder|Recommendation newModelQuery()
@@ -1117,7 +1131,7 @@ namespace App\Models{
  * @property-read int|null $recommendations_count
  * @property-read \App\Models\BaseCollection|\App\Models\Specialization[] $specializations
  * @property-read int|null $specializations_count
- * @property-read \App\Models\BaseCollection|\App\Models\StudyFieldYear[] $studyFieldYears
+ * @property-read \App\Models\StudyFieldYearCollection|\App\Models\StudyFieldYear[] $studyFieldYears
  * @property-read int|null $study_field_years_count
  * @property-read \App\Models\StudyProgram|null $studyProgram
  * @method static \App\Models\BaseCollection|static[] all($columns = ['*'])
@@ -1167,8 +1181,8 @@ namespace App\Models{
  * @property-read \App\Models\BaseCollection|\App\Models\SpecializationYear[] $specializationYears
  * @property-read int|null $specialization_years_count
  * @property-read \App\Models\StudyField $studyField
- * @method static \App\Models\BaseCollection|static[] all($columns = ['*'])
- * @method static \App\Models\BaseCollection|static[] get($columns = ['*'])
+ * @method static \App\Models\StudyFieldYearCollection|static[] all($columns = ['*'])
+ * @method static \App\Models\StudyFieldYearCollection|static[] get($columns = ['*'])
  * @method static \Illuminate\Database\Eloquent\Builder|StudyFieldYear newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|StudyFieldYear newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|StudyFieldYear query()

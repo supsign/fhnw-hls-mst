@@ -143,7 +143,7 @@
                             <vue-plan-wrapper>
                                 <template v-slot:header>
                                     <div class="flex flex-row">
-                                        <div class="my-auto flex-grow hyphens-auto text-sm">
+                                        <div class="my-auto flex-grow hyphens-auto text-sm px-2">
                                             {{$courseGroupYear->courseGroup->name}}
                                         </div>
                                         <vue-course-group-state

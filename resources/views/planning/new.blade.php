@@ -28,16 +28,6 @@
                     </x-base.button>
                 </div>
             </vue-form>
-            <x-app.card class="bg-yellow-400 mt-4">
-                <div class="flex">
-                    <div class="pr-4">
-                        <i class="far fa-lightbulb fa-2x" aria-hidden="true"></i>
-                    </div>
-                    <div>
-                        Gerne nehmen wir Vorschläge entgegen, was hier stehen sollte.
-                    </div>
-                </div>
-            </x-app.card>
         </x-app.card>
     </div>
 </x-layout.app>

@@ -21,6 +21,7 @@
     "maatwebsite/excel": "^3.1",
     "realrashid/sweet-alert": "^4.1",
     "spatie/laravel-activitylog": "^4.3",
+    "spatie/laravel-backup": "^7.7",
     "spatie/laravel-permission": "^5.1",
     "supsign/laravel-csv-reader": "dev-master"
   },

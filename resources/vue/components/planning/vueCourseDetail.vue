@@ -22,13 +22,13 @@
                 </div>
             </div>
 
-            <div class="flex-shrink flex-grow">
+            <div :class="{'line-through': !course.is_has && !course.is_fs}" class="flex-shrink flex-grow">
                 {{ course.name }}
             </div>
 
         </div>
         <vue-plan-course
-            v-if="!courseIsSuccessfullyCompleted"
+            v-if="!courseIsSuccessfullyCompleted && (course.is_fs || course.is_hs)"
             :course="course"
             :planningId="planning.id"
             :planningIsLocked="planningIsLocked"

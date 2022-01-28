@@ -158,7 +158,6 @@ class PlanningController extends Controller
             'planning' => $planning,
             'courseGroupYears' => $planning->studyFieldYear->courseGroupYears()->with(['courses', 'courseGroup', 'courseCourseGroupYears'])->get(),
             'mentorStudent' => null,
-            'semesters' => $semesterService->getSemesterEligibleForPlanning(),
         ];
 
         return view('planning.showOne', $viewParameter);

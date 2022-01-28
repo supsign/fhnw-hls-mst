@@ -112,7 +112,7 @@
         </div>
 
         <vue-store-fill model="coursePlanning" :entities="{{ $planning->coursePlannings }}"></vue-store-fill>
-        <vue-store-fill model="semester" :entities="{{ $semesters }}"></vue-store-fill>
+        <vue-store-fill model="semester" :entities="{{ \App\Models\Semester::all() }}"></vue-store-fill>
         @php
             $courses = $planning->studyFieldYear->courses;
             $courseSkills = App\Models\CourseSkill::whereIn('course_id', $courses->pluck('id'))

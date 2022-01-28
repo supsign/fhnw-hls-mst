@@ -7,11 +7,10 @@ use App\Models\CoursePlanning;
 use App\Models\Planning;
 use App\Models\Semester;
 use App\Services\Base\BaseModelService;
-use App\Services\Semester\SemesterService;
 
 class CoursePlanningService extends BaseModelService
 {
-    public function __construct(protected CoursePlanning $model, protected SemesterService $semesterService)
+    public function __construct(protected CoursePlanning $model)
     {
         parent::__construct($model);
     }
@@ -25,10 +24,6 @@ class CoursePlanningService extends BaseModelService
 
     public function planCourse(Planning $planning, Course $course, Semester $semester): CoursePlanning
     {
-        if (!$this->semesterService->getSemesterEligibleForPlanning()->contains($semester)) {
-            abort(404);
-        }
-
         return $this->model::firstOrCreate(['planning_id' => $planning->id, 'course_id' => $course->id], ['semester_id' => $semester->id]);
     }
 

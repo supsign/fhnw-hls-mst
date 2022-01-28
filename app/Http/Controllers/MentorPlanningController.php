@@ -28,12 +28,11 @@ class MentorPlanningController extends Controller
 {
     public function __construct(
         private PermissionAndRoleService $permissionAndRoleService,
-        protected StudyFieldService      $studyFieldService,
-        protected SemesterService        $semesterService,
-        protected PlanningService        $planningService,
-        protected StudyFieldYearService  $studyFieldYearService,
-    )
-    {
+        protected StudyFieldService $studyFieldService,
+        protected SemesterService $semesterService,
+        protected PlanningService $planningService,
+        protected StudyFieldYearService $studyFieldYearService,
+    ) {
     }
 
     public function copy(Student $student, Planning $planning, MentorStudentService $mentorStudentService)
@@ -84,12 +83,11 @@ class MentorPlanningController extends Controller
     }
 
     public function store(
-        StoreRequest              $request,
-        Student                   $student,
-        SpecializationService     $specializationService,
+        StoreRequest $request,
+        Student $student,
+        SpecializationService $specializationService,
         CrossQualificationService $crossQualificationService,
-    )
-    {
+    ) {
         $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student);
 
         $studyFieldYear = $this->studyFieldYearService->getByStudyFieldIdAndSemesterId(
@@ -117,12 +115,11 @@ class MentorPlanningController extends Controller
     }
 
     public function storeCopy(
-        StoreRequest              $request,
-        Planning                  $planning,
-        SpecializationService     $specializationService,
+        StoreRequest $request,
+        Planning $planning,
+        SpecializationService $specializationService,
         CrossQualificationService $crossQualificationService,
-    )
-    {
+    ) {
         $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($planning->student, $planning);
 
         $studyFieldYear = $this->studyFieldYearService->getByStudyFieldIdAndSemesterId(

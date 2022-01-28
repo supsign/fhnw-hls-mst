@@ -147,7 +147,7 @@ class PlanningController extends Controller
         return redirect()->route('planning.showOne', $newPlanning);
     }
 
-    public function showOne(Planning $planning, SemesterService $semesterService)
+    public function showOne(Planning $planning)
     {
         $user = Auth::user();
         $this->permissionAndRoleService->canPlanMySchedulesOrAbort($user->student, $planning);

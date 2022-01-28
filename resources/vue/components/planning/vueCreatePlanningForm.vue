@@ -1,7 +1,7 @@
 <template>
     <div class="space-y-8 mt-4">
         <vue-input
-            v-model="studyName" 
+            v-model="studyName"
             label="Name der Planung"
             name="name"
         >
@@ -29,7 +29,7 @@
         </vue-select>
         <vue-select
             v-model="selectedSemester"
-            :options="availabelSemesters"
+            :options="availableSemesters"
             class="w-full min-h-16"
             label="Start"
             name="semester"
@@ -78,6 +78,8 @@ import {IStudyField} from "../../interfaces/studyField.interface";
 import {IStudyFieldYear} from "../../interfaces/studyFieldYear.interface";
 import {ISpecialization} from "../../interfaces/specialization.interface";
 import {ICrossQualification} from "../../interfaces/crossQualification.interface";
+import {ISpecializationYear} from "../../interfaces/specialzationYear.interface";
+import {ICrossQualificationYear} from "../../interfaces/crossQualificationYear.interface";
 
 @Component({
     components: {
@@ -105,7 +107,13 @@ export default class VueCreatePlanningForm extends BaseComponent {
     specializations: ISpecialization[]
 
     @Prop({type: Array})
+    specializationYears: ISpecializationYear[]
+
+    @Prop({type: Array})
     crossQualifications: ICrossQualification[]
+
+    @Prop({type: Array})
+    crossQualificationYears: ICrossQualificationYear[]
 
     studyName: string = null;
 
@@ -131,7 +139,7 @@ export default class VueCreatePlanningForm extends BaseComponent {
         );
     }
 
-    public get availabelSemesters(): ISemester[] {
+    public get availableSemesters(): ISemester[] {
         if (!this.selectedStudyField) {
             return []
         }
@@ -144,7 +152,10 @@ export default class VueCreatePlanningForm extends BaseComponent {
                 (studyFieldYear) => this.semesters.find(
                     (semester) => semester.id === studyFieldYear.begin_semester_id
                 )
-            ).sort(function(a, b){return a.year - b.year});;
+            ).sort(function (a, b) {
+                return a.year - b.year
+            });
+
     }
 
     public get availableSpecializations(): ISpecialization[] {

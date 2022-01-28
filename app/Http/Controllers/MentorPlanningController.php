@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Planning\StoreRequest;
 use App\Models\CrossQualification;
+use App\Models\CrossQualificationYear;
 use App\Models\Planning;
 use App\Models\Semester;
 use App\Models\Specialization;
@@ -27,11 +28,12 @@ class MentorPlanningController extends Controller
 {
     public function __construct(
         private PermissionAndRoleService $permissionAndRoleService,
-        protected StudyFieldService $studyFieldService,
-        protected SemesterService $semesterService,
-        protected PlanningService $planningService,
-        protected StudyFieldYearService $studyFieldYearService,
-    ) {
+        protected StudyFieldService      $studyFieldService,
+        protected SemesterService        $semesterService,
+        protected PlanningService        $planningService,
+        protected StudyFieldYearService  $studyFieldYearService,
+    )
+    {
     }
 
     public function copy(Student $student, Planning $planning, MentorStudentService $mentorStudentService)
@@ -52,6 +54,8 @@ class MentorPlanningController extends Controller
             'student' => $student,
             'specializations' => Specialization::all(),
             'crossQualifications' => CrossQualification::all(),
+            'specializationYears' => SpecializationYear::all(),
+            'crossQualificationYears' => CrossQualificationYear::all(),
             'mentorStudent' => $mentorStudent,
             'planning' => $planning,
         ]);
@@ -80,11 +84,12 @@ class MentorPlanningController extends Controller
     }
 
     public function store(
-        StoreRequest $request,
-        Student $student,
-        SpecializationService $specializationService,
+        StoreRequest              $request,
+        Student                   $student,
+        SpecializationService     $specializationService,
         CrossQualificationService $crossQualificationService,
-    ) {
+    )
+    {
         $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($student);
 
         $studyFieldYear = $this->studyFieldYearService->getByStudyFieldIdAndSemesterId(
@@ -112,11 +117,12 @@ class MentorPlanningController extends Controller
     }
 
     public function storeCopy(
-        StoreRequest $request,
-        Planning $planning,
-        SpecializationService $specializationService,
+        StoreRequest              $request,
+        Planning                  $planning,
+        SpecializationService     $specializationService,
         CrossQualificationService $crossQualificationService,
-    ) {
+    )
+    {
         $this->permissionAndRoleService->canPlanStudentSchedulesOrAbort($planning->student, $planning);
 
         $studyFieldYear = $this->studyFieldYearService->getByStudyFieldIdAndSemesterId(

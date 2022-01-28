@@ -112,7 +112,7 @@
         </div>
 
         <vue-store-fill model="coursePlanning" :entities="{{ $planning->coursePlannings }}"></vue-store-fill>
-        <vue-store-fill model="semester" :entities="{{ \App\Models\Semester::all() }}"></vue-store-fill>
+        <vue-store-fill model="semester" :entities="{{ $semesters }}"></vue-store-fill>
         @php
             $courses = $planning->studyFieldYear->courses;
             $courseSkills = App\Models\CourseSkill::whereIn('course_id', $courses->pluck('id'))
@@ -154,8 +154,6 @@
 
                                         </vue-course-group-state>
                                     </div>
-
-
                                 </template>
 
                                 @foreach($courseGroupYear->courseCourseGroupYears()->with('course')->get()->sortBy('course.name') as $courseCourseGroupYear)
@@ -170,16 +168,16 @@
                                         @if(!$mentorStudent && $planning->is_locked)
                                             planning-is-locked
                                         @endif
-                                >
-                                <template v-slot:icon>
-                                    <x-planning.completion :student="$planning->student"
-                                        :course="$courseCourseGroupYear->course"></x-planning.completion>
-                                </template>
-                                </vue-course-detail>
+                                    >
+                                        <template v-slot:icon>
+                                            <x-planning.completion :student="$planning->student"
+                                                :course="$courseCourseGroupYear->course"></x-planning.completion>
+                                        </template>
+                                    </vue-course-detail>
+                                @endforeach
+                            </vue-plan-wrapper>
+                        </div>
                     @endforeach
-                    </vue-plan-wrapper>
-                </div>
-                @endforeach
                 <div>
                     <x-planning.uncounted-completions :student="$planning->student"
                         :study-field-year="$planning->studyFieldYear"></x-planning.uncounted-completions>

@@ -147,7 +147,7 @@ class PlanningController extends Controller
         return redirect()->route('planning.showOne', $newPlanning);
     }
 
-    public function showOne(Planning $planning)
+    public function showOne(Planning $planning, SemesterService $semesterService)
     {
         $user = Auth::user();
         $this->permissionAndRoleService->canPlanMySchedulesOrAbort($user->student, $planning);
@@ -158,6 +158,7 @@ class PlanningController extends Controller
             'planning' => $planning,
             'courseGroupYears' => $planning->studyFieldYear->courseGroupYears()->with(['courses', 'courseGroup', 'courseCourseGroupYears'])->get(),
             'mentorStudent' => null,
+            'semesters' => $semesterService->getSemesterEligibleForPlanning(),
         ];
 
         return view('planning.showOne', $viewParameter);

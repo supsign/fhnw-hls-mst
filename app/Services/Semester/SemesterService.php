@@ -80,6 +80,11 @@ class SemesterService extends BaseModelService
         return $result->push($result->first()->previousSemester)->sortBy('start_date');
     }
 
+    public function getSemesterEligibleForPlanning(): Collection
+    {
+        return $this->model::whereDate('start_date', '>', Carbon::now()->subWeeks(5))->orderBy('start_date')->get();     //
+    }
+
     public function getSemesterFromEventoNumber(string $number): Semester
     {
         $year = 2000 + substr($number, 2, 2);   //  fix before 2100

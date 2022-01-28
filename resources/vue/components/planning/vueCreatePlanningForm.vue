@@ -144,7 +144,7 @@ export default class VueCreatePlanningForm extends BaseComponent {
                 (studyFieldYear) => this.semesters.find(
                     (semester) => semester.id === studyFieldYear.begin_semester_id
                 )
-            );
+            ).sort(function(a, b){return a.year - b.year});;
     }
 
     public get availableSpecializations(): ISpecialization[] {

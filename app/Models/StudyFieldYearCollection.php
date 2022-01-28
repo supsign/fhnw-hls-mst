@@ -7,7 +7,7 @@ use Illuminate\Support\Collection as SupportCollection;
 
 class StudyFieldYearCollection extends Collection
 {
-    public function getStudyFields(): Collection
+    public function getStudyFields(): SupportCollection
     {
         return $this->pluck('studyField')->unique();
     }

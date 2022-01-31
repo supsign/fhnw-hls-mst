@@ -104,6 +104,10 @@
                             <i class="far fa-circle my-auto w-8" aria-hidden="true"></i>
                             <div class="my-auto">@lang('l.completionNone')</div>
                         </div>
+                        <div class="flex flex-row space-x-3">
+                            <div class="my-auto w-8 line-through" aria-hidden="true">ab</div>
+                            <div class="my-auto">findet aktuell nicht statt</div>
+                        </div>
                     </div>
                     <div class="flex flex-col space-y-2 flex-grow">
                         <div class="flex flex-row space-x-3">

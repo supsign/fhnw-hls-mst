@@ -168,8 +168,6 @@
 
                                         </vue-course-group-state>
                                     </div>
-
-
                                 </template>
 
                                 @foreach($courseGroupYear->courseCourseGroupYears()->with('course')->get()->sortBy('course.name') as $courseCourseGroupYear)
@@ -184,16 +182,16 @@
                                         @if(!$mentorStudent && $planning->is_locked)
                                             planning-is-locked
                                         @endif
-                                >
-                                <template v-slot:icon>
-                                    <x-planning.completion :student="$planning->student"
-                                        :course="$courseCourseGroupYear->course"></x-planning.completion>
-                                </template>
-                                </vue-course-detail>
+                                    >
+                                        <template v-slot:icon>
+                                            <x-planning.completion :student="$planning->student"
+                                                :course="$courseCourseGroupYear->course"></x-planning.completion>
+                                        </template>
+                                    </vue-course-detail>
+                                @endforeach
+                            </vue-plan-wrapper>
+                        </div>
                     @endforeach
-                    </vue-plan-wrapper>
-                </div>
-                @endforeach
                 <div>
                     <x-planning.uncounted-completions :student="$planning->student"
                         :study-field-year="$planning->studyFieldYear"></x-planning.uncounted-completions>

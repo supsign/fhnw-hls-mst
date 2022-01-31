@@ -3,6 +3,20 @@
         @lang('l.planning')
     </x-slot>
     <div class="container p-3 mx-auto">
+        <div class="w-full sm:flex-grow">
+            <x-app.card class="bg-yellow-400 mb-4">
+                <div class="flex">
+                    <div class="pr-4">
+                        <i class="far fa-lightbulb fa-2x" aria-hidden="true"></i>
+                    </div>
+                    <div>
+                        Bitte beachten Sie, dass die hier angezeigten Informationen nicht verbindlich sind und
+                        keinen Ersatz für die offiziellen Dokumente darstellen.
+                    </div>
+                </div>
+            </x-app.card>
+
+        </div>
         <div class="md:flex md:justify-between md:space-x-4">
             <x-app.card class="mb-4 md:w-1/2">
                 <x-slot name="title">

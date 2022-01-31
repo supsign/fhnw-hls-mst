@@ -27,12 +27,11 @@ class PlanningController extends Controller
 {
     public function __construct(
         private PermissionAndRoleService $permissionAndRoleService,
-        protected StudyFieldService      $studyFieldService,
-        protected SemesterService        $semesterService,
-        protected PlanningService        $planningService,
-        protected StudyFieldYearService  $studyFieldYearService,
-    )
-    {
+        protected StudyFieldService $studyFieldService,
+        protected SemesterService $semesterService,
+        protected PlanningService $planningService,
+        protected StudyFieldYearService $studyFieldYearService,
+    ) {
     }
 
     public function copy(Planning $planning)
@@ -90,11 +89,10 @@ class PlanningController extends Controller
     }
 
     public function store(
-        StoreRequest              $request,
-        SpecializationService     $specializationService,
+        StoreRequest $request,
+        SpecializationService $specializationService,
         CrossQualificationService $crossQualificationService,
-    )
-    {
+    ) {
         $user = Auth::user();
         $this->permissionAndRoleService->canPlanMySchedulesOrAbort($user->student);
 
@@ -123,12 +121,11 @@ class PlanningController extends Controller
     }
 
     public function storeCopy(
-        StoreRequest              $request,
-        Planning                  $planning,
-        SpecializationService     $specializationService,
+        StoreRequest $request,
+        Planning $planning,
+        SpecializationService $specializationService,
         CrossQualificationService $crossQualificationService,
-    )
-    {
+    ) {
         $user = Auth::user();
         $this->permissionAndRoleService->canPlanMySchedulesOrAbort($user->student, $planning);
 

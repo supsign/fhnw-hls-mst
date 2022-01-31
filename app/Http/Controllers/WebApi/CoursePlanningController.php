@@ -58,6 +58,10 @@ class CoursePlanningController extends Controller
             abort(404);
         }
 
+        if (!$semesterService->getSemesterEligibleForPlanning()->contains($semester)) {
+            abort(404);
+        }
+
         return $this->coursePlanningService->planCourse($planning, $course, $semester);
     }
 

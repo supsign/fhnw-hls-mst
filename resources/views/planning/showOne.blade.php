@@ -3,6 +3,20 @@
         @lang('l.planning')
     </x-slot>
     <div class="container p-3 mx-auto">
+        <div class="w-full sm:flex-grow">
+            <x-app.card class="bg-yellow-400 mb-4">
+                <div class="flex">
+                    <div class="pr-4">
+                        <i class="far fa-lightbulb fa-2x" aria-hidden="true"></i>
+                    </div>
+                    <div>
+                        Bitte beachten Sie, dass die hier angezeigten Informationen nicht verbindlich sind und
+                        keinen Ersatz für die offiziellen Dokumente darstellen.
+                    </div>
+                </div>
+            </x-app.card>
+
+        </div>
         <div class="md:flex md:justify-between md:space-x-4">
             <x-app.card class="mb-4 md:w-1/2">
                 <x-slot name="title">
@@ -154,8 +168,6 @@
 
                                         </vue-course-group-state>
                                     </div>
-
-
                                 </template>
 
                                 @foreach($courseGroupYear->courseCourseGroupYears()->with('course')->get()->sortBy('course.name') as $courseCourseGroupYear)
@@ -170,16 +182,16 @@
                                         @if(!$mentorStudent && $planning->is_locked)
                                             planning-is-locked
                                         @endif
-                                >
-                                <template v-slot:icon>
-                                    <x-planning.completion :student="$planning->student"
-                                        :course="$courseCourseGroupYear->course"></x-planning.completion>
-                                </template>
-                                </vue-course-detail>
+                                    >
+                                        <template v-slot:icon>
+                                            <x-planning.completion :student="$planning->student"
+                                                :course="$courseCourseGroupYear->course"></x-planning.completion>
+                                        </template>
+                                    </vue-course-detail>
+                                @endforeach
+                            </vue-plan-wrapper>
+                        </div>
                     @endforeach
-                    </vue-plan-wrapper>
-                </div>
-                @endforeach
                 <div>
                     <x-planning.uncounted-completions :student="$planning->student"
                         :study-field-year="$planning->studyFieldYear"></x-planning.uncounted-completions>

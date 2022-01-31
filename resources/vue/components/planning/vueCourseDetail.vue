@@ -22,7 +22,7 @@
                 </div>
             </div>
 
-            <div :class="{'line-through': !course.is_has && !course.is_fs}" class="flex-shrink flex-grow">
+            <div :class="{'line-through': !course.is_hs && !course.is_fs}" class="flex-shrink flex-grow">
                 {{ course.name }}
             </div>
 

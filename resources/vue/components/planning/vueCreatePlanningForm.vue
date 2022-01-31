@@ -35,6 +35,7 @@
             name="semester"
             optionKey="year"
             required
+            @input="selectSemester"
         >
         </vue-select>
         <vue-select
@@ -191,7 +192,29 @@ export default class VueCreatePlanningForm extends BaseComponent {
         if (!this.selectedStudyField) {
             return [];
         }
-        return this.crossQualifications.filter((crossQualification) => crossQualification.study_field_id === this.selectedStudyField.id);
+        return this.crossQualifications
+            .filter((crossQualification) => crossQualification.study_field_id === this.selectedStudyField.id)
+            .filter(crossQualification => this.availableCrossQualificationYears.find(crossQualificationYear => crossQualificationYear.cross_qualification_id === crossQualification.id));
+    }
+
+    public get availableCrossQualificationYears(): ICrossQualificationYear[] {
+        if (!this.selectedSemester) {
+            return [];
+        }
+        if (!this.selectedStudyField) {
+            return [];
+        }
+        const studyFieldYear = this.studyFieldYears.find(studyFieldYear => {
+            {
+                return studyFieldYear.study_field_id === this.selectedStudyField.id &&
+                    studyFieldYear.begin_semester_id === this.selectedSemester.id
+            }
+        });
+
+        if (!studyFieldYear) {
+            return [];
+        }
+        return this.crossQualificationYears.filter((crossQualificationYear) => crossQualificationYear.study_field_year_id === studyFieldYear.id);
     }
 
     public created(): void {
@@ -226,7 +249,13 @@ export default class VueCreatePlanningForm extends BaseComponent {
         this.selectedSemester = this.semesters.find((semester) => semester.id === studyFieldYear.begin_semester_id);
     }
 
-    public selectStudyField(studyField: IStudyField) {
+    public selectStudyField() {
+        this.selectedCrossQualification = null;
+        this.selectedSpecialization = null;
+        this.selectedSemester = null;
+    }
+
+    public selectSemester() {
         this.selectedCrossQualification = null;
         this.selectedSpecialization = null;
     }

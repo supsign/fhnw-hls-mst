@@ -8,6 +8,7 @@ use App\Models\CrossQualificationYear;
 use App\Models\Planning;
 use App\Models\Semester;
 use App\Models\Specialization;
+use App\Models\SpecializationYear;
 use App\Models\Student;
 use App\Models\StudyField;
 use App\Models\StudyFieldYear;
@@ -78,6 +79,8 @@ class MentorPlanningController extends Controller
             'semesters' => Semester::where('is_hs', true)->get(),
             'student' => $student,
             'specializations' => Specialization::all(),
+            'specializationYears' => SpecializationYear::all(),
+            'crossQualificationYears' => CrossQualificationYear::all(),
             'crossQualifications' => CrossQualification::all(),
             'mentorStudent' => $mentorStudent,
         ]);

@@ -162,7 +162,29 @@ export default class VueCreatePlanningForm extends BaseComponent {
         if (!this.selectedStudyField) {
             return [];
         }
-        return this.specializations.filter((specialization) => specialization.study_field_id === this.selectedStudyField.id);
+        return this.specializations
+            .filter((specialization) => specialization.study_field_id === this.selectedStudyField.id)
+            .filter(specialization => this.availableSpecializationYears.find(specializationYear => specializationYear.specialization_id === specialization.id));
+    }
+
+    public get availableSpecializationYears(): ISpecializationYear[] {
+        if (!this.selectedSemester) {
+            return [];
+        }
+        if (!this.selectedStudyField) {
+            return [];
+        }
+        const studyFieldYear = this.studyFieldYears.find(studyFieldYear => {
+            {
+                return studyFieldYear.study_field_id === this.selectedStudyField.id &&
+                    studyFieldYear.begin_semester_id === this.selectedSemester.id
+            }
+        });
+
+        if (!studyFieldYear) {
+            return [];
+        }
+        return this.specializationYears.filter((specializationYear) => specializationYear.study_field_year_id === studyFieldYear.id);
     }
 
     public get availableCrossQualifications(): ICrossQualification[] {

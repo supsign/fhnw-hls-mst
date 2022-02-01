@@ -18,7 +18,6 @@ namespace App\Models{
  * @property int $id
  * @property string|null $name
  * @property int|null $amount_to_pass
- * @property int $study_field_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\BaseCollection|\App\Models\AssessmentCourse[] $assessmentCourses
@@ -42,7 +41,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Assessment whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Assessment whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Assessment whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Assessment whereStudyFieldId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Assessment whereUpdatedAt($value)
  */
 	class IdeHelperAssessment extends \Eloquent {}
@@ -843,7 +841,6 @@ namespace App\Models{
  * @mixin IdeHelperRecommendation
  * @property int $id
  * @property string|null $name
- * @property int $study_field_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\BaseCollection|\App\Models\CourseRecommendation[] $courseRecommendations
@@ -871,7 +868,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Recommendation whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recommendation whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recommendation whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Recommendation whereStudyFieldId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recommendation whereUpdatedAt($value)
  */
 	class IdeHelperRecommendation extends \Eloquent {}

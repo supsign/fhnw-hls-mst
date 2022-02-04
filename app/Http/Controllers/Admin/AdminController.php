@@ -19,7 +19,7 @@ class AdminController extends Controller
     {
         $this->permissionAndRoleService->canManageBackendOrAbort();
 
-        $courses = CourseCourseGroupYear::all()->pluck('course')->unique();
+        $courses = CourseCourseGroupYear::all()->pluck('course')->unique()->sortBy('number');
 
         return view('admin.courses', [
             'courses' => $courses,

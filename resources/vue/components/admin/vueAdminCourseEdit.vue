@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-row text-sm lg:text-base space-x-2">
-        <div class="w-40 lg:w-60">{{ course.number}}</div>
-        <div class="flex-grow">{{ course.name}}</div>
+        <div class="w-40 lg:w-60" :class="{'line-through': !hs && !fs}">{{ course.number }}</div>
+        <div class="flex-grow" :class="{'line-through': !hs && !fs}">{{ course.name }}</div>
 
         <div v-if="hs"
              class="w-8 lg:w-16"

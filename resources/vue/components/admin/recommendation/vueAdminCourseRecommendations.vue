@@ -2,11 +2,12 @@
     <div>
         <div class="mb-2">Semester {{ semester }}</div>
         <div class="text-sm space-y-2">
-            <vue-admin-course-pivot
+            <vue-admin-course-pivot-rec
                 v-for="coursePivot in courseRecommendationsInSemester"
                 :course-pivot="coursePivot"
                 :key="coursePivot.id"
                 @remove="remove"
+                :is-hs="[1,3,5].includes(semester)"
             />
         </div>
         <vue-admin-backend-course-select
@@ -23,15 +24,15 @@
 import {Component, Prop} from "vue-property-decorator";
 import BaseComponent from "../../base/baseComponent";
 import VueCard from "../../base/vueCard.vue";
-import VueAdminCoursePivot from "../vueAdminCoursePivot.vue";
 import {ICourse} from "../../../interfaces/course.interface";
 import VueAdminBackendCourseSelect from "../vueAdminBackendCourseSelect.vue";
 import {ICourseRecommendation} from "../../../interfaces/courseRecommendation.interface";
+import VueAdminCoursePivotRec from "../vueAdminCoursePivotRec.vue";
 
 @Component({
     components: {
         VueCard,
-        VueAdminCoursePivot,
+        VueAdminCoursePivotRec,
         VueAdminBackendCourseSelect
     }
 })

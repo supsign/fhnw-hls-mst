@@ -22,7 +22,9 @@
                         :semesters="{{ $semesters }}"
                         :student="{{ $student ?? json_encode(null) }}"
                         :specializations="{{ $specializations }}"
+                        :specialization-years="{{$specializationYears}}"
                         :cross-qualifications="{{ $crossQualifications }}"
+                        :cross-qualification-years="{{ $crossQualificationYears }}"
                     ></vue-create-planning-form>
                     <x-base.button class="mt-4 button-primary w-36 justify-center" type="submit">Erstellen
                     </x-base.button>

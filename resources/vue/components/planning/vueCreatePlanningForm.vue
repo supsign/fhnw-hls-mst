@@ -1,7 +1,7 @@
 <template>
     <div class="space-y-8 mt-4">
         <vue-input
-            v-model="studyName" 
+            v-model="studyName"
             label="Name der Planung"
             name="name"
         >
@@ -29,12 +29,13 @@
         </vue-select>
         <vue-select
             v-model="selectedSemester"
-            :options="availabelSemesters"
+            :options="availableSemesters"
             class="w-full min-h-16"
             label="Start"
             name="semester"
             optionKey="year"
             required
+            @input="selectSemester"
         >
         </vue-select>
         <vue-select
@@ -78,6 +79,8 @@ import {IStudyField} from "../../interfaces/studyField.interface";
 import {IStudyFieldYear} from "../../interfaces/studyFieldYear.interface";
 import {ISpecialization} from "../../interfaces/specialization.interface";
 import {ICrossQualification} from "../../interfaces/crossQualification.interface";
+import {ISpecializationYear} from "../../interfaces/specialzationYear.interface";
+import {ICrossQualificationYear} from "../../interfaces/crossQualificationYear.interface";
 
 @Component({
     components: {
@@ -105,7 +108,13 @@ export default class VueCreatePlanningForm extends BaseComponent {
     specializations: ISpecialization[]
 
     @Prop({type: Array})
+    specializationYears: ISpecializationYear[]
+
+    @Prop({type: Array})
     crossQualifications: ICrossQualification[]
+
+    @Prop({type: Array})
+    crossQualificationYears: ICrossQualificationYear[]
 
     studyName: string = null;
 
@@ -131,7 +140,7 @@ export default class VueCreatePlanningForm extends BaseComponent {
         );
     }
 
-    public get availabelSemesters(): ISemester[] {
+    public get availableSemesters(): ISemester[] {
         if (!this.selectedStudyField) {
             return []
         }
@@ -144,21 +153,68 @@ export default class VueCreatePlanningForm extends BaseComponent {
                 (studyFieldYear) => this.semesters.find(
                     (semester) => semester.id === studyFieldYear.begin_semester_id
                 )
-            ).sort(function(a, b){return a.year - b.year});;
+            ).sort(function (a, b) {
+                return a.year - b.year
+            });
+
     }
 
     public get availableSpecializations(): ISpecialization[] {
         if (!this.selectedStudyField) {
             return [];
         }
-        return this.specializations.filter((specialization) => specialization.study_field_id === this.selectedStudyField.id);
+        return this.specializations
+            .filter((specialization) => specialization.study_field_id === this.selectedStudyField.id)
+            .filter(specialization => this.availableSpecializationYears.find(specializationYear => specializationYear.specialization_id === specialization.id));
+    }
+
+    public get availableSpecializationYears(): ISpecializationYear[] {
+        if (!this.selectedSemester) {
+            return [];
+        }
+        if (!this.selectedStudyField) {
+            return [];
+        }
+        const studyFieldYear = this.studyFieldYears.find(studyFieldYear => {
+            {
+                return studyFieldYear.study_field_id === this.selectedStudyField.id &&
+                    studyFieldYear.begin_semester_id === this.selectedSemester.id
+            }
+        });
+
+        if (!studyFieldYear) {
+            return [];
+        }
+        return this.specializationYears.filter((specializationYear) => specializationYear.study_field_year_id === studyFieldYear.id);
     }
 
     public get availableCrossQualifications(): ICrossQualification[] {
         if (!this.selectedStudyField) {
             return [];
         }
-        return this.crossQualifications.filter((crossQualification) => crossQualification.study_field_id === this.selectedStudyField.id);
+        return this.crossQualifications
+            .filter((crossQualification) => crossQualification.study_field_id === this.selectedStudyField.id)
+            .filter(crossQualification => this.availableCrossQualificationYears.find(crossQualificationYear => crossQualificationYear.cross_qualification_id === crossQualification.id));
+    }
+
+    public get availableCrossQualificationYears(): ICrossQualificationYear[] {
+        if (!this.selectedSemester) {
+            return [];
+        }
+        if (!this.selectedStudyField) {
+            return [];
+        }
+        const studyFieldYear = this.studyFieldYears.find(studyFieldYear => {
+            {
+                return studyFieldYear.study_field_id === this.selectedStudyField.id &&
+                    studyFieldYear.begin_semester_id === this.selectedSemester.id
+            }
+        });
+
+        if (!studyFieldYear) {
+            return [];
+        }
+        return this.crossQualificationYears.filter((crossQualificationYear) => crossQualificationYear.study_field_year_id === studyFieldYear.id);
     }
 
     public created(): void {
@@ -193,7 +249,13 @@ export default class VueCreatePlanningForm extends BaseComponent {
         this.selectedSemester = this.semesters.find((semester) => semester.id === studyFieldYear.begin_semester_id);
     }
 
-    public selectStudyField(studyField: IStudyField) {
+    public selectStudyField() {
+        this.selectedCrossQualification = null;
+        this.selectedSpecialization = null;
+        this.selectedSemester = null;
+    }
+
+    public selectSemester() {
         this.selectedCrossQualification = null;
         this.selectedSpecialization = null;
     }

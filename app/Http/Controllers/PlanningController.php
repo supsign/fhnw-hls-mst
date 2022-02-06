@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Planning\StoreRequest;
 use App\Models\CrossQualification;
+use App\Models\CrossQualificationYear;
 use App\Models\Planning;
 use App\Models\Semester;
 use App\Models\Specialization;
+use App\Models\SpecializationYear;
 use App\Models\StudyField;
 use App\Models\StudyFieldYear;
 use App\Models\StudyProgram;
@@ -45,6 +47,8 @@ class PlanningController extends Controller
             'student' => $planning->student,
             'specializations' => Specialization::all(),
             'crossQualifications' => CrossQualification::all(),
+            'specializationYears' => SpecializationYear::all(),
+            'crossQualificationYears' => CrossQualificationYear::all(),
             'mentorStudent' => null,
             'planning' => $planning,
         ]);
@@ -63,6 +67,8 @@ class PlanningController extends Controller
             'student' => $user->student,
             'specializations' => Specialization::all(),
             'crossQualifications' => CrossQualification::all(),
+            'specializationYears' => SpecializationYear::all(),
+            'crossQualificationYears' => CrossQualificationYear::all(),
             'mentorStudent' => null,
         ]);
     }

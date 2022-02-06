@@ -1,5 +1,5 @@
 <template>
-    <div v-if="!!assessment" class="fixed bottom-0 left-0 mt-2 w-full lg:px-8">
+    <div class="fixed bottom-0 left-0 mt-2 w-full lg:px-8">
         <div v-if="showAssessment || showSpecCross" class="grid grid-cols-1 md:grid-cols-3">
             <div></div>
             <div
@@ -55,6 +55,7 @@
                 />
             </div>
             <div
+                v-if="!!assessment"
                 :class="{'bg-hls': showAssessment}"
                 class="hover:bg-hls cursor-pointer"
                 @click="toggleShowAssessment"

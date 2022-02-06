@@ -87,6 +87,10 @@ class Planning extends BaseModel
         $recommendationService = App::make(RecommendationService::class);
         $recommendation = $recommendationService->getApplicableRecommendation($this);
 
+        if (!$recommendation) {
+            return collect();
+        }
+
         return $recommendation->courseRecommendations;
     }
 
@@ -95,6 +99,10 @@ class Planning extends BaseModel
         /* @var $assessmentService AssessmentService */
         $assessmentService = App::make(AssessmentService::class);
         $assessment = $assessmentService->getApplicableAssessment($this);
+
+        if (!$assessment) {
+            return collect();
+        }
 
         return $assessment->assessmentCourses;
     }

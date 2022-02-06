@@ -31,9 +31,6 @@ Route::middleware('web')->group(
 
         // Login Process Unguarded
         Route::post('/auth/login', [LoginController::class, 'login'])->name('post.auth.login');
-
-        // Flo Test Controller
-        Route::get('test', [TestController::class, 'test'])->name('test');
     }
 );
 

@@ -41,7 +41,7 @@
 
                             @if (!(!$mentorStudent && $planning->is_locked))
                                 <vue-form method="POST"
-                                    action="{{ $mentorStudent ? route('mentor.planning.delete', [$mentorStudent->student, $planning]) : route('planning.delete', $planning) }}">
+                                          action="{{ $mentorStudent ? route('mentor.planning.delete', [$mentorStudent->student, $planning]) : route('planning.delete', $planning) }}">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" name="delete_planning">
@@ -72,7 +72,7 @@
 
                     @if ($planning->studyFieldYear->studyField->url_study_guide)
                         <x-base.link href="{{ $planning->studyFieldYear->studyField->url_study_guide }}"
-                            target="_blank" rel="noopener noreferrer" class="flex space-x-2 mt-1">
+                                     target="_blank" rel="noopener noreferrer" class="flex space-x-2 mt-1">
                             <i class="fas fa-external-link text-blue-600 my-auto" aria-hidden="true"></i>
                             <div>@lang('l.studyGuideLink')</div>
                         </x-base.link>
@@ -135,7 +135,7 @@
             $courses = $planning->studyFieldYear->courses;
             $courseSkills = App\Models\CourseSkill::whereIn('course_id', $courses->pluck('id'))
                 ->where(['is_acquisition' => true])
-                ->get();
+                ->get()
         @endphp
         <vue-store-fill model="course" :entities="{{ $courses }}"></vue-store-fill>
         <vue-store-fill model="skillStudent" :entities="{{ $planning->student->skillStudent }}"></vue-store-fill>
@@ -148,7 +148,7 @@
                     <div>
                         @if (!(!$mentorStudent && $planning->is_locked))
                             <vue-form method="POST"
-                                action="{{ $mentorStudent ? route('mentor.planning.setRecommendations', [$mentorStudent->student, $planning]) : route('planning.setRecommendations', $planning) }}">
+                                      action="{{ $mentorStudent ? route('mentor.planning.setRecommendations', [$mentorStudent->student, $planning]) : route('planning.setRecommendations', $planning) }}">
                                 @csrf
                                 <button class="button-primary mb-4" type="submit">gem. Musterstudienplan planen</button>
                             </vue-form>
@@ -176,19 +176,29 @@
 
                                 @foreach($courseGroupYear->courseCourseGroupYears()->with('course')->get()->sortBy('course.name') as $courseCourseGroupYear)
                                     @inject('courseCompletionService', 'App\Services\Completion\CourseCompletionService')
+                                    @inject('recommendationService', 'App\Services\Recommendation\RecommendationService')
+                                    @inject('specializationYearService', 'App\Services\SpecializationYear\SpecializationYearService')
+                                    @inject('crossQualificationYearService', 'App\Services\CrossQualificationYear\crossQualificationYearService')
+                                    @php
+                                        $courseIsSuccessfullyCompleted = $courseCompletionService->courseIsSuccessfullyCompleted($courseCourseGroupYear->course, $planning->student)
+                                    @endphp
                                     <vue-course-detail
                                         :course-id="{{$courseCourseGroupYear->course_id}}"
                                         :course-year="{{$courseCourseGroupYear->course->getCourseYearBySemesterOrLatest() ?? json_encode(null)}}"
                                         :planning-id="{{$planning->id}}"
-                                        :planning="{{$planning}}"
+                                        {{$recommendationService->courseIsRecommended($courseCourseGroupYear->course, $planning->courseRecommendations) ? 'course-is-recommended': ''}}
+                                        {{$specializationYearService->courseIsInSpecializationYear($courseCourseGroupYear->course, $planning->courseSpecializationYears) ? 'course-is-spec-cross': ''}}
+                                        {{$crossQualificationYearService->courseIsInCrossQualificationYear($courseCourseGroupYear->course, $planning->courseCrossQualificationYears) ? 'course-is-spec-cross': ''}}
 
-                                        {{$courseCompletionService->courseIsSuccessfullyCompleted($courseCourseGroupYear->course, $planning->student) ?'course-is-successfully-completed' : ''}}
+                                        {{$courseIsSuccessfullyCompleted ?'course-is-successfully-completed' : ''}}
                                         @if(!$mentorStudent && $planning->is_locked)
-                                            planning-is-locked
+                                        planning-is-locked
                                         @endif
                                     >
                                         <template v-slot:icon>
-                                            <x-planning.completion :student="$planning->student"
+                                            <x-planning.completion
+                                                :courseIsSuccessfullyCompleted="$courseIsSuccessfullyCompleted"
+                                                :student="$planning->student"
                                                 :course="$courseCourseGroupYear->course"></x-planning.completion>
                                         </template>
                                     </vue-course-detail>
@@ -196,17 +206,17 @@
                             </vue-plan-wrapper>
                         </div>
                     @endforeach
-                <div>
-                    <x-planning.uncounted-completions :student="$planning->student"
-                        :study-field-year="$planning->studyFieldYear"></x-planning.uncounted-completions>
+                    <div>
+                        <x-planning.uncounted-completions :student="$planning->student"
+                                                          :study-field-year="$planning->studyFieldYear"></x-planning.uncounted-completions>
+                    </div>
                 </div>
             </div>
+            <div class="hidden md:block md:w-2/4 lg:w-1/4 md:pl-4">
+                <div class="text-xl lg:text-2xl text-gray-500 mb-4">Semesterübersicht</div>
+                <x-planning.planning-semester :planning="$planning" :mentorStudent="$mentorStudent"/>
+            </div>
         </div>
-        <div class="hidden md:block md:w-2/4 lg:w-1/4 md:pl-4">
-            <div class="text-xl lg:text-2xl text-gray-500 mb-4">Semesterübersicht</div>
-            <x-planning.planning-semester :planning="$planning" :mentorStudent="$mentorStudent" />
-        </div>
-    </div>
-    <x-assessment.assessment-state :planning="$planning"></x-assessment.assessment-state>
+        <x-assessment.assessment-state :planning="$planning"></x-assessment.assessment-state>
     </div>
 </x-layout.app>

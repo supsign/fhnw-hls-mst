@@ -14,10 +14,7 @@
                 <div v-if="courseIsAssessment">
                     <i aria-hidden="true" class="fas fa-sitemap"></i>
                 </div>
-                <div v-else-if="courseIsSpecialization">
-                    <i aria-hidden="true" class="fas fa-sparkles"></i>
-                </div>
-                <div v-else-if="courseIsCrossQualification">
+                <div v-else-if="courseIsSpecCross">
                     <i aria-hidden="true" class="fas fa-sparkles"></i>
                 </div>
             </div>
@@ -30,7 +27,7 @@
         <vue-plan-course
             v-if="!courseIsSuccessfullyCompleted && (course.is_fs || course.is_hs)"
             :course="course"
-            :planningId="planning.id"
+            :planningId="planningId"
             :planningIsLocked="planningIsLocked"
             :semesters="semesters"
             class="flex-none my-auto"
@@ -71,6 +68,9 @@ export default class VueCourseDetail extends BaseComponent {
     @Prop({type: Number})
     courseId: number
 
+    @Prop({type: Number})
+    planningId: number
+
     @Prop({type: Object})
     courseYear: ICourse
 
@@ -83,43 +83,16 @@ export default class VueCourseDetail extends BaseComponent {
     @Prop({type: Boolean, default: false})
     planningIsLocked: boolean
 
+    @Prop({type: Boolean, default: false})
+    courseIsRecommended: boolean
+
+    @Prop({type: Boolean, default: false})
+    courseIsSpecCross: boolean
+
     @Prop({type: Boolean})
     courseIsSuccessfullyCompleted: boolean;
 
     public detailModalIsOpen = false;
-
-    public get courseIsRecommended(): boolean {
-        if (!this.planning || !this.planning.course_recommendations) {
-            return false;
-        }
-
-        const courseRecommendation = this.planning.course_recommendations.find(courseRecommendation => {
-            return courseRecommendation.course_id === this.courseId
-        })
-        return !!courseRecommendation
-    }
-
-    public get courseIsSpecialization(): boolean {
-        if (!this.planning || !this.planning.course_specialization_years) {
-            return false;
-        }
-
-        const courseSpecialization = this.planning.course_specialization_years.find(courseSpecialization => {
-            return courseSpecialization.course_id === this.courseId
-        })
-        return !!courseSpecialization
-    }
-
-    public get courseIsCrossQualification(): boolean {
-        if (!this.planning || !this.planning.course_cross_qualification_years) {
-            return false;
-        }
-
-        const courseCrossQualificationYear = this.planning.course_cross_qualification_years.find(courseCrossQualificationYear => {
-            return courseCrossQualificationYear.course_id === this.courseId
-        })
-        return !!courseCrossQualificationYear
-    }
 
     public get courseIsAssessment(): boolean {
         if (!this.planning || !this.planning.assessment_courses) {
@@ -133,13 +106,10 @@ export default class VueCourseDetail extends BaseComponent {
     }
 
     public get coursePlanning(): ICoursePlanning | null {
-        if (!this.planning.id) {
-            return;
-        }
         if (!this.course.id) {
             return;
         }
-        return this.models.coursePlanning.getCoursePlanning(this.planning.id, this.course.id);
+        return this.models.coursePlanning.getCoursePlanning(this.planningId, this.course.id);
     }
 
     public get requiredSkills(): ICourseSkill[] {

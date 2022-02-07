@@ -18,9 +18,13 @@ class Completion extends Component
      *
      * @return void
      */
-    public function __construct(public Course $course, public Student $student, protected CourseCompletionService $courseCompletionService)
+    public function __construct(public Course $course, public Student $student, protected CourseCompletionService $courseCompletionService, bool $courseIsSuccessfullyCompleted = false)
     {
-        // $completionsOfCourse = $this->courseCompletionService->getCompletionsByStudent($course, $this->student); What does it do?
+
+        if ($courseIsSuccessfullyCompleted) {
+            $this->icon = 1;
+            return;
+        }
 
         $this->evaluateSymbol($course, $this->student);
     }

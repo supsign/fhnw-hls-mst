@@ -3,6 +3,8 @@
 namespace App\Services\SpecializationYear;
 
 use App\Models\Assessment;
+use App\Models\Course;
+use App\Models\CourseSpecializationYear;
 use App\Models\Recommendation;
 use App\Models\Specialization;
 use App\Models\SpecializationYear;
@@ -11,6 +13,7 @@ use App\Models\StudyFieldYear;
 use App\Services\Base\BaseModelService;
 use App\Services\Base\Traits\FirstOrCreateTrait;
 use App\Services\Completion\CourseCompletionService;
+use Illuminate\Support\Collection;
 
 class SpecializationYearService extends BaseModelService
 {
@@ -80,5 +83,14 @@ class SpecializationYearService extends BaseModelService
         $specializationYear->save();
 
         return $specializationYear;
+    }
+
+    public function courseIsInSpecializationYear(Course $course, Collection $courseSpecializationYears): bool
+    {
+        $courseSpecializationYear = $courseSpecializationYears->first(function (CourseSpecializationYear $courseSpecializationYear) use ($course) {
+            return $courseSpecializationYear->course_id === $course->id;
+        });
+
+        return (bool)$courseSpecializationYear;
     }
 }

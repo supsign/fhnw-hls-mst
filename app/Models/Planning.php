@@ -109,6 +109,10 @@ class Planning extends BaseModel
 
     public function getCourseSpecializationYearsAttribute(): Collection
     {
+        if (!$this->specialization_year_id) {
+            return collect();
+        }
+
         $specializationYear = $this->specializationYear;
 
         if (!$specializationYear) {
@@ -120,6 +124,10 @@ class Planning extends BaseModel
 
     public function getCourseCrossQualificationYearsAttribute(): Collection
     {
+        if (!$this->cross_qualification_year_id) {
+            return collect();
+        }
+
         $crossQualificationYear = $this->crossQualificationYear;
 
         if (!$crossQualificationYear) {

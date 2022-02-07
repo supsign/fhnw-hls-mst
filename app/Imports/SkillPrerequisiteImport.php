@@ -13,7 +13,7 @@ class SkillPrerequisiteImport extends BaseCsvImport
 
     public function importLine()
     {
-        $prerequisiteCourse = Course::where('number', $this->line['voraussetzung_laufnummer'])->first();
+        $prerequisiteCourse = Course::where('number_unformated', $this->line['voraussetzung_laufnummer'])->first();
 
         if (!$prerequisiteCourse) {
             return $this;

@@ -20,9 +20,9 @@ class Completion extends Component
      */
     public function __construct(public Course $course, public Student $student, protected CourseCompletionService $courseCompletionService, bool $courseIsSuccessfullyCompleted = false)
     {
-
         if ($courseIsSuccessfullyCompleted) {
             $this->icon = 1;
+
             return;
         }
 

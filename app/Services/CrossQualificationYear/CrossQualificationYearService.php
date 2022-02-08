@@ -3,6 +3,8 @@
 namespace App\Services\CrossQualificationYear;
 
 use App\Models\Assessment;
+use App\Models\Course;
+use App\Models\CourseCrossQualificationYear;
 use App\Models\CrossQualification;
 use App\Models\CrossQualificationYear;
 use App\Models\Recommendation;
@@ -11,6 +13,7 @@ use App\Models\StudyFieldYear;
 use App\Services\Base\BaseModelService;
 use App\Services\Base\Traits\FirstOrCreateTrait;
 use App\Services\Completion\CourseCompletionService;
+use Illuminate\Support\Collection;
 
 class CrossQualificationYearService extends BaseModelService
 {
@@ -80,5 +83,14 @@ class CrossQualificationYearService extends BaseModelService
         $crossQualificationYear->save();
 
         return $crossQualificationYear;
+    }
+
+    public function courseIsInCrossQualificationYear(Course $course, Collection $courseCrossQualificationYears): bool
+    {
+        $courseCrossQualificationYear = $courseCrossQualificationYears->first(function (CourseCrossQualificationYear $courseCrossQualificationYear) use ($course) {
+            return $courseCrossQualificationYear->course_id === $course->id;
+        });
+
+        return (bool)$courseCrossQualificationYear;
     }
 }

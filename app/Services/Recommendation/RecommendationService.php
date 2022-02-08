@@ -2,10 +2,13 @@
 
 namespace App\Services\Recommendation;
 
+use App\Models\Course;
+use App\Models\CourseRecommendation;
 use App\Models\Planning;
 use App\Models\Recommendation;
 use App\Models\StudyField;
 use App\Services\Base\BaseModelService;
+use Illuminate\Support\Collection;
 
 class RecommendationService extends BaseModelService
 {
@@ -46,5 +49,14 @@ class RecommendationService extends BaseModelService
         $recommendation->save();
 
         return $recommendation;
+    }
+
+    public function courseIsRecommended(Course $course, Collection $courseRecommendation): bool
+    {
+        $courseRecommendation = $courseRecommendation->first(function (CourseRecommendation $courseRecommendation) use ($course) {
+            return $courseRecommendation->course_id === $course->id;
+        });
+
+        return (bool)$courseRecommendation;
     }
 }

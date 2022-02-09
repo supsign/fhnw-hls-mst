@@ -10,7 +10,6 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
 
-    @include('3rd-parties.smartlook')
     @include('3rd-parties.tinyMCE')
 
     <title>{{ str_replace('<br>', ',', $title) }} | HLS MST</title>

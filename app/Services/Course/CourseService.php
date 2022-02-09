@@ -38,9 +38,13 @@ class CourseService extends BaseModelService
             return $course->courseYears()->where('semester_id', $semester->id)->first();
         }
 
-        $courseYears = $course->courseYears;
-
-        return $courseYears->load('semester')->sortByDesc('semester.start_date')->first();
+        return $course
+            ->courseYears()
+            ->where(['is_audit' => false])
+                ->get()
+                ->load('semester')
+                ->sortByDesc('semester.start_date')
+                    ->first();
     }
 
     public function firstOrCreateByNumber(string $number, int $courseTypeId, int $languageId = 1, string $name = null, int $credits = 0): Course

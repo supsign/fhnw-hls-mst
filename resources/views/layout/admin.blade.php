@@ -10,7 +10,6 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
 
-    @include('3rd-parties.smartlook')
     @include('3rd-parties.tinyMCE')
 
     <title>{{ str_replace('<br>', ',', $title) }} | HLS MST Backend</title>
@@ -23,24 +22,24 @@
 
 </head>
 <body class="font-body">
-    <div id="app" class="w-full bg-gray-200 overflow-auto">
-        <div class="flex flex-col h-screen relative">
-            <x-admin.top/>
-            <x-layout.header/>
-            <div id="main" class="mb-4 mx-auto container mt-4 lg:flex">
-                <div class="flex-none mx-2 sm:mb-4">
-                    <x-admin.menu />
-                </div>
-                <div class="flex flex-col flex-grow lg:ml-4 mx-2">
-                    {{ $slot }}
-                </div>
+<div id="app" class="w-full bg-gray-200 overflow-auto">
+    <div class="flex flex-col h-screen relative">
+        <x-admin.top/>
+        <x-layout.header/>
+        <div id="main" class="mb-4 mx-auto container mt-4 lg:flex">
+            <div class="flex-none mx-2 sm:mb-4">
+                <x-admin.menu/>
             </div>
-            <x-layout.footer/>
-            <x-layout.bottom/>
+            <div class="flex flex-col flex-grow lg:ml-4 mx-2">
+                {{ $slot }}
+            </div>
         </div>
-        @if(Session::has('alert.config'))
-            <vue-session-sweetalert :swal-option="{{ Session::pull('alert.config') }}"/>
-        @endif
+        <x-layout.footer/>
+        <x-layout.bottom/>
     </div>
+    @if(Session::has('alert.config'))
+        <vue-session-sweetalert :swal-option="{{ Session::pull('alert.config') }}"/>
+    @endif
+</div>
 </body>
 </html>

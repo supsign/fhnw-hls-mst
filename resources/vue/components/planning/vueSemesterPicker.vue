@@ -1,6 +1,8 @@
 <template>
-  <div aria-labelledby="modal-title" aria-modal="true" class="fixed z-10 inset-0 overflow-y-auto" role="dialog"
-       @click.stop="cancel">
+  <div tabindex="0" aria-labelledby="modal-title" aria-modal="true" class="fixed z-10 inset-0 overflow-y-auto" role="dialog"
+       @click.stop="cancel"
+       @keydown.esc="cancel"
+       ref="modal">
     <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
       <!--
         Background overlay, show/hide based on modal state.
@@ -28,6 +30,7 @@
                 To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             -->
             <div
+                @click.stop="()=>{}"
                 class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all w-full sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                 <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     <div class="grid grid-cols-2 gap-4 lg:flex-none sm:items-start">
@@ -145,6 +148,11 @@ export default class VueSemesterPicker extends BaseComponent {
         }).filter((semester) => {
             return (semester.is_hs && this.course.is_hs) || (!semester.is_hs && this.course.is_fs)
         })
+    }
+
+    public mounted() {
+        // @ts-ignore
+        this.$refs.modal.focus();
     }
 }
 </script>

@@ -40,7 +40,7 @@ class HashNumber extends Command
     {
         $hashSalt = config('jwt.hashSalt');
 
-        echo hash('sha3-512', $this->option('number') . $hashSalt);
+        echo hash('sha3-512', $this->option('number').$hashSalt);
 
         return Command::SUCCESS;
     }

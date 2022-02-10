@@ -23,7 +23,7 @@ class CompletionAttemptImport extends BaseExcelImport implements ToModel, WithHe
         'status_anmeldung',
         'id_anlass_modul',
         'anlassbezeichnung_modul',
-        'anlassnummer_modul'
+        'anlassnummer_modul',
 
     ];
     protected CourseService $courseService;
@@ -40,7 +40,7 @@ class CompletionAttemptImport extends BaseExcelImport implements ToModel, WithHe
     }
 
     /**
-     * @param array $row
+     * @param  array  $row
      * @return Model|null
      */
     public function model(array $row)

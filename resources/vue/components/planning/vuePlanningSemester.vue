@@ -16,8 +16,10 @@
             <vue-course-detail v-for="coursePlanning in allCoursePlanningsInSemesterNotSuccessfullyCompleted"
                                :key="coursePlanning.id"
                                :courseId="coursePlanning.course_id"
-                               :planning="planning"
+                               :planning-id="planning.id"
                                :planningIsLocked="planningIsLocked"
+                               :course-is-recommended="getCourseIsRecommended(coursePlanning.course_id)"
+                               :course-is-spec-cross="getCourseIsSpecialization(coursePlanning.course_id) || getCourseIsCrossQualification(coursePlanning.course_id)"
             >
                 <template v-slot:icon>
                     <vue-completion :icon="completion(getCourse(coursePlanning))"
@@ -112,18 +114,8 @@ export default class VuePlanningSemester extends BaseComponent {
         return credits;
     }
 
-    public courseIsPlanned(course: ICourse): boolean {
-        return !!this.coursePlanningsInStudyField.find(coursePlanning => coursePlanning.course_id === course.id)
-    }
-
     public completion(course: ICourse) {
         let icon: number;
-
-        if (!!this.completions.find((completion) => {
-            return completion.course_id === course.id && (completion.completion_type_id === 2 || completion.completion_type_id === 4)
-        })) {
-            icon = 1
-        }
 
         if (!!this.completions.find((completion) => {
             return completion.course_id === course.id && (completion.completion_type_id === 3)
@@ -134,6 +126,36 @@ export default class VuePlanningSemester extends BaseComponent {
         }
 
         return icon;
+    }
+
+    public getCourseIsRecommended(courseId: number): boolean {
+        if (!this.planning || !this.planning.course_recommendations) {
+            return false;
+        }
+        const courseRecommendation = this.planning.course_recommendations.find(courseRecommendation => {
+            return courseRecommendation.course_id === courseId
+        })
+        return !!courseRecommendation
+    }
+
+    public getCourseIsSpecialization(courseId: number): boolean {
+        if (!this.planning || !this.planning.course_specialization_years) {
+            return false;
+        }
+        const courseSpecialization = this.planning.course_specialization_years.find(courseSpecialization => {
+            return courseSpecialization.course_id === courseId
+        })
+        return !!courseSpecialization
+    }
+
+    public getCourseIsCrossQualification(courseId: number): boolean {
+        if (!this.planning || !this.planning.course_cross_qualification_years) {
+            return false;
+        }
+        const courseCrossQualificationYear = this.planning.course_cross_qualification_years.find(courseCrossQualificationYear => {
+            return courseCrossQualificationYear.course_id === courseId
+        })
+        return !!courseCrossQualificationYear
     }
 }
 </script>

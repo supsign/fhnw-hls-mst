@@ -33,11 +33,11 @@ class CompletionService extends BaseModelService
             case empty($grade):
                 $completionTypeId = 1;
                 break;
-            case $grade === 'erfüllt' || $grade >= 4:
+            case $grade === 'erfüllt' || (int)$grade >= 4 :
                 $completionTypeId = 2;
                 $this->attachSkillsToStudent($student, $courseYear);
                 break;
-            case $grade === 'nicht erfüllt' || $grade < 4:
+            case $grade === 'nicht erfüllt' || (int)$grade < 4:
                 $completionTypeId = 3;
                 break;
             default:

@@ -7,12 +7,25 @@ use App\Services\Completion\CompletionService;
 use App\Services\Course\CourseService;
 use App\Services\CourseYear\CourseYearService;
 use App\Services\Student\StudentService;
+use Illuminate\Database\Eloquent\Model;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class CompletionAttemptImport extends BaseExcelImport implements ToModel, WithHeadingRow
 {
-    protected array $requiredFields = ['id_anmeldung', 'id_person', 'id_anlass', 'anlassnummer', 'note', 'credits_anmeldung', 'status_anmeldung'];
+    protected array $requiredFields = [
+        'id_anmeldung',
+        'id_person',
+        'id_anlass',
+        'anlassnummer',
+        'note',
+        'credits_anmeldung',
+        'status_anmeldung',
+        'id_anlass_modul',
+        'anlassbezeichnung_modul',
+        'anlassnummer_modul',
+
+    ];
     protected CourseService $courseService;
     protected CourseYearService $courseYearService;
     protected CompletionService $completionService;
@@ -28,7 +41,7 @@ class CompletionAttemptImport extends BaseExcelImport implements ToModel, WithHe
 
     /**
      * @param  array  $row
-     * @return \Illuminate\Database\Eloquent\Model|null
+     * @return Model|null
      */
     public function model(array $row)
     {

@@ -33,18 +33,18 @@ class CompletionService extends BaseModelService
             case empty($grade):
                 $completionTypeId = 1;
                 break;
-            case $grade === 'erfüllt' || (int)$grade >= 4 :
+            case $grade === 'erfüllt' || (float)$grade >= 4 :
                 $completionTypeId = 2;
                 $this->attachSkillsToStudent($student, $courseYear);
                 break;
-            case $grade === 'nicht erfüllt' || (int)$grade < 4:
+            case $grade === 'nicht erfüllt' || (float)$grade < 4:
                 $completionTypeId = 3;
                 break;
             default:
                 $status = '';
         }
 
-        if ($status !== 'aA.Angemeldet') {
+        if ($status !== 'aA.Angemeldet' || $status !== 'aA.Hist.Angemeldet_alt') {
             $this->getByEventoId($eventoId)?->delete();
 
             return null;

@@ -18,28 +18,26 @@ use Exception;
  */
 class CreateStudyFieldYearByImportService extends BaseModelService
 {
-
     use GetByEventoId;
 
     public function __construct(
-        protected StudyFieldYear                              $model,
-        protected StudyFieldService                           $studyFieldService,
-        protected CourseGroupYearService                      $courseGroupYearService,
-        protected CreateCourseGroupYearByLatestService        $createCourseGroupYearByLatestService,
-        protected CreateSpecializationYearByLatestService     $createSpecializationYearByLatestService,
+        protected StudyFieldYear $model,
+        protected StudyFieldService $studyFieldService,
+        protected CourseGroupYearService $courseGroupYearService,
+        protected CreateCourseGroupYearByLatestService $createCourseGroupYearByLatestService,
+        protected CreateSpecializationYearByLatestService $createSpecializationYearByLatestService,
         protected CreateCrossQualificationYearByLatestService $createCrossQualificationYearByLatestService,
-        protected StudyFieldYearService                       $studyFieldYearService,
-    )
-    {
+        protected StudyFieldYearService $studyFieldYearService,
+    ) {
         parent::__construct($model);
     }
 
-
     /**
-     * @param int $eventoId
-     * @param StudyField $studyField
-     * @param string $eventoNumber
+     * @param  int  $eventoId
+     * @param  StudyField  $studyField
+     * @param  string  $eventoNumber
      * @return StudyFieldYear
+     *
      * @throws Exception
      */
     public function createOrUpdateByReImport(int $eventoId, StudyField $studyField, string $eventoNumber): StudyFieldYear
@@ -55,7 +53,7 @@ class CreateStudyFieldYearByImportService extends BaseModelService
         $studyFieldYear = $this->model::create([
             'evento_id' => $eventoId,
             'study_field_id' => $studyField->id,
-            'begin_semester_id' => $beginSemester->id
+            'begin_semester_id' => $beginSemester->id,
 
         ]);
         activity('info')
@@ -71,7 +69,7 @@ class CreateStudyFieldYearByImportService extends BaseModelService
         $studyFieldYear->update([
             'assessment_id' => $lastStudyFieldYear->assessment_id,
             'recommendation_id' => $lastStudyFieldYear->recommendation_id,
-            'is_specialization_mandatory' => $lastStudyFieldYear->is_specialization_mandatory
+            'is_specialization_mandatory' => $lastStudyFieldYear->is_specialization_mandatory,
         ]);
 
         foreach ($lastStudyFieldYear->courseGroupYears as $courseGroupYear) {
@@ -87,7 +85,6 @@ class CreateStudyFieldYearByImportService extends BaseModelService
         }
 
         return $studyFieldYear;
-
     }
 
     protected function getLatestStudyFieldYear(StudyField $studyField): ?StudyFieldYear

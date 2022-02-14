@@ -41,7 +41,7 @@ class StudyFieldImport extends Command
     public function handle(Excel $excel)
     {
         if (!Storage::exists($this->option('filename'))) {
-            echo 'file "' . $this->option('filename') . '" not found!' . PHP_EOL;
+            echo 'file "'.$this->option('filename').'" not found!'.PHP_EOL;
 
             return Command::INVALID;
         }

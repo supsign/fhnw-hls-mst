@@ -32,7 +32,7 @@ class CreateCrossQualificationYearByLatestService extends BaseModelService
             'cross_qualification_id' => $latestCrossQualificationYear->cross_qualification_id,
             'recommendation_id' => $latestCrossQualificationYear->recommendation_id,
             'study_field_year_id' => $studyFieldYear->id,
-            'amount_to_pass' => $latestCrossQualificationYear->amount_to_pass
+            'amount_to_pass' => $latestCrossQualificationYear->amount_to_pass,
         ]);
 
         foreach ($latestCrossQualificationYear->courseCrossQualificationYears as $courseCrossQualificationYear) {
@@ -40,6 +40,5 @@ class CreateCrossQualificationYearByLatestService extends BaseModelService
         }
 
         return $crossQualificationYear;
-
     }
 }

@@ -19,9 +19,10 @@ class CreateSpecializationYearByLatestService extends BaseModelService
     }
 
     /**
-     * @param SpecializationYear $latestSpecializationYear
-     * @param StudyFieldYear $studyFieldYear
+     * @param  SpecializationYear  $latestSpecializationYear
+     * @param  StudyFieldYear  $studyFieldYear
      * @return SpecializationYear
+     *
      * @throws Exception
      */
     public function createByLatest(SpecializationYear $latestSpecializationYear, StudyFieldYear $studyFieldYear): SpecializationYear
@@ -44,6 +45,4 @@ class CreateSpecializationYearByLatestService extends BaseModelService
 
         return $specializationYear;
     }
-
-
 }

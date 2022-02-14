@@ -7,12 +7,13 @@ use App\Models\Student;
 use App\Services\Base\BaseModelService;
 use App\Services\Base\Traits\UpdateOrCreateTrait;
 use App\Services\Completion\CourseCompletionService;
+use App\Services\CourseCourseGroupYear\CourseCourseGroupYearService;
 
 class CourseGroupYearService extends BaseModelService
 {
     use UpdateOrCreateTrait;
 
-    public function __construct(protected CourseGroupYear $model, protected CourseCompletionService $courseCompletionService)
+    public function __construct(protected CourseGroupYear $model, protected CourseCompletionService $courseCompletionService, protected CourseCourseGroupYearService $courseCourseGroupYearService)
     {
         parent::__construct($model);
     }

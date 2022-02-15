@@ -19,7 +19,7 @@ class CourseReImport extends BaseExcelImport implements ToModel, WithHeadingRow
     }
 
     /**
-     * @param array $row
+     * @param  array  $row
      * @return Model|null
      */
     public function model(array $row): void
@@ -35,7 +35,6 @@ class CourseReImport extends BaseExcelImport implements ToModel, WithHeadingRow
             return;
         }
 
-
         $this->service->createOrUpdateOnEventoId(
             $row['id_anlass'],
             [
@@ -45,7 +44,5 @@ class CourseReImport extends BaseExcelImport implements ToModel, WithHeadingRow
                 'language_id' => 1,
             ]
         );
-
     }
-
 }

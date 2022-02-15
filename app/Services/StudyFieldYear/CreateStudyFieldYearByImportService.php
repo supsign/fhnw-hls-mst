@@ -33,7 +33,8 @@ class CreateStudyFieldYearByImportService extends BaseModelService
     }
 
     /**
-     * If the StudyFieldYears already exists no action will be performed
+     * If the StudyFieldYears already exists no action will be performed.
+     *
      * @param  int  $eventoId
      * @param  StudyField  $studyField
      * @param  string  $eventoNumber
@@ -66,7 +67,6 @@ class CreateStudyFieldYearByImportService extends BaseModelService
         activity('info')
             ->causedBy($studyFieldYear)
             ->log('StudyField Created');
-
 
         $studyFieldYear->update([
             'assessment_id' => $lastStudyFieldYear->assessment_id,

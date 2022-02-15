@@ -22,7 +22,7 @@ class CourseYearReImport extends BaseExcelImport implements ToModel, WithHeading
     }
 
     /**
-     * @param  array  $row
+     * @param array $row
      * @return Model|null
      */
     public function model(array $row): void
@@ -35,6 +35,7 @@ class CourseYearReImport extends BaseExcelImport implements ToModel, WithHeading
         $courseYear = $this->courseYearSerivce->getByEventoId($row['id_anlass']);
 
         if ($courseYear) {
+            $this->courseYearSerivce->updateNameByEventoId($row['id_anlass'], $row['anlassbezeichnung'],);
             return;
         }
 

@@ -39,6 +39,6 @@ class StudyFieldYearReImport extends BaseExcelImport implements ToModel, WithHea
             return null;
         }
 
-        return $this->createStudyFieldYearByImportService->createOrUpdateByReImport($row['id_anlass'], $studyField, $row['anlassnummer']);
+        return $this->createStudyFieldYearByImportService->createNewByReImport($row['id_anlass'], $studyField, $row['anlassnummer']);
     }
 }

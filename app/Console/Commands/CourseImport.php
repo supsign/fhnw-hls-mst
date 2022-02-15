@@ -2,19 +2,19 @@
 
 namespace App\Console\Commands;
 
-use App\Imports\StudyFieldImport as import;
+use App\Imports\CourseReImport as import;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Excel;
 
-class StudyFieldImport extends Command
+class CourseImport extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'import:studyField {--filename=Tab1_Studiengang.xlsx}';
+    protected $signature = 'import:course {--filename=Tab3_Modul.xlsx}';
 
     /**
      * The console command description.

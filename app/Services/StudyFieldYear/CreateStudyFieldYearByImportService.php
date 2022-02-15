@@ -36,13 +36,14 @@ class CreateStudyFieldYearByImportService extends BaseModelService
 
 
     /**
+     * If the StudyFieldYears already exists no action will be performed
      * @param int $eventoId
      * @param StudyField $studyField
      * @param string $eventoNumber
      * @return StudyFieldYear
      * @throws Exception
      */
-    public function createOrUpdateByReImport(int $eventoId, StudyField $studyField, string $eventoNumber): StudyFieldYear
+    public function createNewByReImport(int $eventoId, StudyField $studyField, string $eventoNumber): StudyFieldYear
     {
         $studyFieldYear = $this->studyFieldYearService->getByEventoId($eventoId);
 
@@ -51,6 +52,12 @@ class CreateStudyFieldYearByImportService extends BaseModelService
         }
 
         $beginSemester = $this->studyFieldService->getSemesterFromEventoNumber($eventoNumber);
+
+        $lastStudyFieldYear = $this->getLatestStudyFieldYear($studyField);
+
+        if (!$lastStudyFieldYear) {
+            return $studyFieldYear;
+        }
 
         $studyFieldYear = $this->model::create([
             'evento_id' => $eventoId,
@@ -62,11 +69,6 @@ class CreateStudyFieldYearByImportService extends BaseModelService
             ->causedBy($studyFieldYear)
             ->log('StudyField Created');
 
-        $lastStudyFieldYear = $this->getLatestStudyFieldYear($studyField);
-
-        if (!$lastStudyFieldYear) {
-            return $studyFieldYear;
-        }
 
         $studyFieldYear->update([
             'assessment_id' => $lastStudyFieldYear->assessment_id,
@@ -75,7 +77,13 @@ class CreateStudyFieldYearByImportService extends BaseModelService
         ]);
 
         foreach ($lastStudyFieldYear->courseGroupYears as $courseGroupYear) {
-            $this->createCourseGroupYearByLatestService->createByLatest($courseGroupYear, $studyFieldYear);
+            try {
+                $this->createCourseGroupYearByLatestService->createByLatest($courseGroupYear, $studyFieldYear);
+            } catch (Exception $e) {
+                activity('error')
+                    ->causedBy($studyFieldYear)
+                    ->log($e->getMessage());
+            }
         }
 
         foreach ($lastStudyFieldYear->specializationYears as $specializationYear) {

@@ -31,7 +31,7 @@ class CreateCourseGroupYearByLatestService extends BaseModelService
             'course_group_id' => $latestCourseGroupYear->course_group_id,
             'study_field_year_id' => $studyFieldYear->id,
             'amount_to_pass' => $latestCourseGroupYear->amount_to_pass,
-            'credits_to_pass' => $latestCourseGroupYear->credits_to_pass
+            'credits_to_pass' => $latestCourseGroupYear->credits_to_pass,
         ]);
 
         foreach ($latestCourseGroupYear->courseCourseGroupYears as $courseCourseGroupYear) {
@@ -39,7 +39,5 @@ class CreateCourseGroupYearByLatestService extends BaseModelService
         }
 
         return $courseGroupYear;
-
-
     }
 }

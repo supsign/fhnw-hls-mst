@@ -28,7 +28,7 @@ class StudyFieldImport extends BaseExcelImport implements ToModel, WithHeadingRo
     }
 
     /**
-     * @param array $row
+     * @param  array  $row
      * @return Model|null
      */
     public function model(array $row): void

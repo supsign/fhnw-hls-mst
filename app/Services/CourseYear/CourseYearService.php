@@ -21,6 +21,13 @@ class CourseYearService extends BaseModelService
         parent::__construct($model);
     }
 
+    public function updateNameByEventoId(int $eventoId, string $name)
+    {
+        return $this->createOrUpdateOnEventoIdTrait($eventoId, [
+            'name' => $name,
+        ]);
+    }
+
     public function createOrUpdateOnEventoId(int $eventoId, Course $course, string $number, string $name): ?CourseYear
     {
         $semester = $this->semesterService->getSemesterFromEventoNumber($number);

@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Services\StudyField\StudyFieldService;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\App;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -19,6 +20,8 @@ class StudyFieldImport extends BaseExcelImport implements ToModel, WithHeadingRo
 {
     protected array $requiredFields = ['id_anlass', 'anlassnummer', 'anlassbezeichnung'];
 
+    private StudyFieldService $service;
+
     public function __construct()
     {
         $this->service = App::make(StudyFieldService::class);
@@ -26,7 +29,7 @@ class StudyFieldImport extends BaseExcelImport implements ToModel, WithHeadingRo
 
     /**
      * @param  array  $row
-     * @return \Illuminate\Database\Eloquent\Model|null
+     * @return Model|null
      */
     public function model(array $row): void
     {

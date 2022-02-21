@@ -44,7 +44,7 @@ class CompletionService extends BaseModelService
                 $status = '';
         }
 
-        if (!($status === 'aA.Angemeldet' || $status === 'aA.Hist.Angemeldet_alt')) {
+        if (!($status === 'aA.Angemeldet' || $status === 'aA.Hist.Angemeldet_alt' || $status === 'aA.Hist.Erfolgreich teilgenommen')) {
             $this->getByEventoId($eventoId)?->delete();
 
             return null;

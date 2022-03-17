@@ -35,7 +35,7 @@ class CourseYearReImport extends BaseExcelImport implements ToModel, WithHeading
         $courseYear = $this->courseYearSerivce->getByEventoId($row['id_anlass']);
 
         if ($courseYear) {
-            $this->courseYearSerivce->updateNameByEventoId($row['id_anlass'], $row['anlassbezeichnung'], );
+            $this->courseYearSerivce->updateNameByEventoId($row['id_anlass'], $row['anlassbezeichnung']);
 
             return;
         }

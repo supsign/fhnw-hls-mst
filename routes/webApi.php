@@ -57,7 +57,7 @@ Route::middleware('auth')->group(
 
         Route::controller(WebApiMentorStudyFieldController::class)->group(function () {
             Route::post('mentorStudyFields', 'postMentorStudyField')->name('webapi.mentorStudyField.post');
-            Route::delete('mentorStudyFields/{mentorStudyField}',  'deleteMentorStudyField')->name('webapi.mentorStudyField.delete');
+            Route::delete('mentorStudyFields/{mentorStudyField}', 'deleteMentorStudyField')->name('webapi.mentorStudyField.delete');
         });
 
         Route::controller(FrequentlyAskedQuestionController::class)->group(function () {

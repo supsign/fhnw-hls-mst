@@ -3,6 +3,8 @@
         <div class="w-40 lg:w-60" :class="{'line-through': !hs && !fs}">{{ course.number }}</div>
         <div class="flex-grow" :class="{'line-through': !hs && !fs}">{{ course.name }}</div>
 
+        <vue-input type="text" name="credits" v-model="credits" @change="changeCredit"></vue-input>
+
         <div v-if="hs"
              class="w-8 lg:w-16"
              @click="changeHs"
@@ -37,11 +39,13 @@ import {Component, Prop} from "vue-property-decorator";
 import BaseComponent from "../base/baseComponent";
 import {ICourse} from "../../interfaces/course.interface";
 import VueCheckbox from "../form/vueCheckbox.vue";
+import VueInput from "../form/vueInput.vue";
 import axios from "axios";
 
 @Component({
     components: {
-        VueCheckbox
+        VueCheckbox,
+        VueInput
     }
 })
 export default class VueAdminCourseEdit extends BaseComponent {
@@ -50,10 +54,18 @@ export default class VueAdminCourseEdit extends BaseComponent {
 
     public hs = false;
     public fs = false;
+    public credits = 0;
 
     public created() {
         this.hs = this.course.is_hs;
         this.fs = this.course.is_fs;
+        this.credits = this.course.credits;
+    }
+
+    public changeCredit() {
+        axios.patch<ICourse>(`/webapi/courses/${this.course.id}`, {
+            credits: this.credits
+        });
     }
 
     public changeHs() {

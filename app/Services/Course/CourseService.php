@@ -2,6 +2,7 @@
 
 namespace App\Services\Course;
 
+use App\Http\Requests\Course\PatchCourseRequest;
 use App\Models\Course;
 use App\Models\CourseYear;
 use App\Models\Semester;
@@ -59,6 +60,13 @@ class CourseService extends BaseModelService
                 'credits' => $credits,
             ]
         );
+    }
+
+    public function patch(Course $course, PatchCourseRequest $request): Course
+    {
+        $course->update($request->validated());
+
+        return $course;
     }
 
     public function setSemesterType(Course $course, bool $isHs = null, bool $isFs = null): Course

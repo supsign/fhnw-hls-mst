@@ -24,6 +24,7 @@ class PatchCourseRequest extends FormRequest
     public function rules()
     {
         return [
+            'credits' => 'int',
             'is_hs' => 'boolean',
             'is_fs' => 'boolean',
         ];

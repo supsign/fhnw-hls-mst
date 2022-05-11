@@ -24,7 +24,7 @@ class PatchRequest extends FormRequest
     public function rules()
     {
         return [
-            'contents' => ['string']
+            'contents' => ['string'],
         ];
     }
 }

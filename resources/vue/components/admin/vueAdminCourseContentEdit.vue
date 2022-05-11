@@ -13,7 +13,7 @@
         </div>
         <div>
             <div class="flex-grow font-bold">Credits</div>
-            <vue-input type="text" name="credits" v-model="course.credits"4></vue-input>
+            <vue-input type="text" name="credits" v-model="course.credits"></vue-input>
         </div>
             <div v-for="(courseYear, index) in course.course_years" :key="index">
                 <div class="font-bold">{{courseYear.name}}</div>
@@ -52,6 +52,11 @@ export default class VueAdminCourseEdit extends BaseComponent {
     @Prop({type: Object})
     public course: ICourse
 
+    public credits = 0
+
+    public created() {
+        this.credits = this.course.credits
+    }
     public updateCourse() {
         axios.patch<ICourse>(`/webapi/courses/${this.course.id}`, {
             course_years: this.course.course_years,

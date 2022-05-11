@@ -2,31 +2,30 @@
     <div class="flex flex-row text-sm lg:text-base space-x-2">
         <div class="w-40 lg:w-60" :class="{'line-through': !hs && !fs}">{{ course.number }}</div>
         <div class="flex-grow" :class="{'line-through': !hs && !fs}">{{ course.name }}</div>
-
         <vue-input type="text" name="credits" v-model="credits" @change="changeCredit"></vue-input>
 
         <div v-if="hs"
-             class="w-8 lg:w-16"
-             @click="changeHs"
+            class="w-8 lg:w-16"
+            @click="changeHs"
         >
             <i class="fas fa-check-square text-blue-700 cursor-pointer" aria-hidden="true"></i>
         </div>
         <div v-else
-             class="w-8 lg:w-16"
-             @click="changeHs"
+            class="w-8 lg:w-16"
+            @click="changeHs"
         >
             <i class="far fa-square text-blue-700 cursor-pointer" aria-hidden="true"></i>
         </div>
 
         <div v-if="fs"
-             class="w-8 lg:w-16"
-             @click="changeFS"
+            class="w-8 lg:w-16"
+            @click="changeFS"
         >
             <i class="fas fa-check-square text-blue-700 cursor-pointer" aria-hidden="true"></i>
         </div>
         <div v-else
-             class="w-8 lg:w-16"
-             @click="changeFS"
+            class="w-8 lg:w-16"
+            @click="changeFS"
         >
             <i class="far fa-square text-blue-700 cursor-pointer" aria-hidden="true"></i>
         </div>

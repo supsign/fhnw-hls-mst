@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Course;
 use App\Models\CourseCourseGroupYear;
 use App\Services\Faq\FrequentlyAskedQuestionService;
 use App\Services\User\PermissionAndRoleService;
@@ -12,17 +13,14 @@ use Illuminate\Contracts\View\View;
 class AdminController extends Controller
 {
     public function __construct(protected PermissionAndRoleService $permissionAndRoleService, protected UserService $userService)
-    {
-    }
+    {}
 
     public function courses(): View
     {
         $this->permissionAndRoleService->canManageBackendOrAbort();
 
-        $courses = CourseCourseGroupYear::all()->pluck('course')->unique()->sortBy('number');
-
         return view('admin.courses', [
-            'courses' => $courses,
+            'courses' => CourseCourseGroupYear::all()->pluck('course')->unique()->sortBy('number'),
         ]);
     }
 
@@ -31,6 +29,13 @@ class AdminController extends Controller
         $this->permissionAndRoleService->canManageBackendOrAbort();
 
         return view('admin.dashboard');
+    }
+
+    public function editCourse(Course $course): View
+    {
+        $this->permissionAndRoleService->canManageBackendOrAbort();
+
+        return view('admin.course.edit', ['course' => $course]);
     }
 
     public function faq(FrequentlyAskedQuestionService $faqService): View

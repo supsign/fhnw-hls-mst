@@ -13,7 +13,7 @@
         </div>
         <div>
             <div class="flex-grow font-bold">Credits</div>
-            <vue-input type="text" name="credits" v-model="course.credits"></vue-input>
+            <vue-input type="text" name="credits" v-model="credits" @input="updateCredits"></vue-input>
         </div>
             <div v-for="(courseYear, index) in course.course_years" :key="index">
                 <div class="font-bold">{{courseYear.name}}</div>
@@ -21,13 +21,11 @@
                             name="contents"
                             id="contents"
                             label="Inhalte"
+                            @input="updateCourseYear(courseYear)"
                 >
 
                 </vue-editor>
             </div>
-        <div @click="updateCourse" class="button-primary cursor-pointer">
-            Speichern
-        </div>
     </div>
 </template>
 
@@ -39,6 +37,7 @@ import VueInput from "../form/vueInput.vue";
 import VueEditor from "../form/vueEditor.vue";
 import axios from "axios";
 import { ICourse } from "../../interfaces/course.interface";
+import {ICourseYear} from "../../interfaces/courseYear.interface";
 
 @Component({
     components: {
@@ -57,12 +56,17 @@ export default class VueAdminCourseEdit extends BaseComponent {
     public created() {
         this.credits = this.course.credits
     }
-    public updateCourse() {
+    public updateCredits() {
         axios.patch<ICourse>(`/webapi/courses/${this.course.id}`, {
-            course_years: this.course.course_years,
-            credits: this.course.credits
+            credits: this.credits
         });
     }
+    public updateCourseYear(courseYear: ICourseYear) {
+        axios.patch<ICourse>(`/webapi/courseyears/${courseYear.id}`, {
+            contents: courseYear.contents
+        });
+    }
+
 
 
 }

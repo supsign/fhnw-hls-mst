@@ -2,7 +2,6 @@
     <div class="flex flex-row text-sm lg:text-base space-x-2">
         <div class="w-40 lg:w-60" :class="{'line-through': !hs && !fs}">{{ course.number }}</div>
         <div class="flex-grow" :class="{'line-through': !hs && !fs}">{{ course.name }}</div>
-        <vue-input type="text" name="credits" v-model="credits" @change="changeCredit"></vue-input>
 
         <div v-if="hs"
             class="w-8 lg:w-16"
@@ -29,7 +28,9 @@
         >
             <i class="far fa-square text-blue-700 cursor-pointer" aria-hidden="true"></i>
         </div>
-
+        <a class="w-8 lg:w-16" :href="editLink" >
+            <i class="fas fa-pencil cursor-pointer" aria-hidden="true"></i>
+        </a>
     </div>
 </template>
 
@@ -38,13 +39,11 @@ import {Component, Prop} from "vue-property-decorator";
 import BaseComponent from "../base/baseComponent";
 import {ICourse} from "../../interfaces/course.interface";
 import VueCheckbox from "../form/vueCheckbox.vue";
-import VueInput from "../form/vueInput.vue";
 import axios from "axios";
 
 @Component({
     components: {
         VueCheckbox,
-        VueInput
     }
 })
 export default class VueAdminCourseEdit extends BaseComponent {
@@ -53,18 +52,12 @@ export default class VueAdminCourseEdit extends BaseComponent {
 
     public hs = false;
     public fs = false;
-    public credits = 0;
+    public editLink = ""
 
     public created() {
         this.hs = this.course.is_hs;
         this.fs = this.course.is_fs;
-        this.credits = this.course.credits;
-    }
-
-    public changeCredit() {
-        axios.patch<ICourse>(`/webapi/courses/${this.course.id}`, {
-            credits: this.credits
-        });
+        this.editLink = window.location.href + '/' + this.course.id + '/edit'
     }
 
     public changeHs() {
@@ -80,5 +73,6 @@ export default class VueAdminCourseEdit extends BaseComponent {
             is_fs: this.fs
         });
     }
+
 }
 </script>

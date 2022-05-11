@@ -20,14 +20,14 @@ class CourseGroupController extends Controller
     public function patch(CourseGroup $courseGroup, PatchRequest $request): CourseGroup
     {
         $this->permissionAndRoleService->canManageBackendOrAbort();
-        
+
         return $this->courseGroupService->patch($courseGroup, $request);
     }
 
     public function post(PostRequest $request): CourseGroup
     {
         $this->permissionAndRoleService->canManageBackendOrAbort();
-        
+
         return $this->courseGroupService->create($request);
     }
 }

@@ -35,7 +35,7 @@ class AdminController extends Controller
     {
         $this->permissionAndRoleService->canManageBackendOrAbort();
 
-        return view('admin.course.edit', ['course' => $course]);
+        return view('admin.course.edit', ['course' => $course->load('courseYears')]);
     }
 
     public function faq(FrequentlyAskedQuestionService $faqService): View

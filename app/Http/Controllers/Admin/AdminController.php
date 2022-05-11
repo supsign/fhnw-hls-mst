@@ -13,7 +13,8 @@ use Illuminate\Contracts\View\View;
 class AdminController extends Controller
 {
     public function __construct(protected PermissionAndRoleService $permissionAndRoleService, protected UserService $userService)
-    {}
+    {
+    }
 
     public function courses(): View
     {

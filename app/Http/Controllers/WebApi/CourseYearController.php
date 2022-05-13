@@ -16,10 +16,10 @@ class CourseYearController extends Controller
     ) {
     }
 
-    public function patch(CourseYear $course, PatchRequest $request)
+    public function patch(CourseYear $courseYear, PatchRequest $request)
     {
         $this->permissionAndRoleService->canManageBackendOrAbort();
 
-        return $this->courseService->patch($course, $request);
+        return $this->courseYearService->patch($courseYear, $request);
     }
 }

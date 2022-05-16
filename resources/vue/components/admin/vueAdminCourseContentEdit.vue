@@ -16,15 +16,14 @@
             <vue-input type="text" name="credits" v-model="credits" @input="updateCredits"></vue-input>
         </div>
             <div v-for="(courseYear, index) in course.course_years" :key="index">
-              <div class="font-bold">{{courseYear.name}}</div>
-                <vue-editor v-model="courseYear.contents"
-                            name="contents"
-                            :id="String(index)"
-                            label="Inhalte"
-                            @input="debounceUpdateCourseYear(courseYear)"
-                >
-
-                </vue-editor>
+                <div class="font-bold">{{ courseYear.name + ' - ' +  courseYear.semester.name }}</div>
+                <vue-editor 
+                    v-model="courseYear.contents"
+                    name="contents"
+                    :id="String(index)"
+                    label="Inhalte"
+                    @input="debounceUpdateCourseYear(courseYear)"
+                ></vue-editor>
             </div>
     </div>
 </template>
@@ -37,7 +36,7 @@ import VueInput from "../form/vueInput.vue";
 import VueEditor from "../form/vueEditor.vue";
 import axios from "axios";
 import { ICourse } from "../../interfaces/course.interface";
-import {ICourseYear} from "../../interfaces/courseYear.interface";
+import { ICourseYear } from "../../interfaces/courseYear.interface";
 
 @Component({
     components: {

@@ -1,4 +1,5 @@
-import {IModel} from "../store/model.interface";
+import { IModel } from "../store/model.interface";
+import { ISemester } from "./semester.interface";
 
 export interface ICourseYear extends IModel {
     contents: string
@@ -11,4 +12,5 @@ export interface ICourseYear extends IModel {
     number: string
     semester_id: number
     updated_at: string
+    semester?: ISemester
 }

@@ -16,12 +16,12 @@
             <vue-input type="text" name="credits" v-model="credits" @input="updateCredits"></vue-input>
         </div>
             <div v-for="(courseYear, index) in course.course_years" :key="index">
-                <div class="font-bold">{{courseYear.name}}</div>
+              <div class="font-bold">{{courseYear.name}}</div>
                 <vue-editor v-model="courseYear.contents"
                             name="contents"
                             :id="String(index)"
                             label="Inhalte"
-                            @input="updateCourseYear(courseYear)"
+                            @input="debounceUpdateCourseYear(courseYear)"
                 >
 
                 </vue-editor>
@@ -61,10 +61,20 @@ export default class VueAdminCourseEdit extends BaseComponent {
             credits: this.credits
         });
     }
+    public debounce: any = null
+    public debounceUpdateCourseYear(courseYear: ICourseYear){
+        if(this.debounce !== null) {
+            clearTimeout(this.debounce);
+            this.debounce = null
+        }
+        this.debounce = setTimeout(() => {
+                this.updateCourseYear(courseYear)
+        }, 500);
+    }
     public updateCourseYear(courseYear: ICourseYear) {
-        axios.patch<ICourse>(`/webapi/courseyears/${courseYear.id}`, {
-            contents: courseYear.contents
-        });
+            axios.patch<ICourse>(`/webapi/courseyears/${courseYear.id}`, {
+                contents: courseYear.contents
+            });
     }
 }
 </script>

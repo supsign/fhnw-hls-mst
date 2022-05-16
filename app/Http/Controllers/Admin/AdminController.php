@@ -42,7 +42,7 @@ class AdminController extends Controller
         );
 
         return view('admin.course-edit', [
-            'course' => $course
+            'course' => $course,
         ]);
     }
 

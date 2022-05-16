@@ -2,6 +2,7 @@
 
 namespace App\Services\CourseYear;
 
+use App\Http\Requests\CourseYear\PatchRequest;
 use App\Models\Course;
 use App\Models\CourseYear;
 use App\Services\Base\BaseModelService;
@@ -19,13 +20,6 @@ class CourseYearService extends BaseModelService
     public function __construct(protected CourseYear $model, protected SemesterService $semesterService)
     {
         parent::__construct($model);
-    }
-
-    public function updateNameByEventoId(int $eventoId, string $name)
-    {
-        return $this->createOrUpdateOnEventoIdTrait($eventoId, [
-            'name' => $name,
-        ]);
     }
 
     public function createOrUpdateOnEventoId(int $eventoId, Course $course, string $number, string $name): ?CourseYear
@@ -51,6 +45,20 @@ class CourseYearService extends BaseModelService
             'number' => $number,
             'contents' => strip_tags($contents, '<ul><li><p><div><blockquote>'),
             'is_audit' => str_contains($name, '(Prüfung)'),
+        ]);
+    }
+
+    public function patch(CourseYear $courseYear, PatchRequest $request): CourseYear
+    {
+        $courseYear->update($request->validated());
+
+        return $courseYear;
+    }
+
+    public function updateNameByEventoId(int $eventoId, string $name)
+    {
+        return $this->createOrUpdateOnEventoIdTrait($eventoId, [
+            'name' => $name,
         ]);
     }
 }

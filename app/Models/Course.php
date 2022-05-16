@@ -86,7 +86,7 @@ class Course extends BaseModel
 
     public function courseYears()
     {
-        return $this->hasMany(CourseYear::class);
+        return $this->hasMany(CourseYear::class)->orderBy('id');
     }
 
     public function getCourseYearBySemesterOrLatest(Semester $semester = null): ?CourseYear

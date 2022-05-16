@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\WebApi\CourseController;
 use App\Http\Controllers\WebApi\CoursePlanningController;
+use App\Http\Controllers\WebApi\CourseYearController;
 use App\Http\Controllers\WebApi\FrequentlyAskedQuestionController;
 use App\Http\Controllers\WebApi\StudentController;
 use App\Http\Controllers\WebApi\UserController;
@@ -25,6 +26,8 @@ Route::middleware('auth')->group(
     function () {
         Route::patch('courses/{course}', [CourseController::class, 'patch'])->name('webapi.course.patch');
         Route::get('courses', [CourseController::class, 'search'])->name('webapi.course.search');
+
+        Route::patch('courseyears/{courseYear}', [CourseYearController::class, 'patch'])->name('webapi.courseYear.patch');
 
         Route::get('courseplannings/{coursePlanning}', [CoursePlanningController::class, 'getById'])->name('webapi.courseplannings.getById');
         Route::patch('courseplannings/{coursePlanning}', [CoursePlanningController::class, 'patch'])->name('webapi.courseplannings.patch');

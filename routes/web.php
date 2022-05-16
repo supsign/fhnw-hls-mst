@@ -73,6 +73,7 @@ Route::middleware(['web', 'auth', 'backend'])->group(
     function () {
         Route::get('admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
         Route::get('admin/courses', [AdminController::class, 'courses'])->name('admin.course.list');
+        Route::get('admin/courses/{course}/edit', [AdminController::class, 'editCourse'])->name('admin.course.edit');
         Route::get('admin/faq', [AdminController::class, 'faq'])->name('admin.faq');
         Route::get('admin/userManagement/assignRoleToUser', [AdminRolesController::class, 'assignRoles'])->name('admin.userManagement.assign');
         Route::post('admin/userManagement/assignRoleToUser', [AdminRolesController::class, 'assignRoleToUser'])->name('admin.userManagement.assign.post');

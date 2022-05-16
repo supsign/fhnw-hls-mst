@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Course;
+namespace App\Http\Requests\CourseYear;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PatchCourseRequest extends FormRequest
+class PatchRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,7 @@ class PatchCourseRequest extends FormRequest
     public function rules()
     {
         return [
-            'credits' => 'int',
-            'is_hs' => 'boolean',
-            'is_fs' => 'boolean',
+            'contents' => ['string'],
         ];
     }
 }

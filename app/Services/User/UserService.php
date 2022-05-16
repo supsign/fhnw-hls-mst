@@ -2,9 +2,6 @@
 
 namespace App\Services\User;
 
-use App;
-use App\Models\Mentor;
-use App\Models\Student;
 use App\Models\User;
 use App\Services\Helpers\Hashes;
 use App\Services\Mentor\MentorService;

@@ -22,7 +22,6 @@
                             :id="String(index)"
                             label="Inhalte"
                             @input="updateCourseYear(courseYear)"
-                            @blur="test"
                 >
 
                 </vue-editor>
@@ -67,12 +66,5 @@ export default class VueAdminCourseEdit extends BaseComponent {
             contents: courseYear.contents
         });
     }
-
-    public test() {
-        console.log("ELLO")
-    }
-
-
-
 }
 </script>

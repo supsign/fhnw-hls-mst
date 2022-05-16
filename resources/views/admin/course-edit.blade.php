@@ -7,8 +7,6 @@
         <x-slot name="title">
             @lang('l.courseEdit')
         </x-slot>
-
-
             <vue-admin-course-content-edit :course="{{$course}}"/>
     </x-app.card>
 </x-layout.admin>

@@ -19,9 +19,10 @@
                 <div class="font-bold">{{courseYear.name}}</div>
                 <vue-editor v-model="courseYear.contents"
                             name="contents"
-                            id="contents"
+                            :id="String(index)"
                             label="Inhalte"
                             @input="updateCourseYear(courseYear)"
+                            @blur="test"
                 >
 
                 </vue-editor>
@@ -65,6 +66,10 @@ export default class VueAdminCourseEdit extends BaseComponent {
         axios.patch<ICourse>(`/webapi/courseyears/${courseYear.id}`, {
             contents: courseYear.contents
         });
+    }
+
+    public test() {
+        console.log("ELLO")
     }
 
 

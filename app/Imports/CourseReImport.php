@@ -49,9 +49,10 @@ class CourseReImport extends BaseExcelImport implements ToModel, WithHeadingRow
         if ($course) {
             file_put_contents($this->logFilename, $row['id_anlass'].';exists'.PHP_EOL, FILE_APPEND);
             $this->removeEventIdFromArray($row['id_anlass']);
+
             return;
         }
-        
+
         $this->service->createOrUpdateOnEventoId(
             $row['id_anlass'],
             [

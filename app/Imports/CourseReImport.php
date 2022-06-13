@@ -21,8 +21,6 @@ class CourseReImport extends BaseExcelImport implements ToModel, WithHeadingRow
         $this->courseEventoIds = Course::whereNotNull('evento_id')->get()->pluck('evento_id')->toArray();
         $this->logFilename = 'storage/logs/import_courses_log_'.Carbon::now();
 
-        
-
         file_put_contents($this->logFilename, 'evento_id;status'.PHP_EOL);
     }
 

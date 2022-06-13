@@ -23,7 +23,6 @@ class CompletionCreditImport extends BaseExcelImport implements ToModel, WithHea
         $this->courseService = App::make(CourseService::class);
         $this->completionService = App::make(CompletionService::class);
         $this->studentService = App::make(StudentService::class);
-
         $this->logFilename = 'storage/logs/import_courses_from_completion_credit_log_'.Carbon::now();
 
         file_put_contents($this->logFilename, 'evento_id;status'.PHP_EOL);

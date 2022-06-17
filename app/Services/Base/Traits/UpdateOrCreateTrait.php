@@ -11,7 +11,7 @@ trait UpdateOrCreateTrait
         $referenceAttributes = $this->sanitiseAttributes($referenceAttributes, true);
         $updateAttributes = $this->sanitiseAttributes($updateAttributes);
 
-        foreach (array_keys(array_intersect($referenceAttributes, $updateAttributes)) AS $duplicateKey) {
+        foreach (array_keys(array_intersect($referenceAttributes, $updateAttributes)) as $duplicateKey) {
             unset($updateAttributes[$duplicateKey]);
         }
 

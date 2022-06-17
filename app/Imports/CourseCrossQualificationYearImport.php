@@ -32,12 +32,12 @@ class CourseCrossQualificationYearImport extends BaseCsvImport
             return $this;
         }
 
-        foreach ($this->courseService->getByNumberUnformated($this->line['laufnummer']) AS $course) {
+        foreach ($this->courseService->getByNumberUnformated($this->line['laufnummer']) as $course) {
             // if ($crossQualification->study_field_id === 13 && $this->line['pflicht'] === 'f') {
             //     continue;
             // }
 
-            foreach ($crossQualification->crossQualificationYears AS $crossQualificationYear) {
+            foreach ($crossQualification->crossQualificationYears as $crossQualificationYear) {
                 CourseCrossQualificationYear::updateOrCreate([
                     'course_id' => $course->id,
                     'cross_qualification_year_id' => $crossQualificationYear->id,

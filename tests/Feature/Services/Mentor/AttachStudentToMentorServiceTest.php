@@ -16,12 +16,11 @@ use Tests\TestCase;
 class AttachStudentToMentorServiceTest extends TestCase
 {
     use WithFaker;
-
     private MentorService $mentorService;
     private StudentService $studentService;
     private AttachStudentToMentorService $attacheStudentToMentorService;
 
-    public function setup(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->setUpFaker();

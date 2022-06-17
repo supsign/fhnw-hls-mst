@@ -3,8 +3,7 @@
 use Database\Seeders\ServerAdminSeeder;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateServerAdmin extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -26,4 +25,4 @@ class CreateServerAdmin extends Migration
     public function down()
     {
     }
-}
+};

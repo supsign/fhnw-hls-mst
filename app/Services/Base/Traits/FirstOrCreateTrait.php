@@ -11,7 +11,7 @@ trait FirstOrCreateTrait
         $referenceAttributes = $this->sanitiseAttributes($referenceAttributes, true);
         $insertAttributes = $this->sanitiseAttributes($insertAttributes);
 
-        foreach (array_keys(array_intersect($referenceAttributes, $insertAttributes)) AS $duplicateKey) {
+        foreach (array_keys(array_intersect($referenceAttributes, $insertAttributes)) as $duplicateKey) {
             unset($insertAttributes[$duplicateKey]);
         }
 

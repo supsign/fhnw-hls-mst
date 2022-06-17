@@ -13,12 +13,11 @@ use Tests\TestCase;
 class CourseCrossQualificationYearServiceTest extends TestCase
 {
     use WithFaker;
-
     private CrossQualificationYearService $crossQualificationYearService;
     private CourseService $courseService;
     private CourseCrossQualificationYearService $courseCrossQualificationYearService;
 
-    public function setup(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->setUpFaker();
@@ -32,7 +31,7 @@ class CourseCrossQualificationYearServiceTest extends TestCase
         $crossQualification = CrossQualification::where(['janis_id' => 33])->first();
         $studyFieldYear = StudyFieldYear::where(['evento_number' => '2-L-B-LSCH/19.a-SJ'])->first();
         $crossQualificationYear = $this->crossQualificationYearService->findByCrossQualificationAndStudyFieldYear($crossQualification, $studyFieldYear);
-        $uniqueNumber = $this->faker->unique()->name;
+        $uniqueNumber = $this->faker->unique()->name();
         $course = $this->courseService->firstOrCreateByNumber($uniqueNumber, 1);
         $courseCrossQualificationYear = $this->courseCrossQualificationYearService->add($crossQualificationYear, $course);
         $this->assertNotNull($courseCrossQualificationYear);
@@ -43,7 +42,7 @@ class CourseCrossQualificationYearServiceTest extends TestCase
         $crossQualification = CrossQualification::where(['janis_id' => 33])->first();
         $studyFieldYear = StudyFieldYear::where(['evento_number' => '2-L-B-LSCH/19.a-SJ'])->first();
         $crossQualificationYear = $this->crossQualificationYearService->findByCrossQualificationAndStudyFieldYear($crossQualification, $studyFieldYear);
-        $uniqueNumber = $this->faker->unique()->name;
+        $uniqueNumber = $this->faker->unique()->name();
         $course = $this->courseService->firstOrCreateByNumber($uniqueNumber, 1);
         $courseCrossQualificationYear = $this->courseCrossQualificationYearService->add($crossQualificationYear, $course);
 

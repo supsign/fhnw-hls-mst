@@ -26,7 +26,7 @@ class CourseReImport extends BaseExcelImport implements ToModel, WithHeadingRow
 
     public function __destruct()
     {
-        foreach ($this->courseEventoIds AS $eventoId) {
+        foreach ($this->courseEventoIds as $eventoId) {
             file_put_contents($this->logFilename, $eventoId.';removed'.PHP_EOL, FILE_APPEND);
         }
     }

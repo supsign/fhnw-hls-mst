@@ -15,15 +15,15 @@ class MentorServiceTest extends TestCase
     {
         $mentorService = $this->app->make(MentorService::class);
         $mentor = $mentorService->createOrUpdateOnEventoPersonId('1234', 'Zehnder', 'Beat');
-        $this->assertTrue((bool) $mentor);
+        $this->assertTrue((bool)$mentor);
     }
 
     public function testGetByEventoPersonId()
     {
         $mentorService = $this->app->make(MentorService::class);
         $mentor = $mentorService->createOrUpdateOnEventoPersonId('1234', 'Zehnder', 'Beat');
-        $this->assertTrue((bool) $mentor);
+        $this->assertTrue((bool)$mentor);
         $mentor2 = $mentorService->getByEventoPersonId('1234');
-        $this->assertTrue((bool) $mentor2);
+        $this->assertTrue((bool)$mentor2);
     }
 }

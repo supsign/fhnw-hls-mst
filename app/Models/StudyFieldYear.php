@@ -24,7 +24,7 @@ class StudyFieldYear extends BaseModel
 
     public function originStudyFieldYear()
     {
-        return $this->belongsTo(StudyFieldYear::class, 'origin_study_field_year_id');
+        return $this->belongsTo(self::class, 'origin_study_field_year_id');
     }
 
     public function studyField()

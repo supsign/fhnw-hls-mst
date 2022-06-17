@@ -17,7 +17,7 @@ class LockPlanningServiceTest extends TestCase
     private StudentService $studentService;
     private LockPlanningService $lockPlanningService;
 
-    public function setup(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->setUpFaker();

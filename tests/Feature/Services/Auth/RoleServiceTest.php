@@ -18,7 +18,7 @@ class RoleServiceTest extends TestCase
 
     protected RoleService $roleService;
 
-    public function setup(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->setUpFaker();

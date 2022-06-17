@@ -15,7 +15,7 @@ class StudyFieldYearServiceTest extends TestCase
     protected StudyFieldYearService $studyFieldYearService;
     protected AssessmentService $assessmentService;
 
-    public function setup(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->setUpFaker();

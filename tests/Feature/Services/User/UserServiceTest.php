@@ -17,7 +17,7 @@ class UserServiceTest extends TestCase
     private UserService $userService;
     private StudentService $studentService;
 
-    public function setup(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->setUpFaker();

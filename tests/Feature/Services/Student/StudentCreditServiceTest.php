@@ -21,7 +21,7 @@ class StudentCreditServiceTest extends TestCase
     private CourseService $courseService;
     private CourseYearService $courseYearService;
 
-    public function setup(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->setUpFaker();

@@ -14,7 +14,7 @@ class SpecializationYearServiceTest extends TestCase
 
     private SpecializationYearService $specializationYearService;
 
-    public function setup(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->setUpFaker();

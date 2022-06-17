@@ -12,7 +12,7 @@ class CourseServiceTest extends TestCase
 
     private CourseService $courseService;
 
-    public function setup(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->setUpFaker();

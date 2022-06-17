@@ -25,7 +25,7 @@ class AuthServiceTest extends TestCase
     protected StudentService $studentService;
     protected TokenService $tokenService;
 
-    public function setup(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->setUpFaker();

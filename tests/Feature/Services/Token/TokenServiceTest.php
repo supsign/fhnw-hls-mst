@@ -19,7 +19,7 @@ class TokenServiceTest extends TestCase
 
     protected TokenService $tokenService;
 
-    public function setup(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->setUpFaker();

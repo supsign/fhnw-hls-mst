@@ -21,7 +21,7 @@ class AttachStudentToMentorServiceTest extends TestCase
     private StudentService $studentService;
     private AttachStudentToMentorService $attacheStudentToMentorService;
 
-    public function setup(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->setUpFaker();

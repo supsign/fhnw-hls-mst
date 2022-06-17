@@ -12,7 +12,7 @@ abstract class TestCase extends BaseTestCase
 
     protected static bool $setUpHasRunOnce = false;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         if (!static::$setUpHasRunOnce) {

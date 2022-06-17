@@ -15,7 +15,7 @@ class PlanningServiceTest extends TestCase
     private PlanningService $planningService;
     private StudentService $studentService;
 
-    public function setup(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->setUpFaker();

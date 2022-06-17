@@ -24,7 +24,7 @@ class CoursePlanningServiceTest extends TestCase
     public StudyFieldYearService $studyFieldYearService;
     public PlanningService $planningService;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->setUpFaker();

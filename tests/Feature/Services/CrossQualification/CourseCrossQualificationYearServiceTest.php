@@ -18,7 +18,7 @@ class CourseCrossQualificationYearServiceTest extends TestCase
     private CourseService $courseService;
     private CourseCrossQualificationYearService $courseCrossQualificationYearService;
 
-    public function setup(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->setUpFaker();

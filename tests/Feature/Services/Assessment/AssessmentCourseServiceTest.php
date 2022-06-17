@@ -17,7 +17,7 @@ class AssessmentCourseServiceTest extends TestCase
     private AssessmentService $assessmentService;
     private AssessmentCourseService $assessmentCourseService;
 
-    public function setup(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->setUpFaker();

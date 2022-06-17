@@ -7,6 +7,7 @@ use App\Services\Completion\CompletionService;
 use App\Services\Course\CourseService;
 use App\Services\CourseYear\CourseYearService;
 use App\Services\Student\StudentService;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -37,6 +38,9 @@ class CompletionAttemptImport extends BaseExcelImport implements ToModel, WithHe
         $this->courseYearService = App::make(CourseYearService::class);
         $this->completionService = App::make(CompletionService::class);
         $this->studentService = App::make(StudentService::class);
+        $this->logFilename = 'storage/logs/import_courses_from_completion_attempt_log_'.Carbon::now();
+
+        file_put_contents($this->logFilename, 'evento_id;status'.PHP_EOL);
     }
 
     /**
@@ -59,6 +63,10 @@ class CompletionAttemptImport extends BaseExcelImport implements ToModel, WithHe
                 'name' => $row['anlassbezeichnung_modul'],
                 // 'credits' => (int)$row['credits_anmeldung'],
             ]);
+
+            if ($course->wasRecentlyCreated) {
+                file_put_contents($this->logFilename, $row['id_anlass'].';created'.PHP_EOL, FILE_APPEND);
+            }
 
             $courseYear = $this->courseYearService->createOrUpdateOnEventoId(
                 $row['id_anlass'],

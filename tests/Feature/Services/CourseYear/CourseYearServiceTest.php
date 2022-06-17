@@ -10,7 +10,6 @@ use Tests\TestCase;
 class CourseYearServiceTest extends TestCase
 {
     use WithFaker;
-
     private CourseYearService $courseYearService;
     private CourseService $courseService;
 

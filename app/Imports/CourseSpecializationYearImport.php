@@ -36,8 +36,8 @@ class CourseSpecializationYearImport extends BaseCsvImport
             return $this;
         }
 
-        foreach ($this->courseService->getByNumberUnformated($this->line['laufnummer']) AS $course) {
-            foreach ($specialization->specializationYears AS $specializationYears) {
+        foreach ($this->courseService->getByNumberUnformated($this->line['laufnummer']) as $course) {
+            foreach ($specialization->specializationYears as $specializationYears) {
                 $this->courseSpecializationYearSerivce->updateOrCreate([
                     'course_id' => $course->id,
                     'specialization_year_id' => $specializationYears->id,

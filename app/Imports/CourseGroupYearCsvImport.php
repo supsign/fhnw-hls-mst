@@ -33,7 +33,7 @@ class CourseGroupYearCsvImport extends BaseCsvImport
             return $this;
         }
 
-        foreach ($studyField->studyFieldYears AS $studyFieldYear) {
+        foreach ($studyField->studyFieldYears as $studyFieldYear) {
             $this->courseGroupYearService->updateOrCreate([
                 'course_group_id' => $couseGroup->id,
                 'study_field_year_id' => $studyFieldYear->id,

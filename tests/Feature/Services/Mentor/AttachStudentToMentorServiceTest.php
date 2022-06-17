@@ -16,7 +16,6 @@ use Tests\TestCase;
 class AttachStudentToMentorServiceTest extends TestCase
 {
     use WithFaker;
-
     private MentorService $mentorService;
     private StudentService $studentService;
     private AttachStudentToMentorService $attacheStudentToMentorService;

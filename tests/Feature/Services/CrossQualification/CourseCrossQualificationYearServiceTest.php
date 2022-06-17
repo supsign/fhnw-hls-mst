@@ -13,7 +13,6 @@ use Tests\TestCase;
 class CourseCrossQualificationYearServiceTest extends TestCase
 {
     use WithFaker;
-
     private CrossQualificationYearService $crossQualificationYearService;
     private CourseService $courseService;
     private CourseCrossQualificationYearService $courseCrossQualificationYearService;

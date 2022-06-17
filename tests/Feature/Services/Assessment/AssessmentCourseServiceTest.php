@@ -13,7 +13,6 @@ use Tests\TestCase;
 class AssessmentCourseServiceTest extends TestCase
 {
     use WithFaker;
-
     private AssessmentService $assessmentService;
     private AssessmentCourseService $assessmentCourseService;
 

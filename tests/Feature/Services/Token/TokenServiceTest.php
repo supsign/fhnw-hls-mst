@@ -16,7 +16,6 @@ use Tests\TestCase;
 class TokenServiceTest extends TestCase
 {
     use WithFaker;
-
     protected TokenService $tokenService;
 
     protected function setUp(): void

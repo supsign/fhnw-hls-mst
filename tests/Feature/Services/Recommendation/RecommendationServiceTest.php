@@ -13,7 +13,6 @@ use Tests\TestCase;
 class RecommendationServiceTest extends TestCase
 {
     use WithFaker;
-
     private RecommendationService $recommendationService;
     private PlanningService $planningService;
     private StudentService $studentService;

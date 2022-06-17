@@ -14,7 +14,6 @@ use Tests\TestCase;
 class AssessmentServiceTest extends TestCase
 {
     use WithFaker;
-
     private AssessmentService $assessmentService;
     private PlanningService $planningService;
     private StudentService $studentService;

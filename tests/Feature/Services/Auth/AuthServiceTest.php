@@ -20,7 +20,6 @@ use Tests\TestCase;
 class AuthServiceTest extends TestCase
 {
     use WithFaker;
-
     protected AuthService $authService;
     protected StudentService $studentService;
     protected TokenService $tokenService;

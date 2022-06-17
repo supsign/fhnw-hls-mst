@@ -11,7 +11,6 @@ use Tests\TestCase;
 class StudyFieldYearServiceTest extends TestCase
 {
     use WithFaker;
-
     protected StudyFieldYearService $studyFieldYearService;
     protected AssessmentService $assessmentService;
 

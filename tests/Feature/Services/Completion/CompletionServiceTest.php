@@ -12,7 +12,6 @@ use Tests\TestCase;
 class CompletionServiceTest extends TestCase
 {
     use WithFaker;
-
     private StudentService $studentService;
     private CompletionService $completionService;
     private CourseService $courseService;

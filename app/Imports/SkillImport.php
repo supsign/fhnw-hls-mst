@@ -28,7 +28,7 @@ class SkillImport extends BaseCsvImport
             'definition' => $this->line['lernziel'],
         ]);
 
-        foreach ($this->courseService->getByNumberUnformated($this->line['laufnummer']) AS $course) {
+        foreach ($this->courseService->getByNumberUnformated($this->line['laufnummer']) as $course) {
             CourseSkill::create([
                 'skill_id' => $skill->id,
                 'course_id' => $course->id,

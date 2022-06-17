@@ -18,7 +18,6 @@ use Tests\TestCase;
 class CoursePlanningServiceTest extends TestCase
 {
     use WithFaker;
-
     public CoursePlanningService $coursePlanningService;
     public StudentService $studentService;
     public StudyFieldYearService $studyFieldYearService;

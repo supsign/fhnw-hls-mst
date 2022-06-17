@@ -9,7 +9,6 @@ use ReflectionClass;
 abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
-
     protected static bool $setUpHasRunOnce = false;
 
     protected function setUp(): void

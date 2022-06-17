@@ -9,7 +9,6 @@ use Tests\TestCase;
 class CourseServiceTest extends TestCase
 {
     use WithFaker;
-
     private CourseService $courseService;
 
     protected function setUp(): void

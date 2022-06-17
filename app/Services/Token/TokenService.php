@@ -65,7 +65,7 @@ class TokenService
     public function issue(ShibbolethProperties $shibbolethProperties): Plain
     {
         if (App::environment() === 'production') {
-            throw new MethodNotFoundException('Method not found', TokenService::class, 'issue', $shibbolethProperties);
+            throw new MethodNotFoundException('Method not found', self::class, 'issue', $shibbolethProperties);
         }
 
         $private = config('jwt.private');

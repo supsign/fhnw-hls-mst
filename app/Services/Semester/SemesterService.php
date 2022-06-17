@@ -17,7 +17,6 @@ class SemesterService extends BaseModelService
     use FirstOrCreateTrait {
         firstOrCreate as protected firstOrCreateTrait;
     }
-
     protected $semesterStartDateHs = '01.09.';
     protected $semesterStartDateFs = '01.02.';
 

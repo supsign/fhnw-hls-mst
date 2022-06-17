@@ -15,7 +15,6 @@ use Tests\TestCase;
 class LoginRouteTest extends TestCase
 {
     use WithFaker;
-
     protected TokenService $tokenService;
 
     protected function setUp(): void

@@ -1,6 +1,6 @@
-import { ICourseCourseGroupYear } from "../store/courseCourseGroupYear/courseCourseGroupYear.interface";
-import { ICourseGroup } from "../store/courseGroup/courseGroup.interface";
-import { IModel } from "../store/model.interface";
+import { ICourseCourseGroupYear } from '../store/courseCourseGroupYear/courseCourseGroupYear.interface';
+import { ICourseGroup } from '../store/courseGroup/courseGroup.interface';
+import { IModel } from '../store/model.interface';
 
 export interface ICourseGroupYear extends IModel {
     amount_to_pass?: number;

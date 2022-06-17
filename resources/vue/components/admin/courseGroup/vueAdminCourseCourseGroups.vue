@@ -18,7 +18,11 @@
                     <div v-if="!editMode" class="cursor-pointer" @click="edit">
                         <i aria-hidden="true" class="far fa-edit"></i>
                     </div>
-                     <div v-if="!editMode && !courseGroupYear.course_course_group_years.length" class="cursor-pointer" @click="deleteCourseYear">
+                    <div
+                        v-if="!editMode && !courseGroupYear.course_course_group_years.length"
+                        class="cursor-pointer"
+                        @click="deleteCourseYear"
+                    >
                         <i aria-hidden="true" class="far fa-trash"></i>
                     </div>
                     <div v-if="editMode" class="flex felx-row space-x-2">
@@ -131,7 +135,7 @@ export default class VueAdminCourseCourseGroups extends BaseComponent {
     }
 
     public deleteCourseYear() {
-        this.models.courseGroupYear.delete(this.courseGroupYear.id)
+        this.models.courseGroupYear.delete(this.courseGroupYear.id);
     }
 
     public save() {

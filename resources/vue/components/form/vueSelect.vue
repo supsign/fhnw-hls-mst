@@ -4,12 +4,12 @@
             class="absolute px-2 z-10 text-gray-400 bg-white whitespace-nowrap -top-3.5 left-2.5 font-semibold"
             style="transform: scale(0.9)"
         >
-            {{ label }}{{ required && label ? " *" : "" }}
+            {{ label }}{{ required && label ? ' *' : '' }}
         </div>
 
         <v-select
             :class="{
-                'is-invalid': showError
+                'is-invalid': showError,
             }"
             :clearable="clearable"
             :disabled="disabled"
@@ -31,24 +31,14 @@
             <template v-if="showOption" #selected-option="option">
                 {{ showOption(option) }}
             </template>
-            <template #no-options>
-                Keine Einträge gefunden
-            </template>
+            <template #no-options> Keine Einträge gefunden </template>
         </v-select>
         <div v-if="showError" class="text-xs vs__error" role="alert">
             {{ initialError || fieldControl.errors[0] }}
         </div>
         <select :name="name" hidden>
-            <option
-                v-if="internalValue"
-                :value="internalValue.id"
-                selected
-            ></option>
-            <option
-                v-else
-                :value="null"
-                selected
-            ></option>
+            <option v-if="internalValue" :value="internalValue.id" selected></option>
+            <option v-else :value="null" selected></option>
         </select>
 
         <div v-if="value" hidden>
@@ -58,97 +48,97 @@
 </template>
 
 <script lang="ts">
-import {Component, Emit, Prop} from "vue-property-decorator";
-import BaseComponent from "../base/baseComponent";
-import vSelect from "vue-select";
-import {IModel} from "../../store/model.interface";
-import Fuse from "fuse.js";
-import {FieldControl} from "../../helpers/validation/fieldControl";
-import {ValidationRule} from "../../helpers/validation/rules/validationRule";
+import { Component, Emit, Prop } from 'vue-property-decorator';
+import BaseComponent from '../base/baseComponent';
+import vSelect from 'vue-select';
+import { IModel } from '../../store/model.interface';
+import Fuse from 'fuse.js';
+import { FieldControl } from '../../helpers/validation/fieldControl';
+import { ValidationRule } from '../../helpers/validation/rules/validationRule';
 
 @Component({
     components: {
-        vSelect
-    }
+        vSelect,
+    },
 })
 export default class VueSelect extends BaseComponent {
     @Prop({
-        type: [Object, String]
+        type: [Object, String],
     })
     value: IModel | string;
 
     @Prop({
-        type: Object
+        type: Object,
     })
     initValue: IModel;
 
     @Prop({
-        type: Boolean
+        type: Boolean,
     })
     isBlade: boolean;
     @Prop({
         type: String,
-        default: "id"
+        default: 'id',
     })
     optionKey: string;
     @Prop({
         type: String,
-        default: ""
+        default: '',
     })
     name: string;
     @Prop({
         type: String,
-        default: ""
+        default: '',
     })
     label: string;
     @Prop({
-        type: Array
+        type: Array,
     })
     searchKeys: string[];
     @Prop({
         type: Boolean,
-        default: false
+        default: false,
     })
     clearable: boolean;
     @Prop({
         type: Boolean,
-        default: false
+        default: false,
     })
     disabled: boolean;
     @Prop({
         type: Array,
         default: (): [] => {
             return [];
-        }
+        },
     })
     options: Array<IModel>;
     @Prop({
         type: Boolean,
-        default: false
+        default: false,
     })
     searchable: boolean;
     @Prop({
         type: Boolean,
-        default: false
+        default: false,
     })
     required: boolean;
 
     @Prop({
         type: Boolean,
-        default: true
+        default: true,
     })
     filterable: boolean;
 
     @Prop({
-        type: Function
+        type: Function,
     })
     selectable: (option: any) => boolean;
     @Prop({
-        type: Function
+        type: Function,
     })
     showOption: (option: any) => string;
     @Prop({
-        type: String
+        type: String,
     })
     initError: string;
     public internalValue: IModel | string = null;
@@ -157,16 +147,12 @@ export default class VueSelect extends BaseComponent {
     private initialError: string = null;
     private isTouched = false;
 
-
     public get isValid() {
         return this.fieldControl.isValid;
     }
 
     get showError() {
-        return (
-            !!this.initialError ||
-            (!this.fieldControl.isValid && this.isTouched)
-        );
+        return !!this.initialError || (!this.fieldControl.isValid && this.isTouched);
     }
 
     get calcValue() {
@@ -176,7 +162,7 @@ export default class VueSelect extends BaseComponent {
     public input(ev: any) {
         this.internalValue = ev;
         this.initialError = null;
-        this.$emit("input", ev);
+        this.$emit('input', ev);
         this.blur(ev);
     }
 
@@ -207,7 +193,7 @@ export default class VueSelect extends BaseComponent {
 
     @Emit()
     search(search: any, loading: any) {
-        return {search, loading};
+        return { search, loading };
     }
 
     @Emit()
@@ -225,10 +211,10 @@ export default class VueSelect extends BaseComponent {
             const fuse = new Fuse(options, {
                 keys: this.searchKeys,
                 shouldSort: true,
-                findAllMatches: true
+                findAllMatches: true,
             });
 
-            return fuse.search(search).map(({item}): { item: any } => item);
+            return fuse.search(search).map(({ item }): { item: any } => item);
         };
     }
 

@@ -7,7 +7,7 @@
                 :autocomplete="'current-' + name"
                 :autofocus="autofocus"
                 :class="{
-                    'is-invalid': showError
+                    'is-invalid': showError,
                 }"
                 :disabled="disabled"
                 :name="name"
@@ -20,7 +20,7 @@
                 v-on="listeners"
             />
             <span ref="tooltipp" class="input__label">
-                {{ label }}{{ required ? " *" : "" }}
+                {{ label }}{{ required ? ' *' : '' }}
                 <i v-if="tooltipp" class="fas fa-info-circle"></i>
             </span>
 
@@ -32,12 +32,12 @@
 </template>
 
 <script lang="ts">
-import {Component, Emit, Model, Prop} from "vue-property-decorator";
-import BaseComponent from "../base/baseComponent";
-import {FieldControl} from "../../helpers/validation/fieldControl";
-import {parseValidationRules} from "../../helpers/validation/rules/parseValidationRules";
-import tippy, {Instance as TippyInstance} from "tippy.js";
-import {ValidationRule} from "../../helpers/validation/rules/validationRule";
+import { Component, Emit, Model, Prop } from 'vue-property-decorator';
+import BaseComponent from '../base/baseComponent';
+import { FieldControl } from '../../helpers/validation/fieldControl';
+import { parseValidationRules } from '../../helpers/validation/rules/parseValidationRules';
+import tippy, { Instance as TippyInstance } from 'tippy.js';
+import { ValidationRule } from '../../helpers/validation/rules/validationRule';
 
 @Component
 export default class VueInput extends BaseComponent {
@@ -49,110 +49,107 @@ export default class VueInput extends BaseComponent {
 
     @Prop({
         type: String,
-        default: ""
+        default: '',
     })
     validationRules: string;
 
     @Prop({
-        type: String
+        type: String,
     })
     name: string;
 
     @Prop({
-        type: Boolean
+        type: Boolean,
     })
     date: boolean;
 
     @Prop({
-        type: Boolean
+        type: Boolean,
     })
     time: boolean;
 
     @Prop({
-        type: String
+        type: String,
     })
     id: string;
 
     @Prop({
-        type: String
+        type: String,
     })
     label: string;
 
     @Prop({
-        type: String
+        type: String,
     })
     initError: string;
 
     @Prop({
-        type: Boolean
+        type: Boolean,
     })
     required: boolean;
 
     @Prop({
-        type: Boolean
+        type: Boolean,
     })
     disabled: boolean;
 
     @Prop({
-        type: Boolean
+        type: Boolean,
     })
     autofocus: boolean;
 
-    @Prop({type: String, default: "text"})
+    @Prop({ type: String, default: 'text' })
     type: string;
 
     @Prop({
-        type: String
+        type: String,
     })
     tooltipp: string;
 
     @Prop({
         type: Boolean,
-        default: false
+        default: false,
     })
     blade: boolean;
 
     @Prop({
-        type: String
+        type: String,
     })
     initValue: string;
 
-    @Model("input")
+    @Model('input')
     value: string;
 
-    internValue = "";
+    internValue = '';
 
     public get mask() {
         if (this.date && this.time) {
-            return "####-##-## ##:##";
+            return '####-##-## ##:##';
         }
 
         if (this.time) {
-            return "##:##";
+            return '##:##';
         }
 
         if (this.date) {
-            return "####-##-##";
+            return '####-##-##';
         }
     }
 
     get listeners() {
-        const {input, blur, ...listeners} = this.$listeners;
+        const { input, blur, ...listeners } = this.$listeners;
         return listeners;
     }
 
     get showError() {
-        return (
-            !!this.initialError ||
-            (!this.fieldControl.isValid && this.isTouched)
-        );
+        return !!this.initialError || (!this.fieldControl.isValid && this.isTouched);
     }
 
     input(ev: any) {
         this.internValue = ev.target.value;
         this.initialError = null;
         this.validate();
-        this.$emit("input", ev.target.value);
+        this.$emit('input', ev.target.value);
     }
 
     @Emit()
@@ -184,11 +181,7 @@ export default class VueInput extends BaseComponent {
     }
 
     mounted(): void {
-        if (
-            this.tooltipp &&
-            !this.tippy &&
-            this.$refs.tooltipp instanceof Element
-        ) {
+        if (this.tooltipp && !this.tippy && this.$refs.tooltipp instanceof Element) {
             this.tippy = tippy(this.$refs.tooltipp);
             this.tippy.setContent(this.tooltipp);
         }
@@ -196,14 +189,10 @@ export default class VueInput extends BaseComponent {
 
     loadValidationRules() {
         const validations: ValidationRule[] = [];
-        const createValidationRuleOptions = parseValidationRules(
-            this.validationRules
-        );
+        const createValidationRuleOptions = parseValidationRules(this.validationRules);
 
         for (const createValidationRuleOption of createValidationRuleOptions) {
-            const validation = ValidationRule.create(
-                createValidationRuleOption
-            );
+            const validation = ValidationRule.create(createValidationRuleOption);
             if (!validation) {
                 continue;
             }

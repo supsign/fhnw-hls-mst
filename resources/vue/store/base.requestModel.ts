@@ -1,6 +1,6 @@
-import axios, {AxiosError} from "axios";
-import Swal from "sweetalert2";
-import {IModel} from "./model.interface";
+import axios, { AxiosError } from 'axios';
+import Swal from 'sweetalert2';
+import { IModel } from './model.interface';
 
 export class BaseRequestModel {
     protected static modelRouteName: string;
@@ -9,13 +9,13 @@ export class BaseRequestModel {
         return new Promise((resolve, reject) => {
             axios
                 .post<T>(`/webapi/${this.modelRouteName}`, entitiy)
-                .then(res => {
+                .then((res) => {
                     resolve(res.data);
                 })
                 .catch((reason: AxiosError<{ message: string }>) => {
                     Swal.fire({
                         html: reason.response.data.message,
-                        icon: "error"
+                        icon: 'error',
                     });
                     reject(reason.response.data.message);
                 });
@@ -26,13 +26,13 @@ export class BaseRequestModel {
         return new Promise((resolve, reject) => {
             axios
                 .delete<void>(`/webapi/${this.modelRouteName}/${id}`, {})
-                .then(res => {
+                .then((res) => {
                     resolve(res.data);
                 })
                 .catch((reason: AxiosError<{ message: string }>) => {
                     Swal.fire({
                         html: reason.response.data.message,
-                        icon: "error"
+                        icon: 'error',
                     });
                     reject(reason.response.data.message);
                 });
@@ -43,13 +43,13 @@ export class BaseRequestModel {
         return new Promise((resolve, reject) => {
             axios
                 .get<T>(`/webapi/${this.modelRouteName}/${id}`)
-                .then(res => {
+                .then((res) => {
                     resolve(res.data);
                 })
                 .catch((reason: AxiosError<{ message: string }>) => {
                     Swal.fire({
                         html: reason.response.data.message,
-                        icon: "error"
+                        icon: 'error',
                     });
                     reject(reason.response.data.message);
                 });
@@ -60,13 +60,13 @@ export class BaseRequestModel {
         return new Promise((resolve, reject) => {
             axios
                 .patch<IModel>(`/webapi/${this.modelRouteName}/${entity.id}`, entity)
-                .then(res => {
+                .then((res) => {
                     resolve(res.data);
                 })
                 .catch((reason: AxiosError<{ message: string }>) => {
                     Swal.fire({
                         html: reason.response.data.message,
-                        icon: "error"
+                        icon: 'error',
                     });
                     reject(reason.response.data.message);
                 });

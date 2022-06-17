@@ -1,4 +1,4 @@
-import {ValidationRule} from "./rules/validationRule";
+import { ValidationRule } from './rules/validationRule';
 
 export class FieldControl {
     private rules: ValidationRule[] = [];

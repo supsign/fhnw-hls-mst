@@ -1,9 +1,6 @@
 <template>
     <div>
-        <div
-            v-if="!editMode"
-            class="block py-2 px-6 w-full border border-transparent w-full"
-        >
+        <div v-if="!editMode" class="block py-2 px-6 w-full border border-transparent w-full">
             {{ value }}
         </div>
         <input
@@ -18,8 +15,8 @@
             v-on="listeners"
             class="w-full input__field"
             :class="{
-            'is-invalid': showError
-        }"
+                'is-invalid': showError,
+            }"
             :autocomplete="'current-' + name"
             :placeholder="placeholder"
         />
@@ -27,72 +24,69 @@
 </template>
 
 <script lang="ts">
-import {Component, Emit, Prop} from "vue-property-decorator";
-import BaseComponent from "../base/baseComponent";
-import VueInput from "./vueInput.vue";
-import {IModel} from "../../store/model.interface";
-import {EntityModel} from "../../store/base/baseEntity.model";
-import {FieldControl} from "../../helpers/validation/fieldControl";
-import {ValidationRule} from "../../helpers/validation/rules/validationRule";
-import {parseValidationRules} from "../../helpers/validation/rules/parseValidationRules";
-
+import { Component, Emit, Prop } from 'vue-property-decorator';
+import BaseComponent from '../base/baseComponent';
+import VueInput from './vueInput.vue';
+import { IModel } from '../../store/model.interface';
+import { EntityModel } from '../../store/base/baseEntity.model';
+import { FieldControl } from '../../helpers/validation/fieldControl';
+import { ValidationRule } from '../../helpers/validation/rules/validationRule';
+import { parseValidationRules } from '../../helpers/validation/rules/parseValidationRules';
 
 @Component({
     components: {
-        VueInput
-    }
+        VueInput,
+    },
 })
 export default class VueStoreInput extends BaseComponent {
     @Prop({
         type: String,
-        default: ""
+        default: '',
     })
     validationRules: string;
 
     @Prop({
-        type: String
+        type: String,
     })
     name: string;
 
     @Prop({
-        type: String
+        type: String,
     })
     id: string;
 
     @Prop({
-        type: String
+        type: String,
     })
     placeholder: string;
 
     @Prop({
-        type: Boolean
+        type: Boolean,
     })
     required: boolean;
 
     @Prop({
-        type: Boolean
+        type: Boolean,
     })
     disabled: boolean;
 
-    @Prop({type: String, default: "text"})
+    @Prop({ type: String, default: 'text' })
     type: string;
-
 
     @Prop()
     entity: IModel;
 
     @Prop({
-        type: Boolean
+        type: Boolean,
     })
     editMode: boolean;
 
-    @Prop({type: EntityModel})
+    @Prop({ type: EntityModel })
     model!: EntityModel<any, any, IModel>;
 
     fieldControl: FieldControl = null;
     isDirty = false;
     isTouched = false;
-
 
     public get value() {
         return this.entity[this.name];
@@ -100,7 +94,7 @@ export default class VueStoreInput extends BaseComponent {
 
     @Emit()
     input(ev: any) {
-        this.model.patch({id: this.entity.id, [this.name]: ev.target.value});
+        this.model.patch({ id: this.entity.id, [this.name]: ev.target.value });
         return ev.target.value;
     }
 
@@ -115,13 +109,12 @@ export default class VueStoreInput extends BaseComponent {
         this.validate();
     }
 
-
     get showError() {
         return !this.fieldControl.isValid && this.isTouched;
     }
 
     get listeners() {
-        const {input, blur, ...listeners} = this.$listeners;
+        const { input, blur, ...listeners } = this.$listeners;
         return listeners;
     }
 
@@ -132,14 +125,10 @@ export default class VueStoreInput extends BaseComponent {
 
     private loadValidationRules() {
         const validations: ValidationRule[] = [];
-        const createValidationRuleOptions = parseValidationRules(
-            this.validationRules
-        );
+        const createValidationRuleOptions = parseValidationRules(this.validationRules);
 
         for (const createValidationRuleOption of createValidationRuleOptions) {
-            const validation = ValidationRule.create(
-                createValidationRuleOption
-            );
+            const validation = ValidationRule.create(createValidationRuleOption);
             if (!validation) {
                 continue;
             }

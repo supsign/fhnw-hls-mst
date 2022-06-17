@@ -20,30 +20,28 @@
             {{ studyField.name }}
         </td>
     </tr>
-
 </template>
 
 <script lang="ts">
-import {Component, Prop} from "vue-property-decorator";
-import BaseComponent from "../base/baseComponent";
-import {IMentorStudyField} from "../../interfaces/mentorStudyField.interface";
-import {IStudyField} from "../../interfaces/studyField.interface";
-import axios from "axios";
-import {IMentor} from "../../interfaces/mentor.interface";
+import { Component, Prop } from 'vue-property-decorator';
+import BaseComponent from '../base/baseComponent';
+import { IMentorStudyField } from '../../interfaces/mentorStudyField.interface';
+import { IStudyField } from '../../interfaces/studyField.interface';
+import axios from 'axios';
+import { IMentor } from '../../interfaces/mentor.interface';
 
 @Component
 export default class VueToggleMentorStudyField extends BaseComponent {
+    @Prop({ type: Object })
+    public initMentorStudyField: IMentorStudyField;
 
-    @Prop({type: Object})
-    public initMentorStudyField: IMentorStudyField
-
-    @Prop({type: Object})
-    public mentor: IMentor
+    @Prop({ type: Object })
+    public mentor: IMentor;
 
     public mentorStudyField: IMentorStudyField = null;
 
-    @Prop({type: Object})
-    public studyField: IStudyField
+    @Prop({ type: Object })
+    public studyField: IStudyField;
 
     public isSet = false;
 
@@ -62,7 +60,6 @@ export default class VueToggleMentorStudyField extends BaseComponent {
         }
 
         this.isSet = true;
-
     }
 
     public toggleIsSet() {
@@ -82,20 +79,22 @@ export default class VueToggleMentorStudyField extends BaseComponent {
             this.isSet = false;
         }
 
-        this.saveSettings()
+        this.saveSettings();
     }
 
     public saveSettings() {
         if (this.isSet || this.isDeputy) {
-            return axios.post<IMentorStudyField>('/webapi/mentorStudyFields', {
-                mentor_id: this.mentor.id,
-                study_field_id: this.studyField.id,
-                is_deputy: this.isDeputy
-            }).then((res) => {
-                this.mentorStudyField = res.data;
-                this.isDeputy = this.mentorStudyField.is_deputy;
-                this.isSet = !this.mentorStudyField.is_deputy;
-            })
+            return axios
+                .post<IMentorStudyField>('/webapi/mentorStudyFields', {
+                    mentor_id: this.mentor.id,
+                    study_field_id: this.studyField.id,
+                    is_deputy: this.isDeputy,
+                })
+                .then((res) => {
+                    this.mentorStudyField = res.data;
+                    this.isDeputy = this.mentorStudyField.is_deputy;
+                    this.isSet = !this.mentorStudyField.is_deputy;
+                });
         }
 
         if (this.mentorStudyField) {
@@ -103,9 +102,8 @@ export default class VueToggleMentorStudyField extends BaseComponent {
                 this.isSet = false;
                 this.isDeputy = false;
                 this.mentorStudyField = null;
-            })
+            });
         }
     }
-
 }
 </script>

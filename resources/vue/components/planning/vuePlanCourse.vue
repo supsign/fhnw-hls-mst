@@ -1,52 +1,62 @@
 <template>
     <div class="w-16 text-center">
-        <div v-if="!coursePlanning && !planningIsLocked" class="flex text-center justify-center"
-             @click.stop="openPicker">
-            <img :src="'/img/calendarIcon.svg'" alt="module_icon"
-                 class="w-7 h-7 my-auto cursor-pointer">
+        <div
+            v-if="!coursePlanning && !planningIsLocked"
+            class="flex text-center justify-center"
+            @click.stop="openPicker"
+        >
+            <img :src="'/img/calendarIcon.svg'" alt="module_icon" class="w-7 h-7 my-auto cursor-pointer" />
         </div>
-        <div v-else-if="coursePlanningSemester" :class="{'cursor-pointer': !planningIsLocked}" class="text-sm"
-             @click.stop="openPicker">
+        <div
+            v-else-if="coursePlanningSemester"
+            :class="{ 'cursor-pointer': !planningIsLocked }"
+            class="text-sm"
+            @click.stop="openPicker"
+        >
             {{ coursePlanningSemester.year - 2000 }}
             {{ coursePlanningSemester.is_hs ? 'HS' : 'FS' }}
         </div>
-        <vue-semester-picker v-if="pickerIsOpen" :course="course" :is-saving="isSaving"
-                             :isSaving="isSaving"
-                             :selected-semester="coursePlanningSemester"
-                             :semesters="semesters"
-                             @cancel="cancel"
-                             @remove="remove"
-                             @select="select"></vue-semester-picker>
+        <vue-semester-picker
+            v-if="pickerIsOpen"
+            :course="course"
+            :is-saving="isSaving"
+            :isSaving="isSaving"
+            :selected-semester="coursePlanningSemester"
+            :semesters="semesters"
+            @cancel="cancel"
+            @remove="remove"
+            @select="select"
+        ></vue-semester-picker>
     </div>
 </template>
 
 <script lang="ts">
-import {Component, Prop} from "vue-property-decorator";
-import BaseComponent from "../base/baseComponent";
-import {ICoursePlanning} from "../../store/coursePlanning/coursePlanning.interface";
-import {ISemester} from "../../interfaces/semester.interface";
-import VueSemesterPicker from "./vueSemesterPicker.vue";
-import {ICourse} from "../../interfaces/course.interface";
+import { Component, Prop } from 'vue-property-decorator';
+import BaseComponent from '../base/baseComponent';
+import { ICoursePlanning } from '../../store/coursePlanning/coursePlanning.interface';
+import { ISemester } from '../../interfaces/semester.interface';
+import VueSemesterPicker from './vueSemesterPicker.vue';
+import { ICourse } from '../../interfaces/course.interface';
 
 @Component({
     components: {
-        VueSemesterPicker
-    }
+        VueSemesterPicker,
+    },
 })
 export default class VuePlanCourse extends BaseComponent {
-    @Prop({type: Number})
-    public planningId: number
+    @Prop({ type: Number })
+    public planningId: number;
 
-    @Prop({type: Object})
-    public course: ICourse
+    @Prop({ type: Object })
+    public course: ICourse;
 
     @Prop({
-        type: Array
+        type: Array,
     })
-    public semesters: ISemester[]
+    public semesters: ISemester[];
 
-    @Prop({type: Boolean, default: false})
-    planningIsLocked: boolean
+    @Prop({ type: Boolean, default: false })
+    planningIsLocked: boolean;
 
     public pickerIsOpen = false;
 
@@ -79,10 +89,9 @@ export default class VuePlanCourse extends BaseComponent {
             return;
         }
 
-        await this.planCourse(semester)
+        await this.planCourse(semester);
         this.pickerIsOpen = false;
         this.isSaving = false;
-
     }
 
     public async remove() {
@@ -94,7 +103,7 @@ export default class VuePlanCourse extends BaseComponent {
     }
 
     public patchCourse(semester: ISemester) {
-        this.models.coursePlanning.patchById(this.coursePlanning.id, {semester_id: semester.id});
+        this.models.coursePlanning.patchById(this.coursePlanning.id, { semester_id: semester.id });
         return this.models.coursePlanning.save(this.coursePlanning.id);
     }
 
@@ -102,17 +111,15 @@ export default class VuePlanCourse extends BaseComponent {
         return this.models.coursePlanning.post({
             course_id: this.course.id,
             planning_id: this.planningId,
-            semester_id: semester.id
-        })
+            semester_id: semester.id,
+        });
     }
 
     public openPicker() {
         if (this.planningIsLocked) {
             return;
         }
-        this.pickerIsOpen = true
+        this.pickerIsOpen = true;
     }
-
 }
 </script>
-

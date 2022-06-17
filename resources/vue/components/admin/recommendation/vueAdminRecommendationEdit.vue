@@ -34,38 +34,37 @@
         </template>
         <div class="flex flex-col gap-6">
             <vue-admin-course-recommendations
-                v-for="semester in [1,2,3,4,5,6]"
+                v-for="semester in [1, 2, 3, 4, 5, 6]"
                 :key="semester"
                 :recommendation-id="recommendationId"
-                :semester="semester"/>
+                :semester="semester"
+            />
         </div>
     </vue-card>
 </template>
 
 <script lang="ts">
-import {Component, Prop} from "vue-property-decorator";
-import BaseComponent from "../../base/baseComponent";
-import VueCard from "../../base/vueCard.vue";
-import VueAdminCourseRecommendations from "./vueAdminCourseRecommendations.vue";
-import VueStoreInput from "../../form/storeInput.vue";
+import { Component, Prop } from 'vue-property-decorator';
+import BaseComponent from '../../base/baseComponent';
+import VueCard from '../../base/vueCard.vue';
+import VueAdminCourseRecommendations from './vueAdminCourseRecommendations.vue';
+import VueStoreInput from '../../form/storeInput.vue';
 
 @Component({
     components: {
         VueAdminCourseRecommendations,
         VueCard,
-        VueStoreInput
-
-    }
+        VueStoreInput,
+    },
 })
 export default class VueAdminRecommendation extends BaseComponent {
-    @Prop({type: Number})
-    public recommendationId: number
+    @Prop({ type: Number })
+    public recommendationId: number;
 
     public editMode = false;
 
-
     public get recommendation() {
-        return this.models.recommendation.getById(this.recommendationId)
+        return this.models.recommendation.getById(this.recommendationId);
     }
 
     public edit() {
@@ -73,14 +72,13 @@ export default class VueAdminRecommendation extends BaseComponent {
     }
 
     public save() {
-        this.models.recommendation.save(this.recommendationId)
+        this.models.recommendation.save(this.recommendationId);
         this.editMode = false;
     }
 
     public cancel() {
-        this.models.recommendation.reset(this.recommendationId)
+        this.models.recommendation.reset(this.recommendationId);
         this.editMode = false;
     }
-
 }
 </script>

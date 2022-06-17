@@ -1,15 +1,16 @@
-import {Store} from "vuex";
-import {EntityModel} from "../base/baseEntity.model";
-import {IBaseState} from "../base/baseState.interface";
-import {ICourseSkill} from "./courseSkill.interface";
-import {courseSkillRequestModel} from "./courseSkill.requestModel";
+import { Store } from 'vuex';
+import { EntityModel } from '../base/baseEntity.model';
+import { IBaseState } from '../base/baseState.interface';
+import { ICourseSkill } from './courseSkill.interface';
+import { courseSkillRequestModel } from './courseSkill.requestModel';
 
-
-export class courseSkillModel extends EntityModel<IBaseState<ICourseSkill>,
+export class courseSkillModel extends EntityModel<
+    IBaseState<ICourseSkill>,
     typeof courseSkillRequestModel,
-    ICourseSkill> {
+    ICourseSkill
+> {
     constructor(store: Store<IBaseState<ICourseSkill>>) {
-        super("courseSkill", store, courseSkillRequestModel);
+        super('courseSkill', store, courseSkillRequestModel);
     }
 
     public getByCoursesIds(courseIds: number[]): ICourseSkill[] {

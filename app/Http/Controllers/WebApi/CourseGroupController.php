@@ -8,6 +8,7 @@ use App\Http\Requests\CourseGroup\PostRequest;
 use App\Models\CourseGroup;
 use App\Services\CourseGroup\CourseGroupService;
 use App\Services\User\PermissionAndRoleService;
+use Illuminate\Support\Collection;
 
 class CourseGroupController extends Controller
 {
@@ -15,6 +16,11 @@ class CourseGroupController extends Controller
         protected CourseGroupService $courseGroupService,
         protected PermissionAndRoleService $permissionAndRoleService,
     ) {
+    }
+
+    public function getAll(): Collection
+    {
+        return CourseGroup::all();
     }
 
     public function patch(CourseGroup $courseGroup, PatchRequest $request): CourseGroup

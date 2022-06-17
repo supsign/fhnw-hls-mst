@@ -11,11 +11,10 @@ use Tests\TestCase;
 class StudyFieldYearServiceTest extends TestCase
 {
     use WithFaker;
-
     protected StudyFieldYearService $studyFieldYearService;
     protected AssessmentService $assessmentService;
 
-    public function setup(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->setUpFaker();

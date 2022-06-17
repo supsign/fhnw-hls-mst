@@ -18,86 +18,86 @@
 </template>
 
 <script lang="ts">
-import {Component, Emit, Prop} from "vue-property-decorator";
+import { Component, Emit, Prop } from 'vue-property-decorator';
 
-import VueSelect from "./vueSelect.vue";
+import VueSelect from './vueSelect.vue';
 
-import axios, {CancelTokenSource} from "axios";
-import BaseComponent from "../base/baseComponent";
-import {IModel} from "../../store/model.interface";
+import axios, { CancelTokenSource } from 'axios';
+import BaseComponent from '../base/baseComponent';
+import { IModel } from '../../store/model.interface';
 
 @Component({
     components: {
-        VueSelect
-    }
+        VueSelect,
+    },
 })
 export default class VueBackendSelect extends BaseComponent {
     @Prop({
-        type: [Object, String, Number]
+        type: [Object, String, Number],
     })
     value: IModel | string | number;
 
     @Prop({
         type: String,
-        default: "id"
+        default: 'id',
     })
     optionKey: string;
 
     @Prop({
         type: String,
-        default: ""
+        default: '',
     })
     name: string;
 
     @Prop({
         type: String,
-        default: ""
+        default: '',
     })
     label: string;
 
     @Prop({
         type: Boolean,
-        default: false
+        default: false,
     })
     clearable: boolean;
 
     @Prop({
         type: Boolean,
-        default: false
+        default: false,
     })
     disabled: boolean;
 
     @Prop({
         type: Boolean,
-        default: false
+        default: false,
     })
     required: boolean;
 
     @Prop({
-        type: Function
+        type: Function,
     })
     selectable: (option: any) => boolean;
 
     @Prop({
-        type: Function
+        type: Function,
     })
     showOption: (option: any) => string;
 
-    @Prop({type: String})
-    backendSearchUrl: string
+    @Prop({ type: String })
+    backendSearchUrl: string;
 
-    @Prop({type: Function})
-    getBackendSearchParams: (searchString: string) => { [key: string]: any }
+    @Prop({ type: Function })
+    getBackendSearchParams: (searchString: string) => { [key: string]: any };
     public options: any[] = [];
 
     public source: CancelTokenSource = null;
 
     @Emit()
     input(obj: any) {
-        return obj
+        return obj;
     }
 
-    public performBackendQuery(searchCallBack: { search: string, loading: (state: boolean) => void }) {
+    public performBackendQuery(searchCallBack: { search: string; loading: (state: boolean) => void }) {
         if (!this.backendSearchUrl || !this.getBackendSearchParams) {
             return;
         }
@@ -106,31 +106,30 @@ export default class VueBackendSelect extends BaseComponent {
             return;
         }
 
-
         if (this.source) {
             this.source.cancel();
-            this.source = null
+            this.source = null;
         }
 
         searchCallBack.loading(true);
 
         this.source = axios.CancelToken.source();
-        axios.get<any[]>(this.backendSearchUrl, {
-            params: this.getBackendSearchParams(searchCallBack.search),
-            cancelToken: this.source.token
-        })
-            .then(
-                (res) => {
-                    searchCallBack.loading(false);
-                    this.options = res.data;
-                    this.source = null;
+        axios
+            .get<any[]>(this.backendSearchUrl, {
+                params: this.getBackendSearchParams(searchCallBack.search),
+                cancelToken: this.source.token,
+            })
+            .then((res) => {
+                searchCallBack.loading(false);
+                this.options = res.data;
+                this.source = null;
+            })
+            .catch((reason) => {
+                if (reason instanceof axios.Cancel) {
+                    return;
                 }
-            ).catch((reason) => {
-            if (reason instanceof axios.Cancel) {
-                return
-            }
-            searchCallBack.loading(false);
-        });
+                searchCallBack.loading(false);
+            });
     }
 }
 </script>

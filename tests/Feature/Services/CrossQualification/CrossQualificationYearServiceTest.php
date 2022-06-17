@@ -11,10 +11,9 @@ use Tests\TestCase;
 class CrossQualificationYearServiceTest extends TestCase
 {
     use WithFaker;
-
     private CrossQualificationYearService $crossQualificationYearService;
 
-    public function setup(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->setUpFaker();

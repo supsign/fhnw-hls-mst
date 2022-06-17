@@ -16,7 +16,7 @@ class Studentdata extends Component
      *
      * @return void
      */
-    public function __construct(protected ?Student $student = null, StudentCreditService $studentCreditService)
+    public function __construct(protected ?Student $student, StudentCreditService $studentCreditService)
     {
         $user = Auth::user();
         $this->studentCredits = $studentCreditService->getCreditsAsString($user->student);

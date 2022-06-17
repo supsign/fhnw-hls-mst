@@ -12,12 +12,11 @@ use Tests\TestCase;
 class LockPlanningServiceTest extends TestCase
 {
     use WithFaker;
-
     private PlanningService $planningService;
     private StudentService $studentService;
     private LockPlanningService $lockPlanningService;
 
-    public function setup(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->setUpFaker();

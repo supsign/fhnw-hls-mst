@@ -11,7 +11,7 @@ use App\Services\Evento\Traits\GetByEventoPersonId;
 class StudentService extends BaseModelService
 {
     use CreateOrUpdateOnEventoPersonId {
-        createOrUpdateOnEventoPersonId AS protected createOrUpdateOnEventoPersonIdTrait;
+        createOrUpdateOnEventoPersonId as protected createOrUpdateOnEventoPersonIdTrait;
     }
     use GetByEventoPersonId;
 
@@ -35,8 +35,8 @@ class StudentService extends BaseModelService
 
         $courseYearIds = [];
 
-        foreach ($studyFieldYear->courseGroupYears()->with('courses')->get() AS $courseGroupYear) {
-            foreach ($courseGroupYear->courses()->with('courseGroupYears')->get() AS $course) {
+        foreach ($studyFieldYear->courseGroupYears()->with('courses')->get() as $courseGroupYear) {
+            foreach ($courseGroupYear->courses()->with('courseGroupYears')->get() as $course) {
                 $courseYearIds = array_merge($courseYearIds, $course->courseGroupYears->pluck('id')->toArray());
             }
         }
@@ -47,7 +47,7 @@ class StudentService extends BaseModelService
             ->whereIn('course_year_id', array_unique($courseYearIds))
                 ->get();
 
-        foreach ($completions AS $completion) {
+        foreach ($completions as $completion) {
             $credits += $completion->credits;
         }
 

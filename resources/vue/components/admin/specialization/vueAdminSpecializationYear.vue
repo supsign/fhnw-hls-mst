@@ -24,7 +24,7 @@
                         :edit-mode="editMode"
                         :entity="specializationYear"
                         :model="models.specializationYear"
-                        :related-filter="(rec => rec.study_field_id === specialization.study_field_id)"
+                        :related-filter="(rec) => rec.study_field_id === specialization.study_field_id"
                         :related-model="models.recommendation"
                         clearable
                         label="name"
@@ -39,7 +39,7 @@
                         :edit-mode="editMode"
                         :entity="specializationYear"
                         :model="models.specializationYear"
-                        :related-filter="(ass => ass.study_field_id === specialization.study_field_id)"
+                        :related-filter="(ass) => ass.study_field_id === specialization.study_field_id"
                         :related-model="models.assessment"
                         clearable
                         label="name"
@@ -50,17 +50,22 @@
             <div>
                 <div class="text-xs text-gray-600">Anzahl Kurse um zu bestehen</div>
                 <div class="ml-2 text-sm">
-                    <vue-store-input :edit-mode="editMode" :entity="specializationYear"
-                                     :model="models.specializationYear" name="amount_to_pass"/>
+                    <vue-store-input
+                        :edit-mode="editMode"
+                        :entity="specializationYear"
+                        :model="models.specializationYear"
+                        name="amount_to_pass"
+                    />
                 </div>
             </div>
             <div>
                 <div class="text-xs text-gray-600 mb-4">Module</div>
                 <div class="ml-2 text-sm space-y-2">
-                    <vue-admin-course-pivot v-for="coursePivot in courseSpecializationYears"
-                                            :key="coursePivot.id"
-                                            :course-pivot="coursePivot"
-                                            @remove="remove"
+                    <vue-admin-course-pivot
+                        v-for="coursePivot in courseSpecializationYears"
+                        :key="coursePivot.id"
+                        :course-pivot="coursePivot"
+                        @remove="remove"
                     />
                     <div class="mt-8">
                         <vue-admin-backend-course-select
@@ -71,7 +76,6 @@
                             @input="addCourse"
                         ></vue-admin-backend-course-select>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -79,17 +83,16 @@
 </template>
 
 <script lang="ts">
-import {Component, Prop,} from "vue-property-decorator";
-import BaseComponent from "../../base/baseComponent";
-import {ISpecializationYear} from "../../../interfaces/specialzationYear.interface";
-import VueCard from "../../base/vueCard.vue";
-import VueAdminBackendCourseSelect from "..//vueAdminBackendCourseSelect.vue"
-import {ICourse} from "../../../interfaces/course.interface";
-import {ICourseSpecializationYear} from "../../../interfaces/courseSpecializationYear.interface";
-import VueStoreInput from "../../form/storeInput.vue";
-import VueStoreSelect from "../../form/storeSelect.vue";
-import VueAdminCoursePivot from "../vueAdminCoursePivot.vue";
-
+import { Component, Prop } from 'vue-property-decorator';
+import BaseComponent from '../../base/baseComponent';
+import { ISpecializationYear } from '../../../interfaces/specialzationYear.interface';
+import VueCard from '../../base/vueCard.vue';
+import VueAdminBackendCourseSelect from '..//vueAdminBackendCourseSelect.vue';
+import { ICourse } from '../../../interfaces/course.interface';
+import { ICourseSpecializationYear } from '../../../interfaces/courseSpecializationYear.interface';
+import VueStoreInput from '../../form/storeInput.vue';
+import VueStoreSelect from '../../form/storeSelect.vue';
+import VueAdminCoursePivot from '../vueAdminCoursePivot.vue';
 
 @Component({
     components: {
@@ -97,33 +100,33 @@ import VueAdminCoursePivot from "../vueAdminCoursePivot.vue";
         VueAdminBackendCourseSelect,
         VueStoreInput,
         VueStoreSelect,
-        VueAdminCoursePivot
-    }
+        VueAdminCoursePivot,
+    },
 })
 export default class VueAdminSpecializationYear extends BaseComponent {
-    @Prop({type: Object})
-    specializationYear: ISpecializationYear
+    @Prop({ type: Object })
+    specializationYear: ISpecializationYear;
 
     public selectedCourse: ICourse = null;
 
     public editMode = false;
 
     public get assessment() {
-        return this.models.assessment.getById(this.specializationYear.assessment_id)
+        return this.models.assessment.getById(this.specializationYear.assessment_id);
     }
 
     public get specialization() {
-        return this.models.specialization.getById(this.specializationYear.specialization_id)
+        return this.models.specialization.getById(this.specializationYear.specialization_id);
     }
 
     public get courseSpecializationYears() {
         return this.models.courseSpecializationYear.filter(
-            coursePivot => coursePivot.specialization_year_id === this.specializationYear.id
-        )
+            (coursePivot) => coursePivot.specialization_year_id === this.specializationYear.id
+        );
     }
 
     public get courseIdsInUse() {
-        return this.courseSpecializationYears.map(courseSpecializationYear => courseSpecializationYear.course_id);
+        return this.courseSpecializationYears.map((courseSpecializationYear) => courseSpecializationYear.course_id);
     }
 
     public edit() {
@@ -140,22 +143,23 @@ export default class VueAdminSpecializationYear extends BaseComponent {
         }
 
         if (this.courseIdsInUse.includes(this.selectedCourse.id)) {
-            return
+            return;
         }
 
         this.models.course.add(this.selectedCourse);
 
-        this.models.courseSpecializationYear.post(
-            {
+        this.models.courseSpecializationYear
+            .post({
                 course_id: this.selectedCourse.id,
-                specialization_year_id: this.specializationYear.id
-            }).finally(() => {
-            this.selectedCourse = null;
-        });
+                specialization_year_id: this.specializationYear.id,
+            })
+            .finally(() => {
+                this.selectedCourse = null;
+            });
     }
 
     public remove(courseSpecializationYear: ICourseSpecializationYear) {
-        this.models.courseSpecializationYear.delete(courseSpecializationYear.id)
+        this.models.courseSpecializationYear.delete(courseSpecializationYear.id);
     }
 
     public save() {

@@ -24,7 +24,7 @@
                         :edit-mode="editMode"
                         :entity="studyFieldYear"
                         :model="models.studyFieldYear"
-                        :related-filter="(rec => rec.study_field_id === studyFieldYear.study_field_id)"
+                        :related-filter="(rec) => rec.study_field_id === studyFieldYear.study_field_id"
                         :related-model="models.recommendation"
                         label="name"
                         name="recommendation_id"
@@ -38,7 +38,7 @@
                         :edit-mode="editMode"
                         :entity="studyFieldYear"
                         :model="models.studyFieldYear"
-                        :related-filter="(ass => ass.study_field_id === studyFieldYear.study_field_id)"
+                        :related-filter="(ass) => ass.study_field_id === studyFieldYear.study_field_id"
                         :related-model="models.assessment"
                         label="name"
                         name="assessment_id"
@@ -75,18 +75,17 @@
 </template>
 
 <script lang="ts">
-import {Component, Prop,} from "vue-property-decorator";
-import BaseComponent from "../../base/baseComponent";
-import VueCard from "../../base/vueCard.vue";
-import VueAdminBackendCourseSelect from "..//vueAdminBackendCourseSelect.vue"
-import VueStoreInput from "../../form/storeInput.vue";
-import VueStoreSelect from "../../form/storeSelect.vue";
-import VueAdminCoursePivot from "../vueAdminCoursePivot.vue";
-import {IStudyFieldYear} from "../../../interfaces/studyFieldYear.interface";
-import {IStudyField} from "../../../interfaces/studyField.interface";
-import {ISemester} from "../../../interfaces/semester.interface";
-import {ICourseGroup} from "../../../store/courseGroup/courseGroup.interface";
-
+import { Component, Prop } from 'vue-property-decorator';
+import BaseComponent from '../../base/baseComponent';
+import VueCard from '../../base/vueCard.vue';
+import VueAdminBackendCourseSelect from '..//vueAdminBackendCourseSelect.vue';
+import VueStoreInput from '../../form/storeInput.vue';
+import VueStoreSelect from '../../form/storeSelect.vue';
+import VueAdminCoursePivot from '../vueAdminCoursePivot.vue';
+import { IStudyFieldYear } from '../../../interfaces/studyFieldYear.interface';
+import { IStudyField } from '../../../interfaces/studyField.interface';
+import { ISemester } from '../../../interfaces/semester.interface';
+import { ICourseGroup } from '../../../store/courseGroup/courseGroup.interface';
 
 @Component({
     components: {
@@ -94,21 +93,21 @@ import {ICourseGroup} from "../../../store/courseGroup/courseGroup.interface";
         VueAdminBackendCourseSelect,
         VueStoreInput,
         VueStoreSelect,
-        VueAdminCoursePivot
-    }
+        VueAdminCoursePivot,
+    },
 })
 export default class VueAdminStudyFieldYear extends BaseComponent {
-    @Prop({type: Number})
-    studyFieldYearId: number
+    @Prop({ type: Number })
+    studyFieldYearId: number;
 
-    @Prop({type: Object})
-    studyField: IStudyField
+    @Prop({ type: Object })
+    studyField: IStudyField;
 
-    @Prop({type: Object})
-    semester: ISemester
+    @Prop({ type: Object })
+    semester: ISemester;
 
-    @Prop({type: Array})
-    courseGroups: ICourseGroup[]
+    @Prop({ type: Array })
+    courseGroups: ICourseGroup[];
 
     public editMode = false;
 
@@ -116,21 +115,18 @@ export default class VueAdminStudyFieldYear extends BaseComponent {
         return this.models.studyFieldYear.getById(this.studyFieldYearId);
     }
 
-
     public edit() {
         this.editMode = true;
     }
 
     public save() {
-        this.models.studyFieldYear.save(this.studyFieldYearId)
+        this.models.studyFieldYear.save(this.studyFieldYearId);
         this.editMode = false;
-
     }
 
     public cancel() {
-        this.models.studyFieldYear.reset(this.studyFieldYearId)
+        this.models.studyFieldYear.reset(this.studyFieldYearId);
         this.editMode = false;
-
     }
 }
 </script>

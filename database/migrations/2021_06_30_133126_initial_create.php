@@ -35,8 +35,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Excel;
 
-class InitialCreate extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -516,4 +515,4 @@ class InitialCreate extends Migration
         Schema::dropIfExists('course_types');
         Schema::dropIfExists('completion_types');
     }
-}
+};

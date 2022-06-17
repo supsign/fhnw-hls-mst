@@ -18,13 +18,12 @@ use Tests\TestCase;
 class CoursePlanningServiceTest extends TestCase
 {
     use WithFaker;
-
     public CoursePlanningService $coursePlanningService;
     public StudentService $studentService;
     public StudyFieldYearService $studyFieldYearService;
     public PlanningService $planningService;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->setUpFaker();

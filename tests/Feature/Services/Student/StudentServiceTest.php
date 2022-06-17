@@ -15,15 +15,15 @@ class StudentServiceTest extends TestCase
     {
         $studentService = $this->app->make(StudentService::class);
         $mentor = $studentService->createOrUpdateOnEventoPersonId('12347');
-        $this->assertTrue((bool) $mentor);
+        $this->assertTrue((bool)$mentor);
     }
 
     public function testGetByEventoPersonId()
     {
         $studentService = $this->app->make(StudentService::class);
         $mentor = $studentService->createOrUpdateOnEventoPersonId('12347');
-        $this->assertTrue((bool) $mentor);
+        $this->assertTrue((bool)$mentor);
         $mentor2 = $studentService->getByEventoPersonId('12347');
-        $this->assertTrue((bool) $mentor2);
+        $this->assertTrue((bool)$mentor2);
     }
 }

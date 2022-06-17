@@ -1,5 +1,5 @@
-import {BaseRequestModel} from "../base.requestModel";
+import { BaseRequestModel } from '../base.requestModel';
 
 export class CrossQualificationRequestModel extends BaseRequestModel {
-    protected static modelRouteName = "crossQualifications";
+    protected static modelRouteName = 'crossQualifications';
 }

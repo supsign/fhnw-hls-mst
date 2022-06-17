@@ -13,7 +13,6 @@ class User extends Authenticatable
 {
     use HasRoles;
     use HasFactory;
-
     protected $fillable = ['email_hash'];
     protected $hidden = ['email_hash'];
 

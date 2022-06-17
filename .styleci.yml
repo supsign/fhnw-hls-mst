@@ -1,20 +1,85 @@
-php:
-  preset: laravel
-  version: 8
-  disabled:
-    - no_unused_imports
-    - binary_operator_spaces
-    - not_operator_with_successor_space
-    - cast_spaces
-    - lowercase_keywords
-  finder:
-    not-name:
-      - index.php
-      - server.php
-      - _ide_helper.php
-      - _ide_helper_models.php
+php: false
 js:
+  tab-width: 4
+  use-tabs: false
+  print-width: 120
+  double-quotes: false
+  trailing-commas: es5
+  semicolons: true
+  arrow-parens: always
+  bracket-same-line: false
+  bracket-spacing: true
   finder:
+    exclude:
+      - "modules"
+      - "node_modules"
+      - "nova"
+      - "nova-components"
+      - "storage"
+      - "spark"
+      - "vendor"
+    name:
+      - "*.js"
+      - "*.jsx"
     not-name:
-      - webpack.mix.js
-css: true
+      - "*.min.js"
+ts:
+  tab-width: 4
+  use-tabs: false
+  print-width: 120
+  double-quotes: false
+  trailing-commas: es5
+  semicolons: true
+  arrow-parens: always
+  bracket-same-line: false
+  bracket-spacing: true
+  finder:
+    exclude:
+      - "modules"
+      - "node_modules"
+      - "nova"
+      - "nova-components"
+      - "storage"
+      - "spark"
+      - "vendor"
+    name: "*.ts"
+vue:
+  tab-width: 4
+  use-tabs: false
+  print-width: 120
+  double-quotes: false
+  trailing-commas: es5
+  semicolons: true
+  arrow-parens: always
+  bracket-same-line: false
+  bracket-spacing: true
+  indent-script-and-style: false
+  whitespace-sensitivity: css
+  finder:
+    exclude:
+      - "modules"
+      - "node_modules"
+      - "nova"
+      - "nova-components"
+      - "storage"
+      - "spark"
+      - "vendor"
+    name: "*.vue"
+css:
+  tab-width: 4
+  use-tabs: false
+  print-width: 120
+  double-quotes: false
+  finder:
+    exclude:
+      - "modules"
+      - "node_modules"
+      - "nova"
+      - "nova-components"
+      - "storage"
+      - "spark"
+      - "vendor"
+    name:
+      - "*.css"
+      - "*.scss"
+      - "*.less"

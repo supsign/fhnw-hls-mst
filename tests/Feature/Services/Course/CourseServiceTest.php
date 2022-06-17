@@ -9,10 +9,9 @@ use Tests\TestCase;
 class CourseServiceTest extends TestCase
 {
     use WithFaker;
-
     private CourseService $courseService;
 
-    public function setup(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->setUpFaker();
@@ -21,7 +20,7 @@ class CourseServiceTest extends TestCase
 
     public function testCreatCourseByNumber()
     {
-        $uniqueNumber = $this->faker->unique()->name;
+        $uniqueNumber = $this->faker->unique()->name();
         $course1 = $this->courseService->firstOrCreateByNumber($uniqueNumber, 1);
         $this->assertNotNull($course1);
         $course2 = $this->courseService->firstOrCreateByNumber($uniqueNumber, 1);

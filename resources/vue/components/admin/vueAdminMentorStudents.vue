@@ -1,21 +1,20 @@
 <template>
     <div class="space-y-4">
-        <div class="p-2 rounded  bg-white flex flex-col shadow-xl">
+        <div class="p-2 rounded bg-white flex flex-col shadow-xl">
             <div class="content-center p-2 border-b rounded-t text-base md:text-lg">
                 <div>Studierende</div>
             </div>
 
             <div class="p-3 text-sm md:text-base flex-grow">
                 <div v-for="mentorStudent in mentorStudents">
-                    <span @click="()=>remove(mentorStudent)">
-                            <i aria-hidden="true" class="far fa-trash alt mr-2 cursor-pointer"> </i>
-                        </span>
+                    <span @click="() => remove(mentorStudent)">
+                        <i aria-hidden="true" class="far fa-trash alt mr-2 cursor-pointer"> </i>
+                    </span>
                     {{ mentorStudent.firstname }} {{ mentorStudent.lastname }}
                 </div>
             </div>
-
         </div>
-        <div class="p-2 rounded  bg-white flex flex-col shadow-xl">
+        <div class="p-2 rounded bg-white flex flex-col shadow-xl">
             <div class="content-center p-2 border-b rounded-t text-base md:text-lg flex flex-row justify-between">
                 <div>Studierende Hinzufügen</div>
                 <div class="flex flex-col justify-end">
@@ -29,33 +28,29 @@
                     <vue-input v-model="firstname" :disabled="inputIsDisabled" :label="'Vorname'" required></vue-input>
                     <vue-input v-model="lastname" :disabled="inputIsDisabled" :label="'Nachname'" required></vue-input>
                 </div>
-
             </div>
-
         </div>
     </div>
-
 </template>
 
 <script lang="ts">
-import {Component, Prop} from "vue-property-decorator";
-import BaseComponent from "../base/baseComponent";
-import {IMentor} from "../../interfaces/mentor.interface";
-import {IMentorStudent} from "../../interfaces/mentorStudent.interface";
-import VueInput from "../form/vueInput.vue";
-import axios from "axios";
-import {Toast} from "../../helpers/toast";
+import { Component, Prop } from 'vue-property-decorator';
+import BaseComponent from '../base/baseComponent';
+import { IMentor } from '../../interfaces/mentor.interface';
+import { IMentorStudent } from '../../interfaces/mentorStudent.interface';
+import VueInput from '../form/vueInput.vue';
+import axios from 'axios';
+import { Toast } from '../../helpers/toast';
 
 @Component({
-    components: {VueInput}
+    components: { VueInput },
 })
 export default class VueAdminMentorStudents extends BaseComponent {
+    @Prop({ type: Object })
+    public mentor: IMentor;
 
-    @Prop({type: Object})
-    public mentor: IMentor
-
-    @Prop({type: Array})
-    public initMentorStudents: IMentorStudent[]
+    @Prop({ type: Array })
+    public initMentorStudents: IMentorStudent[];
 
     public mentorStudents: IMentorStudent[] = [];
 
@@ -72,37 +67,41 @@ export default class VueAdminMentorStudents extends BaseComponent {
     }
 
     public addStudent() {
-        axios.post<IMentorStudent>(`/webapi/mentor/${this.mentor.id}/students`, {
-            evento_id: this.eventoId,
-            firstname: this.firstname,
-            lastname: this.lastname
-        })
+        axios
+            .post<IMentorStudent>(`/webapi/mentor/${this.mentor.id}/students`, {
+                evento_id: this.eventoId,
+                firstname: this.firstname,
+                lastname: this.lastname,
+            })
             .then((res) => {
-                if (this.mentorStudents.find(mentorStudent => mentorStudent.id === res.data?.id)) {
-                    Toast.fire({title: 'Student:in bereits vorhanden', icon: 'success'})
+                if (this.mentorStudents.find((mentorStudent) => mentorStudent.id === res.data?.id)) {
+                    Toast.fire({ title: 'Student:in bereits vorhanden', icon: 'success' });
                 }
-                Toast.fire({title: 'Student:in hinzugefügt', icon: 'success'})
+                Toast.fire({ title: 'Student:in hinzugefügt', icon: 'success' });
                 this.mentorStudents.push(res.data);
-                this.resetInput()
+                this.resetInput();
             })
             .catch((reason) => {
-                Toast.fire({title: 'Error', icon: 'error', text: reason.text});
+                Toast.fire({ title: 'Error', icon: 'error', text: reason.text });
                 console.log(reason);
                 this.eventoId = null;
-            })
+            });
     }
 
     public remove(mentorStudent: IMentorStudent) {
-        const index = this.mentorStudents.findIndex(mentorStudentAttached => mentorStudentAttached.id === mentorStudent.id);
+        const index = this.mentorStudents.findIndex(
+            (mentorStudentAttached) => mentorStudentAttached.id === mentorStudent.id
+        );
         if (index === -1) {
             return;
         }
         this.mentorStudents.splice(index, 1);
-        axios.delete(`/webapi/mentor/${mentorStudent.mentor_id}/students/${mentorStudent.student_id}`)
-            .then(() => Toast.fire({title: 'Student:in entfernt', icon: 'success'}))
+        axios
+            .delete(`/webapi/mentor/${mentorStudent.mentor_id}/students/${mentorStudent.student_id}`)
+            .then(() => Toast.fire({ title: 'Student:in entfernt', icon: 'success' }))
             .catch(() => {
                 this.mentorStudents.push(mentorStudent);
-            })
+            });
     }
 
     public resetInput() {
@@ -110,7 +109,5 @@ export default class VueAdminMentorStudents extends BaseComponent {
         this.firstname = null;
         this.lastname = null;
     }
-
-
 }
 </script>

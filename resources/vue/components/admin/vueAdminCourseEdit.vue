@@ -4,31 +4,33 @@
         <div class="flex-grow" :class="{'line-through': !hs && !fs}">{{ course.name }}</div>
 
         <div v-if="hs"
-             class="w-8 lg:w-16"
-             @click="changeHs"
+            class="w-8 lg:w-16"
+            @click="changeHs"
         >
             <i class="fas fa-check-square text-blue-700 cursor-pointer" aria-hidden="true"></i>
         </div>
         <div v-else
-             class="w-8 lg:w-16"
-             @click="changeHs"
+            class="w-8 lg:w-16"
+            @click="changeHs"
         >
             <i class="far fa-square text-blue-700 cursor-pointer" aria-hidden="true"></i>
         </div>
 
         <div v-if="fs"
-             class="w-8 lg:w-16"
-             @click="changeFS"
+            class="w-8 lg:w-16"
+            @click="changeFS"
         >
             <i class="fas fa-check-square text-blue-700 cursor-pointer" aria-hidden="true"></i>
         </div>
         <div v-else
-             class="w-8 lg:w-16"
-             @click="changeFS"
+            class="w-8 lg:w-16"
+            @click="changeFS"
         >
             <i class="far fa-square text-blue-700 cursor-pointer" aria-hidden="true"></i>
         </div>
-
+        <a class="w-8 lg:w-16" :href="editLink" >
+            <i class="fas fa-pencil cursor-pointer" aria-hidden="true"></i>
+        </a>
     </div>
 </template>
 
@@ -41,7 +43,7 @@ import axios from "axios";
 
 @Component({
     components: {
-        VueCheckbox
+        VueCheckbox,
     }
 })
 export default class VueAdminCourseEdit extends BaseComponent {
@@ -50,10 +52,12 @@ export default class VueAdminCourseEdit extends BaseComponent {
 
     public hs = false;
     public fs = false;
+    public editLink = ""
 
     public created() {
         this.hs = this.course.is_hs;
         this.fs = this.course.is_fs;
+        this.editLink = window.location.href + '/' + this.course.id + '/edit'
     }
 
     public changeHs() {
@@ -69,5 +73,6 @@ export default class VueAdminCourseEdit extends BaseComponent {
             is_fs: this.fs
         });
     }
+
 }
 </script>

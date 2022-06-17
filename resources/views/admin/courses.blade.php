@@ -13,6 +13,7 @@
             <div class="flex-grow">@lang('l.name')</div>
             <div class="w-8 lg:w-16">@lang('l.hs')</div>
             <div class="w-8 lg:w-16">@lang('l.fs')</div>
+            <div class="w-8 lg:w-16"></div>
         </div>
         @foreach($courses as $course)
             <vue-admin-course-edit :course="{{ $course }}"></vue-admin-course-edit>

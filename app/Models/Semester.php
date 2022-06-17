@@ -10,6 +10,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  */
 class Semester extends BaseModel
 {
+    protected $appends = ['name'];
     protected $dates = ['start_date'];
 
     public static function __callStatic($method, $parameters)
@@ -110,5 +111,10 @@ class Semester extends BaseModel
     public function students()
     {
         return $this->hasMany(Student::class, 'begin_semester_id');
+    }
+
+    public function getNameAttribute(): string
+    {
+        return $this->year.($this->is_hs ? ' HS' : ' FS');
     }
 }

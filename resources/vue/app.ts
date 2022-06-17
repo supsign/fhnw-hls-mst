@@ -49,6 +49,7 @@ import {courseCrossQualificationYearStore} from "./store/courseCrossQualificatio
 import {crossQualificationStore} from "./store/crossQualification/crossQualification.store";
 import {assessmentCourseStore} from "./store/assessmentCourse/assessmentCourse.store";
 import VueAdminAssessment from "./components/admin/assessment/vueAdminAssessment.vue";
+import VueAdminCourseContentEdit from "./components/admin/vueAdminCourseContentEdit.vue";
 
 //@ts-ignore
 import VueMask from 'v-mask';
@@ -123,7 +124,8 @@ const app = new Vue({
         VueAdminCrossQualificationYears,
         VueAdminAssessment,
         VueAdminRecommendation,
-        VueAdminStudyFieldYear
+        VueAdminStudyFieldYear,
+        VueAdminCourseContentEdit
     },
     store
 });

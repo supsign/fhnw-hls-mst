@@ -21,7 +21,7 @@ class CourseController extends Controller
     {
         $this->permissionAndRoleService->canManageBackendOrAbort();
 
-        return $this->courseService->setSemesterType($course, $request->is_hs, $request->is_fs);
+        return $this->courseService->patch($course, $request);
     }
 
     public function search(SearchCourseRequest $searchCourseRequest)

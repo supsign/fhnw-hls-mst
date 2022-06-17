@@ -1,51 +1,24 @@
 <template>
-    <div
-        class="relative mt-2 text-left text-gray-700"
-        :id="id"
-        :class="{ 'cursor-not-allowed opacity-75': disabled }"
-    >
+    <div class="relative mt-2 text-left text-gray-700" :id="id" :class="{ 'cursor-not-allowed opacity-75': disabled }">
         <div class="flex flex-row">
-            <div
-                @click="toggle"
-                v-on="listeners"
-                :class="{ 'cursor-pointer': !disabled }"
-                class="w-8 text-center"
-            >
-                <div
-                    class="border rounded-lg shadow-md w-7 h-7"
-                >
-                    <div
-                        v-if="internalValue"
-                        class="flex items-center justify-center h-full"
-                    >
-                        <font-awesome-icon
-                            icon="check"
-                            style="color:green"
-                            class="text-xl"
-                        />
+            <div @click="toggle" v-on="listeners" :class="{ 'cursor-pointer': !disabled }" class="w-8 text-center">
+                <div class="border rounded-lg shadow-md w-7 h-7">
+                    <div v-if="internalValue" class="flex items-center justify-center h-full">
+                        <font-awesome-icon icon="check" style="color: green" class="text-xl" />
                     </div>
                 </div>
             </div>
-            <div
-                class="ml-4 text-black align-center"
-                ref="tooltipp"
-                v-html="requiredLabel"
-            ></div>
+            <div class="ml-4 text-black align-center" ref="tooltipp" v-html="requiredLabel"></div>
         </div>
 
-        <input
-            hidden
-            type="string"
-            :value="internalValue ? valueId : 0"
-            :name="name"
-        />
+        <input hidden type="string" :value="internalValue ? valueId : 0" :name="name" />
     </div>
 </template>
 
 <script lang="ts">
-import { Component, Emit, Model, Prop } from "vue-property-decorator";
-import BaseComponent from "../base/baseComponent";
-import { FieldControl } from "../../helpers/validation/fieldControl";
+import { Component, Emit, Model, Prop } from 'vue-property-decorator';
+import BaseComponent from '../base/baseComponent';
+import { FieldControl } from '../../helpers/validation/fieldControl';
 
 @Component
 export default class VueCheckbox extends BaseComponent {
@@ -56,71 +29,71 @@ export default class VueCheckbox extends BaseComponent {
 
     @Prop({
         type: String,
-        default: ""
+        default: '',
     })
     validationRules: string;
 
     @Prop({
-        type: String
+        type: String,
     })
     name: string;
 
     @Prop({
-        type: String
+        type: String,
     })
     id: string;
 
     @Prop({
-        type: String
+        type: String,
     })
     label: string;
 
     @Prop({
-        type: String
+        type: String,
     })
     initError: string;
 
     @Prop({
-        type: Boolean
+        type: Boolean,
     })
     required: boolean;
 
     @Prop({
-        type: Boolean
+        type: Boolean,
     })
     disabled: boolean;
 
     @Prop({
-        type: String
+        type: String,
     })
     tooltipp: string;
 
     @Prop({
         type: Boolean,
-        default: false
+        default: false,
     })
     blade: boolean;
 
     @Prop({
-        type: [Boolean, Number]
+        type: [Boolean, Number],
     })
     initValue: boolean | number;
 
     @Prop({
         type: [Boolean, String, Number],
-        default: 1
+        default: 1,
     })
     valueId: boolean | string | number;
 
-    @Model("input", {
-        type: [Boolean, String, Number]
+    @Model('input', {
+        type: [Boolean, String, Number],
     })
     value: boolean | string | number;
 
     internalValue = false;
 
     public get requiredLabel() {
-        return this.label + (this.required ? " *" : "");
+        return this.label + (this.required ? ' *' : '');
     }
 
     toggle() {
@@ -130,7 +103,7 @@ export default class VueCheckbox extends BaseComponent {
         this.isTouched = true;
         this.internalValue = !this.internalValue;
         this.initialError = null;
-        this.$emit("input", this.internalValue);
+        this.$emit('input', this.internalValue);
         this.blur();
     }
 
@@ -159,15 +132,14 @@ export default class VueCheckbox extends BaseComponent {
         return listeners;
     }
 
-
     private setInternalValue(value: any) {
-        if (typeof value === "undefined") {
+        if (typeof value === 'undefined') {
             this.internalValue = false;
             return;
         }
 
-        if (typeof value === "string") {
-            if (value === "0" || value.toLowerCase() === "false") {
+        if (typeof value === 'string') {
+            if (value === '0' || value.toLowerCase() === 'false') {
                 this.internalValue = false;
                 return;
             }
@@ -176,12 +148,12 @@ export default class VueCheckbox extends BaseComponent {
             return;
         }
 
-        if (typeof value === "boolean") {
+        if (typeof value === 'boolean') {
             this.internalValue = value;
             return;
         }
 
-        if (typeof value === "number") {
+        if (typeof value === 'number') {
             this.internalValue = !!this.value;
             return;
         }
@@ -190,4 +162,3 @@ export default class VueCheckbox extends BaseComponent {
     }
 }
 </script>
-

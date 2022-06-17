@@ -1,7 +1,6 @@
-import {IModel} from "../model.interface";
-
+import { IModel } from '../model.interface';
 
 export interface IRecommendation extends IModel {
-    name: string,
-    study_field_id: number
+    name: string;
+    study_field_id: number;
 }

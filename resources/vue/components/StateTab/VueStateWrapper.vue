@@ -2,16 +2,13 @@
     <div class="fixed bottom-0 left-0 mt-2 w-full lg:px-8">
         <div v-if="showAssessment || showSpecCross" class="grid grid-cols-1 md:grid-cols-3">
             <div></div>
-            <div
-                class="text-sm lg:text-base overflow-y-auto max-h-full"
-            >
+            <div class="text-sm lg:text-base overflow-y-auto max-h-full">
                 <vue-courses-tab
                     v-if="(specialization || crossQualification) && showSpecCross"
                     :completions="completions"
                     :courses="specializationCourses || crossQualificationCourses"
                     :planning-id="planningId"
                     :semesters="semesters"
-
                     class="bg-hls rounded-t-lg p-3"
                 />
             </div>
@@ -28,15 +25,18 @@
         </div>
 
         <div class="grid grid-cols-3 md:w-full bg-hls-200">
-            <div
-                class="text-center">
+            <div class="text-center">
                 <div>{{ countCredits }}&nbsp;|&nbsp;180</div>
                 <div>ECTS</div>
             </div>
             <div
-                :class="{'bg-hls': showSpecCross, 'hover:bg-hls cursor-pointer': crossQualification || specialization }"
+                :class="{
+                    'bg-hls': showSpecCross,
+                    'hover:bg-hls cursor-pointer': crossQualification || specialization,
+                }"
                 class="text-center"
-                @click="toggleShowSpecCross">
+                @click="toggleShowSpecCross"
+            >
                 <vue-courses-state
                     v-if="!!crossQualification"
                     :amount-to-pass="crossQualificationYear.amount_to_pass"
@@ -56,7 +56,7 @@
             </div>
             <div
                 v-if="!!assessment"
-                :class="{'bg-hls': showAssessment}"
+                :class="{ 'bg-hls': showAssessment }"
                 class="hover:bg-hls cursor-pointer"
                 @click="toggleShowAssessment"
             >
@@ -73,68 +73,66 @@
 </template>
 
 <script lang="ts">
-import {Component, Prop} from "vue-property-decorator";
-import BaseComponent from "../base/baseComponent";
-import VueCoursesTab from "./VueCoursesTab.vue";
-import {IAssessment} from "../../interfaces/assessment.interface";
-import {ICourse} from "../../interfaces/course.interface";
-import {ICompletion} from "../../interfaces/completion.interface";
-import {ISemester} from "../../interfaces/semester.interface";
-import {ISpecialization} from "../../interfaces/specialization.interface";
-import {ISpecializationYear} from "../../interfaces/specialzationYear.interface";
-import {ICoursePlanning} from "../../store/coursePlanning/coursePlanning.interface";
-import {ICrossQualification} from "../../interfaces/crossQualification.interface";
-import {ICrossQualificationYear} from "../../interfaces/crossQualificationYear.interface";
-import VueCoursesState from "./VueCoursesState.vue";
-
+import { Component, Prop } from 'vue-property-decorator';
+import BaseComponent from '../base/baseComponent';
+import VueCoursesTab from './VueCoursesTab.vue';
+import { IAssessment } from '../../interfaces/assessment.interface';
+import { ICourse } from '../../interfaces/course.interface';
+import { ICompletion } from '../../interfaces/completion.interface';
+import { ISemester } from '../../interfaces/semester.interface';
+import { ISpecialization } from '../../interfaces/specialization.interface';
+import { ISpecializationYear } from '../../interfaces/specialzationYear.interface';
+import { ICoursePlanning } from '../../store/coursePlanning/coursePlanning.interface';
+import { ICrossQualification } from '../../interfaces/crossQualification.interface';
+import { ICrossQualificationYear } from '../../interfaces/crossQualificationYear.interface';
+import VueCoursesState from './VueCoursesState.vue';
 
 @Component({
     components: {
         VueCoursesTab,
-        VueCoursesState
-    }
+        VueCoursesState,
+    },
 })
 export default class VueStateWrapper extends BaseComponent {
-    @Prop({type: Number})
-    public planningId: number
+    @Prop({ type: Number })
+    public planningId: number;
 
-    @Prop({type: Object})
-    public assessment: IAssessment
+    @Prop({ type: Object })
+    public assessment: IAssessment;
 
-    @Prop({type: Array})
-    public assessmentCourses: ICourse[]
+    @Prop({ type: Array })
+    public assessmentCourses: ICourse[];
 
-    @Prop({type: Array})
-    public completions: ICompletion[]
+    @Prop({ type: Array })
+    public completions: ICompletion[];
 
-    @Prop({type: Array})
-    public semesters: ISemester[]
+    @Prop({ type: Array })
+    public semesters: ISemester[];
 
-    @Prop({type: Object})
-    public specialization: ISpecialization
+    @Prop({ type: Object })
+    public specialization: ISpecialization;
 
-    @Prop({type: Object})
-    public specializationYear?: ISpecializationYear
+    @Prop({ type: Object })
+    public specializationYear?: ISpecializationYear;
 
-    @Prop({type: Array})
-    public specializationCourses: ICourse[]
+    @Prop({ type: Array })
+    public specializationCourses: ICourse[];
 
-    @Prop({type: Object})
-    public crossQualification: ICrossQualification
+    @Prop({ type: Object })
+    public crossQualification: ICrossQualification;
 
-    @Prop({type: Object})
-    public crossQualificationYear?: ICrossQualificationYear
+    @Prop({ type: Object })
+    public crossQualificationYear?: ICrossQualificationYear;
 
-    @Prop({type: Array})
-    public crossQualificationCourses: ICourse[]
+    @Prop({ type: Array })
+    public crossQualificationCourses: ICourse[];
 
-    @Prop({type: Array})
+    @Prop({ type: Array })
     public courses: ICourse[];
 
     public showAssessment = false;
 
     public showSpecCross = false;
-
 
     public get countCredits(): number {
         let credits = 0;
@@ -155,12 +153,12 @@ export default class VueStateWrapper extends BaseComponent {
 
     public get coursePlannings(): ICoursePlanning[] {
         return this.models.coursePlanning.all.filter((coursePlanning) => {
-            return !!this.courses.find(course => course.id === coursePlanning.course_id)
+            return !!this.courses.find((course) => course.id === coursePlanning.course_id);
         });
     }
 
     public toggleShowAssessment() {
-        console.log('toggleShowAssessment')
+        console.log('toggleShowAssessment');
         this.showSpecCross = false;
         this.showAssessment = !this.showAssessment;
     }
@@ -175,15 +173,15 @@ export default class VueStateWrapper extends BaseComponent {
 
     public coursesIsCompletedSusscessfully(course: ICourse): boolean {
         return !!this.completions.find((completion) => {
-            return completion.course_id === course.id && (completion.completion_type_id === 2 || completion.completion_type_id === 4)
-        })
+            return (
+                completion.course_id === course.id &&
+                (completion.completion_type_id === 2 || completion.completion_type_id === 4)
+            );
+        });
     }
 
     public courseIsPlanned(course: ICourse): boolean {
-        return !!this.coursePlannings.find(coursePlanning => coursePlanning.course_id === course.id)
+        return !!this.coursePlannings.find((coursePlanning) => coursePlanning.course_id === course.id);
     }
 }
 </script>
-
-
-

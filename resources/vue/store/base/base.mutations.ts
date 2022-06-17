@@ -1,10 +1,8 @@
-import { IBaseState } from "./baseState.interface";
-import { IModel } from "../model.interface";
+import { IBaseState } from './baseState.interface';
+import { IModel } from '../model.interface';
 
 export const patch = (state: IBaseState<IModel>, payload: IModel) => {
-    const entity = state.entities.local.find(
-        entity => entity?.id === payload.id
-    );
+    const entity = state.entities.local.find((entity) => entity?.id === payload.id);
 
     if (!entity) {
         return;
@@ -13,13 +11,8 @@ export const patch = (state: IBaseState<IModel>, payload: IModel) => {
     Object.assign(entity, payload);
 };
 
-export const patchServerState = (
-    state: IBaseState<IModel>,
-    payload: IModel
-) => {
-    const entity = state.entities.server.find(
-        entity => entity?.id === payload.id
-    );
+export const patchServerState = (state: IBaseState<IModel>, payload: IModel) => {
+    const entity = state.entities.server.find((entity) => entity?.id === payload.id);
 
     if (!entity) {
         return;
@@ -32,9 +25,7 @@ export const add = (state: IBaseState<IModel>, payload: IModel) => {
     if (!payload.id) {
         return;
     }
-    const entity = state.entities.local.find(
-        entity => entity?.id === payload.id
-    );
+    const entity = state.entities.local.find((entity) => entity?.id === payload.id);
     if (entity) {
         patch(state, payload);
         patchServerState(state, payload);
@@ -56,14 +47,12 @@ export const initMultiple = (state: IBaseState<IModel>, models: IModel[]) => {
 };
 
 export const reset = (state: IBaseState<IModel>, id: number) => {
-    const entityStateServer = state.entities.server.find(
-        entity => entity?.id === id
-    );
+    const entityStateServer = state.entities.server.find((entity) => entity?.id === id);
     if (!entityStateServer) {
         return;
     }
 
-    const entity = state.entities.local.find(entity => entity?.id === id);
+    const entity = state.entities.local.find((entity) => entity?.id === id);
     if (!entity) {
         return;
     }
@@ -72,7 +61,7 @@ export const reset = (state: IBaseState<IModel>, id: number) => {
 };
 
 export const setEntityIsLoading = (state: IBaseState<IModel>, id: number) => {
-    const loadingId = state.isLoading.find(idInLoading => idInLoading === id);
+    const loadingId = state.isLoading.find((idInLoading) => idInLoading === id);
 
     if (loadingId) {
         return;
@@ -82,24 +71,15 @@ export const setEntityIsLoading = (state: IBaseState<IModel>, id: number) => {
 };
 
 export const deleteById = (state: IBaseState<IModel>, id: number) => {
-    const localIndex = state.entities.local.findIndex(
-        entity => entity.id === id
-    );
+    const localIndex = state.entities.local.findIndex((entity) => entity.id === id);
 
     state.entities.local.splice(localIndex, 1);
-    const serverIndex = state.entities.server.findIndex(
-        entity => entity.id === id
-    );
+    const serverIndex = state.entities.server.findIndex((entity) => entity.id === id);
     state.entities.server.splice(serverIndex, 1);
 };
 
-export const setEntityIsNotLoading = (
-    state: IBaseState<IModel>,
-    id: number
-) => {
-    const loadingIdIndex = state.isLoading.findIndex(
-        idInLoading => idInLoading === id
-    );
+export const setEntityIsNotLoading = (state: IBaseState<IModel>, id: number) => {
+    const loadingIdIndex = state.isLoading.findIndex((idInLoading) => idInLoading === id);
 
     if (loadingIdIndex === -1) {
         return;

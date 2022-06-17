@@ -1,14 +1,15 @@
-import {Store} from "vuex";
-import {EntityModel} from "../base/baseEntity.model";
-import {IBaseState} from "../base/baseState.interface";
-import {ISkillStudent} from "./skillStudent.interface";
-import {skillStudentRequestModel} from "./skillStudent.requestModel";
+import { Store } from 'vuex';
+import { EntityModel } from '../base/baseEntity.model';
+import { IBaseState } from '../base/baseState.interface';
+import { ISkillStudent } from './skillStudent.interface';
+import { skillStudentRequestModel } from './skillStudent.requestModel';
 
-
-export class SkillStudentModel extends EntityModel<IBaseState<ISkillStudent>,
+export class SkillStudentModel extends EntityModel<
+    IBaseState<ISkillStudent>,
     typeof skillStudentRequestModel,
-    ISkillStudent> {
+    ISkillStudent
+> {
     constructor(store: Store<IBaseState<ISkillStudent>>) {
-        super("skillStudent", store, skillStudentRequestModel);
+        super('skillStudent', store, skillStudentRequestModel);
     }
 }

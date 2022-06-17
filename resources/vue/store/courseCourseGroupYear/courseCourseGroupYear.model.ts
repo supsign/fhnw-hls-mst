@@ -1,13 +1,15 @@
-import {Store} from "vuex";
-import {EntityModel} from "../base/baseEntity.model";
-import {IBaseState} from "../base/baseState.interface";
-import {CourseCourseGroupYearRequestModel} from "./courseCourseGroupYearRequestModel";
-import {ICourseCourseGroupYear} from "./courseCourseGroupYear.interface";
+import { Store } from 'vuex';
+import { EntityModel } from '../base/baseEntity.model';
+import { IBaseState } from '../base/baseState.interface';
+import { CourseCourseGroupYearRequestModel } from './courseCourseGroupYearRequestModel';
+import { ICourseCourseGroupYear } from './courseCourseGroupYear.interface';
 
-export class CourseCourseGroupYearModel extends EntityModel<IBaseState<ICourseCourseGroupYear>,
+export class CourseCourseGroupYearModel extends EntityModel<
+    IBaseState<ICourseCourseGroupYear>,
     typeof CourseCourseGroupYearRequestModel,
-    ICourseCourseGroupYear> {
+    ICourseCourseGroupYear
+> {
     constructor(store: Store<IBaseState<ICourseCourseGroupYear>>) {
-        super("courseCourseGroupYear", store, CourseCourseGroupYearRequestModel);
+        super('courseCourseGroupYear', store, CourseCourseGroupYearRequestModel);
     }
 }

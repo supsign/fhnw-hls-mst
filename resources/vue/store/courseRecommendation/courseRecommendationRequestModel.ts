@@ -1,5 +1,5 @@
-import {BaseRequestModel} from "../base.requestModel";
+import { BaseRequestModel } from '../base.requestModel';
 
 export class CourseRecommendationRequestModel extends BaseRequestModel {
-    protected static modelRouteName = "courseRecommendations";
+    protected static modelRouteName = 'courseRecommendations';
 }

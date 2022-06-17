@@ -1,8 +1,5 @@
 <template>
-    <div
-        v-if="!editMode"
-        class="block w-full px-6 py-2 border border-transparent"
-    >
+    <div v-if="!editMode" class="block w-full px-6 py-2 border border-transparent">
         {{ showOption(value) }}
     </div>
     <vue-select
@@ -22,40 +19,39 @@
 </template>
 
 <script lang="ts">
-
-import BaseComponent from "../base/baseComponent";
-import {Component, Emit, Prop} from "vue-property-decorator";
-import VueSelect from "./vueSelect.vue";
-import {IModel} from "../../store/model.interface";
-import {EntityModel} from "../../store/base/baseEntity.model";
-import {FieldControl} from "../../helpers/validation/fieldControl";
-import {ValidationRule} from "../../helpers/validation/rules/validationRule";
-import {parseValidationRules} from "../../helpers/validation/rules/parseValidationRules";
+import BaseComponent from '../base/baseComponent';
+import { Component, Emit, Prop } from 'vue-property-decorator';
+import VueSelect from './vueSelect.vue';
+import { IModel } from '../../store/model.interface';
+import { EntityModel } from '../../store/base/baseEntity.model';
+import { FieldControl } from '../../helpers/validation/fieldControl';
+import { ValidationRule } from '../../helpers/validation/rules/validationRule';
+import { parseValidationRules } from '../../helpers/validation/rules/parseValidationRules';
 
 @Component({
     components: {
-        VueSelect
-    }
+        VueSelect,
+    },
 })
 export default class VueStoreSelect extends BaseComponent {
     @Prop({
         type: String,
-        default: ""
+        default: '',
     })
     validationRules: string;
 
     @Prop({
-        type: String
+        type: String,
     })
     name: string;
 
     @Prop({
-        type: Boolean
+        type: Boolean,
     })
     required: boolean;
 
     @Prop({
-        type: Boolean
+        type: Boolean,
     })
     disabled: boolean;
 
@@ -63,52 +59,52 @@ export default class VueStoreSelect extends BaseComponent {
     entity: IModel;
 
     @Prop({
-        type: Boolean
+        type: Boolean,
     })
     editMode: boolean;
 
     @Prop({
-        type: Array
+        type: Array,
     })
     searchKeys: string[];
 
-    @Prop({type: EntityModel})
+    @Prop({ type: EntityModel })
     model!: EntityModel<any, any, IModel>;
 
-    @Prop({type: EntityModel})
+    @Prop({ type: EntityModel })
     relatedModel!: EntityModel<any, any, IModel>;
 
     @Prop({
         type: Function,
-        default: () => true
+        default: () => true,
     })
     relatedFilter!: (entity: IModel) => boolean;
 
     @Prop({
         type: Function,
-        default: (option: any) => option?.name
+        default: (option: any) => option?.name,
     })
     showOption: (option: any) => string;
 
     @Prop({
-        type: Function
+        type: Function,
     })
     sortOptions: (a: any, b: any) => number;
 
     @Prop({
         type: Boolean,
-        default: false
+        default: false,
     })
     searchable: boolean;
 
     @Prop({
         type: Boolean,
-        default: false
+        default: false,
     })
     clearable: boolean;
 
     @Prop({
-        type: String
+        type: String,
     })
     label: string;
 
@@ -121,8 +117,8 @@ export default class VueStoreSelect extends BaseComponent {
         if (relatedId === null || relatedId === undefined) {
             return;
         }
-        if (typeof relatedId !== "number") {
-            throw new Error("id ist not a number");
+        if (typeof relatedId !== 'number') {
+            throw new Error('id ist not a number');
         }
         return this.relatedModel.getById(relatedId);
     }
@@ -132,10 +128,10 @@ export default class VueStoreSelect extends BaseComponent {
         if (selectedModel) {
             this.model.patch({
                 id: this.entity.id,
-                [this.name]: selectedModel.id
+                [this.name]: selectedModel.id,
             });
         } else {
-            this.model.patch({id: this.entity.id, [this.name]: null});
+            this.model.patch({ id: this.entity.id, [this.name]: null });
         }
 
         return selectedModel;
@@ -154,9 +150,7 @@ export default class VueStoreSelect extends BaseComponent {
 
     public get options() {
         // create new Array to prevent mutation in the store
-        return [...this.relatedModel.all]
-            .sort(this.sortOptions || this.defaultSortOptions)
-            .filter(this.relatedFilter);
+        return [...this.relatedModel.all].sort(this.sortOptions || this.defaultSortOptions).filter(this.relatedFilter);
     }
 
     private defaultSortOptions(a: any, b: any) {
@@ -168,7 +162,7 @@ export default class VueStoreSelect extends BaseComponent {
     }
 
     get listeners() {
-        const {input, blur, ...listeners} = this.$listeners;
+        const { input, blur, ...listeners } = this.$listeners;
         return listeners;
     }
 
@@ -179,14 +173,10 @@ export default class VueStoreSelect extends BaseComponent {
 
     private loadValidationRules() {
         const validations: ValidationRule[] = [];
-        const createValidationRuleOptions = parseValidationRules(
-            this.validationRules
-        );
+        const createValidationRuleOptions = parseValidationRules(this.validationRules);
 
         for (const createValidationRuleOption of createValidationRuleOptions) {
-            const validation = ValidationRule.create(
-                createValidationRuleOption
-            );
+            const validation = ValidationRule.create(createValidationRuleOption);
             if (!validation) {
                 continue;
             }

@@ -1,4 +1,4 @@
-import { FieldControl } from "./fieldControl";
+import { FieldControl } from './fieldControl';
 
 export class FormControl {
     private fieldControls: FieldControl[] = [];

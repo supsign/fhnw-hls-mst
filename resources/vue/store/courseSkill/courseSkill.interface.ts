@@ -1,7 +1,7 @@
-import {IModel} from "../model.interface";
+import { IModel } from '../model.interface';
 
 export interface ICourseSkill extends IModel {
-    course_id: number,
-    skill_id: number,
-    is_acquisition: boolean,
+    course_id: number;
+    skill_id: number;
+    is_acquisition: boolean;
 }

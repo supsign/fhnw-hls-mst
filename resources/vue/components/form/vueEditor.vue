@@ -16,12 +16,12 @@
                 content_style: [
                     'h6 {font-size:18px; margin-block-start:0em;margin-block-end:0em} ',
                     'p {margin-block-start:0em}',
-                    'ul {margin-block-start: 0em}'
-                ]
+                    'ul {margin-block-start: 0em}',
+                ],
             }"
         />
         <span class="input__label" ref="tooltipp">
-            {{ label }}{{ required ? " *" : "" }}
+            {{ label }}{{ required ? ' *' : '' }}
             <i v-if="tooltipp" class="fas fa-info-circle" aria-hidden="true"></i>
         </span>
 
@@ -32,11 +32,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Emit, Model, Prop } from "vue-property-decorator";
-import BaseComponent from "../base/baseComponent";
-import { FieldControl } from "../../helpers/validation/fieldControl";
-import { ValidationRule } from "../../helpers/validation/rules/validationRule";
-import { parseValidationRules } from "../../helpers/validation/rules/parseValidationRules";
+import { Component, Emit, Model, Prop } from 'vue-property-decorator';
+import BaseComponent from '../base/baseComponent';
+import { FieldControl } from '../../helpers/validation/fieldControl';
+import { ValidationRule } from '../../helpers/validation/rules/validationRule';
+import { parseValidationRules } from '../../helpers/validation/rules/parseValidationRules';
 
 @Component
 export default class VueEditor extends BaseComponent {
@@ -47,66 +47,66 @@ export default class VueEditor extends BaseComponent {
 
     @Prop({
         type: String,
-        default: ""
+        default: '',
     })
     validationRules: string;
 
     @Prop({
-        type: String
+        type: String,
     })
     name: string;
 
     @Prop({
-        type: String
+        type: String,
     })
     id: string;
 
     @Prop({
-        type: String
+        type: String,
     })
     label: string;
 
     @Prop({
-        type: String
+        type: String,
     })
     initError: string;
 
     @Prop({
-        type: Boolean
+        type: Boolean,
     })
     required: boolean;
 
     @Prop({
-        type: Boolean
+        type: Boolean,
     })
     disabled: boolean;
 
     @Prop({
-        type: String
+        type: String,
     })
     tooltipp: string;
 
     @Prop({
         type: Boolean,
-        default: false
+        default: false,
     })
     blade: boolean;
 
     @Prop({
-        type: String
+        type: String,
     })
     initValue: string;
 
-    @Model("input")
+    @Model('input')
     value: string;
 
-    internValue = "";
+    internValue = '';
 
     input(ev: any) {
         this.internValue = ev;
         this.initialError = null;
         this.validate();
-        this.$emit("input", ev);
+        this.$emit('input', ev);
     }
 
     @Emit()
@@ -146,21 +146,14 @@ export default class VueEditor extends BaseComponent {
     }
 
     get showError() {
-        return (
-            !!this.initialError ||
-            (!this.fieldControl.isValid && this.isTouched)
-        );
+        return !!this.initialError || (!this.fieldControl.isValid && this.isTouched);
     }
 
     loadValidationRules() {
         const validations: ValidationRule[] = [];
-        const createValidationRuleOptions = parseValidationRules(
-            this.validationRules
-        );
+        const createValidationRuleOptions = parseValidationRules(this.validationRules);
         for (const createValidationRuleOption of createValidationRuleOptions) {
-            const validation = ValidationRule.create(
-                createValidationRuleOption
-            );
+            const validation = ValidationRule.create(createValidationRuleOption);
             if (!validation) {
                 continue;
             }

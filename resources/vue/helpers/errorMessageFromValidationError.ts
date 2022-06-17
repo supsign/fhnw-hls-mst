@@ -1,4 +1,4 @@
-import { IReason } from "../store/reason.interface";
+import { IReason } from '../store/reason.interface';
 
 export function errorMessageFromValidationError(reason: IReason): string {
     const response = reason.response;
@@ -9,5 +9,5 @@ export function errorMessageFromValidationError(reason: IReason): string {
         messages.push(...message);
     }
 
-    return messages.join("<br>");
+    return messages.join('<br>');
 }

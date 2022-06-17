@@ -1,11 +1,57 @@
 <template>
-<div><VueInput  /></div>
+    <vue-card>
+        <template slot="title">
+          <div>Erstellen</div>
+        </template>
+        <div class="flex flex-col gap-5">
+          <div class="grid grid-cols-2 gap-5 divide-x">
+             <vue-select
+                v-model="courseGroupYear.course_group"
+                :options="models.courseGroup.all"
+                class="w-full min-h-16"
+                label="Modulgruppe"
+                optionKey="name"
+            ></vue-select>
+              <vue-input  type="text" label="Name" v-model="courseGroupYear.credits_to_pass" class="pl-5"/>
+           </div>
+            <vue-input  type="number" label="Benötigte Punkte" v-model="courseGroupYear.credits_to_pass"/>
+            <button class="button-primary w-full lg:w-60" @click="createCourseGroupYear">Modulgruppe Erstellen</button>
+        </div>
+    </vue-card>
 </template>
 <script lang="ts">
 import Component from "vue-class-component";
+import { ICourse } from "../../../interfaces/course.interface";
+import { ICourseGroupYear } from "../../../interfaces/courseGroupYear.interface";
+import { ICourseGroup } from "../../../store/courseGroup/courseGroup.interface";
 import BaseComponent from "../../base/baseComponent";
+import VueCard from "../../base/vueCard.vue";
+import VueSelect from "../../form/vueSelect.vue";
+import VueInput from "../../form/vueInput.vue";
 
+
+@Component({
+    components: {
+        VueCard,
+        VueInput,
+        VueSelect 
+    }
+})
 export default class VueAdminCreateCourseGroupYear extends BaseComponent {
+
+
+
+    public courseGroupYear: ICourseGroupYear =  {id: 0, course_group: {id: 0, name: '' }, course_group_id: 0, course_course_group_years: [], study_field_year_id: 0, credits_to_pass: null};
+
+    public getCourseGroupName(course: ICourseGroup) {
+      return course.name
+    }
+    public getCourseSearchParams(search: string) {
+        return {search}
+    }
+    public createCourseGroupYear() {
+
+    }
 
 }
 

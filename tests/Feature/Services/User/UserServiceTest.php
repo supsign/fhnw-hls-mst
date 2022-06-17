@@ -34,7 +34,7 @@ class UserServiceTest extends TestCase
     {
         $eventoId = $this->faker->randomNumber(5);
         $this->studentService->createOrUpdateOnEventoPersonId($eventoId);
-        $user = $this->userService->updateOrCreateUserAsStudent($this->faker->email, $eventoId);
+        $user = $this->userService->updateOrCreateUserAsStudent($this->faker->email(), $eventoId);
         $user->refresh();
         $this->assertInstanceOf(User::class, $user);
         $this->assertInstanceOf(Student::class, $user->student);
@@ -42,7 +42,7 @@ class UserServiceTest extends TestCase
 
     public function testUpdateOrCreateUserAsMentor()
     {
-        $email = $this->faker->email;
+        $email = $this->faker->email();
         $user = $this->userService->udpateOrCreateAsMentor($email, $this->faker->randomNumber(5));
         $this->assertInstanceOf(User::class, $user);
         $user->refresh();
@@ -52,8 +52,8 @@ class UserServiceTest extends TestCase
     public function testPreventAssociatingMentorToMultipleUsers()
     {
         $eventoId = $this->faker->randomNumber(5);
-        $userOne = $this->userService->udpateOrCreateAsMentor($this->faker->email, $eventoId);
-        $userTwo = $this->userService->udpateOrCreateAsMentor($this->faker->email, $eventoId);
+        $userOne = $this->userService->udpateOrCreateAsMentor($this->faker->email(), $eventoId);
+        $userTwo = $this->userService->udpateOrCreateAsMentor($this->faker->email(), $eventoId);
         $userOne->refresh();
         $userTwo->refresh();
         $this->assertNull($userOne->mentor);
@@ -63,8 +63,8 @@ class UserServiceTest extends TestCase
     {
         $eventoId = $this->faker->randomNumber(5);
         $this->studentService->createOrUpdateOnEventoPersonId($eventoId);
-        $userOne = $this->userService->updateOrCreateUserAsStudent($this->faker->email, $eventoId);
-        $userTwo = $this->userService->updateOrCreateUserAsStudent($this->faker->email, $eventoId);
+        $userOne = $this->userService->updateOrCreateUserAsStudent($this->faker->email(), $eventoId);
+        $userTwo = $this->userService->updateOrCreateUserAsStudent($this->faker->email(), $eventoId);
         $userOne->refresh();
         $userTwo->refresh();
         $this->assertNull($userOne->student);

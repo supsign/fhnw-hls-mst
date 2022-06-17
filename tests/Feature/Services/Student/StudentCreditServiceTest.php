@@ -34,7 +34,7 @@ class StudentCreditServiceTest extends TestCase
 
     public function testCountEctsServiceAsString()
     {
-        $studentEventoId = $this->faker->unique->numberBetween(1, 9999999);
+        $studentEventoId = $this->faker->unique()->numberBetween(1, 9999999);
         $student = $this->studentService->createOrUpdateOnEventoPersonId($studentEventoId);
         $credits = $this->studentEctsService->getCreditsAsString($student);
         $this->assertEquals('-', $credits);
@@ -43,13 +43,13 @@ class StudentCreditServiceTest extends TestCase
         $student->update(['study_field_year_id' => $studyFieldYear->id]);
         $course = $studyFieldYear->courses->first();
         $this->courseYearService->createOrUpdateOnEventoId(
-            $this->faker->unique->numberBetween(1, 9999999),
+            $this->faker->unique()->numberBetween(1, 9999999),
             $course,
             '2-21FS.somestupiduniquestring.EN/a',
             'test'
         );
         $this->completionService->createOrUpdateOnEventoIdAsCredit(
-            $this->faker->unique->numberBetween(1, 9999999),
+            $this->faker->unique()->numberBetween(1, 9999999),
             $student,
             $course,
             $course->credits,

@@ -35,7 +35,7 @@ class LoginRouteTest extends TestCase
     public function testValidLogin()
     {
         $shibbolethProperties = new ShibbolethProperties();
-        $shibbolethProperties->mail = $this->faker->email;
+        $shibbolethProperties->mail = $this->faker->email();
         $shibbolethProperties->fhnwIDPerson = $this->faker->randomNumber(5);
         $shibbolethProperties->entitlement = 'http://fhnw.ch/aai/res/hls/stab/mst_edu_student';
         $token = $this->tokenService->issue($shibbolethProperties);

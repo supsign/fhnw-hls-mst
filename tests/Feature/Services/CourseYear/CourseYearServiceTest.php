@@ -10,11 +10,10 @@ use Tests\TestCase;
 class CourseYearServiceTest extends TestCase
 {
     use WithFaker;
-
     private CourseYearService $courseYearService;
     private CourseService $courseService;
 
-    public function setup(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->setUpFaker();
@@ -24,11 +23,11 @@ class CourseYearServiceTest extends TestCase
 
     public function testCreateCourseYear()
     {
-        $uniqueNumber = $this->faker->unique()->name;
-        $name = $this->faker->name;
+        $uniqueNumber = $this->faker->unique()->name();
+        $name = $this->faker->name();
         $course = $this->courseService->firstOrCreateByNumber($uniqueNumber, 1, 1, $name);
         $courseYear = $this->courseYearService->createOrUpdateOnEventoId(
-            $this->faker->unique->numberBetween(1, 9999999),
+            $this->faker->unique()->numberBetween(1, 9999999),
             $course,
             '2-21FS.TEST1234.EN/a',
             $name,

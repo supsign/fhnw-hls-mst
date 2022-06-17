@@ -13,10 +13,10 @@ use Illuminate\Database\Eloquent\Collection;
 class FrequentlyAskedQuestionService extends BaseModelService
 {
     use UpdateTrait{
-        update AS protected baseUpdate;
+        update as protected baseUpdate;
     }
     use FirstOrCreateTrait{
-        firstOrCreate AS protected baseFirstOrCreate;
+        firstOrCreate as protected baseFirstOrCreate;
     }
 
     public function __construct(protected FrequentlyAskedQuestion $model)

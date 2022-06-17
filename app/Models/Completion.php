@@ -34,7 +34,7 @@ class Completion extends BaseModel
         $studyFieldYears = new BaseCollection;
         $course = $this->courseYear->course()->with('courseGroupYears')->first();
 
-        foreach ($course->courseGroupYears AS $courseGroupYear) {
+        foreach ($course->courseGroupYears as $courseGroupYear) {
             if (!$studyFieldYears->contains($courseGroupYear->studyFieldYear)) {
                 $studyFieldYears->push($courseGroupYear->studyFieldYear);
             }

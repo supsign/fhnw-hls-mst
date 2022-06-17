@@ -1,4 +1,4 @@
-import {IModel} from "../store/model.interface";
+import { IModel } from '../store/model.interface';
 
 export interface ISpecializationYear extends IModel {
     specialization_id: number;

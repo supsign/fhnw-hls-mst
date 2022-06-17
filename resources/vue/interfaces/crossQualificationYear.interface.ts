@@ -1,4 +1,4 @@
-import {IModel} from "../store/model.interface";
+import { IModel } from '../store/model.interface';
 
 export interface ICrossQualificationYear extends IModel {
     cross_qualification_id: number;

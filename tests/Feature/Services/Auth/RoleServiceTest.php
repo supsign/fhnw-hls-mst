@@ -15,10 +15,9 @@ use Tests\TestCase;
 class RoleServiceTest extends TestCase
 {
     use WithFaker;
-
     protected RoleService $roleService;
 
-    public function setup(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->setUpFaker();
@@ -44,14 +43,14 @@ class RoleServiceTest extends TestCase
     {
         $this->expectException(Exception::class);
         $shib = new ShibbolethProperties();
-        $shib->mail = $this->faker->email;
+        $shib->mail = $this->faker->email();
         $this->roleService->evaluate($shib);
     }
 
     public function testEvaluateStudentRole()
     {
         $shibbolethProperties = new ShibbolethProperties();
-        $shibbolethProperties->mail = $this->faker->email;
+        $shibbolethProperties->mail = $this->faker->email();
         $shibbolethProperties->fhnwIDPerson = $this->faker->randomNumber(5);
         $shibbolethProperties->entitlement = 'http://fhnw.ch/aai/res/hls/stab/mst_edu_student';
         $role = $this->roleService->evaluate($shibbolethProperties);
@@ -61,7 +60,7 @@ class RoleServiceTest extends TestCase
     public function testEvaluateStudentMentor()
     {
         $shibbolethProperties = new ShibbolethProperties();
-        $shibbolethProperties->mail = $this->faker->email;
+        $shibbolethProperties->mail = $this->faker->email();
         $shibbolethProperties->fhnwIDPerson = $this->faker->randomNumber(5);
         $shibbolethProperties->entitlement = 'http://fhnw.ch/aai/res/hls/stab/mst_mentor';
         $role = $this->roleService->evaluate($shibbolethProperties);

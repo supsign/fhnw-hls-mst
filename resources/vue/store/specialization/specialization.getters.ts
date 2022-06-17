@@ -1,5 +1,4 @@
-import {SpecializationRequestModel} from "./specializationRequestModel";
-
+import { SpecializationRequestModel } from './specializationRequestModel';
 
 export const requestModel = (): typeof SpecializationRequestModel => {
     return SpecializationRequestModel;

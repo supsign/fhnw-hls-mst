@@ -3,8 +3,7 @@
 use Database\Seeders\RoleAndPermissionSeeder;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRolesAndPermissions extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -26,4 +25,4 @@ class CreateRolesAndPermissions extends Migration
     public function down()
     {
     }
-}
+};

@@ -18,7 +18,7 @@ class CrossQualificationImport extends BaseCsvImport
             'study_field_id' => $this->line['id_studienrichtung'],
         ]);
 
-        foreach ($crossQualification->studyField->studyFieldYears AS $studyFieldYear) {
+        foreach ($crossQualification->studyField->studyFieldYears as $studyFieldYear) {
             CrossQualificationYear::firstOrCreate([
                 'cross_qualification_id' => $crossQualification->id,
                 'study_field_year_id' => $studyFieldYear->id,
@@ -30,7 +30,7 @@ class CrossQualificationImport extends BaseCsvImport
 
     public function countAmountToPass()
     {
-        foreach (CrossQualificationYear::all() AS $crossQualifcationYear) {
+        foreach (CrossQualificationYear::all() as $crossQualifcationYear) {
             $crossQualifcationYear->update([
                 'amount_to_pass' => $crossQualifcationYear->courses()->count(),
             ]);

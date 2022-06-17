@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\WebApi\CourseController;
 use App\Http\Controllers\WebApi\CoursePlanningController;
+use App\Http\Controllers\WebApi\CourseYearController;
 use App\Http\Controllers\WebApi\FrequentlyAskedQuestionController;
 use App\Http\Controllers\WebApi\StudentController;
 use App\Http\Controllers\WebApi\UserController;
@@ -23,106 +24,70 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(
     function () {
-        Route::controller(CourseController::class)->group(function () {
-            Route::patch('courses/{course}', 'patch')->name('webapi.course.patch');
-            Route::get('courses', 'search')->name('webapi.course.search');
-        });
+        Route::patch('courses/{course}', [CourseController::class, 'patch'])->name('webapi.course.patch');
+        Route::get('courses', [CourseController::class, 'search'])->name('webapi.course.search');
 
-        Route::controller(CoursePlanningController::class)->group(function () {
-            Route::get('courseplannings/{coursePlanning}', 'getById')->name('webapi.courseplannings.getById');
-            Route::patch('courseplannings/{coursePlanning}', 'patch')->name('webapi.courseplannings.patch');
-            Route::delete('courseplannings/{coursePlanning}', 'delete')->name('webapi.courseplannings.delete');
-            Route::post('courseplannings', 'post')->name('webapi.courseplannings.post');
-        });
+        Route::patch('courseyears/{courseYear}', [CourseYearController::class, 'patch'])->name('webapi.courseYear.patch');
 
-        Route::controller(WebApiPlanningController::class)->group(function () {
-            Route::post('plannings/{planning}/lock', 'lock')->name('webapi.plannings.lock');
-            Route::post('plannings/{planning}/unlock', 'unLock')->name('webapi.plannings.unLock');
-        });
+        Route::get('courseplannings/{coursePlanning}', [CoursePlanningController::class, 'getById'])->name('webapi.courseplannings.getById');
+        Route::patch('courseplannings/{coursePlanning}', [CoursePlanningController::class, 'patch'])->name('webapi.courseplannings.patch');
+        Route::delete('courseplannings/{coursePlanning}', [CoursePlanningController::class, 'delete'])->name('webapi.courseplannings.delete');
+        Route::post('courseplannings', [CoursePlanningController::class, 'post'])->name('webapi.courseplannings.post');
 
-        Route::controller(WebApiMentorController::class)->group(function () {
-            Route::get('mentor/getByEventoId', [WebApiMentorController::class, 'getByEventoId'])->name('webapi.mentor.getByEventoId');
-            Route::post('mentor/{mentor}/students/{student}', 'attachToStudent')->name('webapi.mentor.attacheToStudent');
-            Route::post('mentor/{mentor}/students', 'findAndAttach')->name('webapi.mentor.attacheToStudent');
-            Route::delete('mentor/{mentor}/students/{student}', 'detachStudent')->name('webapi.mentor.detacheStudent');
-        });
+        Route::post('plannings/{planning}/lock', [WebApiPlanningController::class, 'lock'])->name('webapi.plannings.lock');
+        Route::post('plannings/{planning}/unlock', [WebApiPlanningController::class, 'unLock'])->name('webapi.plannings.unLock');
 
-        Route::controller(StudentController::class)->group(function () {
-            Route::get('student/getByEventoId', 'getByEventoId')->name('webapi.student.getByEventoId');
-        });
+        Route::get('mentor/getByEventoId', [WebApiMentorController::class, 'getByEventoId'])->name('webapi.mentor.getByEventoId');
+        Route::post('mentor/{mentor}/students/{student}', [WebApiMentorController::class, 'attachToStudent'])->name('webapi.mentor.attacheToStudent');
+        Route::post('mentor/{mentor}/students', [WebApiMentorController::class, 'findAndAttach'])->name('webapi.mentor.attacheToStudent');
+        Route::delete('mentor/{mentor}/students/{student}', [WebApiMentorController::class, 'detachStudent'])->name('webapi.mentor.detacheStudent');
 
-        Route::controller(UserController::class)->group(function () {
-            Route::get('user/getByEmail', 'getByEmail')->name('webapi.user.getByEmail');
-        });
+        Route::get('student/getByEventoId', [StudentController::class, 'getByEventoId'])->name('webapi.student.getByEventoId');
 
-        Route::controller(WebApiMentorStudyFieldController::class)->group(function () {
-            Route::post('mentorStudyFields', 'postMentorStudyField')->name('webapi.mentorStudyField.post');
-            Route::delete('mentorStudyFields/{mentorStudyField}', 'deleteMentorStudyField')->name('webapi.mentorStudyField.delete');
-        });
+        Route::get('user/getByEmail', [UserController::class, 'getByEmail'])->name('webapi.user.getByEmail');
 
-        Route::controller(FrequentlyAskedQuestionController::class)->group(function () {
-            Route::get('faq', 'getAllWithTrashed')->name('webapi.faq.getAllWithTrashed');
-            Route::post('faq', 'create')->name('webapi.faq.create');
-            Route::patch('faq/{faq}', 'patch')->name('webapi.faq.patch');
-            Route::delete('faq/{faq}', 'delete')->name('webapi.faq.delete');
-            Route::post('faq/{faqId}/restore', 'restore')->name('webapi.faq.restore');
-            Route::post('faq/{faq}/down', 'moveDown')->name('webapi.faq.down');
-            Route::post('faq/{faq}/up', 'moveUp')->name('webapi.faq.up');
-        });
+        Route::post('mentorStudyFields', [WebApiMentorStudyFieldController::class, 'postMentorStudyField'])->name('webapi.mentorStudyField.post');
+        Route::delete('mentorStudyFields/{mentorStudyField}', [WebApiMentorStudyFieldController::class, 'deleteMentorStudyField'])->name('webapi.mentorStudyField.delete');
 
-        Route::controller(WebApiCourseGroupYearController::class)->group(function () {
-            Route::get('courseGroupYears/{courseGroupYear}', 'get')->name('webapi.courseGroupYears.get');
-            Route::patch('courseGroupYears/{courseGroupYear}', 'patch')->name('webapi.courseGroupYears.patch');
-        });
+        Route::get('faq', [FrequentlyAskedQuestionController::class, 'getAllWithTrashed'])->name('webapi.faq.getAllWithTrashed');
+        Route::post('faq', [FrequentlyAskedQuestionController::class, 'create'])->name('webapi.faq.create');
+        Route::patch('faq/{faq}', [FrequentlyAskedQuestionController::class, 'patch'])->name('webapi.faq.patch');
+        Route::delete('faq/{faq}', [FrequentlyAskedQuestionController::class, 'delete'])->name('webapi.faq.delete');
+        Route::post('faq/{faqId}/restore', [FrequentlyAskedQuestionController::class, 'restore'])->name('webapi.faq.restore');
+        Route::post('faq/{faq}/down', [FrequentlyAskedQuestionController::class, 'moveDown'])->name('webapi.faq.down');
+        Route::post('faq/{faq}/up', [FrequentlyAskedQuestionController::class, 'moveUp'])->name('webapi.faq.up');
 
-        Route::controller(WebApiSpecializationYearController::class)->group(function () {
-            Route::get('specializationYears/{specializationYear}', 'get')->name('webapi.courseGroupYears.get');
-            Route::patch('specializationYears/{specializationYear}', 'patch')->name('webapi.courseGroupYears.patch');
-        });
+        Route::get('courseGroupYears/{courseGroupYear}', [WebApiCourseGroupYearController::class, 'get'])->name('webapi.courseGroupYears.get');
+        Route::patch('courseGroupYears/{courseGroupYear}', [WebApiCourseGroupYearController::class, 'patch'])->name('webapi.courseGroupYears.patch');
 
-        Route::controller(WebApiCrossQualificationYearController::class)->group(function () {
-            Route::get('crossQualificationYears/{crossQualificationYear}', 'get')->name('webapi.courseGroupYears.get');
-            Route::patch('crossQualificationYears/{crossQualificationYear}', 'patch')->name('webapi.courseGroupYears.patch');
-        });
+        Route::get('specializationYears/{specializationYear}', [WebApiSpecializationYearController::class, 'get'])->name('webapi.courseGroupYears.get');
+        Route::patch('specializationYears/{specializationYear}', [WebApiSpecializationYearController::class, 'patch'])->name('webapi.courseGroupYears.patch');
 
-        Route::controller(WebApiAssessmentController::class)->group(function () {
-            Route::get('assessments/{assessment}', 'get')->name('webapi.assessments.get');
-            Route::patch('assessments/{assessment}', 'patch')->name('webapi.assessments.patch');
-        });
+        Route::get('crossQualificationYears/{crossQualificationYear}', [WebApiCrossQualificationYearController::class, 'get'])->name('webapi.courseGroupYears.get');
+        Route::patch('crossQualificationYears/{crossQualificationYear}', [WebApiCrossQualificationYearController::class, 'patch'])->name('webapi.courseGroupYears.patch');
 
-        Route::controller(WebApiRecommendationController::class)->group(function () {
-            Route::get('recommendations/{recommendation}', 'get')->name('webapi.recommendations.get');
-            Route::patch('recommendations/{recommendation}', 'patch')->name('webapi.recommendations.patch');
-        });
+        Route::get('assessments/{assessment}', [WebApiAssessmentController::class, 'get'])->name('webapi.assessments.get');
+        Route::patch('assessments/{assessment}', [WebApiAssessmentController::class, 'patch'])->name('webapi.assessments.patch');
 
-        Route::controller(WebApiStudyFieldYearController::class)->group(function () {
-            Route::get('studyFieldYears/{studyFieldYear}', 'get')->name('webapi.studyFieldYears.get');
-            Route::patch('studyFieldYears/{studyFieldYear}', 'patch')->name('webapi.studyFieldYears.patch');
-        });
+        Route::get('recommendations/{recommendation}', [WebApiRecommendationController::class, 'get'])->name('webapi.recommendations.get');
+        Route::patch('recommendations/{recommendation}', [WebApiRecommendationController::class, 'patch'])->name('webapi.recommendations.patch');
 
-        Route::controller(WebApiAssessmentCourseController::class)->group(function () {
-            Route::post('assessmentCourses', 'post')->name('webapi.assessmentCourses.post');
-            Route::delete('assessmentCourses/{assessmentCourse}', 'delete')->name('webapi.assessmentCourses.delete');
-        });
+        Route::get('studyFieldYears/{studyFieldYear}', [WebApiStudyFieldYearController::class, 'get'])->name('webapi.studyFieldYears.get');
+        Route::patch('studyFieldYears/{studyFieldYear}', [WebApiStudyFieldYearController::class, 'patch'])->name('webapi.studyFieldYears.patch');
 
-        Route::controller(WebApiCourseRecommendationController::class)->group(function () {
-            Route::post('courseRecommendations', 'post')->name('webapi.courseRecommendations.post');
-            Route::delete('courseRecommendations/{courseRecommendation}', 'delete')->name('webapi.courseRecommendations.delete');
-        });
+        Route::post('assessmentCourses', [WebApiAssessmentCourseController::class, 'post'])->name('webapi.assessmentCourses.post');
+        Route::delete('assessmentCourses/{assessmentCourse}', [WebApiAssessmentCourseController::class, 'delete'])->name('webapi.assessmentCourses.delete');
 
-        Route::controller(WebApiCourseSpecializationYearController::class)->group(function () {
-            Route::post('courseSpecializationYears', 'post')->name('webapi.courseSpecializationYears.post');
-            Route::delete('courseSpecializationYears/{courseSpecializationYear}', 'delete')->name('webapi.courseSpecializationYears.delete');
-        });
+        Route::post('courseRecommendations', [WebApiCourseRecommendationController::class, 'post'])->name('webapi.courseRecommendations.post');
+        Route::delete('courseRecommendations/{courseRecommendation}', [WebApiCourseRecommendationController::class, 'delete'])->name('webapi.courseRecommendations.delete');
 
-        Route::controller(WebApiCourseCrossQualificationYearController::class)->group(function () {
-            Route::post('courseCrossQualificationYears', 'post')->name('webapi.courseCrossQualificationYear.post');
-            Route::delete('courseCrossQualificationYears/{courseCrossQualificationYear}', 'delete')->name('webapi.courseCrossQualificationYear.delete');
-        });
+        Route::post('courseSpecializationYears', [WebApiCourseSpecializationYearController::class, 'post'])->name('webapi.courseSpecializationYears.post');
+        Route::delete('courseSpecializationYears/{courseSpecializationYear}', [WebApiCourseSpecializationYearController::class, 'delete'])->name('webapi.courseSpecializationYears.delete');
 
-        Route::controller(WebApiCourseCourseGroupYearController::class)->group(function () {
-            Route::post('courseCourseGroupYears', 'post')->name('webapi.courseCourseGroupYears.post');
-            Route::delete('courseCourseGroupYears/{courseCourseGroupYear}', 'delete')->name('webapi.courseCourseGroupYears.delete');
-        });
+        Route::post('courseCrossQualificationYears', [WebApiCourseCrossQualificationYearController::class, 'post'])->name('webapi.courseCrossQualificationYear.post');
+        Route::delete('courseCrossQualificationYears/{courseCrossQualificationYear}', [WebApiCourseCrossQualificationYearController::class, 'delete'])->name('webapi.courseCrossQualificationYear.delete');
+
+        Route::post('courseCourseGroupYears', [WebApiCourseCourseGroupYearController::class, 'post'])->name('webapi.courseCourseGroupYears.post');
+        Route::delete('courseCourseGroupYears/{courseCourseGroupYear}', [WebApiCourseCourseGroupYearController::class, 'delete'])->name('webapi.courseCourseGroupYears.delete');
     }
 );

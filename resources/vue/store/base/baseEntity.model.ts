@@ -1,5 +1,5 @@
-import {Store} from "vuex";
-import {IModel} from "../model.interface";
+import { Store } from 'vuex';
+import { IModel } from '../model.interface';
 
 export class EntityModel<S, T, U extends IModel> {
     protected _modelName: string;
@@ -21,9 +21,7 @@ export class EntityModel<S, T, U extends IModel> {
         return this._store.getters[`${this._modelName}/all`];
     }
 
-    public filter(
-        predicate: (value: U, index: number, array: U[]) => unknown
-    ): U[] {
+    public filter(predicate: (value: U, index: number, array: U[]) => unknown): U[] {
         return this._store.getters[`${this._modelName}/filter`](predicate);
     }
 
@@ -42,7 +40,7 @@ export class EntityModel<S, T, U extends IModel> {
     public patchById(id: number, payload: Partial<U>): Promise<void> {
         return this._store.dispatch(`${this._modelName}/patch`, {
             id,
-            ...payload
+            ...payload,
         });
     }
 

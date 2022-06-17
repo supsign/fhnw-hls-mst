@@ -15,10 +15,9 @@ use Tests\TestCase;
 class LoginRouteTest extends TestCase
 {
     use WithFaker;
-
     protected TokenService $tokenService;
 
-    public function setup(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->setUpFaker();
@@ -35,7 +34,7 @@ class LoginRouteTest extends TestCase
     public function testValidLogin()
     {
         $shibbolethProperties = new ShibbolethProperties();
-        $shibbolethProperties->mail = $this->faker->email;
+        $shibbolethProperties->mail = $this->faker->email();
         $shibbolethProperties->fhnwIDPerson = $this->faker->randomNumber(5);
         $shibbolethProperties->entitlement = 'http://fhnw.ch/aai/res/hls/stab/mst_edu_student';
         $token = $this->tokenService->issue($shibbolethProperties);

@@ -1,13 +1,10 @@
-import * as EmailValidator from "email-validator";
-import {ICreateValidationRuleOption} from "../../../store/createValidationRuleOption.interface";
+import * as EmailValidator from 'email-validator';
+import { ICreateValidationRuleOption } from '../../../store/createValidationRuleOption.interface';
 
 export class ValidationRule {
-    private errorString = "l.error";
+    private errorString = 'l.error';
 
-    protected constructor(
-        rule: (value: string) => boolean,
-        errorString: string
-    ) {
+    protected constructor(rule: (value: string) => boolean, errorString: string) {
         this.rule = rule;
         this.errorString = errorString;
     }
@@ -31,7 +28,7 @@ export class ValidationRule {
                 return !isNaN(value.getTime());
             }
 
-            if (typeof value === "object") {
+            if (typeof value === 'object') {
                 for (const _ in value) {
                     return true;
                 }
@@ -58,9 +55,7 @@ export class ValidationRule {
 
     static minLength(minLength: number): ValidationRule {
         const rule = (value: any): boolean => {
-            return (
-                String(value).length >= minLength || String(value).length === 0
-            );
+            return String(value).length >= minLength || String(value).length === 0;
         };
 
         const errorString = 'Mindestlänge: ' + minLength.toString();
@@ -80,31 +75,31 @@ export class ValidationRule {
 
     static create(createValidationRuleOption: ICreateValidationRuleOption) {
         switch (createValidationRuleOption.name) {
-            case "min":
+            case 'min':
                 let minLength = createValidationRuleOption.paramters?.[0];
 
-                if (typeof minLength === "string") {
+                if (typeof minLength === 'string') {
                     minLength = parseInt(minLength, 10);
                 }
 
-                if (!minLength || typeof minLength !== "number") {
+                if (!minLength || typeof minLength !== 'number') {
                     minLength = 1;
                 }
                 return ValidationRule.minLength(minLength);
 
-            case "max":
+            case 'max':
                 let maxLength = createValidationRuleOption.paramters?.[0];
 
-                if (typeof maxLength === "string") {
+                if (typeof maxLength === 'string') {
                     maxLength = parseInt(maxLength, 10);
                 }
 
-                if (!maxLength || typeof maxLength !== "number") {
+                if (!maxLength || typeof maxLength !== 'number') {
                     maxLength = 1;
                 }
                 return ValidationRule.maxLength(maxLength);
 
-            case "email":
+            case 'email':
                 return ValidationRule.email();
 
             default:
@@ -116,12 +111,12 @@ export class ValidationRule {
         const isValid = this.evaluate(value);
         return {
             isValid,
-            error: !isValid ? this.errorString : undefined
+            error: !isValid ? this.errorString : undefined,
         };
     }
 
     private rule: (value: string) => boolean = (): boolean => {
-        throw new Error("must be implemented on derived class");
+        throw new Error('must be implemented on derived class');
     };
 
     private evaluate(value: any): boolean {

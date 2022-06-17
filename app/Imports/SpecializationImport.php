@@ -34,7 +34,7 @@ class SpecializationImport extends BaseCsvImport
             'study_field_id' => $this->line['id_studienrichtung'],
         ]);
 
-        foreach ($specialization->studyField->studyFieldYears AS $studyFieldYear) {
+        foreach ($specialization->studyField->studyFieldYears as $studyFieldYear) {
             $this->specializationYearService->firstOrCreate([
                 'specialization_id' => $specialization->id,
                 'study_field_year_id' => $studyFieldYear->id,
@@ -44,7 +44,7 @@ class SpecializationImport extends BaseCsvImport
 
     public function countAmountToPass()
     {
-        foreach (SpecializationYear::all() AS $specalisationYear) {
+        foreach (SpecializationYear::all() as $specalisationYear) {
             $specalisationYear->update([
                 'amount_to_pass' => $specalisationYear->courses()->count(),
             ]);

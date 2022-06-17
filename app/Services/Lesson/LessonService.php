@@ -25,7 +25,7 @@ class LessonService extends BaseModelService
 
     public function removeLessonsFromCourseYear(CourseYear $courseYear): self
     {
-        foreach ($courseYear->lessons AS $lesson) {
+        foreach ($courseYear->lessons as $lesson) {
             $lesson->delete();
         }
 

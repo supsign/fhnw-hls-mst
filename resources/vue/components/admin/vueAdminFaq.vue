@@ -3,69 +3,47 @@
         <div class="p-4 border rounded shadow-xl flex flex-grow justify-between space-x-4">
             <div class="flex-grow">
                 <div class="flex justify-between border-b">
-                    <div v-if="!editMode"
-                         class="font-bold pb-3 flex space-x-4">
+                    <div v-if="!editMode" class="font-bold pb-3 flex space-x-4">
                         <div>
                             {{ question }}
                         </div>
-                        <div v-if="isDeleted"
-                             class="text-red-500 text-sm my-auto"
-                        >
-                            Gelöscht
-                        </div>
+                        <div v-if="isDeleted" class="text-red-500 text-sm my-auto">Gelöscht</div>
                     </div>
-                    <vue-input v-else
-                               v-model="question"
-                               class="pb-4 flex-grow"
-                               type="text"
-                               name="question"
-                               label="Frage"
+                    <vue-input
+                        v-else
+                        v-model="question"
+                        class="pb-4 flex-grow"
+                        type="text"
+                        name="question"
+                        label="Frage"
                     />
                 </div>
-                <div v-if="!editMode"
-                     class="pt-3 tinymce"
-                     v-html="answer">
-                </div>
-                <vue-editor v-else
-                            v-model="answer"
-                            name="answer"
-                            id="answer"
-                            label="Antwort"
-                >
-
-                </vue-editor>
+                <div v-if="!editMode" class="pt-3 tinymce" v-html="answer"></div>
+                <vue-editor v-else v-model="answer" name="answer" id="answer" label="Antwort"> </vue-editor>
             </div>
             <div class="my-auto w-8">
                 <div class="flex flex flex-col md:flex-row md:space-x-2">
-                    <div v-if="editMode && !isDeleted"
-                         class="mx-auto"
-                         @click="save()">
+                    <div v-if="editMode && !isDeleted" class="mx-auto" @click="save()">
                         <i class="far fa-save text-blue-600 cursor-pointer" aria-hidden="true"></i>
                     </div>
-                    <div v-if="!editMode && !isDeleted"
-                         class="mx-auto"
-                         @click="edit()">
+                    <div v-if="!editMode && !isDeleted" class="mx-auto" @click="edit()">
                         <i class="far fa-edit text-blue-600 cursor-pointer" aria-hidden="true"></i>
                     </div>
-                    <div v-if="!isDeleted"
-                         class="mx-auto"
-                         @click="remove()">
+                    <div v-if="!isDeleted" class="mx-auto" @click="remove()">
                         <i class="far fa-trash text-red-500 cursor-pointer" aria-hidden="true"></i>
                     </div>
-                    <div v-if="isDeleted"
-                         class="mx-auto"
-                         @click="restore()">
+                    <div v-if="isDeleted" class="mx-auto" @click="restore()">
                         <i class="far fa-trash-undo text-green-500 cursor-pointer text-lg" aria-hidden="true"></i>
                     </div>
                 </div>
             </div>
         </div>
         <div class="text-xl h-auto my-auto w-8">
-            <div  v-if="!isDeleted">
-                <div v-if="minSortOrder !== faq.sort_order" @click="()=>moveUp(faq)">
+            <div v-if="!isDeleted">
+                <div v-if="minSortOrder !== faq.sort_order" @click="() => moveUp(faq)">
                     <i class="fas fa-arrow-circle-up cursor-pointer" aria-hidden="true"></i>
                 </div>
-                <div v-if="maxSortOrder !== faq.sort_order" @click="()=>moveDown(faq)">
+                <div v-if="maxSortOrder !== faq.sort_order" @click="() => moveDown(faq)">
                     <i class="fas fa-arrow-circle-down cursor-pointer" aria-hidden="true"></i>
                 </div>
             </div>
@@ -74,24 +52,24 @@
 </template>
 
 <script lang="ts">
-import {Component, Emit, Prop} from "vue-property-decorator";
-import BaseComponent from "../base/baseComponent";
-import {IFaq} from "../../interfaces/faq.interface";
-import Swal from "sweetalert2";
-import axios from "axios";
-import {Toast} from "../../helpers/toast";
-import VueInput from "../form/vueInput.vue";
-import VueEditor from "../form/vueEditor.vue";
+import { Component, Emit, Prop } from 'vue-property-decorator';
+import BaseComponent from '../base/baseComponent';
+import { IFaq } from '../../interfaces/faq.interface';
+import Swal from 'sweetalert2';
+import axios from 'axios';
+import { Toast } from '../../helpers/toast';
+import VueInput from '../form/vueInput.vue';
+import VueEditor from '../form/vueEditor.vue';
 
 @Component({
-    components: {VueEditor, VueInput}
+    components: { VueEditor, VueInput },
 })
 export default class VueAdminFaq extends BaseComponent {
-    @Prop({type: Object})
-    public faq: IFaq
+    @Prop({ type: Object })
+    public faq: IFaq;
 
-    @Prop({type: Array})
-    public faqs: IFaq[]
+    @Prop({ type: Array })
+    public faqs: IFaq[];
 
     editMode = false;
     question: string = null;
@@ -107,20 +85,27 @@ export default class VueAdminFaq extends BaseComponent {
     }
 
     public get minSortOrder() {
-        return Math.min.apply(Math, this.faqs.map(function(faq) {
-            return faq.sort_order; }));
+        return Math.min.apply(
+            Math,
+            this.faqs.map(function (faq) {
+                return faq.sort_order;
+            })
+        );
     }
 
     public get maxSortOrder() {
-        return Math.max.apply(Math, this.faqs.map(function(faq) {
-            return faq.sort_order; }));
+        return Math.max.apply(
+            Math,
+            this.faqs.map(function (faq) {
+                return faq.sort_order;
+            })
+        );
     }
 
     public edit() {
-        if(!this.editMode) {
+        if (!this.editMode) {
             this.editMode = true;
-        }
-        else {
+        } else {
             return;
         }
     }
@@ -132,22 +117,20 @@ export default class VueAdminFaq extends BaseComponent {
         Swal.fire({
             title: 'Warnung',
             text: 'Bist du sicher dass du diese FAQ löschen willst?',
-            icon: "warning",
+            icon: 'warning',
             showCancelButton: true,
             cancelButtonText: 'Abbrechen',
-            confirmButtonText: 'Ja'
+            confirmButtonText: 'Ja',
         }).then((result) => {
-            if(result.isConfirmed) {
+            if (result.isConfirmed) {
                 return axios
-                    .delete(
-                        `/webapi/faq/${this.faq.id}`
-                    )
+                    .delete(`/webapi/faq/${this.faq.id}`)
                     .then(() => {
                         this.isDeleted = true;
-                        Toast.fire({icon: "success", title: 'Die FAQ wurde gelöscht.'});
+                        Toast.fire({ icon: 'success', title: 'Die FAQ wurde gelöscht.' });
                     })
                     .catch((reason) => {
-                        Toast.fire({title: 'Error', icon: 'error', text: reason.text});
+                        Toast.fire({ title: 'Error', icon: 'error', text: reason.text });
                         console.log(reason);
                     });
             }
@@ -155,11 +138,10 @@ export default class VueAdminFaq extends BaseComponent {
     }
 
     save() {
-        if(this.editMode) {
+        if (this.editMode) {
             this.editMode = false;
             this.store();
-        }
-        else {
+        } else {
             return;
         }
     }
@@ -169,17 +151,15 @@ export default class VueAdminFaq extends BaseComponent {
             return this.faq;
         }
         return axios
-            .patch(
-                `/webapi/faq/${this.faq.id}`, {
-                    question: this.question,
-                    answer: this.answer,
-                }
-            )
+            .patch(`/webapi/faq/${this.faq.id}`, {
+                question: this.question,
+                answer: this.answer,
+            })
             .then(() => {
-                Toast.fire({icon: "success", title: 'Gespeichert'});
+                Toast.fire({ icon: 'success', title: 'Gespeichert' });
             })
             .catch((reason) => {
-                Toast.fire({title: 'Error', icon: 'error', text: reason.text});
+                Toast.fire({ title: 'Error', icon: 'error', text: reason.text });
                 console.log(reason);
             });
     }
@@ -196,15 +176,13 @@ export default class VueAdminFaq extends BaseComponent {
 
     public restore() {
         // faq/{faqId}/restore
-        axios.post<IFaq>(`/webapi/faq/${this.faq.id}/restore`)
-            .then(() => {
-                this.isDeleted = null;
-                Toast.fire({
-                    icon: "success",
-                    title: "FAQ wurde wiederhergestellt."
-                });
-            })
+        axios.post<IFaq>(`/webapi/faq/${this.faq.id}/restore`).then(() => {
+            this.isDeleted = null;
+            Toast.fire({
+                icon: 'success',
+                title: 'FAQ wurde wiederhergestellt.',
+            });
+        });
     }
-
 }
 </script>

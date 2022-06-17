@@ -11,10 +11,9 @@ use Tests\TestCase;
 class SpecializationYearServiceTest extends TestCase
 {
     use WithFaker;
-
     private SpecializationYearService $specializationYearService;
 
-    public function setup(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->setUpFaker();

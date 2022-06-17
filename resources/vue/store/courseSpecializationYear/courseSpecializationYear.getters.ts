@@ -1,5 +1,4 @@
-import {CourseSpecializationYearRequestModel} from "./courseSpecializationYearRequestModel";
-
+import { CourseSpecializationYearRequestModel } from './courseSpecializationYearRequestModel';
 
 export const requestModel = (): typeof CourseSpecializationYearRequestModel => {
     return CourseSpecializationYearRequestModel;

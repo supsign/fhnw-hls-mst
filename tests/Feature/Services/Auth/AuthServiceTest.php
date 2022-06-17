@@ -20,12 +20,11 @@ use Tests\TestCase;
 class AuthServiceTest extends TestCase
 {
     use WithFaker;
-
     protected AuthService $authService;
     protected StudentService $studentService;
     protected TokenService $tokenService;
 
-    public function setup(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->setUpFaker();

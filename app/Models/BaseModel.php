@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\App;
 class BaseModel extends Model
 {
     use HasFactory;
-
     protected $guarded = [];
     protected $hidden = ['janis_id'];
 

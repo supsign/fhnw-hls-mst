@@ -19,7 +19,7 @@ class Recommendation extends BaseModel
 
     public function originRecommendation()
     {
-        return $this->belongsTo(Recommendation::class);
+        return $this->belongsTo(self::class);
     }
 
     public function specializationYear()

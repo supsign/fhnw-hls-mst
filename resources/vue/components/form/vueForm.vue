@@ -5,9 +5,9 @@
 </template>
 
 <script lang="ts">
-import { Component } from "vue-property-decorator";
-import { FormControl } from "../../helpers/validation/formControl";
-import BaseComponent from "../base/baseComponent";
+import { Component } from 'vue-property-decorator';
+import { FormControl } from '../../helpers/validation/formControl';
+import BaseComponent from '../base/baseComponent';
 
 @Component
 export default class VueForm extends BaseComponent {
@@ -41,4 +41,3 @@ export default class VueForm extends BaseComponent {
     }
 }
 </script>
-

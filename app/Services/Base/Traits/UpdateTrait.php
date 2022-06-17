@@ -8,7 +8,7 @@ trait UpdateTrait
 {
     public function update(BaseModel $model, array $attributes): self
     {
-        foreach ($this->sanitiseAttributes($attributes) AS $key => $value) {
+        foreach ($this->sanitiseAttributes($attributes) as $key => $value) {
             $model->$key = $value;
         }
 

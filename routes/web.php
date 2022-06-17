@@ -27,7 +27,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('web')->group(
     function () {
-
         // Login Process Unguarded
         Route::controller(LoginController::class)->group(function () {
             Route::post('/auth/login', 'login')->name('post.auth.login');
@@ -84,41 +83,27 @@ Route::middleware(['web', 'auth'])->group(
 
 Route::middleware(['web', 'auth', 'backend'])->group(
     function () {
-        Route::controller(AdminController::class)->group(function () {
-            Route::get('admin', 'dashboard')->name('admin.dashboard');
-            Route::get('admin/courses', 'courses')->name('admin.course.list');
-            Route::get('admin/faq', 'faq')->name('admin.faq');
-        });
+        Route::get('admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+        Route::get('admin/courses', [AdminController::class, 'courses'])->name('admin.course.list');
+        Route::get('admin/courses/{course}/edit', [AdminController::class, 'editCourse'])->name('admin.course.edit');
+        Route::get('admin/faq', [AdminController::class, 'faq'])->name('admin.faq');
+        Route::get('admin/userManagement/assignRoleToUser', [AdminRolesController::class, 'assignRoles'])->name('admin.userManagement.assign');
+        Route::post('admin/userManagement/assignRoleToUser', [AdminRolesController::class, 'assignRoleToUser'])->name('admin.userManagement.assign.post');
+        Route::post('admin/userManagement/removeRoleFromUser', [AdminRolesController::class, 'removeRoleFromUser'])->name('admin.userManagement.remove.post');
 
-        Route::controller(AdminRolesController::class)->group(function () {
-            Route::get('admin/userManagement/assignRoleToUser', 'assignRoles')->name('admin.userManagement.assign');
-            Route::post('admin/userManagement/assignRoleToUser', 'assignRoleToUser')->name('admin.userManagement.assign.post');
-            Route::post('admin/userManagement/removeRoleFromUser', 'removeRoleFromUser')->name('admin.userManagement.remove.post');
-        });
+        Route::get('admin/mentors', [AdminMentorController::class, 'mentors'])->name('admin.mentors');
+        Route::get('admin/mentors/{mentor}', [AdminMentorController::class, 'showOne'])->name('admin.mentor');
 
-        Route::controller(AdminMentorController::class)->group(function () {
-            Route::get('admin/mentors', 'mentors')->name('admin.mentors');
-            Route::get('admin/mentors/{mentor}', 'showOne')->name('admin.mentor');
-        });
+        Route::get('admin/studyFields', [AdminStudyFieldController::class, 'showAll'])->name('admin.studyFields.all');
 
-        Route::controller(AdminStudyFieldController::class)->group(function () {
-            Route::get('admin/studyFields', 'showAll')->name('admin.studyFields.all');
-        });
+        Route::get('admin/assessments/{assessment}', [AdminAssessmentController::class, 'showOne'])->name('admin.assessments.showOne');
+        Route::get('admin/assessments/{assessment}/copy', [AdminAssessmentController::class, 'copy'])->name('admin.assessments.copy');
 
-        Route::controller(AdminAssessmentController::class)->group(function () {
-            Route::get('admin/assessments/{assessment}', 'showOne')->name('admin.assessments.showOne');
-            Route::get('admin/assessments/{assessment}/copy', 'copy')->name('admin.assessments.copy');
-        });
+        Route::get('admin/recommendations/{recommendation}', [AdminRecommendationController::class, 'showOne'])->name('admin.recommendation.showOne');
+        Route::get('admin/recommendations/{recommendation}/copy', [AdminRecommendationController::class, 'copy'])->name('admin.recommendation.copy');
+        Route::get('admin/recommendations/{recommendation}/setFsHs', [AdminRecommendationController::class, 'setFsHs'])->name('admin.recommendation.setFsHs');
 
-        Route::controller(AdminRecommendationController::class)->group(function () {
-            Route::get('admin/recommendations/{recommendation}', 'showOne')->name('admin.recommendation.showOne');
-            Route::get('admin/recommendations/{recommendation}/copy', 'copy')->name('admin.recommendation.copy');
-            Route::get('admin/recommendations/{recommendation}/setFsHs', 'setFsHs')->name('admin.recommendation.setFsHs');
-        });
-
-        Route::controller(AdminStudyFieldYearController::class)->group(function () {
-            Route::get('admin/studyFieldYears/{studyFieldYear}', 'show')->name('admin.studyFieldYears.show');
-            Route::get('admin/studyFieldYears/{studyFieldYear}/courseGroups', 'courseGroups')->name('admin.studyFieldYears.courseGroups');
-        });
+        Route::get('admin/studyFieldYears/{studyFieldYear}', [AdminStudyFieldYearController::class, 'show'])->name('admin.studyFieldYears.show');
+        Route::get('admin/studyFieldYears/{studyFieldYear}/courseGroups', [AdminStudyFieldYearController::class, 'courseGroups'])->name('admin.studyFieldYears.courseGroups');
     }
 );

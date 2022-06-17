@@ -11,7 +11,9 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 class Semester extends BaseModel
 {
     protected $appends = ['name'];
-    protected $dates = ['start_date'];
+    protected $casts = [
+        'start_date' => 'datetime',
+    ];
 
     public static function __callStatic($method, $parameters)
     {

@@ -20,7 +20,13 @@ class CourseGroupController extends Controller
 
     public function getAll(): Collection
     {
-        return CourseGroup::all();
+        return CourseGroup::all()
+            ->makeHidden([
+                'import_id',
+                'study_field_id',
+                'created_at',
+                'updated_at',
+            ]);
     }
 
     public function patch(CourseGroup $courseGroup, PatchRequest $request): CourseGroup

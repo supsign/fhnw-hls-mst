@@ -38,7 +38,7 @@ class CompletionAttemptImport extends BaseExcelImport implements ToModel, WithHe
         $this->courseYearService = App::make(CourseYearService::class);
         $this->completionService = App::make(CompletionService::class);
         $this->studentService = App::make(StudentService::class);
-        $this->logFilename = 'storage/logs/import_courses_from_completion_attempt_log_'.Carbon::now();
+        $this->logFilename = 'storage/logs/import_courses_from_completion_attempt_log_'.Carbon::now()->format('Y-m-d H-i');
 
         file_put_contents($this->logFilename, 'evento_id;status'.PHP_EOL);
     }

@@ -16,6 +16,7 @@
                 <vue-input type="text" label="Name" v-model="name" @input="resetSelect" class="pl-5" />
             </div>
             <vue-input type="number" label="Benötigte Punkte" v-model="courseGroupYear.credits_to_pass" />
+            <vue-input type="number" label="Benötigte Kurse" v-model="courseGroupYear.amount_to_pass" />
             <button
                 class="button-primary w-full lg:w-60"
                 @click="createCourseGroupYear"
@@ -35,7 +36,6 @@ import BaseComponent from '../../base/baseComponent';
 import VueCard from '../../base/vueCard.vue';
 import VueSelect from '../../form/vueSelect.vue';
 import VueInput from '../../form/vueInput.vue';
-import axios from 'axios';
 import { IStudyFieldYear } from '../../../interfaces/studyFieldYear.interface';
 import { Prop } from 'vue-property-decorator';
 
@@ -70,10 +70,8 @@ export default class VueAdminCreateCourseGroupYear extends BaseComponent {
         if (this.name) {
             this.courseGroupYear.course_group.name = this.name;
         }
-        axios
-            .post('/webapi/courseGroupYears', this.courseGroupYearPostRequest(this.courseGroupYear))
-            .then((res) => console.log(res.data))
-            .catch();
+        this.models.courseGroupYear.post(this.courseGroupYearPostRequest(this.courseGroupYear)).then(res => {console.log(res), this.models.courseGroup.add(res.course_group)})
+
     }
 
     public resetSelect() {
@@ -95,11 +93,10 @@ export default class VueAdminCreateCourseGroupYear extends BaseComponent {
             study_field_year_id: this.studyFieldYear ? this.studyFieldYear.id : 0,
             credits_to_pass: courseGroupYear.credits_to_pass,
         };
-        console.log(courseGroupYear);
         if (courseGroupYear.course_group.id) {
             return {
                 ...data,
-                course_group_id: courseGroupYear.course_group.id,
+                course_group_id: courseGroupYear.course_group.id
             };
         } else {
             return {

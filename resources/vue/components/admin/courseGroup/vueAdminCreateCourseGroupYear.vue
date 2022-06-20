@@ -70,7 +70,6 @@ export default class VueAdminCreateCourseGroupYear extends BaseComponent {
         if (this.name) {
             this.courseGroupYear.course_group.name = this.name;
         }
-        console.log(this.courseGroupYearPostRequest(this.courseGroupYear));
         axios
             .post('/webapi/courseGroupYears', this.courseGroupYearPostRequest(this.courseGroupYear))
             .then((res) => console.log(res.data))

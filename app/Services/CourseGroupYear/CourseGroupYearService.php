@@ -23,7 +23,7 @@ class CourseGroupYearService extends BaseModelService
     {
         dd($request->all());
 
-        return new CourseGroupYear  //::create([]);
+        return new CourseGroupYear;  //::create([]);
     }
 
     public function isSuccessfullyCompleted(CourseGroupYear $courseGroupYear, Student $student): bool

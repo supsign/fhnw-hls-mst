@@ -24,7 +24,22 @@ class PostRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'course_group_id' => [
+                'required_without:course_group_name',
+                'int',
+            ],
+            'course_group_name' => [
+                'required_without:course_group_id',
+                'string',
+            ],
+            'credits_to_pass' => [
+                'nullable',
+                'int',
+            ],
+            'study_field_year_id' => [
+                'required',
+                'int',
+            ],
         ];
     }
 }

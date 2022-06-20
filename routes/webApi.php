@@ -61,7 +61,9 @@ Route::middleware('auth')->group(
         Route::post('faq/{faq}/up', [FrequentlyAskedQuestionController::class, 'moveUp'])->name('webapi.faq.up');
 
         Route::get('courseGroupYears/{courseGroupYear}', [WebApiCourseGroupYearController::class, 'get'])->name('webapi.courseGroupYears.get');
+        Route::delete('courseGroupYears/{courseGroupYear}', [WebApiCourseGroupYearController::class, 'delete'])->name('webapi.courseGroupYears.delete');
         Route::patch('courseGroupYears/{courseGroupYear}', [WebApiCourseGroupYearController::class, 'patch'])->name('webapi.courseGroupYears.patch');
+        Route::post('courseGroupYears', [WebApiCourseGroupYearController::class, 'post'])->name('webapi.courseGroupYears.post');
 
         Route::get('specializationYears/{specializationYear}', [WebApiSpecializationYearController::class, 'get'])->name('webapi.courseGroupYears.get');
         Route::patch('specializationYears/{specializationYear}', [WebApiSpecializationYearController::class, 'patch'])->name('webapi.courseGroupYears.patch');

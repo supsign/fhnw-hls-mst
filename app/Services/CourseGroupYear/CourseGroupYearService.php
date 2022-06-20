@@ -2,6 +2,7 @@
 
 namespace App\Services\CourseGroupYear;
 
+use App\Http\Requests\CourseGroupYear\PostRequest;
 use App\Models\CourseGroupYear;
 use App\Models\Student;
 use App\Services\Base\BaseModelService;
@@ -16,6 +17,13 @@ class CourseGroupYearService extends BaseModelService
     public function __construct(protected CourseGroupYear $model, protected CourseCompletionService $courseCompletionService, protected CourseCourseGroupYearService $courseCourseGroupYearService)
     {
         parent::__construct($model);
+    }
+
+    public function createFromPostRequest(PostRequest $request): CourseGroupYear
+    {
+        dd($request->all());
+
+        return new CourseGroupYear  //::create([]);
     }
 
     public function isSuccessfullyCompleted(CourseGroupYear $courseGroupYear, Student $student): bool

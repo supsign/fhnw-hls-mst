@@ -164,8 +164,13 @@ export default class VueSemesterPicker extends BaseComponent {
                 }
 
                 return semester.start_date.getTime() > now.getTime() - 3024000000; //  that's 5 weeks
-            }).map((semester)=> {
-                if(semester.is_hs && this.course.is_hs|| !semester.is_hs && this.course.is_fs) {
+            }).filter(semester => {
+                if(semester.is_hs && this.course.is_hs || this.course.is_fs && !semester.is_hs ||semester.is_hs && !this.course.is_hs) {
+                    return semester
+                }
+            })
+            .map((semester)=> {
+                if(semester.is_hs && !this.course.is_hs) {
                     semester.is_exam = true
                 }
                 return semester

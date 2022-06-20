@@ -70,8 +70,9 @@ export default class VueAdminCreateCourseGroupYear extends BaseComponent {
         if (this.name) {
             this.courseGroupYear.course_group.name = this.name;
         }
-        this.models.courseGroupYear.post(this.courseGroupYearPostRequest(this.courseGroupYear)).then(res => this.models.courseGroup.add(res.course_group))
-
+        this.models.courseGroupYear.post(this.courseGroupYearPostRequest(this.courseGroupYear))
+        .then(res => this.models.courseGroup.add(res.course_group))
+        .finally(() => this.resetCourseGroupYear())
     }
 
     public resetSelect() {
@@ -79,6 +80,18 @@ export default class VueAdminCreateCourseGroupYear extends BaseComponent {
     }
     public resetName() {
         this.name = '';
+    }
+
+    public resetCourseGroupYear() {
+        this.name = ''
+        this.courseGroupYear = {
+            id: 0,
+            course_group: { id: 0, name: '' },
+            course_group_id: 0,
+            course_course_group_years: [],
+            study_field_year_id: 0,
+            credits_to_pass: null,
+        }
     }
 
     public get isDisabled() {

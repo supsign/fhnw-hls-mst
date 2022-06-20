@@ -95,11 +95,11 @@ export default class VueAdminCreateCourseGroupYear extends BaseComponent {
             study_field_year_id: this.studyFieldYear ? this.studyFieldYear.id : 0,
             credits_to_pass: courseGroupYear.credits_to_pass,
         };
-        console.log(courseGroupYear)
+        console.log(courseGroupYear);
         if (courseGroupYear.course_group.id) {
             return {
                 ...data,
-                course_group_id: courseGroupYear.course_group.id
+                course_group_id: courseGroupYear.course_group.id,
             };
         } else {
             return {

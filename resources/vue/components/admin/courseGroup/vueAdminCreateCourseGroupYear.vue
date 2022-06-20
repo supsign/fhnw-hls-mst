@@ -36,6 +36,8 @@ import VueCard from '../../base/vueCard.vue';
 import VueSelect from '../../form/vueSelect.vue';
 import VueInput from '../../form/vueInput.vue';
 import axios from 'axios';
+import { IStudyFieldYear } from '../../../interfaces/studyFieldYear.interface';
+import { Prop } from 'vue-property-decorator';
 
 @Component({
     components: {
@@ -45,6 +47,10 @@ import axios from 'axios';
     },
 })
 export default class VueAdminCreateCourseGroupYear extends BaseComponent {
+
+    @Prop({ type: Object })
+    public studyFieldYear: IStudyFieldYear;
+    
     public courseGroupYear: ICourseGroupYear = {
         id: 0,
         course_group: { id: 0, name: '' },
@@ -65,8 +71,9 @@ export default class VueAdminCreateCourseGroupYear extends BaseComponent {
         if (this.name) {
             this.courseGroupYear.course_group.name = this.name;
         }
+        console.log(this.courseGroupYearPostRequest(this.courseGroupYear))
         axios
-            .post('/webapi/courseGroupYears', this.courseGroupYear)
+            .post('/webapi/courseGroupYears', this.courseGroupYearPostRequest(this.courseGroupYear))
             .then((res) => console.log(res.data))
             .catch();
     }
@@ -83,6 +90,22 @@ export default class VueAdminCreateCourseGroupYear extends BaseComponent {
             return true;
         }
         return false;
+    }
+
+    public courseGroupYearPostRequest(courseGroupYear: ICourseGroupYear) {
+        const data = { study_field_year_id: this.studyFieldYear ? this.studyFieldYear.id : 0, credits_to_pass: courseGroupYear.credits_to_pass }
+        if(courseGroupYear.id) {
+            return {
+                ...data,
+                course_group_id: courseGroupYear.id
+            }
+        } else {
+            return {
+                ...data,
+                course_group_name: courseGroupYear.course_group.name,
+            }
+        }
+     
     }
 }
 </script>

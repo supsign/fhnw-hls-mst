@@ -6,7 +6,7 @@
             :course-group-year="courseGroupYear"
         />
 
-        <vue-admin-create-course-group-year :study-field-year="studyFieldYear"/>
+        <vue-admin-create-course-group-year :study-field-year="studyFieldYear" />
     </div>
 </template>
 

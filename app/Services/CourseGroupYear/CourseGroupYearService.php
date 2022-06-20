@@ -10,6 +10,7 @@ use App\Services\Base\BaseModelService;
 use App\Services\Base\Traits\UpdateOrCreateTrait;
 use App\Services\Completion\CourseCompletionService;
 use App\Services\CourseCourseGroupYear\CourseCourseGroupYearService;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 class CourseGroupYearService extends BaseModelService
 {
@@ -28,6 +29,8 @@ class CourseGroupYearService extends BaseModelService
             $courseGroup = CourseGroup::create([
                 'name' => $request->safe()->course_group_name,
             ]);
+        } else {
+            throw new UnprocessableEntityHttpException('no course group found');
         }
 
         return CourseGroupYear::create([

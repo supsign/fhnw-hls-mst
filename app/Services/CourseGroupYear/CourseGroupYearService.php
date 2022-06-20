@@ -3,6 +3,7 @@
 namespace App\Services\CourseGroupYear;
 
 use App\Http\Requests\CourseGroupYear\PostRequest;
+use App\Models\CourseGroup;
 use App\Models\CourseGroupYear;
 use App\Models\Student;
 use App\Services\Base\BaseModelService;
@@ -21,9 +22,20 @@ class CourseGroupYearService extends BaseModelService
 
     public function createFromPostRequest(PostRequest $request): CourseGroupYear
     {
-        dd($request->all());
+        if (!empty($request->safe()->course_group_id)) {
+            $courseGroup = CourseGroup::find($request->safe()->course_group_id);
+        } elseif (!empty($request->safe()->course_group_name)) {
+            $courseGroup = CourseGroup::create([
+                'name' => $request->safe()->course_group_name,
+            ]);
+        }
 
-        return new CourseGroupYear;  //::create([]);
+        return CourseGroupYear::create([
+            'amount_to_pass' => $request->safe()->amount_to_pass ?? null,
+            'credits_to_pass' => $request->safe()->credits_to_pass ?? null,
+            'course_group_id' => $courseGroup->id,
+            'study_field_year_id' => $request->safe()->study_field_year_id,
+        ]);
     }
 
     public function isSuccessfullyCompleted(CourseGroupYear $courseGroupYear, Student $student): bool

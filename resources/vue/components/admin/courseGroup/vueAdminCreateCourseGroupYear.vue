@@ -96,7 +96,7 @@ export default class VueAdminCreateCourseGroupYear extends BaseComponent {
         if (courseGroupYear.course_group.id) {
             return {
                 ...data,
-                course_group_id: courseGroupYear.course_group.id
+                course_group_id: courseGroupYear.course_group.id,
             };
         } else {
             return {

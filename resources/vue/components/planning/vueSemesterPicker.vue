@@ -180,6 +180,7 @@ export default class VueSemesterPicker extends BaseComponent {
     public mounted() {
         // @ts-ignore
         this.$refs.modal.focus();
+        
     }
 }
 </script>

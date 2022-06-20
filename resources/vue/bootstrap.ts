@@ -21,7 +21,7 @@ if (token) {
 }
 
 axios.defaults.headers.common = {
-    ' Cache-Control': 'no-cache',
+    'Cache-Control': 'no-cache',
     Pragma: 'no-cache',
     Expires: '0',
     Accept: 'application/json',

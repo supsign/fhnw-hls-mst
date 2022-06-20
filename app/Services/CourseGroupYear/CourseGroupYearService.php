@@ -38,7 +38,7 @@ class CourseGroupYearService extends BaseModelService
             'credits_to_pass' => $request->safe()->credits_to_pass ?? null,
             'course_group_id' => $courseGroup->id,
             'study_field_year_id' => $request->safe()->study_field_year_id,
-        ]);
+        ])->load('courseGroup');
     }
 
     public function isSuccessfullyCompleted(CourseGroupYear $courseGroupYear, Student $student): bool

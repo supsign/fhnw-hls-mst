@@ -63,21 +63,24 @@ export default class VueAdminCreateCourseGroupYear extends BaseComponent {
     public getCourseGroupName(course: ICourseGroup) {
         return course.name;
     }
+
     public getCourseSearchParams(search: string) {
         return { search };
     }
+
     public createCourseGroupYear() {
         if (this.name) {
             this.courseGroupYear.course_group.name = this.name;
         }
         this.models.courseGroupYear.post(this.courseGroupYearPostRequest(this.courseGroupYear))
         .then(res => this.models.courseGroup.add(res.course_group))
-        .finally(() => this.resetCourseGroupYear())
+        .finally(() => this.resetCourseGroupYear()) 
     }
 
     public resetSelect() {
         this.courseGroupYear.course_group = { id: 0, name: '' };
     }
+
     public resetName() {
         this.name = '';
     }

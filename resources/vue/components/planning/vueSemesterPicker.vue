@@ -62,7 +62,7 @@
                             <div v-else class="flex justify-between mx-4 h-full">
                                 <div class="text-center my-auto w-full">
                                     {{ semester.year }} {{ getShortHS(semester) }}
-                                    {{isExam(semester) ? '(Prüfung)' : '' }}
+                                    {{ isExam(semester) ? '(Prüfung)' : '' }}
                                 </div>
                             </div>
                         </div>
@@ -157,22 +157,21 @@ export default class VueSemesterPicker extends BaseComponent {
     }
 
     public get pickableSemsters(): ISemester[] {
-        return this.semesters
-            .filter((semester) => {
-                const now = new Date();
-                if (typeof semester.start_date === 'string') {
-                    semester.start_date = new Date(semester.start_date);
-                }
+        return this.semesters.filter((semester) => {
+            const now = new Date();
+            if (typeof semester.start_date === 'string') {
+                semester.start_date = new Date(semester.start_date);
+            }
 
-                return semester.start_date.getTime() > now.getTime() - 3024000000; //  that's 5 weeks
-            })
+            return semester.start_date.getTime() > now.getTime() - 3024000000; //  that's 5 weeks
+        });
     }
 
     public isExam(semester: ISemester) {
-        if (!this.course.is_fs && !semester.is_hs || !this.course.is_hs && semester.is_hs ) {
-            return true
+        if ((!this.course.is_fs && !semester.is_hs) || (!this.course.is_hs && semester.is_hs)) {
+            return true;
         }
-        return false
+        return false;
     }
     public mounted() {
         // @ts-ignore

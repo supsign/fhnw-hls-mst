@@ -42,6 +42,7 @@ class CourseCompletionService
     public function getCompletionsByStudent(Course $course, Student $student): Collection
     {
         $completions = $student->completions;
+
         return $completions->filter(function ($completion) use ($course) {
             return $course->courseYears->contains($completion->courseYear);
         });
@@ -50,6 +51,7 @@ class CourseCompletionService
     public function courseFailedCompletionsCount(Course $course, Student $student): int
     {
         $completions = $this->getCompletionsByStudent($course, $student);
+
         return $this->completionService->countFailedCompletions($completions);
     }
 

@@ -20,9 +20,9 @@ if (token) {
     axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 }
 
-axios.defaults.headers = {
+axios.defaults.headers.common = {
     'Cache-Control': 'no-cache',
     Pragma: 'no-cache',
     Expires: '0',
-    Accept: ['application/json'],
+    Accept: 'application/json',
 };

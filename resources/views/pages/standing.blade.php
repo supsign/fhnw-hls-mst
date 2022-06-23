@@ -31,9 +31,10 @@
                         @foreach($student->studyFieldYear->courseGroupYears()->with('courses')->get() as $courseGroupYear)
                             <x-student.standing-course-group :student="$student" :courseGroupYear="$courseGroupYear"/>
                         @endforeach
-                        <x-standing.uncounted-completions :student="$student"
-                                                          :studyFieldYear="$student->studyFieldYear"></x-standing.uncounted-completions>
-
+                        <x-standing.uncounted-completions 
+                            :student="$student"
+                            :studyFieldYear="$student->studyFieldYear"
+                        ></x-standing.uncounted-completions>
                     </div>
                 </div>
 

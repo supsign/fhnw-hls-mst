@@ -48,6 +48,13 @@ class CourseCompletionService
         });
     }
 
+    public function courseFailedCompletionsCount(Course $course, Student $student): int
+    {
+        $completions = $this->getCompletionsByStudent($course, $student);
+
+        return $this->completionService->countFailedCompletions($completions);
+    }
+
     public function courseHasFailedCompletions(Course $course, Student $student): bool
     {
         $completions = $this->getCompletionsByStudent($course, $student);

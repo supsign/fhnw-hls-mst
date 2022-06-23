@@ -107,6 +107,13 @@ class CompletionService extends BaseModelService
         return $completion;
     }
 
+    public function countFailedCompletions(Collection $completions): int
+    {
+        return $completions->filter(function (Completion $completion) {
+            return $completion->completion_type_id === 3;
+        })->count();
+    }
+
     public function hasSuccessfulCompletions(Collection $completions): bool
     {
         $successfulCompletions = $completions->filter(function (Completion $completion) {
@@ -118,14 +125,6 @@ class CompletionService extends BaseModelService
 
     public function hasFailedCompletions(Collection $completions): bool
     {
-        $failedCompletions = $completions->filter(function (Completion $completion) {
-            return $completion->completion_type_id === 3;
-        });
-
-        if ($failedCompletions->count() !== 0) {
-            return true;
-        }
-
-        return false;
+        return $this->countFailedCompletions($completions);
     }
 }

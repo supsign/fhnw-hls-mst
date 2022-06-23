@@ -7,7 +7,7 @@
         @foreach($studyFields as $studyField)
             <x-app.card>
                 <x-slot name="title">
-                    {{$studyField->name}}
+                    {{ $studyField->name }}
                 </x-slot>
                 <div class="space-y-4">
                     <div class="space-y-2">
@@ -16,10 +16,7 @@
                                 <a href="{{route('admin.studyFieldYears.show', [$studyFieldYear])}}"
                                    class="text-blue-500"
                                 >
-                                    <div class="flex flex-row">
-                                        <div>Start im</div>
-                                        <div>{{$studyFieldYear->beginSemester->year}}</div>
-                                    </div>
+                                    <div>Start im {{ $studyFieldYear->beginSemester->year }}</div>
                                 </a>
                             </div>
                         @endforeach
@@ -33,9 +30,7 @@
                                 <a href="{{route('admin.assessments.showOne', [$assessment])}}"
                                    class="text-blue-500"
                                 >
-
-                                    <div>{{$assessment->name}}</div>
-
+                                    <div>{{ $assessment->name }}</div>
                                 </a>
                             </div>
                         @endforeach
@@ -50,7 +45,7 @@
                                    class="text-blue-500"
                                 >
 
-                                    <div>{{$recommendation->name}}</div>
+                                    <div>{{ $recommendation->name }}</div>
 
                                 </a>
                             </div>

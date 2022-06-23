@@ -21,15 +21,14 @@
                     <div
                         v-if="
                             !editMode &&
-                            (!courseGroupYear.course_course_group_years ||
-                                !courseGroupYear.course_course_group_years.length)
+                            !courseCourseGroupYears.length
                         "
                         class="cursor-pointer"
                         @click="deleteCourseYear"
                     >
                         <i aria-hidden="true" class="far fa-trash"></i>
                     </div>
-                    <div v-if="editMode" class="flex felx-row space-x-2">
+                    <div v-if="editMode" class="flex flex-row gap-x-10">
                         <div class="cursor-pointer" @click="cancel">
                             <i aria-hidden="true" class="far fa-times"></i>
                         </div>

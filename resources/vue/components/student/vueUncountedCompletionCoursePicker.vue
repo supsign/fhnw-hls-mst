@@ -69,9 +69,11 @@ export default class VueSemesterPicker extends BaseComponent {
 
     public async save(courseGroup: ICourseGroup) {
         try {
-            await axios.post(`/webapi/completions/${this.completion.id}/addtocoursegroup`, { course_group_id: courseGroup.id });
-            window.location.reload()
-        } catch(error) {}
+            await axios.post(`/webapi/completions/${this.completion.id}/addtocoursegroup`, {
+                course_group_id: courseGroup.id,
+            });
+            window.location.reload();
+        } catch (error) {}
     }
 
     public mounted() {

@@ -5,6 +5,11 @@
 
 @elseif($icon === 2)
     <div class="my-auto text-lg flex-none">
+        <i class="far fa-exclamation-circle" aria-hidden="true"></i>
+    </div>
+
+@elseif($icon === 4)
+    <div class="my-auto text-lg flex-none">
         <i class="far fa-times-circle" aria-hidden="true"></i>
     </div>
 @else

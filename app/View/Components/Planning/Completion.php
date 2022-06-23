@@ -40,6 +40,10 @@ class Completion extends Component
         if ($this->courseCompletionService->courseHasFailedCompletions($course, $student)) {
             $this->icon = 2;
 
+            if ($this->courseCompletionService->courseFailedCompletionsCount($course, $student) > 1) {
+                $this->icon = 4;
+            }
+
             return;
         }
 

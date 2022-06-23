@@ -20,7 +20,9 @@
                     <div>
                         <div class="text-center text-lg mb-5">Modulgruppe auswählen</div>
                         <div class="grid grid-cols-1 gap-4 lg:flex-none sm:items-start">
-                            <button v-for="(courseGroup, index) in courseGroups" :key="index"
+                            <button
+                                v-for="(courseGroup, index) in courseGroups"
+                                :key="index"
                                 class="bg-gray-100 w-full h-8 text-center leading-loose cursor-pointer"
                                 @click.stop="() => save(courseGroup)"
                             >
@@ -41,20 +43,18 @@
 <script lang="ts">
 import { Component, Emit, Prop, Watch } from 'vue-property-decorator';
 import BaseComponent from '../base/baseComponent';
-import {IStudent} from "../../interfaces/student.interface";
-import {ICourseGroup} from "../../store/courseGroup/courseGroup.interface";
-import VueForm from "../form/vueForm.vue";
-import {ICompletion} from "../../interfaces/completion.interface";
-import axios from "axios";
+import { IStudent } from '../../interfaces/student.interface';
+import { ICourseGroup } from '../../store/courseGroup/courseGroup.interface';
+import VueForm from '../form/vueForm.vue';
+import { ICompletion } from '../../interfaces/completion.interface';
+import axios from 'axios';
 
 @Component({
-    components: {VueForm}
+    components: { VueForm },
 })
 export default class VueSemesterPicker extends BaseComponent {
-
     @Prop({ type: Object })
     public student: IStudent;
-
 
     @Prop({ type: Object })
     public completion: ICompletion;
@@ -62,14 +62,13 @@ export default class VueSemesterPicker extends BaseComponent {
     @Prop({ type: Array })
     public courseGroups: ICourseGroup[];
 
-
     @Emit()
     public cancel() {
         return;
     }
 
     public save(courseGroup: ICourseGroup) {
-        axios.post(`/webapi/completions/${this.completion.id}/addtocoursegroup`,{course_group_id: courseGroup.id})
+        axios.post(`/webapi/completions/${this.completion.id}/addtocoursegroup`, { course_group_id: courseGroup.id });
     }
 
     public mounted() {

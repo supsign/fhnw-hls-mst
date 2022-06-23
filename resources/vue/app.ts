@@ -50,8 +50,7 @@ import { crossQualificationStore } from './store/crossQualification/crossQualifi
 import { assessmentCourseStore } from './store/assessmentCourse/assessmentCourse.store';
 import VueAdminAssessment from './components/admin/assessment/vueAdminAssessment.vue';
 import VueAdminCourseContentEdit from './components/admin/vueAdminCourseContentEdit.vue';
-import VueUncountedCompletionCourse from './components/student/vueUncountedCompletionCourse.vue'
-
+import VueUncountedCompletionCourse from './components/student/vueUncountedCompletionCourse.vue';
 
 //@ts-ignore
 import VueMask from 'v-mask';
@@ -128,7 +127,7 @@ const app = new Vue({
         VueAdminRecommendation,
         VueAdminStudyFieldYear,
         VueAdminCourseContentEdit,
-        VueUncountedCompletionCourse
+        VueUncountedCompletionCourse,
     },
     store,
 });

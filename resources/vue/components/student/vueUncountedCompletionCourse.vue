@@ -7,32 +7,35 @@
                 </div>
             </div>
             <div>
-                {{completion.course_year.course.name}}
+                {{ completion.course_year.course.name }}
             </div>
             <div class="w-8">
-                <div   class="my-auto text-lg flex-none cursor-pointer" @click.stop="openPicker">
+                <div class="my-auto text-lg flex-none cursor-pointer" @click.stop="openPicker">
                     <i class="fas fa-link" aria-hidden="true"></i>
                 </div>
             </div>
         </div>
-        <vue-uncounted-completion-course-picker v-if="pickerIsOpen" :student="student" :completion="completion" :course-groups="courseGroups" />
+        <vue-uncounted-completion-course-picker
+            v-if="pickerIsOpen"
+            :student="student"
+            :completion="completion"
+            :course-groups="courseGroups"
+        />
     </div>
-
 </template>
 
 <script lang="ts">
-
-import {Component, Emit, Prop} from "vue-property-decorator";
-import BaseComponent from "../base/baseComponent";
-import {IStudent} from "../../interfaces/student.interface";
-import {ICourse} from "../../interfaces/course.interface";
-import VueUncountedCompletionCoursePicker from "./vueUncountedCompletionCoursePicker.vue";
-import {ISemester} from "../../interfaces/semester.interface";
-import {ICourseGroup} from "../../store/courseGroup/courseGroup.interface";
-import {ICompletion} from "../../interfaces/completion.interface";
+import { Component, Emit, Prop } from 'vue-property-decorator';
+import BaseComponent from '../base/baseComponent';
+import { IStudent } from '../../interfaces/student.interface';
+import { ICourse } from '../../interfaces/course.interface';
+import VueUncountedCompletionCoursePicker from './vueUncountedCompletionCoursePicker.vue';
+import { ISemester } from '../../interfaces/semester.interface';
+import { ICourseGroup } from '../../store/courseGroup/courseGroup.interface';
+import { ICompletion } from '../../interfaces/completion.interface';
 
 @Component({
-    components: {VueUncountedCompletionCoursePicker}
+    components: { VueUncountedCompletionCoursePicker },
 })
 export default class VueUncountedCompletionCourse extends BaseComponent {
     @Prop({ type: Object })

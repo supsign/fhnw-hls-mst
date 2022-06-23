@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(
     function () {
-        Route::put('completions/{completion}/addtocoursgroup', [CompletionController::class, 'addToCourseGroup'])->name('webapi.completion.addToCourseGroup');
+        Route::post('completions/{completion}/addtocoursgroup', [CompletionController::class, 'addToCourseGroup'])->name('webapi.completion.addToCourseGroup');
 
         Route::patch('courses/{course}', [CourseController::class, 'patch'])->name('webapi.course.patch');
         Route::get('courses', [CourseController::class, 'search'])->name('webapi.course.search');

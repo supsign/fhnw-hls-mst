@@ -2,6 +2,7 @@
 
 namespace App\Services\Completion;
 
+use App\Http\Requests\Completion\AddToCourseGroupRequest;
 use App\Models\Completion;
 use App\Models\Course;
 use App\Models\CourseYear;
@@ -27,19 +28,31 @@ class CompletionService extends BaseModelService
         parent::__construct($model);
     }
 
+    public function addToCourseGroup(Completion $completion, AddToCourseGroupRequest $request): Completion
+    {
+        $completion->update([
+            'course_group_id' => $request->safe()->course_group_id ?? null
+        ]);
+
+        return $completion;
+    }
+
     public function createUpdateOrDeleteOnEventoIdAsAttempt(int $eventoId, Student $student, CourseYear $courseYear, int $credits, string $status, string $grade = ''): ?Completion
     {
         switch (true) {
             case empty($grade):
                 $completionTypeId = 1;
                 break;
+
             case $grade === 'erfüllt' || (float)$grade >= 4 :
                 $completionTypeId = 2;
                 $this->attachSkillsToStudent($student, $courseYear);
                 break;
+
             case $grade === 'nicht erfüllt' || (float)$grade < 4:
                 $completionTypeId = 3;
                 break;
+
             default:
                 $status = '';
         }

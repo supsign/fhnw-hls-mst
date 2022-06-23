@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 /**
  * @mixin IdeHelperCompletion
  */
@@ -9,22 +11,27 @@ class Completion extends BaseModel
 {
     protected $appends = ['course_id'];
 
-    public function courseYear()
+    public function courseGroup(): BelongsTo
+    {
+        return $this->belongsTo(CourseGroup::class);
+    }
+
+    public function courseYear(): BelongsTo
     {
         return $this->belongsTo(CourseYear::class);
     }
 
-    public function student()
+    public function student(): BelongsTo
     {
         return $this->belongsTo(Student::class);
     }
 
-    public function completionType()
+    public function completionType(): BelongsTo
     {
         return $this->belongsTo(CompletionType::class);
     }
 
-    public function getCourseIdAttribute()
+    public function getCourseIdAttribute(): int
     {
         return $this->courseYear->course_id;
     }

@@ -19,10 +19,7 @@
                         <i aria-hidden="true" class="far fa-edit"></i>
                     </div>
                     <div
-                        v-if="
-                            !editMode &&
-                            !courseCourseGroupYears.length
-                        "
+                        v-if="!editMode && !courseCourseGroupYears.length"
                         class="cursor-pointer"
                         @click="deleteCourseYear"
                     >

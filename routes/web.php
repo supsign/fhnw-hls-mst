@@ -12,6 +12,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MentorPlanningController;
 use App\Http\Controllers\PlanningController;
 use App\Http\Controllers\StandingController;
+use App\Models\Student;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,6 +25,16 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+        Route::get('test', function() {
+
+            $student = Student::find(584);
+
+            dump(
+                $student->studyField?->name,
+            );
+
+        });
 
 Route::middleware('web')->group(
     function () {

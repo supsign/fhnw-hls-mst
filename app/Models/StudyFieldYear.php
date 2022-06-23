@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 
 /**
  * @mixin IdeHelperStudyFieldYear
@@ -83,7 +84,7 @@ class StudyFieldYear extends BaseModel
     public function courseGroups(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->courseGroupYears->pluck('courseGroup')->values()
+            get: fn (): Collection => $this->courseGroupYears->pluck('courseGroup')->values(),
         );
     }
 

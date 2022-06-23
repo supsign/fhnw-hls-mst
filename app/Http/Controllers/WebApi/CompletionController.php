@@ -9,11 +9,11 @@ use App\Services\Completion\CompletionService;
 
 class CompletionController extends Controller
 {
-    public function __construct(CompletionService $completionService)
+    public function __construct(protected CompletionService $completionService)
     {}
 
     public function addToCourseGroup(Completion $completion, AddToCourseGroupRequest $request): Completion
     {
-        return $this->completionService->addToCourseGroup($request);
+        return $this->completionService->addToCourseGroup($completion,$request);
     }
 }

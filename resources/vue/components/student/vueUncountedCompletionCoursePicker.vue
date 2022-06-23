@@ -41,7 +41,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Emit, Prop, Watch } from 'vue-property-decorator';
+import { Component, Emit, Prop } from 'vue-property-decorator';
 import BaseComponent from '../base/baseComponent';
 import { IStudent } from '../../interfaces/student.interface';
 import { ICourseGroup } from '../../store/courseGroup/courseGroup.interface';
@@ -67,8 +67,11 @@ export default class VueSemesterPicker extends BaseComponent {
         return;
     }
 
-    public save(courseGroup: ICourseGroup) {
-        axios.post(`/webapi/completions/${this.completion.id}/addtocoursegroup`, { course_group_id: courseGroup.id });
+    public async save(courseGroup: ICourseGroup) {
+        try {
+            await axios.post(`/webapi/completions/${this.completion.id}/addtocoursegroup`, { course_group_id: courseGroup.id });
+            window.location.reload()
+        } catch(error) {}
     }
 
     public mounted() {

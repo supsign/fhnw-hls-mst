@@ -9,6 +9,7 @@ use App\Services\Base\BaseModelService;
 use App\Services\Base\Traits\UpdateOrCreateTrait;
 use App\Services\Completion\CourseCompletionService;
 use App\Services\CourseCourseGroupYear\CourseCourseGroupYearService;
+use Illuminate\Support\Collection;
 
 class CourseGroupYearService extends BaseModelService
 {
@@ -35,12 +36,8 @@ class CourseGroupYearService extends BaseModelService
             $credits += $this->courseCompletionService->getCredits($course, $student);
         }
 
-        $otherCompletions = $student
-            ->completions
-            ->filter(fn (Completion $completion) => $completion->course_group_id === $courseGroupYear->course_group_id && in_array($completion->completion_type_id, [2, 4]));
-
-        foreach ($otherCompletions AS $otherCompletion) {
-            $credits += $otherCompletion->credits;
+        foreach ($this->getFurtherCompletions($courseGroupYear, $student) AS $furtherCompletion) {
+            $credits += $furtherCompletion->credits;
         }
 
         return $credits;
@@ -56,6 +53,10 @@ class CourseGroupYearService extends BaseModelService
             if ($this->courseCompletionService->courseHasFailedCompletions($course, $student)) {
                 return true;
             }
+
+            if ($this->getFurtherCompletions($courseGroupYear, $student)->count()) {
+                return true;
+            }
         }
 
         return false;
@@ -67,5 +68,12 @@ class CourseGroupYearService extends BaseModelService
         $courseGroupYear->save();
 
         return $courseGroupYear;
+    }
+
+    protected function getFurtherCompletions(CourseGroupYear $courseGroupYear, Student $student): Collection
+    {
+        return $student
+            ->completions
+            ->filter(fn (Completion $completion) => $completion->course_group_id === $courseGroupYear->course_group_id && in_array($completion->completion_type_id, [2, 4]));
     }
 }

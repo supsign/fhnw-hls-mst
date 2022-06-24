@@ -19,8 +19,8 @@ class StandingCourseGroup extends Component
         public Student $student,
         protected CourseGroupYearService $courseGroupYearService
     ) {
-        $this->completed = $this->courseGroupYearService->isSuccessfullyCompleted($this->courseGroupYear, $this->student);
         $this->completions = $this->getCompletions();
+        $this->completed = $this->courseGroupYearService->isSuccessfullyCompleted($this->courseGroupYear, $this->student);
         $this->reachedCredits = $this->courseGroupYearService->getCredits($this->courseGroupYear, $this->student);
     }
 

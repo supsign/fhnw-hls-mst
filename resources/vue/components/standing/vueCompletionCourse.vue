@@ -1,7 +1,7 @@
 <template>
     <div class="mb-4">
-        <div class="flex">
-            <div class="w-8">
+        <div class="flex gap-3">
+            <div>
                 <div class="my-auto text-lg flex-none">
                     <i class="far fa-check-circle" aria-hidden="true"></i>
                 </div>
@@ -9,7 +9,7 @@
             <div>
                 {{ completion.course_year.course.name }}
             </div>
-            <div class="w-8">
+            <div>
                 <div class="my-auto text-lg flex-none cursor-pointer" @click.stop="remove()">
                     <i class="far fa-times" aria-hidden="true"></i>
                 </div>

@@ -10,20 +10,7 @@
     @endforeach
 
     @foreach ($completions AS $completion)
-        <div class="mb-4">
-            <div class="flex">
-                <div class="w-8">
-                    <x-planning.completion 
-                        :student="$student"
-                        :course="$completion->courseYear->course"
-                    />
-                </div>
-                <div>
-                    {{ $completion->courseYear->course->name }}
-                </div>
-                <div></div>
-            </div>
-        </div>
+        <vue-completion-course :student="{{$student}}" :completion="{{$completion}}" />
     @endforeach
 
     <x-slot name="footer">

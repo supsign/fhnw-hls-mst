@@ -20,6 +20,7 @@
             :student="student"
             :completion="completion"
             :course-groups="courseGroups"
+            @cancel="cancel"
         />
     </div>
 </template>
@@ -28,7 +29,6 @@
 import { Component, Emit, Prop } from 'vue-property-decorator';
 import BaseComponent from '../base/baseComponent';
 import { IStudent } from '../../interfaces/student.interface';
-import { ICourse } from '../../interfaces/course.interface';
 import VueUncountedCompletionCoursePicker from './vueUncountedCompletionCoursePicker.vue';
 import { ISemester } from '../../interfaces/semester.interface';
 import { ICourseGroup } from '../../store/courseGroup/courseGroup.interface';
@@ -52,9 +52,9 @@ export default class VueUncountedCompletionCourse extends BaseComponent {
     public openPicker() {
         this.pickerIsOpen = true;
     }
-    @Emit()
+
     public cancel() {
-        return;
+        this.pickerIsOpen = false;
     }
 
     public select(semester: ISemester) {

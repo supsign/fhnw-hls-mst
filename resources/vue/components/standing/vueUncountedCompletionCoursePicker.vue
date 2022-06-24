@@ -23,7 +23,7 @@
                             <button
                                 v-for="(courseGroup, index) in courseGroups"
                                 :key="index"
-                                class="bg-gray-100 w-full h-8 text-center leading-loose cursor-pointer"
+                                class="bg-gray-100 hover:bg-gray-200 w-full h-8 text-center leading-loose cursor-pointer"
                                 @click.stop="() => save(courseGroup)"
                             >
                                 <div class="flex justify-between mx-4 h-full">
@@ -33,6 +33,7 @@
                                 </div>
                             </button>
                         </div>
+
                     </div>
                 </div>
             </div>

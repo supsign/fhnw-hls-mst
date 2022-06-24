@@ -16,8 +16,8 @@ class CourseGroupYearService extends BaseModelService
     use UpdateOrCreateTrait;
 
     public function __construct(
-        protected CourseGroupYear $model, 
-        protected CourseCompletionService $courseCompletionService, 
+        protected CourseGroupYear $model,
+        protected CourseCompletionService $courseCompletionService,
         protected CourseCourseGroupYearService $courseCourseGroupYearService
     ) {
         parent::__construct($model);
@@ -36,7 +36,7 @@ class CourseGroupYearService extends BaseModelService
             $credits += $this->courseCompletionService->getCredits($course, $student);
         }
 
-        foreach ($this->getFurtherCompletions($courseGroupYear, $student) AS $furtherCompletion) {
+        foreach ($this->getFurtherCompletions($courseGroupYear, $student) as $furtherCompletion) {
             $credits += $furtherCompletion->credits;
         }
 

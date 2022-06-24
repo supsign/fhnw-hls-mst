@@ -42,7 +42,7 @@ class StudentCreditService
             $student
                 ->completions
                 ->filter(fn (Completion $completion) => $completion->course_group_id && in_array($completion->completion_type_id, $this->passedCompletionTypes))
-            AS $otherCompletions
+            as $otherCompletions
         ) {
             $credits += $otherCompletions->credits;
         }

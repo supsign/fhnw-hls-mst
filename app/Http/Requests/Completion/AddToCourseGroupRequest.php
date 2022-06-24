@@ -27,7 +27,7 @@ class AddToCourseGroupRequest extends FormRequest
             'course_group_id' => [
                 'nullable',
                 'int',
-            ]
+            ],
         ];
     }
 }

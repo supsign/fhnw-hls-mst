@@ -56,16 +56,5 @@ export default class VueUncountedCompletionCourse extends BaseComponent {
     public cancel() {
         this.pickerIsOpen = false;
     }
-
-    public select(semester: ISemester) {
-        this.$emit('select', semester);
-    }
-
-    public remove(semester: ISemester) {
-        if (!semester) {
-            return;
-        }
-        this.$emit('remove');
-    }
 }
 </script>

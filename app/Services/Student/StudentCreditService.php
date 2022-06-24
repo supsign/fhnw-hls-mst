@@ -2,10 +2,13 @@
 
 namespace App\Services\Student;
 
+use App\Models\Completion;
 use App\Models\Student;
 
 class StudentCreditService
 {
+    protected array $passedCompletionTypes = [2, 4];
+
     public function getCreditsAsString(Student $student = null): string
     {
         if (!$student || !$student->completions()->count()) {
@@ -23,22 +26,25 @@ class StudentCreditService
             return $credits;
         }
 
-        /** @var $completion Completion * */
         foreach ($student->completions as $completion) {
             if (!$student->studyFieldYear->courses->contains($completion->courseYear->course)) {
                 continue;
             }
 
-            // bestanden
-            if ($completion->completion_type_id === 2) {
-                $credits += $completion->credits;
+            if (!in_array($completion->completion_type_id, $this->passedCompletionTypes)) {
                 continue;
             }
 
-            // angerechnet
-            if ($completion->completion_type_id === 4) {
-                $credits += $completion->credits;
-            }
+            $credits += $completion->credits;
+        }
+
+        foreach (
+            $student
+                ->completions
+                ->filter(fn (Completion $completion) => $completion->course_group_id && in_array($completion->completion_type_id, $this->passedCompletionTypes))
+            as $otherCompletions
+        ) {
+            $credits += $otherCompletions->credits;
         }
 
         return $credits;

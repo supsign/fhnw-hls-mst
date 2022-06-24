@@ -25,10 +25,8 @@ class CourseCompletionService
 
     public function getSuccessfulCompletionsByStudent(Course $course, Student $student): Collection
     {
-        $completions = $student->completions()->whereIn('completion_type_id', [2, 4])->with('courseYear')->get();
-
-        return $completions->filter(function ($completion) use ($course) {
-            return $course->courseYears->contains($completion->courseYear);
+        return $student->completions->filter(function ($completion) use ($course) {
+            return in_array($completion->completion_type_id, [2, 4]) && $course->courseYears->contains($completion->courseYear);
         });
     }
 

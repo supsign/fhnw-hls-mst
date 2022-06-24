@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\WebApi\CompletionController;
 use App\Http\Controllers\WebApi\CourseController;
 use App\Http\Controllers\WebApi\CoursePlanningController;
 use App\Http\Controllers\WebApi\CourseYearController;
@@ -24,6 +25,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(
     function () {
+        Route::post('completions/{completion}/addtocoursegroup', [CompletionController::class, 'addToCourseGroup'])->name('webapi.completion.addToCourseGroup');
+
         Route::patch('courses/{course}', [CourseController::class, 'patch'])->name('webapi.course.patch');
         Route::get('courses', [CourseController::class, 'search'])->name('webapi.course.search');
 

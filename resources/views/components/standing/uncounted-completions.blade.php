@@ -3,8 +3,10 @@
         Weitere abgeschlossene Module
     </x-slot>
     @foreach($completions as $completion)
-        <x-student.standing-course :student="$student" :course="$completion->courseYear->course"/>
+        <vue-uncounted-completion-course
+            :student="{{ $student }}"
+            :completion="{{ $completion }}"
+            :course-groups="{{ $student->studyFieldYear?->courseGroups }}"
+        ></vue-uncounted-completion-course>
     @endforeach
-
-
 </x-app.card>

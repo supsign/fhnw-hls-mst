@@ -2,6 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
+
 /**
  * @mixin IdeHelperStudyFieldYear
  */
@@ -12,27 +17,27 @@ class StudyFieldYear extends BaseModel
         return new StudyFieldYearCollection($models);
     }
 
-    public function assessment()
+    public function assessment(): BelongsTo
     {
         return $this->belongsTo(Assessment::class);
     }
 
-    public function beginSemester()
+    public function beginSemester(): BelongsTo
     {
         return $this->belongsTo(Semester::class, 'begin_semester_id');
     }
 
-    public function originStudyFieldYear()
+    public function originStudyFieldYear(): BelongsTo
     {
         return $this->belongsTo(self::class, 'origin_study_field_year_id');
     }
 
-    public function studyField()
+    public function studyField(): BelongsTo
     {
         return $this->belongsTo(StudyField::class);
     }
 
-    public function recommendation()
+    public function recommendation(): BelongsTo
     {
         return $this->belongsTo(Recommendation::class);
     }
@@ -42,7 +47,7 @@ class StudyFieldYear extends BaseModel
         return $this->specializationYears()->with('courseSpecializationYears')->get()->pluck('courseSpecializationYears')->flatten(1)->unique();
     }
 
-    public function specializationYears()
+    public function specializationYears(): HasMany
     {
         return $this->hasMany(SpecializationYear::class);
     }
@@ -54,7 +59,7 @@ class StudyFieldYear extends BaseModel
         return $blub;
     }
 
-    public function crossQualificationYears()
+    public function crossQualificationYears(): HasMany
     {
         return $this->hasMany(CrossQualificationYear::class);
     }
@@ -76,7 +81,14 @@ class StudyFieldYear extends BaseModel
         return $courseQuery->find($courseIds);
     }
 
-    public function courseGroupYears()
+    public function courseGroups(): Attribute
+    {
+        return Attribute::make(
+            get: fn (): Collection => $this->courseGroupYears->pluck('courseGroup')->values(),
+        );
+    }
+
+    public function courseGroupYears(): HasMany
     {
         return $this->hasMany(CourseGroupYear::class);
     }

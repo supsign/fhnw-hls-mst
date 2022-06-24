@@ -36,7 +36,6 @@ import { ICompletion } from '../../interfaces/completion.interface';
 @Component({
     components: { VueUncountedCompletionCoursePicker },
 })
-
 export default class VueUncountedCompletionCourse extends BaseComponent {
     @Prop({ type: Object })
     public student: IStudent;

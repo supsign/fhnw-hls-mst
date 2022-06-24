@@ -19,8 +19,9 @@ class StandingCourseGroup extends Component
         public Student $student,
         protected CourseGroupYearService $courseGroupYearService
     ) {
+        $this->completed = $this->courseGroupYearService->isSuccessfullyCompleted($this->courseGroupYear, $this->student);
         $this->completions = $this->getCompletions();
-        $this->reachedCredits = $this->getCredit();
+        $this->reachedCredits = $this->courseGroupYearService->getCredits($this->courseGroupYear, $this->student);
     }
 
     public function render()
@@ -40,18 +41,5 @@ class StandingCourseGroup extends Component
         ])->where([
             'course_group_id' => $this->courseGroupYear->course_group_id,
         ])->get();
-    }
-
-    protected function getCredit(): int
-    {
-        $credits = $this->courseGroupYearService->getCredits($this->courseGroupYear, $this->student);
-
-        foreach ($this->completions AS $completion) {
-            $credits += $completion->credits;
-        }
-
-        $this->completed = $credits >= $this->courseGroupYear->credits_to_pass;
-
-        return $credits;   
     }
 }

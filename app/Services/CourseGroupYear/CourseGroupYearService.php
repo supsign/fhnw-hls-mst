@@ -31,6 +31,16 @@ class CourseGroupYearService extends BaseModelService
             $credits += $this->courseCompletionService->getCredits($course, $student);
         }
 
+        $otherCompletions = $student
+            ->completions()
+            ->whereNotNull('course_group_id')
+            ->whereIn('completion_type_id', [2, 4])
+            ->get();
+
+        foreach ($otherCompletions AS $otherCompletion) {
+            $credits += $otherCompletion->credits;
+        }
+
         return $credits;
     }
 

@@ -33,7 +33,7 @@ class CourseGroupYearService extends BaseModelService
 
         $otherCompletions = $student
             ->completions()
-            ->whereNotNull('course_group_id')
+            ->where('course_group_id', $courseGroupYear->course_group_id)
             ->whereIn('completion_type_id', [2, 4])
             ->get();
 

@@ -31,7 +31,7 @@ class CompletionService extends BaseModelService
     public function addToCourseGroup(Completion $completion, AddToCourseGroupRequest $request): Completion
     {
         $completion->update([
-            'course_group_id' => $request->safe()->course_group_id ?? null
+            'course_group_id' => $request->safe()->course_group_id ?? null,
         ]);
 
         return $completion;

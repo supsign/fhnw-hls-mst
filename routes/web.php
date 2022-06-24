@@ -26,14 +26,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-        Route::get('test', function() {
-
+        Route::get('test', function () {
             $student = Student::find(584);
 
             dump(
                 $student->studyField?->name,
             );
-
         });
 
 Route::middleware('web')->group(

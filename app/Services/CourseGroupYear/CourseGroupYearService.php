@@ -2,6 +2,7 @@
 
 namespace App\Services\CourseGroupYear;
 
+use App\Models\Completion;
 use App\Models\CourseGroupYear;
 use App\Models\Student;
 use App\Services\Base\BaseModelService;
@@ -13,8 +14,11 @@ class CourseGroupYearService extends BaseModelService
 {
     use UpdateOrCreateTrait;
 
-    public function __construct(protected CourseGroupYear $model, protected CourseCompletionService $courseCompletionService, protected CourseCourseGroupYearService $courseCourseGroupYearService)
-    {
+    public function __construct(
+        protected CourseGroupYear $model, 
+        protected CourseCompletionService $courseCompletionService, 
+        protected CourseCourseGroupYearService $courseCourseGroupYearService
+    ) {
         parent::__construct($model);
     }
 
@@ -32,10 +36,8 @@ class CourseGroupYearService extends BaseModelService
         }
 
         $otherCompletions = $student
-            ->completions()
-            ->where('course_group_id', $courseGroupYear->course_group_id)
-            ->whereIn('completion_type_id', [2, 4])
-            ->get();
+            ->completions
+            ->filter(fn (Completion $completion) => $completion->course_group_id === $courseGroupYear->course_group_id && in_array($completion->completion_type_id, [2, 4]));
 
         foreach ($otherCompletions AS $otherCompletion) {
             $credits += $otherCompletion->credits;

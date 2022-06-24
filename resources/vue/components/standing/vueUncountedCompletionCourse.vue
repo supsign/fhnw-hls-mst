@@ -26,17 +26,17 @@
 </template>
 
 <script lang="ts">
-import { Component, Emit, Prop } from 'vue-property-decorator';
+import { Component, Prop } from 'vue-property-decorator';
 import BaseComponent from '../base/baseComponent';
 import { IStudent } from '../../interfaces/student.interface';
 import VueUncountedCompletionCoursePicker from './vueUncountedCompletionCoursePicker.vue';
-import { ISemester } from '../../interfaces/semester.interface';
 import { ICourseGroup } from '../../store/courseGroup/courseGroup.interface';
 import { ICompletion } from '../../interfaces/completion.interface';
 
 @Component({
     components: { VueUncountedCompletionCoursePicker },
 })
+
 export default class VueUncountedCompletionCourse extends BaseComponent {
     @Prop({ type: Object })
     public student: IStudent;

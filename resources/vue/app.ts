@@ -51,7 +51,7 @@ import { assessmentCourseStore } from './store/assessmentCourse/assessmentCourse
 import VueAdminAssessment from './components/admin/assessment/vueAdminAssessment.vue';
 import VueAdminCourseContentEdit from './components/admin/vueAdminCourseContentEdit.vue';
 import VueUncountedCompletionCourse from './components/standing/vueUncountedCompletionCourse.vue';
-import VueCompletionCourse from "./components/standing/vueCompletionCourse.vue";
+import VueCompletionCourse from './components/standing/vueCompletionCourse.vue';
 
 //@ts-ignore
 import VueMask from 'v-mask';
@@ -129,7 +129,7 @@ const app = new Vue({
         VueAdminStudyFieldYear,
         VueAdminCourseContentEdit,
         VueUncountedCompletionCourse,
-        VueCompletionCourse
+        VueCompletionCourse,
     },
     store,
 });

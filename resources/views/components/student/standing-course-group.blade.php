@@ -9,6 +9,23 @@
         <x-student.standing-course :student="$student" :course="$course"/>
     @endforeach
 
+    @foreach ($completions AS $completion)
+        <div class="mb-4">
+            <div class="flex">
+                <div class="w-8">
+                    <x-planning.completion 
+                        :student="$student"
+                        :course="$completion->courseYear->course"
+                    />
+                </div>
+                <div>
+                    {{ $completion->courseYear->course->name }}
+                </div>
+                <div></div>
+            </div>
+        </div>
+    @endforeach
+
     <x-slot name="footer">
         <div class="flex justify-end">
             <div>Total: {{ $reachedCredits }}/{{ $courseGroupYear->credits_to_pass }}</div>

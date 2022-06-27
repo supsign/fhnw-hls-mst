@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\CourseGroupYear;
+namespace App\Http\Requests\CourseGroup;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PatchCourseGroupYearRequest extends FormRequest
+class PatchRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class PatchCourseGroupYearRequest extends FormRequest
     public function rules()
     {
         return [
-            'credits_to_pass' => 'int|nullable',
+            //
         ];
     }
 }

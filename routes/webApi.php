@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\WebApi\CompletionController;
 use App\Http\Controllers\WebApi\CourseController;
+use App\Http\Controllers\WebApi\CourseGroupController;
 use App\Http\Controllers\WebApi\CoursePlanningController;
 use App\Http\Controllers\WebApi\CourseYearController;
 use App\Http\Controllers\WebApi\FrequentlyAskedQuestionController;
@@ -29,6 +30,8 @@ Route::middleware('auth')->group(
 
         Route::patch('courses/{course}', [CourseController::class, 'patch'])->name('webapi.course.patch');
         Route::get('courses', [CourseController::class, 'search'])->name('webapi.course.search');
+
+        Route::get('coursegroups', [CourseGroupController::class, 'getAll'])->name('webapi.courseGroup.getAll');
 
         Route::patch('courseyears/{courseYear}', [CourseYearController::class, 'patch'])->name('webapi.courseYear.patch');
 
@@ -61,7 +64,9 @@ Route::middleware('auth')->group(
         Route::post('faq/{faq}/up', [FrequentlyAskedQuestionController::class, 'moveUp'])->name('webapi.faq.up');
 
         Route::get('courseGroupYears/{courseGroupYear}', [WebApiCourseGroupYearController::class, 'get'])->name('webapi.courseGroupYears.get');
+        Route::delete('courseGroupYears/{courseGroupYear}', [WebApiCourseGroupYearController::class, 'delete'])->name('webapi.courseGroupYears.delete');
         Route::patch('courseGroupYears/{courseGroupYear}', [WebApiCourseGroupYearController::class, 'patch'])->name('webapi.courseGroupYears.patch');
+        Route::post('courseGroupYears', [WebApiCourseGroupYearController::class, 'post'])->name('webapi.courseGroupYears.post');
 
         Route::get('specializationYears/{specializationYear}', [WebApiSpecializationYearController::class, 'get'])->name('webapi.courseGroupYears.get');
         Route::patch('specializationYears/{specializationYear}', [WebApiSpecializationYearController::class, 'patch'])->name('webapi.courseGroupYears.patch');

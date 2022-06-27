@@ -96,9 +96,9 @@ class CourseService extends BaseModelService
     {
         $likeString = '%'.$search.'%';
 
-        return $this->model::where('name', 'like', $likeString)
-            ->orWhere('number_unformated', 'like', $likeString)
-            ->orWhere('number', 'like', $likeString)
+        return $this->model::where('name', 'ilike', $likeString)
+            ->orWhere('number_unformated', 'ilike', $likeString)
+            ->orWhere('number', 'ilike', $likeString)
             ->get();
     }
 }

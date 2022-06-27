@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\WebApi;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CourseGroupYear\PatchCourseGroupYearRequest;
+use App\Http\Requests\CourseGroupYear\PatchRequest;
+use App\Http\Requests\CourseGroupYear\PostRequest;
 use App\Models\CourseGroupYear;
 use App\Services\CourseGroupYear\CourseGroupYearService;
 use App\Services\User\PermissionAndRoleService;
+use Illuminate\Http\Response;
 
 class WebApiCourseGroupYearController extends Controller
 {
@@ -22,11 +24,23 @@ class WebApiCourseGroupYearController extends Controller
         return $courseGroupYear;
     }
 
-    public function patch(PatchCourseGroupYearRequest $patchCourseGroupYearRequest, CourseGroupYear $courseGroupYear, CourseGroupYearService $courseGroupYearService): CourseGroupYear
+    public function delete(CourseGroupYear $courseGroupYear): Response
+    {
+        $courseGroupYear->delete();
+
+        return response()->noContent();
+    }
+
+    public function patch(CourseGroupYear $courseGroupYear, CourseGroupYearService $courseGroupYearService, PatchRequest $request): CourseGroupYear
     {
         $this->permissionAndRoleService->canManageBackendOrAbort();
-        $courseGroupYearService->setCreditToPass($courseGroupYear, $patchCourseGroupYearRequest->credits_to_pass);
+        $courseGroupYearService->setCreditToPass($courseGroupYear, $request->credits_to_pass);
 
         return $courseGroupYear;
+    }
+
+    public function post(PostRequest $request, CourseGroupYearService $courseGroupYearService): CourseGroupYear
+    {
+        return $courseGroupYearService->createFromPostRequest($request);
     }
 }

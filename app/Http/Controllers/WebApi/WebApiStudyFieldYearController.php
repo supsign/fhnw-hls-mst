@@ -4,8 +4,6 @@ namespace App\Http\Controllers\WebApi;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StudyFieldYear\PatchStudyFieldYearRequest;
-use App\Models\Assessment;
-use App\Models\Recommendation;
 use App\Models\StudyFieldYear;
 use App\Services\Assessment\AssessmentService;
 use App\Services\Recommendation\RecommendationService;

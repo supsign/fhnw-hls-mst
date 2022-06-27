@@ -12,6 +12,7 @@ use App\Services\Mentor\MentorService;
 use App\Services\Student\StudentService;
 use App\Services\User\PermissionAndRoleService;
 use Auth;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Request;
 
 class WebApiMentorController extends Controller
@@ -53,16 +54,14 @@ class WebApiMentorController extends Controller
         );
     }
 
-    public function detachStudent(Mentor $mentor, AttachStudentToMentorService $attacheStudentToMentorService): void
+    public function detachStudent(Mentor $mentor, Student $student, AttachStudentToMentorService $attacheStudentToMentorService): Response
     {
         $user = Auth::user();
         $this->permissionAndRoleService->canPlanMySchedulesOrAbort($user->student);
 
-        if (!$user->student) {
-            abort(409, 'User is not a student.');
-        }
+        $attacheStudentToMentorService->detach($mentor, $student);
 
-        $attacheStudentToMentorService->detach($mentor, $user->student);
+        return response()->noContent();
     }
 
     public function getByEventoId(Request $request)

@@ -12,6 +12,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MentorPlanningController;
 use App\Http\Controllers\PlanningController;
 use App\Http\Controllers\StandingController;
+use App\Models\Course;
 use App\Models\Student;
 use Illuminate\Support\Facades\Route;
 
@@ -26,13 +27,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-        Route::get('test', function () {
-            $student = Student::find(584);
-
-            dump(
-                $student->studyField?->name,
-            );
-        });
+Route::get('test', function () {
+    abort(404);
+});
 
 Route::middleware('web')->group(
     function () {

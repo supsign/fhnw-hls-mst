@@ -65,7 +65,7 @@ class CompletionAttemptImport extends BaseExcelImport implements ToModel, WithHe
             ]);
 
             if ($course->wasRecentlyCreated) {
-                file_put_contents($this->logFilename, $row['id_anlass'].';created'.PHP_EOL, FILE_APPEND);
+                file_put_contents($this->logFilename, $row['id_anlass_modul'].';created'.PHP_EOL, FILE_APPEND);
             }
 
             $courseYear = $this->courseYearService->createOrUpdateOnEventoId(

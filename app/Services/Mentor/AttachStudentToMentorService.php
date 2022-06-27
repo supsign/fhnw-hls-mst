@@ -30,13 +30,9 @@ class AttachStudentToMentorService
 
     public function detach(Mentor $mentor, Student $student): void
     {
-        $mentorStudent = $this->mentorStudentModel::where(
-            [
-                'mentor_id' => $mentor->id,
-                'student_id' => $student->id,
-            ]
-        )->first();
-
-        $mentorStudent->delete();
+        $this->mentorStudentModel::where([
+            'mentor_id' => $mentor->id,
+            'student_id' => $student->id,
+        ])->first()?->delete();
     }
 }

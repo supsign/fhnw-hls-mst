@@ -3,16 +3,16 @@
 namespace App\Services\CourseGroupYear;
 
 use App\Http\Requests\CourseGroupYear\PostRequest;
-use App\Models\CourseGroup;
 use App\Models\Completion;
+use App\Models\CourseGroup;
 use App\Models\CourseGroupYear;
 use App\Models\Student;
 use App\Services\Base\BaseModelService;
 use App\Services\Base\Traits\UpdateOrCreateTrait;
 use App\Services\Completion\CourseCompletionService;
 use App\Services\CourseCourseGroupYear\CourseCourseGroupYearService;
-use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 use Illuminate\Support\Collection;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 class CourseGroupYearService extends BaseModelService
 {

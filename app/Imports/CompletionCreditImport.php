@@ -42,15 +42,16 @@ class CompletionCreditImport extends BaseExcelImport implements ToModel, WithHea
         $course = $this->courseService->getByEventoId($row['id_anlass']);
 
         if (!$course) {
-            $course = $this->courseService->firstOrCreateByNumber(
-                $row['id_anlass'],
-                1,
-                1,
-                $row['anlassbezeichnung'],
-                // $row['credits'],
-            );
+            $course = $this->courseService->createOrUpdateOnEventoId($row['id_anlass'], [
+                'course_type_id' => 1,
+                'language_id' => 1,
+                'number' => $row['anlassnummer'],
+                'name' => $row['anlassbezeichnung'],
+            ]);
 
-            file_put_contents($this->logFilename, $row['id_anlass'].';created'.PHP_EOL, FILE_APPEND);
+            if ($course->wasRecentlyCreated) {
+                file_put_contents($this->logFilename, $row['id_anlass'].';created'.PHP_EOL, FILE_APPEND);
+            }
         }
 
         $this->completionService->createOrUpdateOnEventoIdAsCredit(

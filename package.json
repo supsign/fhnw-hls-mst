@@ -12,13 +12,14 @@
     "devDependencies": {
         "@types/axios": "^0.14.0",
         "@types/vue-select": "^3.11.2",
-        "laravel-mix": "^6.0.31",
         "lodash": "^4.17.19",
         "postcss": "^8.3.7",
         "sass": "^1.42.1",
         "sass-loader": "^12.1.0",
         "tailwindcss": "^2.2.15",
-        "ts-loader": "^9.2.6"
+        "ts-loader": "^9.2.6",
+        "vite": "^2.9.12",
+        "laravel-vite-plugin": "^0.2.2"
     },
     "dependencies": {
         "@fortawesome/fontawesome-pro": "^5.15.4",
@@ -52,6 +53,7 @@
         "vue-property-decorator": "^9.1.2",
         "vue-select": "^3.13.0",
         "vue-template-compiler": "^2.6.14",
-        "vuex": "^3.6.2"
+        "vuex": "^3.6.2",
+        "@vitejs/plugin-vue": "^2.3.3"
     }
 }

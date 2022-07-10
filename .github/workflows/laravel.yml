@@ -78,4 +78,4 @@ jobs:
           npm config set "@fortawesome:registry" https://npm.fontawesome.com/
           npm config set "//npm.fontawesome.com/:_authToken" "${{ secrets.NPM_TOKEN }}"
           npm install
-          npm run prod
+          npm run build

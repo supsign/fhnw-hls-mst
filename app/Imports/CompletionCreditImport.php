@@ -25,7 +25,7 @@ class CompletionCreditImport extends BaseExcelImport implements ToModel, WithHea
         $this->studentService = App::make(StudentService::class);
         $this->logFilename = 'storage/logs/import_courses_from_completion_credit_log_'.Carbon::now()->format('Y-m-d H-i');
 
-        file_put_contents($this->logFilename, 'evento_id;status'.PHP_EOL);
+        file_put_contents($this->logFilename, 'evento_id;number;status'.PHP_EOL);
     }
 
     /**
@@ -50,7 +50,7 @@ class CompletionCreditImport extends BaseExcelImport implements ToModel, WithHea
             ]);
 
             if ($course->wasRecentlyCreated) {
-                file_put_contents($this->logFilename, $row['id_anlass'].';created'.PHP_EOL, FILE_APPEND);
+                file_put_contents($this->logFilename, $row['id_anlass'].';'.$row['anlassnummer'].';created'.PHP_EOL, FILE_APPEND);
             }
         }
 

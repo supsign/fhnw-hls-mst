@@ -76,6 +76,10 @@ class CompletionAttemptImport extends BaseExcelImport implements ToModel, WithHe
             );
         }
 
+        if (!is_numeric($row['credits_anmeldung'])) {
+            return;
+        }
+
         $this->completionService->createUpdateOrDeleteOnEventoIdAsAttempt(
             $row['id_anmeldung'],
             $this->studentService->createOrUpdateOnEventoPersonId($row['id_person']),

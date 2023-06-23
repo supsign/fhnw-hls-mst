@@ -30,7 +30,7 @@
         "@tailwindcss/line-clamp": "^0.2.1",
         "@tailwindcss/typography": "^0.4.1",
         "@tinymce/tinymce-vue": "^3.2.8",
-        "@typescript-eslint/eslint-plugin": "^4.31.2",
+        "@typescript-eslint/eslint-plugin": "^4.33.0",
         "@typescript-eslint/parser": "^4.31.2",
         "@vue/eslint-config-typescript": "^7.0.0",
         "autoprefixer": "^10.3.5",

@@ -27,7 +27,7 @@
         "@fortawesome/vue-fontawesome": "^2.0.10",
         "@tailwindcss/aspect-ratio": "^0.2.1",
         "@tailwindcss/forms": "^0.3.3",
-        "@tailwindcss/line-clamp": "^0.2.1",
+        "@tailwindcss/line-clamp": "^0.4.4",
         "@tailwindcss/typography": "^0.4.1",
         "@tinymce/tinymce-vue": "^3.2.8",
         "@typescript-eslint/eslint-plugin": "^4.31.2",

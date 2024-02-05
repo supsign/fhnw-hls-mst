@@ -21,7 +21,7 @@ class RecommendationServiceTest extends TestCase
     {
         parent::setUp();
         $this->setUpFaker();
-        $this->recommendationService = $this->app->make(recommendationService::class);
+        $this->recommendationService = $this->app->make(RecommendationService::class);
         $this->planningService = $this->app->make(PlanningService::class);
         $this->studentService = $this->app->make(StudentService::class);
     }

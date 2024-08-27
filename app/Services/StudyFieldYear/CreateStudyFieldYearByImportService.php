@@ -50,29 +50,28 @@ class CreateStudyFieldYearByImportService extends BaseModelService
             return $studyFieldYear;
         }
 
-        $beginSemester = $this->studyFieldService->getSemesterFromEventoNumber($eventoNumber);
-
-        $lastStudyFieldYear = $this->getLatestStudyFieldYear($studyField);
-
-        if (!$lastStudyFieldYear) {
-            return $studyFieldYear;
-        }
-
         $studyFieldYear = $this->model::create([
             'evento_id' => $eventoId,
             'study_field_id' => $studyField->id,
-            'begin_semester_id' => $beginSemester->id,
+            'begin_semester_id' => $this->studyFieldService->getSemesterFromEventoNumber($eventoNumber)->id,
 
         ]);
+
         activity('info')
             ->causedBy($studyFieldYear)
             ->log('StudyField Created');
 
+        $lastStudyFieldYear = $this->getLatestStudyFieldYear($studyField);
+
         $studyFieldYear->update([
-            'assessment_id' => $lastStudyFieldYear->assessment_id,
-            'recommendation_id' => $lastStudyFieldYear->recommendation_id,
-            'is_specialization_mandatory' => $lastStudyFieldYear->is_specialization_mandatory,
+            'assessment_id' => $lastStudyFieldYear?->assessment_id,
+            'recommendation_id' => $lastStudyFieldYear?->recommendation_id,
+            'is_specialization_mandatory' => $lastStudyFieldYear->is_specialization_mandatory ?? false,
         ]);
+
+        if (!$lastStudyFieldYear) {
+            return $studyFieldYear;
+        }
 
         foreach ($lastStudyFieldYear->courseGroupYears as $courseGroupYear) {
             try {

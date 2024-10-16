@@ -14,7 +14,7 @@ class CourseYearImport extends Command
      *
      * @var string
      */
-    protected $signature = 'import:courseYear {--filename=Tab4_Modulanlass.xlsx}';
+    protected $signature = 'import:courseYear {--filename=Tab4.xlsx}';
 
     /**
      * The console command description.

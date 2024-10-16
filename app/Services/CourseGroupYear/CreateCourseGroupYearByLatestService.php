@@ -23,9 +23,9 @@ class CreateCourseGroupYearByLatestService extends BaseModelService
      */
     public function createByLatest(CourseGroupYear $latestCourseGroupYear, StudyFieldYear $studyFieldYear): ?CourseGroupYear
     {
-        if ($latestCourseGroupYear->studyFieldYear->study_field_id !== $studyFieldYear->study_field_id) {
-            throw new Exception('change of studyField by createByLatest now allowed');
-        }
+        // if ($latestCourseGroupYear->studyFieldYear->study_field_id !== $studyFieldYear->study_field_id) {
+        //     throw new Exception('change of studyField by createByLatest now allowed');
+        // }
 
         $courseGroupYear = $this->model::create([
             'course_group_id' => $latestCourseGroupYear->course_group_id,

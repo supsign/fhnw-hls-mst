@@ -23,9 +23,9 @@ class CreateCrossQualificationYearByLatestService extends BaseModelService
      */
     public function createByLatest(CrossQualificationYear $latestCrossQualificationYear, StudyFieldYear $studyFieldYear): CrossQualificationYear
     {
-        if ($latestCrossQualificationYear->studyFieldYear->study_field_id !== $studyFieldYear->study_field_id) {
-            throw new Exception('change of studyField by createByLatest now allowed');
-        }
+        // if ($latestCrossQualificationYear->studyFieldYear->study_field_id !== $studyFieldYear->study_field_id) {
+        //     throw new Exception('change of studyField by createByLatest not allowed');
+        // }
 
         $crossQualificationYear = $this->model::create([
             'assessment_id' => $latestCrossQualificationYear->assessment_id,

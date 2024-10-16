@@ -42,24 +42,25 @@ class CreateStudyFieldYearByImportService extends BaseModelService
      *
      * @throws Exception
      */
-    public function createNewByReImport(int $eventoId, StudyField $studyField, string $eventoNumber): StudyFieldYear
-    {
+    public function createNewByReImport(int $eventoId, StudyField $studyField, string $eventoNumber)    //: StudyFieldYear
+    { 
         $studyFieldYear = $this->studyFieldYearService->getByEventoId($eventoId);
 
-        if ($studyFieldYear) {
+        if ($studyFieldYear && $studyFieldYear->courseGroupYears()->count()) {
             return $studyFieldYear;
         }
 
-        $studyFieldYear = $this->model::create([
-            'evento_id' => $eventoId,
-            'study_field_id' => $studyField->id,
-            'begin_semester_id' => $this->studyFieldService->getSemesterFromEventoNumber($eventoNumber)->id,
+        if (!$studyFieldYear) {
+            $studyFieldYear = $this->model::create([
+                'evento_id' => $eventoId,
+                'study_field_id' => $studyField->id,
+                'begin_semester_id' => $this->studyFieldService->getSemesterFromEventoNumber($eventoNumber)->id,
+            ]);
 
-        ]);
-
-        activity('info')
-            ->causedBy($studyFieldYear)
-            ->log('StudyField Created');
+            activity('info')
+                ->causedBy($studyFieldYear)
+                ->log('StudyField Created');
+        }
 
         $lastStudyFieldYear = $this->getLatestStudyFieldYear($studyField);
 

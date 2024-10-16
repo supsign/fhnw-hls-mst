@@ -14,7 +14,7 @@ class StudentImport extends Command
      *
      * @var string
      */
-    protected $signature = 'import:student {--filename=Tab5.xlsx}';
+    protected $signature = 'import:student {--filename=Tab_5.xlsx}';
 
     /**
      * The console command description.

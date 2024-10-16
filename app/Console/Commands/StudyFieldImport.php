@@ -14,7 +14,7 @@ class StudyFieldImport extends Command
      *
      * @var string
      */
-    protected $signature = 'import:studyField {--filename=Tab1.xlsx}';
+    protected $signature = 'import:studyField {--filename=Tab_1.xlsx}';
 
     /**
      * The console command description.

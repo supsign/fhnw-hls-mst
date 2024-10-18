@@ -31,44 +31,62 @@ class CopyToNewStudyFields extends Command
     public function handle()
     {
         $studyFieldMap = [
-             8 => 42,
-             9 => 44,
-            11 => 40,
-            12 => 41,
-            13 => 39,
-            14 => 38,
-            // 15 => 
+            37 => 15,
+            38 => 14,
+            39 => 13,
+            40 => 11,
+            41 => 12,
+            42 => 8,
+            43 => 15,
+            44 => 9
         ];
 
-        foreach (Assessment::all() AS $assassment) {
-            if (!array_key_exists($assassment->study_field_id, $studyFieldMap)) {
+        foreach (Assessment::with('assessmentCourses')->get() AS $assessment) {
+            if (!in_array($assessment->study_field_id, $studyFieldMap)) {
                 continue;
             }
 
-            $copy = $assassment->replicate();
-            $copy->study_field_id = $studyFieldMap[$assassment->study_field_id];
+            $copy = $assessment->replicate();
+            $copy->study_field_id = array_search($assessment->study_field_id, $studyFieldMap);
             $copy->save();
+
+            foreach ($assessment->assessmentCourses AS $assessmentCourses) {
+                $pivotCopy = $assessmentCourses->replicate();
+                $pivotCopy->assessment_id = $copy->id;
+                $pivotCopy->save();
+            }
         }
 
         foreach (CrossQualification::all() AS $crossQualification) {
-            if (!array_key_exists($crossQualification->study_field_id, $studyFieldMap)) {
+            if (!in_array($crossQualification->study_field_id, $studyFieldMap)) {
                 continue;
             }
 
             $copy = $crossQualification->replicate();
-            $copy->study_field_id = $studyFieldMap[$crossQualification->study_field_id];
+            $copy->study_field_id = array_search($crossQualification->study_field_id, $studyFieldMap);
             $copy->janis_id = null;
             $copy->save();
+
+
+
+
+            
         }
 
-        foreach (Recommendation::all() AS $recommendation) {
-            if (!array_key_exists($recommendation->study_field_id, $studyFieldMap)) {
+        foreach (Recommendation::with('courseRecommendations')->get() AS $recommendation) {
+            if (!in_array($recommendation->study_field_id, $studyFieldMap)) {
                 continue;
             }
 
             $copy = $recommendation->replicate();
-            $copy->study_field_id = $studyFieldMap[$recommendation->study_field_id];
+            $copy->study_field_id = array_search($recommendation->study_field_id, $studyFieldMap);
             $copy->save();
+
+            foreach ($recommendation->courseRecommendations AS $courseRecommendations) {
+                $pivotCopy = $courseRecommendations->replicate();
+                $pivotCopy->recommendation_id = $copy->id;
+                $pivotCopy->save();
+            }
         }
 
         return Command::SUCCESS;

@@ -57,22 +57,6 @@ class CopyToNewStudyFields extends Command
             }
         }
 
-        foreach (CrossQualification::all() AS $crossQualification) {
-            if (!in_array($crossQualification->study_field_id, $studyFieldMap)) {
-                continue;
-            }
-
-            $copy = $crossQualification->replicate();
-            $copy->study_field_id = array_search($crossQualification->study_field_id, $studyFieldMap);
-            $copy->janis_id = null;
-            $copy->save();
-
-
-
-
-            
-        }
-
         foreach (Recommendation::with('courseRecommendations')->get() AS $recommendation) {
             if (!in_array($recommendation->study_field_id, $studyFieldMap)) {
                 continue;
@@ -88,6 +72,9 @@ class CopyToNewStudyFields extends Command
                 $pivotCopy->save();
             }
         }
+
+
+
 
         return Command::SUCCESS;
     }

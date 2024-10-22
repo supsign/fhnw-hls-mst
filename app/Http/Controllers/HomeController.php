@@ -2,10 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CrossQualification;
-use App\Models\CrossQualificationYear;
-use App\Models\StudyField;
-use App\Models\StudyFieldYear;
 use App\Services\Faq\FrequentlyAskedQuestionService;
 use App\Services\User\PermissionAndRoleService;
 

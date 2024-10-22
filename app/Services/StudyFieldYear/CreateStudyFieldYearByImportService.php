@@ -42,8 +42,8 @@ class CreateStudyFieldYearByImportService extends BaseModelService
      *
      * @throws Exception
      */
-    public function createNewByReImport(int $eventoId, StudyField $studyField, string $eventoNumber)    //: StudyFieldYear
-    { 
+    public function createNewByReImport(int $eventoId, StudyField $studyField, string $eventoNumber): StudyFieldYear
+    {
         $studyFieldYear = $this->studyFieldYearService->getByEventoId($eventoId);
 
         if ($studyFieldYear && $studyFieldYear->courseGroupYears()->count()) {

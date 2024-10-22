@@ -39,10 +39,6 @@ class StudyFieldYearReImport extends BaseExcelImport implements ToModel, WithHea
             return null;
         }
 
-        dump(
-            $row['anlassbezeichnung']
-        );
-
         if ($row['id_anlass'] == 9749132) {
             return null;
         }

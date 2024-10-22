@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Assessment;
-use App\Models\CrossQualification;
+use App\Models\CrossQualificationYear;
 use App\Models\Recommendation;
 use App\Models\StudyField;
 use App\Models\StudyFieldYear;
@@ -87,6 +87,15 @@ class CopyToNewStudyFields extends Command
 
             foreach ($studyFieldYear->crossQualificationYears AS $crossQualificationYear) {
                 $newStudyFieldYear = StudyFieldYear::where('study_field_id', array_search($studyFieldYear->study_field_id, $studyFieldMap))->first();
+
+                $check = CrossQualificationYear::where('cross_qualification_id', $crossQualificationYear->cross_qualification_id)
+                    ->where('study_field_year_id', $newStudyFieldYear->id)
+                    ->first();
+
+                if ($check) {
+                    continue;
+                }
+
                 $newCrossQualitifactonYear = $crossQualificationYear->replicate();
                 $newCrossQualitifactonYear->study_field_year_id = $newStudyFieldYear->id;
                 $newCrossQualitifactonYear->save();

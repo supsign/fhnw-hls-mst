@@ -44,7 +44,6 @@ Route::middleware(['web', 'auth'])->group(
     function () {
         Route::controller(HomeController::class)->group(function () {
             Route::get('/', 'index')->name('home');
-            Route::get('test', 'test')->name('test');
         });
 
         // Plannings

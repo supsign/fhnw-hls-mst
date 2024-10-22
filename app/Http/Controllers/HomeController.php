@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CrossQualification;
 use App\Models\CrossQualificationYear;
+use App\Models\StudyField;
 use App\Models\StudyFieldYear;
 use App\Services\Faq\FrequentlyAskedQuestionService;
 use App\Services\User\PermissionAndRoleService;
@@ -26,31 +27,40 @@ class HomeController extends Controller
             // 44 => 9
         ];
 
-        // foreach (CrossQualification::all() AS $crossQualification) {
-        //     if (!in_array($crossQualification->study_field_id, $studyFieldMap)) {
-        //         continue;
-        //     }
-
-        //     $copy = $crossQualification->replicate();
-        //     $copy->study_field_id = array_search($crossQualification->study_field_id, $studyFieldMap);
-        //     $copy->janis_id = null;
-        //     $copy->save();
-        // }
-
-        $
-        $crossQualitifactonYears = CrossQualificationYear::with('studyFieldYear')->get();
-        $studyFieldYears = StudyFieldYear::with('studyField')
-            ->whereIn('study_field_id', array_keys($studyFieldMap))
+        $studyFields = StudyField::whereIn('id', $studyFieldMap)
+            ->with('studyFieldYears.crossQualificationYears')
             ->get();
 
-        foreach ($crossQualitifactonYears AS $crossQualitifactonYear) {
-            if (!in_array($crossQualitifactonYear->studyFieldYear->study_field_id, $studyFieldMap)) {
-                continue;
-            }
+        foreach ($studyFields AS $studyField) {
+            $studyFieldYear = $studyField
+                ->studyFieldYears
+                ->sortByDesc('id')
+                ->first();
 
-            $newStudyFieldYear = $studyFieldYears->first(
-                fn (StudyFieldYear $sfy): bool => $sfy->study_field_id === array_search($crossQualitifactonYear->studyFieldYear->study_field_id, $studyFieldMap)
-            );
+            foreach ($studyFieldYear->crossQualificationYears AS $crossQualificationYear) {
+                $newStudyFieldYear = StudyFieldYear::where('study_field_id', array_search($studyFieldYear->study_field_id, $studyFieldMap))->first();
+                $newCrossQualitifactonYear = $crossQualificationYear->replicate();
+                $newCrossQualitifactonYear->study_field_year_id = $newStudyFieldYear->id;
+                $newCrossQualitifactonYear->save();
+
+                foreach ($crossQualificationYear->courseCrossQualificationYears AS $courseCrossQualificationYear) {
+                    $newCourseCrossQualificationYear = $courseCrossQualificationYear->replicate();
+                    $newCourseCrossQualificationYear->cross_qualification_year_id = $newCrossQualitifactonYear->id;
+                    $newCourseCrossQualificationYear->save();
+                }
+            }
+        }
+
+        return 1;
+
+
+
+
+
+        $crossQualitifactonYears = [];
+
+        foreach ($crossQualitifactonYears AS $crossQualitifactonYear) {
+            $newStudyFieldYear = null;
 
             dump(
                 $crossQualitifactonYear->cross_qualification_id,
@@ -71,12 +81,12 @@ class HomeController extends Controller
             echo 'next one <br/>';
             continue;
 
-            $newCrossQualitifactonYear->save();
+            // $newCrossQualitifactonYear->save();
 
             foreach ($crossQualitifactonYear->courseCrossQualificationYears AS $courseCrossQualificationYear) {
                 $newCourseCrossQualificationYear = $courseCrossQualificationYear->replicate();
                 $newCourseCrossQualificationYear->cross_qualification_year_id = $newCrossQualitifactonYear->id;
-                $newCourseCrossQualificationYear->save();
+                // $newCourseCrossQualificationYear->save();
             }
         }
 

@@ -5,6 +5,8 @@ namespace App\Console\Commands;
 use App\Models\Assessment;
 use App\Models\CrossQualification;
 use App\Models\Recommendation;
+use App\Models\StudyField;
+use App\Models\StudyFieldYear;
 use Illuminate\Console\Command;
 
 class CopyToNewStudyFields extends Command
@@ -38,7 +40,7 @@ class CopyToNewStudyFields extends Command
             41 => 12,
             42 => 8,
             43 => 15,
-            44 => 9
+            // 44 => 9
         ];
 
         foreach (Assessment::with('assessmentCourses')->get() AS $assessment) {
@@ -73,29 +75,28 @@ class CopyToNewStudyFields extends Command
             }
         }
 
-        foreach (CrossQualification::all() AS $crossQualification) {
-            if (!in_array($crossQualification->study_field_id, $studyFieldMap)) {
-                continue;
+        $studyFields = StudyField::whereIn('id', $studyFieldMap)
+            ->with('studyFieldYears.crossQualificationYears')
+            ->get();
+
+        foreach ($studyFields AS $studyField) {
+            $studyFieldYear = $studyField
+                ->studyFieldYears
+                ->sortByDesc('id')
+                ->first();
+
+            foreach ($studyFieldYear->crossQualificationYears AS $crossQualificationYear) {
+                $newStudyFieldYear = StudyFieldYear::where('study_field_id', array_search($studyFieldYear->study_field_id, $studyFieldMap))->first();
+                $newCrossQualitifactonYear = $crossQualificationYear->replicate();
+                $newCrossQualitifactonYear->study_field_year_id = $newStudyFieldYear->id;
+                $newCrossQualitifactonYear->save();
+
+                foreach ($crossQualificationYear->courseCrossQualificationYears AS $courseCrossQualificationYear) {
+                    $newCourseCrossQualificationYear = $courseCrossQualificationYear->replicate();
+                    $newCourseCrossQualificationYear->cross_qualification_year_id = $newCrossQualitifactonYear->id;
+                    $newCourseCrossQualificationYear->save();
+                }
             }
-
-            $copy = $crossQualification->replicate();
-            $copy->study_field_id = array_search($crossQualification->study_field_id, $studyFieldMap);
-            $copy->janis_id = null;
-            $copy->save();
-
-
-
-
-
-
-
-
-
-
-
-
-
-            
         }
 
         return Command::SUCCESS;

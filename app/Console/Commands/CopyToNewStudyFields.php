@@ -43,7 +43,7 @@ class CopyToNewStudyFields extends Command
             // 44 => 9
         ];
 
-        foreach (Assessment::with('assessmentCourses')->get() AS $assessment) {
+        foreach (Assessment::with('assessmentCourses')->get() as $assessment) {
             if (!in_array($assessment->study_field_id, $studyFieldMap)) {
                 continue;
             }
@@ -52,14 +52,14 @@ class CopyToNewStudyFields extends Command
             $copy->study_field_id = array_search($assessment->study_field_id, $studyFieldMap);
             $copy->save();
 
-            foreach ($assessment->assessmentCourses AS $assessmentCourses) {
+            foreach ($assessment->assessmentCourses as $assessmentCourses) {
                 $pivotCopy = $assessmentCourses->replicate();
                 $pivotCopy->assessment_id = $copy->id;
                 $pivotCopy->save();
             }
         }
 
-        foreach (Recommendation::with('courseRecommendations')->get() AS $recommendation) {
+        foreach (Recommendation::with('courseRecommendations')->get() as $recommendation) {
             if (!in_array($recommendation->study_field_id, $studyFieldMap)) {
                 continue;
             }
@@ -68,7 +68,7 @@ class CopyToNewStudyFields extends Command
             $copy->study_field_id = array_search($recommendation->study_field_id, $studyFieldMap);
             $copy->save();
 
-            foreach ($recommendation->courseRecommendations AS $courseRecommendations) {
+            foreach ($recommendation->courseRecommendations as $courseRecommendations) {
                 $pivotCopy = $courseRecommendations->replicate();
                 $pivotCopy->recommendation_id = $copy->id;
                 $pivotCopy->save();
@@ -79,13 +79,13 @@ class CopyToNewStudyFields extends Command
             ->with('studyFieldYears.crossQualificationYears')
             ->get();
 
-        foreach ($studyFields AS $studyField) {
+        foreach ($studyFields as $studyField) {
             $studyFieldYear = $studyField
                 ->studyFieldYears
                 ->sortByDesc('id')
                 ->first();
 
-            foreach ($studyFieldYear->crossQualificationYears AS $crossQualificationYear) {
+            foreach ($studyFieldYear->crossQualificationYears as $crossQualificationYear) {
                 $newStudyFieldYear = StudyFieldYear::where('study_field_id', array_search($studyFieldYear->study_field_id, $studyFieldMap))->first();
 
                 $check = CrossQualificationYear::where('cross_qualification_id', $crossQualificationYear->cross_qualification_id)
@@ -100,7 +100,7 @@ class CopyToNewStudyFields extends Command
                 $newCrossQualitifactonYear->study_field_year_id = $newStudyFieldYear->id;
                 $newCrossQualitifactonYear->save();
 
-                foreach ($crossQualificationYear->courseCrossQualificationYears AS $courseCrossQualificationYear) {
+                foreach ($crossQualificationYear->courseCrossQualificationYears as $courseCrossQualificationYear) {
                     $newCourseCrossQualificationYear = $courseCrossQualificationYear->replicate();
                     $newCourseCrossQualificationYear->cross_qualification_year_id = $newCrossQualitifactonYear->id;
                     $newCourseCrossQualificationYear->save();

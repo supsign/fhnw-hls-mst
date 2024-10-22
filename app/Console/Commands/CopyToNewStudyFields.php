@@ -73,8 +73,30 @@ class CopyToNewStudyFields extends Command
             }
         }
 
+        foreach (CrossQualification::all() AS $crossQualification) {
+            if (!in_array($crossQualification->study_field_id, $studyFieldMap)) {
+                continue;
+            }
+
+            $copy = $crossQualification->replicate();
+            $copy->study_field_id = array_search($crossQualification->study_field_id, $studyFieldMap);
+            $copy->janis_id = null;
+            $copy->save();
 
 
+
+
+
+
+
+
+
+
+
+
+
+            
+        }
 
         return Command::SUCCESS;
     }

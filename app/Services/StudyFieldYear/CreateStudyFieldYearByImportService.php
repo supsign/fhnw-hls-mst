@@ -57,12 +57,23 @@ class CreateStudyFieldYearByImportService extends BaseModelService
                 'begin_semester_id' => $this->studyFieldService->getSemesterFromEventoNumber($eventoNumber)->id,
             ]);
 
+            dump(
+                'created new studyFieldYear',
+            );
+
             activity('info')
                 ->causedBy($studyFieldYear)
                 ->log('StudyField Created');
         }
 
         $lastStudyFieldYear = $this->getLatestStudyFieldYear($studyField);
+
+        dump(
+            'studyFieldYearEventoID:'. $eventoId,
+            'studyField:'. $studyField->id,
+            'studyFieldYear:'. $lastStudyFieldYear->id,
+        );
+        echo '--------------'.PHP_EOL;
 
         $studyFieldYear->update([
             'assessment_id' => $lastStudyFieldYear?->assessment_id,

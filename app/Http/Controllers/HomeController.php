@@ -23,7 +23,7 @@ class HomeController extends Controller
             41 => 12,
             42 => 8,
             43 => 15,
-            44 => 9
+            // 44 => 9
         ];
 
         // foreach (CrossQualification::all() AS $crossQualification) {
@@ -37,6 +37,7 @@ class HomeController extends Controller
         //     $copy->save();
         // }
 
+        $
         $crossQualitifactonYears = CrossQualificationYear::with('studyFieldYear')->get();
         $studyFieldYears = StudyFieldYear::with('studyField')
             ->whereIn('study_field_id', array_keys($studyFieldMap))
@@ -51,28 +52,33 @@ class HomeController extends Controller
                 fn (StudyFieldYear $sfy): bool => $sfy->study_field_id === array_search($crossQualitifactonYear->studyFieldYear->study_field_id, $studyFieldMap)
             );
 
-            // dump(
-            //     $crossQualitifactonYear->studyFieldYear,
-            //     $newStudyFieldYear,
-            // );
+            dump(
+                $crossQualitifactonYear->cross_qualification_id,
+                $crossQualitifactonYear->study_field_year_id,
+            );
+            echo '<hr/>';
+            // continue;
 
-            if (is_null($newStudyFieldYear)) {
-                dd(
-                    $crossQualitifactonYear
-                );
+            $newCrossQualitifactonYear = $crossQualitifactonYear->replicate();
+            $newCrossQualitifactonYear->study_field_year_id = $newStudyFieldYear->id;
+
+            dump(
+                $newCrossQualitifactonYear->cross_qualification_id,
+                $newCrossQualitifactonYear->study_field_year_id,
+                $newStudyFieldYear,
+                array_search($crossQualitifactonYear->studyFieldYear->study_field_id, $studyFieldMap),
+            );
+            echo 'next one <br/>';
+            continue;
+
+            $newCrossQualitifactonYear->save();
+
+            foreach ($crossQualitifactonYear->courseCrossQualificationYears AS $courseCrossQualificationYear) {
+                $newCourseCrossQualificationYear = $courseCrossQualificationYear->replicate();
+                $newCourseCrossQualificationYear->cross_qualification_year_id = $newCrossQualitifactonYear->id;
+                $newCourseCrossQualificationYear->save();
             }
-
-            $copy = $crossQualitifactonYear->replicate();
-            $copy->study_field_year_id = $newStudyFieldYear->id;
-            // $copy->save();
-
-            // dump(
-            //     $crossQualitifactonYear->study_field_year_id,
-            //     $copy->study_field_year_id,
-            // );
-
         }
-
 
         return 1;
     }

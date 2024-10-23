@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Assessment;
+use App\Models\CrossQualification;
 use App\Models\CrossQualificationYear;
 use App\Models\Recommendation;
 use App\Models\StudyField;
@@ -76,34 +77,37 @@ class CopyToNewStudyFields extends Command
         }
 
         $studyFields = StudyField::whereIn('id', $studyFieldMap)
-            ->with('studyFieldYears.crossQualificationYears')
+            ->with('crossQualifications.crossQualificationYears')
             ->get();
 
         foreach ($studyFields AS $studyField) {
-            $studyFieldYear = $studyField
-                ->studyFieldYears
-                ->sortByDesc('id')
-                ->first();
+            foreach ($studyField->crossQualifications() AS $crossQualification) {
+                $newCrossQualitifacton = $crossQualification->replicate();
+                $newCrossQualitifacton->janis_id = null;
+                $newCrossQualitifacton->study_field_id = array_search($studyField->id, $studyFieldMap);
+                $newCrossQualitifacton->save();
 
-            foreach ($studyFieldYear->crossQualificationYears AS $crossQualificationYear) {
-                $newStudyFieldYear = StudyFieldYear::where('study_field_id', array_search($studyFieldYear->study_field_id, $studyFieldMap))->first();
+                foreach ($crossQualification->crossQualificationYears AS $crossQualificationYear) {
+                    $newStudyFieldYear = StudyFieldYear::where('study_field_id', array_search($studyField->id, $studyFieldMap))->first();
 
-                $check = CrossQualificationYear::where('cross_qualification_id', $crossQualificationYear->cross_qualification_id)
-                    ->where('study_field_year_id', $newStudyFieldYear->id)
-                    ->first();
+                    $check = CrossQualificationYear::where('cross_qualification_id', $crossQualificationYear->cross_qualification_id)
+                        ->where('study_field_year_id', $newStudyFieldYear->id)
+                        ->first();
 
-                if ($check) {
-                    continue;
-                }
+                    if ($check) {
+                        continue;
+                    }
 
-                $newCrossQualitifactonYear = $crossQualificationYear->replicate();
-                $newCrossQualitifactonYear->study_field_year_id = $newStudyFieldYear->id;
-                $newCrossQualitifactonYear->save();
+                    $newCrossQualitifactonYear = $crossQualificationYear->replicate();
+                    $newCrossQualitifactonYear->cross_qualification_id = 
+                    $newCrossQualitifactonYear->study_field_year_id = $newStudyFieldYear->id;
+                    $newCrossQualitifactonYear->save();
 
-                foreach ($crossQualificationYear->courseCrossQualificationYears AS $courseCrossQualificationYear) {
-                    $newCourseCrossQualificationYear = $courseCrossQualificationYear->replicate();
-                    $newCourseCrossQualificationYear->cross_qualification_year_id = $newCrossQualitifactonYear->id;
-                    $newCourseCrossQualificationYear->save();
+                    foreach ($crossQualificationYear->courseCrossQualificationYears AS $courseCrossQualificationYear) {
+                        $newCourseCrossQualificationYear = $courseCrossQualificationYear->replicate();
+                        $newCourseCrossQualificationYear->cross_qualification_year_id = $newCrossQualitifactonYear->id;
+                        $newCourseCrossQualificationYear->save();
+                    }
                 }
             }
         }

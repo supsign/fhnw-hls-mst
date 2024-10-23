@@ -40,7 +40,7 @@ class CopyToNewStudyFields extends Command
             41 => 12,
             42 => 8,
             43 => 15,
-            // 44 => 9
+            44 => 9
         ];
 
         foreach (Assessment::with('assessmentCourses')->get() AS $assessment) {

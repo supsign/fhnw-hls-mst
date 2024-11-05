@@ -3,10 +3,8 @@
 namespace App\Console\Commands;
 
 use App\Models\Assessment;
-use App\Models\CrossQualificationYear;
 use App\Models\Recommendation;
 use App\Models\StudyField;
-use App\Models\StudyFieldYear;
 use Illuminate\Console\Command;
 
 class CopyToNewStudyFields extends Command
@@ -85,29 +83,6 @@ class CopyToNewStudyFields extends Command
                 $newCrossQualitifacton->janis_id = null;
                 $newCrossQualitifacton->study_field_id = array_search($studyField->id, $studyFieldMap);
                 $newCrossQualitifacton->save();
-
-                // foreach ($crossQualification->crossQualificationYears AS $crossQualificationYear) {
-                //     $newStudyFieldYear = StudyFieldYear::where('study_field_id', array_search($studyField->id, $studyFieldMap))->first();
-
-                //     $check = CrossQualificationYear::where('cross_qualification_id', $crossQualificationYear->cross_qualification_id)
-                //         ->where('study_field_year_id', $newStudyFieldYear->id)
-                //         ->first();
-
-                //     if ($check) {
-                //         continue;
-                //     }
-
-                //     $newCrossQualitifactonYear = $crossQualificationYear->replicate();
-                //     $newCrossQualitifactonYear->cross_qualification_id = $newCrossQualitifacton->id;
-                //     $newCrossQualitifactonYear->study_field_year_id = $newStudyFieldYear->id;
-                //     $newCrossQualitifactonYear->save();
-
-                //     foreach ($crossQualificationYear->courseCrossQualificationYears AS $courseCrossQualificationYear) {
-                //         $newCourseCrossQualificationYear = $courseCrossQualificationYear->replicate();
-                //         $newCourseCrossQualificationYear->cross_qualification_year_id = $newCrossQualitifactonYear->id;
-                //         $newCourseCrossQualificationYear->save();
-                //     }
-                // }
             }
         }
 

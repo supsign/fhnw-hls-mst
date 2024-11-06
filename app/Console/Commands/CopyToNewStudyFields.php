@@ -38,10 +38,10 @@ class CopyToNewStudyFields extends Command
             41 => 12,
             42 => 8,
             43 => 15,
-            44 => 9
+            44 => 9,
         ];
 
-        foreach (Assessment::with('assessmentCourses')->get() AS $assessment) {
+        foreach (Assessment::with('assessmentCourses')->get() as $assessment) {
             if (!in_array($assessment->study_field_id, $studyFieldMap)) {
                 continue;
             }
@@ -50,14 +50,14 @@ class CopyToNewStudyFields extends Command
             $copy->study_field_id = array_search($assessment->study_field_id, $studyFieldMap);
             $copy->save();
 
-            foreach ($assessment->assessmentCourses AS $assessmentCourses) {
+            foreach ($assessment->assessmentCourses as $assessmentCourses) {
                 $pivotCopy = $assessmentCourses->replicate();
                 $pivotCopy->assessment_id = $copy->id;
                 $pivotCopy->save();
             }
         }
 
-        foreach (Recommendation::with('courseRecommendations')->get() AS $recommendation) {
+        foreach (Recommendation::with('courseRecommendations')->get() as $recommendation) {
             if (!in_array($recommendation->study_field_id, $studyFieldMap)) {
                 continue;
             }
@@ -66,7 +66,7 @@ class CopyToNewStudyFields extends Command
             $copy->study_field_id = array_search($recommendation->study_field_id, $studyFieldMap);
             $copy->save();
 
-            foreach ($recommendation->courseRecommendations AS $courseRecommendations) {
+            foreach ($recommendation->courseRecommendations as $courseRecommendations) {
                 $pivotCopy = $courseRecommendations->replicate();
                 $pivotCopy->recommendation_id = $copy->id;
                 $pivotCopy->save();
@@ -77,8 +77,8 @@ class CopyToNewStudyFields extends Command
             ->with('crossQualifications.crossQualificationYears')
             ->get();
 
-        foreach ($studyFields AS $studyField) {
-            foreach ($studyField->crossQualifications AS $crossQualification) {
+        foreach ($studyFields as $studyField) {
+            foreach ($studyField->crossQualifications as $crossQualification) {
                 $newCrossQualitifacton = $crossQualification->replicate();
                 $newCrossQualitifacton->janis_id = null;
                 $newCrossQualitifacton->study_field_id = array_search($studyField->id, $studyFieldMap);

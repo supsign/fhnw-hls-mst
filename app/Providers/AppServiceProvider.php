@@ -32,8 +32,7 @@ class AppServiceProvider extends ServiceProvider
 
         Collection::macro(
             'toEloquentCollection',
-            fn(): EloquentCollection
-            => new EloquentCollection($this)
+            fn (): EloquentCollection => new EloquentCollection($this)
         );
     }
 }

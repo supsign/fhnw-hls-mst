@@ -27,9 +27,9 @@ class CreateSpecializationYearByLatestService extends BaseModelService
      */
     public function createByLatest(SpecializationYear $latestSpecializationYear, StudyFieldYear $studyFieldYear): SpecializationYear
     {
-        if ($latestSpecializationYear->studyFieldYear->study_field_id !== $studyFieldYear->study_field_id) {
-            throw new Exception('change of studyField by createByLatest now allowed');
-        }
+        // if ($latestSpecializationYear->studyFieldYear->study_field_id !== $studyFieldYear->study_field_id) {
+        //     throw new Exception('change of studyField by createByLatest now allowed');
+        // }
 
         $specializationYear = $this->model::create([
             'assessment_id' => $latestSpecializationYear->assessment_id,

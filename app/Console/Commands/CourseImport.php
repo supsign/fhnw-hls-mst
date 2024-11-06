@@ -14,7 +14,7 @@ class CourseImport extends Command
      *
      * @var string
      */
-    protected $signature = 'import:course {--filename=Tab3_Modul.xlsx}';
+    protected $signature = 'import:course {--filename=Tab_3.xlsx}';
 
     /**
      * The console command description.

@@ -14,7 +14,7 @@ class CompletionCreditImport extends Command
      *
      * @var string
      */
-    protected $signature = 'import:completion:credit {--filename=Tab7_Anrechnungen.xlsx}';
+    protected $signature = 'import:completion:credit {--filename=Tab_7.xlsx}';
 
     /**
      * The console command description.

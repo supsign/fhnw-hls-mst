@@ -14,7 +14,7 @@ class CompletionAttemptImport extends Command
      *
      * @var string
      */
-    protected $signature = 'import:completion:attempt {--filename=Tab6_AnmMA.xlsx}';
+    protected $signature = 'import:completion:attempt {--filename=Tab_6.xlsx}';
 
     /**
      * The console command description.

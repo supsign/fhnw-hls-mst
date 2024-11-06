@@ -8,8 +8,7 @@ use App\Services\User\PermissionAndRoleService;
 class HomeController extends Controller
 {
     public function __construct(protected PermissionAndRoleService $permissionAndRoleService)
-    {
-    }
+    {}
 
     public function index()
     {

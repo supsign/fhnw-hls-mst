@@ -31,14 +31,7 @@ class CopyToNewStudyFields extends Command
     public function handle()
     {
         $studyFieldMap = [
-            37 => 15,
-            38 => 14,
-            39 => 13,
-            40 => 11,
-            41 => 12,
-            42 => 8,
             43 => 15,
-            44 => 9,
         ];
 
         foreach (Assessment::with('assessmentCourses')->get() as $assessment) {

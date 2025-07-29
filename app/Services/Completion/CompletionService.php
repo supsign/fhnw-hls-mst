@@ -60,6 +60,7 @@ class CompletionService extends BaseModelService
         $statuses = [
             'aA.Hist.Angemeldet',
             'aA.Angemeldet',
+            'aA.Erfolgreich teilgenommen',
             'aA.Hist.Angemeldet_alt',
             'aA.Hist.Erfolgreich teilgenommen',
             'Erfolgreich teilgenommen',

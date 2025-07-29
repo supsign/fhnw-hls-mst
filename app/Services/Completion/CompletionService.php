@@ -57,7 +57,16 @@ class CompletionService extends BaseModelService
                 $status = '';
         }
 
-        if (!in_array($status, ['aA.Hist.Angemeldet', 'aA.Angemeldet', 'aA.Hist.Angemeldet_alt', 'aA.Hist.Erfolgreich teilgenommen'])) {
+        $statuses = [
+            'aA.Hist.Angemeldet',
+            'aA.Angemeldet',
+            'aA.Erfolgreich teilgenommen',
+            'aA.Hist.Angemeldet_alt',
+            'aA.Hist.Erfolgreich teilgenommen',
+            'Erfolgreich teilgenommen',
+        ];
+
+        if (!in_array($status, $statuses)) {
             $this->getByEventoId($eventoId)?->delete();
 
             return null;

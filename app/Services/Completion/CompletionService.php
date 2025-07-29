@@ -57,7 +57,7 @@ class CompletionService extends BaseModelService
                 $status = '';
         }
 
-        $statis = [
+        $statuses = [
             'aA.Hist.Angemeldet',
             'aA.Angemeldet',
             'aA.Hist.Angemeldet_alt',
@@ -65,7 +65,7 @@ class CompletionService extends BaseModelService
             'Erfolgreich teilgenommen',
         ];
 
-        if (!in_array($status, $statis)) {
+        if (!in_array($status, $statuses)) {
             $this->getByEventoId($eventoId)?->delete();
 
             return null;

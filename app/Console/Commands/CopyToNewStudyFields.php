@@ -30,8 +30,9 @@ class CopyToNewStudyFields extends Command
      */
     public function handle()
     {
+        //  target => source
         $studyFieldMap = [
-            43 => 15,
+            44 => 45,
         ];
 
         foreach (Assessment::with('assessmentCourses')->get() as $assessment) {

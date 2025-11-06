@@ -8,26 +8,10 @@ use Illuminate\Console\Command;
 
 class CopyToNewStudyFieldYears extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'copy:studyfieldyears';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Copy Assessment, CrossQualification & Recommendation to new studyfieldyears';
 
-    /**
-     * Execute the console command.
-     *
-     * @return int
-     */
-    public function handle()
+    public function handle(): int
     {
         //  source => targets
         $studyFieldYearMap = [

@@ -54,9 +54,7 @@ class StudyFieldYear extends BaseModel
 
     public function getCourseCrossQualificationYearsAttribute()
     {
-        $blub = $this->crossQualificationYears()->with('courseCrossQualificationYears')->get()->pluck('courseCrossQualificationYears')->flatten(1)->unique();
-
-        return $blub;
+        return $this->crossQualificationYears()->with('courseCrossQualificationYears')->get()->pluck('courseCrossQualificationYears')->flatten(1)->unique();
     }
 
     public function crossQualificationYears(): HasMany

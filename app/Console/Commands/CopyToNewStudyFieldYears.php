@@ -22,7 +22,6 @@ class CopyToNewStudyFieldYears extends Command
             47 => 55,    //  Medizininformatik ab 2024
             48 => 56,    //  Medizintechnik ab 2024
             49 => 57,    //  Pharmatechnologie ab 2024
-
         ];
 
         foreach ($studyFieldYearMap AS $sourceId => $targetIds) {
@@ -31,21 +30,47 @@ class CopyToNewStudyFieldYears extends Command
             }
 
             $source = StudyFieldYear::with([
-                'crossQualificationYears',
-                'specializationYears',
+                'courseGroupYears.courseCourseGroupYears',
+                'crossQualificationYears.courseCrossQualificationYears',
+                'specializationYears.courseSpecializationYears',
             ])->find($sourceId);
-
-            $targets = StudyFieldYear::with([
-                'crossQualificationYears',
-                'specializationYears',
-            ])->whereIn('id', $targetIds)->get();
 
             if (is_null($source)) {
                 throw new Exception('studyFieldYear with ID "'.$sourceId.'" wasn\'t found');                
             }
 
+            $targets = StudyFieldYear::whereIn('id', $targetIds)
+                ->with([
+                    'courseGroupYears.courseCourseGroupYears',
+                    'crossQualificationYears.courseCrossQualificationYears',
+                    'specializationYears.courseSpecializationYears',
+                ])
+                ->get();
+
             if ($targets->isEmpty()) {
                 throw new Exception('no studyFieldYear with IDs "'.$targetIds.'" were found');
+            }
+
+            foreach ($source->courseGroupYears AS $sourceCourseGroupYear) {
+                foreach ($targets AS $target) {
+                    foreach ($target->courseGroupYears AS $targetCourseGroupYears) {
+                        if ($sourceCourseGroupYear->cross_qualification_id === $targetCourseGroupYears->cross_qualification_id) {
+                            continue 2;
+                        }
+                    }
+
+                    $newCourseGroupYear = $sourceCourseGroupYear->replicate();
+
+                    $newCourseGroupYear->study_field_year_id = $target->id;
+                    $newCourseGroupYear->save();
+
+                    foreach ($sourceCourseGroupYear->courseCourseGroupYears AS $sourceCourseCourseGroupYear) {
+                        $newCourseCourseGroupYear = $sourceCourseCourseGroupYear->replicate();
+
+                        $newCourseCourseGroupYear->course_group_year_id = $newCourseGroupYear->id;
+                        $newCourseCourseGroupYear->save();
+                    }
+                }
             }
 
             foreach ($source->crossQualificationYears AS $sourceCrossQualificationYear) {
@@ -56,12 +81,18 @@ class CopyToNewStudyFieldYears extends Command
                         }
                     }
 
-                    $new = $sourceCrossQualificationYear->replicate();
+                    $newCrossQualificationYear = $sourceCrossQualificationYear->replicate();
 
-                    $new->study_field_year_id = $target->id;
-                    $new->save();
+                    $newCrossQualificationYear->study_field_year_id = $target->id;
+                    $newCrossQualificationYear->save();
+
+                    foreach ($sourceCrossQualificationYear->courseCrossQualificationYears AS $courseCrossQualificationYear) {
+                        $newCourseCrossQualificationYear = $courseCrossQualificationYear->replicate();
+
+                        $newCourseCrossQualificationYear->cross_qualification_year_id = $newCrossQualificationYear->id;
+                        $newCourseCrossQualificationYear->save();
+                    }
                 }
-
             }
 
             foreach ($source->SpecializationYears AS $sourceSpecializationYear) {
@@ -72,10 +103,17 @@ class CopyToNewStudyFieldYears extends Command
                         }
                     }
 
-                    $new = $sourceSpecializationYear->replicate();
+                    $newSpecializationYear = $sourceSpecializationYear->replicate();
 
-                    $new->study_field_year_id = $target->id;
-                    $new->save();
+                    $newSpecializationYear->study_field_year_id = $target->id;
+                    $newSpecializationYear->save();
+
+                    foreach ($sourceSpecializationYear->courseSpecializationYears AS $courseSpecializationYear) {
+                        $newCourseSpecializationYear = $courseSpecializationYear->replicate();
+
+                        $newCourseSpecializationYear->specialization_year_id = $newSpecializationYear->id;
+                        $newCourseSpecializationYear->save();
+                    }
                 }
             }
         }

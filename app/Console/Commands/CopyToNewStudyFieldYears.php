@@ -2,12 +2,11 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Assessment;
-use App\Models\Recommendation;
-use App\Models\StudyField;
+use App\Models\StudyFieldYear;
+use Exception;
 use Illuminate\Console\Command;
 
-class CopyToNewStudyFields extends Command
+class CopyToNewStudyFieldYears extends Command
 {
     /**
      * The name and signature of the console command.
@@ -30,53 +29,70 @@ class CopyToNewStudyFields extends Command
      */
     public function handle()
     {
-        //  target => source
+        //  source => targets
         $studyFieldYearMap = [
-            52 => 44,
+            43 => 51,    //  Biotechnologie ab 2024
+            44 => 52,    //  Bioanalytik und Zellbiologie ab 2024
+            45 => 53,    //  Chemical Engineering ab 2024
+            46 => 54,    //  Chemie ab 2024
+            47 => 55,    //  Medizininformatik ab 2024
+            48 => 56,    //  Medizintechnik ab 2024
+            49 => 57,    //  Pharmatechnologie ab 2024
+
         ];
 
-        foreach (Assessment::with('assessmentCourses')->get() as $assessment) {
-            if (!in_array($assessment->study_field_id, $studyFieldMap)) {
-                continue;
+        foreach ($studyFieldYearMap AS $sourceId => $targetIds) {
+            if (!is_array($targetIds)) {
+                $targetIds = [$targetIds];
             }
 
-            $copy = $assessment->replicate();
-            $copy->study_field_id = array_search($assessment->study_field_id, $studyFieldMap);
-            $copy->save();
+            $source = StudyFieldYear::with([
+                'crossQualificationYears',
+                'specializationYears',
+            ])->find($sourceId);
 
-            foreach ($assessment->assessmentCourses as $assessmentCourses) {
-                $pivotCopy = $assessmentCourses->replicate();
-                $pivotCopy->assessment_id = $copy->id;
-                $pivotCopy->save();
-            }
-        }
+            $targets = StudyFieldYear::with([
+                'crossQualificationYears',
+                'specializationYears',
+            ])->whereIn('id', $targetIds)->get();
 
-        foreach (Recommendation::with('courseRecommendations')->get() as $recommendation) {
-            if (!in_array($recommendation->study_field_id, $studyFieldMap)) {
-                continue;
+            if (is_null($source)) {
+                throw new Exception('studyFieldYear with ID "'.$sourceId.'" wasn\'t found');                
             }
 
-            $copy = $recommendation->replicate();
-            $copy->study_field_id = array_search($recommendation->study_field_id, $studyFieldMap);
-            $copy->save();
-
-            foreach ($recommendation->courseRecommendations as $courseRecommendations) {
-                $pivotCopy = $courseRecommendations->replicate();
-                $pivotCopy->recommendation_id = $copy->id;
-                $pivotCopy->save();
+            if ($targets->isEmpty()) {
+                throw new Exception('no studyFieldYear with IDs "'.$targetIds.'" were found');
             }
-        }
 
-        $studyFields = StudyField::whereIn('id', $studyFieldMap)
-            ->with('crossQualifications.crossQualificationYears')
-            ->get();
+            foreach ($source->crossQualificationYears AS $sourceCrossQualificationYear) {
+                foreach ($targets AS $target) {
+                    foreach ($target->crossQualificationYears AS $targetCrossQualificationYear) {
+                        if ($sourceCrossQualificationYear->cross_qualification_id === $targetCrossQualificationYear->cross_qualification_id) {
+                            continue 2;
+                        }
+                    }
 
-        foreach ($studyFields as $studyField) {
-            foreach ($studyField->crossQualifications as $crossQualification) {
-                $newCrossQualitifacton = $crossQualification->replicate();
-                $newCrossQualitifacton->janis_id = null;
-                $newCrossQualitifacton->study_field_id = array_search($studyField->id, $studyFieldMap);
-                $newCrossQualitifacton->save();
+                    $new = $sourceCrossQualificationYear->replicate();
+
+                    $new->study_field_year_id = $target->id;
+                    $new->save();
+                }
+
+            }
+
+            foreach ($source->SpecializationYears AS $sourceSpecializationYear) {
+                foreach ($targets AS $target) {
+                    foreach ($target->SpecializationYears AS $targetSpecializationYear) {
+                        if ($sourceSpecializationYear->specialization_id === $targetSpecializationYear->specialization_id) {
+                            continue 2;
+                        }
+                    }
+
+                    $new = $sourceSpecializationYear->replicate();
+
+                    $new->study_field_year_id = $target->id;
+                    $new->save();
+                }
             }
         }
 

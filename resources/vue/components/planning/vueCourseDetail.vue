@@ -28,7 +28,7 @@
         <vue-plan-course
             v-if="!courseIsSuccessfullyCompleted && (course.is_fs || course.is_hs)"
             :course="course"
-            :planningId="planningId"
+            :planningId="planning.id"
             :planningIsLocked="planningIsLocked"
             :semesters="semesters"
             class="flex-none my-auto"
@@ -68,9 +68,6 @@ export default class VueCourseDetail extends BaseComponent {
     @Prop({ type: Number })
     courseId: number;
 
-    @Prop({ type: Number })
-    planningId: number;
-
     @Prop({ type: Object })
     courseYear: ICourse;
 
@@ -109,7 +106,7 @@ export default class VueCourseDetail extends BaseComponent {
         if (!this.course.id) {
             return;
         }
-        return this.models.coursePlanning.getCoursePlanning(this.planningId, this.course.id);
+        return this.models.coursePlanning.getCoursePlanning(this.planning.id, this.course.id);
     }
 
     public get requiredSkills(): ICourseSkill[] {

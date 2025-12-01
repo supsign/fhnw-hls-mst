@@ -95,9 +95,9 @@ class CopyToNewStudyFieldYears extends Command
                 }
             }
 
-            foreach ($source->specializationYears AS $sourceSpecializationYear) {
-                foreach ($targets AS $target) {
-                    foreach ($target->specializationYears AS $targetSpecializationYear) {
+            foreach ($source->specializationYears as $sourceSpecializationYear) {
+                foreach ($targets as $target) {
+                    foreach ($target->specializationYears as $targetSpecializationYear) {
                         if ($sourceSpecializationYear->specialization_id === $targetSpecializationYear->specialization_id) {
                             continue 2;
                         }

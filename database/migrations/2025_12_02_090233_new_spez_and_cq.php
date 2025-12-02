@@ -7,13 +7,12 @@ use App\Models\SpecializationYear;
 use App\Models\StudyFieldYear;
 use Illuminate\Database\Migrations\Migration;
 
-return new class extends Migration
-{
+return new class extends Migration {
     public function up()
     {
         $ut = StudyFieldYear::find(50);
 
-        foreach (['UT - Umweltwissenschaften', 'UT - Umweltingenieurswesen'] AS $specialisationName) {
+        foreach (['UT - Umweltwissenschaften', 'UT - Umweltingenieurswesen'] as $specialisationName) {
             $spec = Specialization::firstOrCreate([
                 'name' => $specialisationName,
                 'study_field_id' => $ut->study_field_id,
@@ -25,7 +24,7 @@ return new class extends Migration
             ]);
         }
 
-        foreach (['UT - Digitalisierung'] AS $crossQualificationName) {
+        foreach (['UT - Digitalisierung'] as $crossQualificationName) {
             $cq = CrossQualification::firstOrCreate([
                 'name' => $crossQualificationName,
                 'study_field_id' => $ut->study_field_id,
@@ -39,7 +38,7 @@ return new class extends Migration
 
         $ce24 = StudyFieldYear::find(45);
 
-        foreach (['CE - Digitalisierung'] AS $crossQualificationName) {
+        foreach (['CE - Digitalisierung'] as $crossQualificationName) {
             $cq = CrossQualification::firstOrCreate([
                 'name' => $crossQualificationName,
                 'study_field_id' => $ce24->study_field_id,
@@ -53,7 +52,7 @@ return new class extends Migration
 
         $ce25 = StudyFieldYear::find(53);
 
-        foreach (['CE - Digitalisierung'] AS $crossQualificationName) {
+        foreach (['CE - Digitalisierung'] as $crossQualificationName) {
             $cq = CrossQualification::firstOrCreate([
                 'name' => $crossQualificationName,
                 'study_field_id' => $ce25->study_field_id,

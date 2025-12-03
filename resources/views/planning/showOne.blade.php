@@ -185,7 +185,7 @@
                                     <vue-course-detail
                                         :course-id="{{$courseCourseGroupYear->course_id}}"
                                         :course-year="{{$courseCourseGroupYear->course->getCourseYearBySemesterOrLatest() ?? json_encode(null)}}"
-                                        :planning-id="{{$planning->id}}"
+                                        :planning="{{$planning}}"
                                         {{$recommendationService->courseIsRecommended($courseCourseGroupYear->course, $planning->courseRecommendations) ? 'course-is-recommended': ''}}
                                         {{$specializationYearService->courseIsInSpecializationYear($courseCourseGroupYear->course, $planning->courseSpecializationYears) ? 'course-is-spec-cross': ''}}
                                         {{$crossQualificationYearService->courseIsInCrossQualificationYear($courseCourseGroupYear->course, $planning->courseCrossQualificationYears) ? 'course-is-spec-cross': ''}}

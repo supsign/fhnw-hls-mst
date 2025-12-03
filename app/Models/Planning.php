@@ -12,7 +12,12 @@ use Illuminate\Support\Facades\App;
  */
 class Planning extends BaseModel
 {
-    protected $appends = ['course_recommendations', 'course_specialization_years', 'course_cross_qualification_years', 'assessment_courses'];
+    protected $appends = [
+        'assessment_courses',
+        'course_recommendations',
+        'course_specialization_years',
+        'course_cross_qualification_years',
+    ];
 
     public function crossQualificationYear()
     {

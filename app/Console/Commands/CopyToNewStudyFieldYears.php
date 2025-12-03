@@ -9,7 +9,7 @@ use Illuminate\Console\Command;
 class CopyToNewStudyFieldYears extends Command
 {
     protected $signature = 'copy:studyfieldyears';
-    protected $description = 'Copy Assessment, CrossQualification & Recommendation to new studyfieldyears';
+    protected $description = 'Copy CourseGroupYears, CrossQualificationYears & SpecializationYears to new studyfieldyears';
 
     public function handle(): int
     {
@@ -95,9 +95,9 @@ class CopyToNewStudyFieldYears extends Command
                 }
             }
 
-            foreach ($source->SpecializationYears as $sourceSpecializationYear) {
+            foreach ($source->specializationYears as $sourceSpecializationYear) {
                 foreach ($targets as $target) {
-                    foreach ($target->SpecializationYears as $targetSpecializationYear) {
+                    foreach ($target->specializationYears as $targetSpecializationYear) {
                         if ($sourceSpecializationYear->specialization_id === $targetSpecializationYear->specialization_id) {
                             continue 2;
                         }
